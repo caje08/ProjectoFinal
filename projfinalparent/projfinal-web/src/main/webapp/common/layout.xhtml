@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="_containers.css" />
+	<h:outputStylesheet library="css" name="_boxes.css" />
+	<h:outputStylesheet library="css" name="_contents.css" />
+</h:head>
+<h:body>
+
+	<div id="global_container">
+
+		<div id="top_container">
+			<ui:insert name="top">
+				<ui:include src="contents/top.xhtml" />
+			</ui:insert>
+		</div>
+
+		<div id="left_container">
+			<div id="scroll_left">
+				<div id="content_left">
+					<ui:insert name="left">
+						<ui:include src="contents/leftMenu.xhtml" />
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+
+		<div id="right_container">
+			<div id="scroll_right">
+				<div id="content_right">
+					<ui:insert name="right">
+						<ui:include src="contents/rightMenu.xhtml" />
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+
+		<div id="browser_container">
+			<div id="scroll_browser">
+				<div id="content_browser">
+					<ui:insert name="browser">
+						<ui:include src="contents/browser.xhtml" />
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+
+		<div id="bottom_container">
+			<ui:insert name="bottom">
+				<ui:include src="contents/bottom.xhtml" />
+			</ui:insert>
+		</div>
+
+	</div>
+</h:body>
+</html>

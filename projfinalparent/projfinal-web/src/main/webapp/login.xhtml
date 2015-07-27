@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:body>
+	<ui:composition template="common/layout.xhtml">
+
+		<ui:define name="top">
+			<div id="search">
+				<h:form>
+					<f:event listener="#{loginMB.logged()}" type="preRenderView" />
+
+					<table>
+						<tr>
+							<td><h:graphicImage library="images" name="critSW_small.png" /></td>
+
+							<td><label>Email: </label></td>
+
+							<td><h:inputText value="#{loginMB.email}" /></td>
+
+							<td><label>Password: </label></td>
+
+							<td><h:inputSecret value="#{loginMB.password}" /></td>
+
+							<td><h:commandButton action="#{loginMB.login()}"
+									value="Submit" /></td>
+
+							<td><h:commandButton value="New User" action="registry" /></td>
+
+							<td><h:outputText style="color:red"
+									value="#{loginMB.errorMessage}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+
+			<div id="user_logout">
+				<h:form rendered="#{render.active}">
+					<h:commandButton value="#{activeSession.activeUser.name}" />
+					<table>
+						<tr>
+							<td><h:commandButton action="index" value="Continue Session" /></td>
+							<td><h:commandButton action="#{activeSession.logout()}"
+									value="Logout" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+		</ui:define>
+
+		<ui:define name="left" />
+		<ui:define name="right" />
+		<ui:define name="browser">
+			<h:graphicImage styleClass="displayed" library="images"
+				name="critSW2_large.png" />
+		</ui:define>
+		<ui:define name="bottom" />
+	</ui:composition>
+</h:body>
+
+</html>

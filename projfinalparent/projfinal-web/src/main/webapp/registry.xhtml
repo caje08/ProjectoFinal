@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:body>
+	<ui:composition template="common/layout.xhtml">
+
+		<ui:define name="top">
+			<div id="search">
+				<h:form>
+					<f:event listener="#{loginMB.logged()}" type="preRenderView" />
+
+					<table>
+						<tr>
+							<td><h:graphicImage library="images"
+									name="critSW_small.png" /></td>
+
+							<td><label>Name: </label></td>
+
+							<td><h:inputText value="#{registryMB.name}" /></td>
+
+							<td><label>Email: </label></td>
+
+							<td><h:inputText value="#{registryMB.email}" /></td>
+
+							<td><label>Password: </label></td>
+
+							<td><h:inputSecret value="#{registryMB.password}" /></td>
+
+							<td><label>Confirm Password: </label></td>
+
+							<td><h:inputSecret value="#{registryMB.confirmPassword}" /></td>
+
+							<td><label>Data de Nascimento (formato AAAA/MM/DD):
+							</label></td>
+
+							<td><h:inputText value="#{registryMB.datanascimento}" /></td>
+
+							<td><h:commandButton action="#{registryMB.submit}"
+									value="Submit" /></td>
+
+							<td><h:commandButton action="#{registryMB.cancel()}"
+									value="Cancel" /></td>
+
+						</tr>
+					</table>
+				</h:form>
+			</div>
+
+			<div id="user_logout">
+				<h:form rendered="#{render.active}">
+					<h:commandButton value="#{activeSession.activeUser.name}" />
+					<table>
+						<tr>
+							<td><h:commandButton action="index" value="Continue Session" /></td>
+							<td><h:commandButton action="#{activeSession.logout()}"
+									value="Logout" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+		</ui:define>
+
+		<ui:define name="left" />
+		<ui:define name="right" />
+		<ui:define name="browser" />
+
+		<ui:define name="bottom">
+			<div id="bottom">
+				<h:form>
+					<table>
+						<tr>
+							<td><h:commandButton action="/generate" value="Generate DB" /></td>
+							<td><h:outputText value="#{registryMB.errorMessage}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+
+</html>
