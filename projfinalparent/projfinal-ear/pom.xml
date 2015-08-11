@@ -23,7 +23,11 @@
 					<modules>
 						<webModule>
 							<groupId>pt.uc.dei.aor.proj.carlos.catarina</groupId>
-							<artifactId>projfinal-web</artifactId>
+							<artifactId>projfinal-webplatf</artifactId>
+						</webModule>
+						<webModule>
+							<groupId>pt.uc.dei.aor.proj.carlos.catarina</groupId>
+							<artifactId>projfinal-publicweb</artifactId>
 						</webModule>
 						<webModule>
 							<groupId>pt.uc.dei.aor.proj.carlos.catarina</groupId>
@@ -50,9 +54,15 @@
 	</build>
 	<!-- Adicionar os modulos que criámos -->
 	<dependencies>
+	    <dependency>
+			<groupId>pt.uc.dei.aor.proj.carlos.catarina</groupId>
+			<artifactId>projfinal-publicweb</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
 		<dependency>
 			<groupId>pt.uc.dei.aor.proj.carlos.catarina</groupId>
-			<artifactId>projfinal-web</artifactId>
+			<artifactId>projfinal-webplatf</artifactId>
 			<version>${project.version}</version>
 			<type>war</type>
 		</dependency>

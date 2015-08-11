@@ -12,10 +12,10 @@
 	<!-- 2. Definir modulos associados a este pom "pai" -->
 	<modules>
 		<module>projfinal-ear</module>
-		<module>projfinal-web</module>
+		<module>projfinal-webplatf</module>
 		<module>projfinal-services</module>
 		<module>projfinal-domain</module>
-		
+		<module>projfinal-publicweb</module>
 		<module>projfinal-ws</module>
 	</modules>
 
