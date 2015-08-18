@@ -1,15 +1,23 @@
 package pt.uc.dei.aor.proj.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
@@ -54,26 +62,30 @@ public class UserEntity implements Serializable {
 	@Column(name = "datanascimento")
 	private String datanascimento;
 	@NotNull
-	@Column(name = "role")
-	private String role;
+	@Column(name = "role", nullable = false)
+	private Role role;
+	@ElementCollection
+	@CollectionTable(name="cargos",joinColumns=@JoinColumn(name="email",referencedColumnName="email"),uniqueConstraints=@UniqueConstraint(columnNames={"cargo","email"}))
+	@Enumerated(EnumType.STRING)
+	@Column(name="cargo")
+	private Collection<Role> roles;
 
-	//	@OneToMany(mappedBy = "id.utilizador", orphanRemoval = true)
-	//    private List<LyricEntity> userlyrics;
 
 	static Logger logger = LoggerFactory.getLogger(UserEntity.class);
 
 	public UserEntity() {
 		super();
-		this.role="appuser";
+		//this.role="appuser";
 	}
 
-	public UserEntity(String name, String password, String email, String dtnasc) {
+	public UserEntity(String name, String password, String email, String dtnasc, Role role) {
 		super();
 		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.datanascimento = dtnasc;
-		this.role="appuser";
+		this.role=role;
+		this.roles=new ArrayList<Role>();
 	}
 
 	public Long getUserId() {
@@ -88,12 +100,29 @@ public class UserEntity implements Serializable {
 		return datanascimento;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
+
+	}
+
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
+
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Role cargo) {
+		this.roles.add(cargo);
 	}
 
 	public void setDatanascimento(String datanascimento) {

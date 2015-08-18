@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.proj.entities.Role;
 import pt.uc.dei.aor.proj.entities.UserEntity;
 
 /**
@@ -44,13 +45,19 @@ public class UserEJB implements UserEJBLocal {
 	public void populate() {
 
 		UserEntity usertmp1= new UserEntity("Carlos", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "carlos@gmail.com",
-				"1970/06/13"); //pass 123
+				"1970/06/13", Role.MANAGER); //pass 123
+		System.out.println("Criou user "+usertmp1.getEmail()+" e sizeRoles= "+usertmp1.getRoles().size());
+		usertmp1.setRoles(Role.MANAGER);
 		em.persist(usertmp1);
 		UserEntity	usertmp2 = new UserEntity("Catarina", "s6jg4fmrG/46NvIx9nb3i7MKUZ0rIebFMMDu6Ou0pdA=", "ciclapo@gmail.com",
-				"1985/10/21"); //pass 456
+				"1985/10/21", Role.INTERVIEWER); //pass 456
+		System.out.println("Criou user "+usertmp2.getEmail()+" e sizeRoles= "+usertmp2.getRoles().size());
+		usertmp2.setRoles(Role.INTERVIEWER);
 		em.persist(usertmp2);
 		UserEntity	usertmp3 = new UserEntity("Admin", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", "admin@admin",
-				"1985/10/21"); //pass 456
+				"1985/10/21", Role.ADMIN); //pass admin
+		System.out.println("Criou user "+usertmp3.getEmail()+" e sizeRoles= "+usertmp3.getRoles().size());
+		usertmp3.setRoles(Role.ADMIN);
 		em.persist(usertmp3);
 		//		datanasc = "1970/06/13";
 		//		em.persist(new UserEntity("Carlos", "123", "carlosantos@gmail.com",

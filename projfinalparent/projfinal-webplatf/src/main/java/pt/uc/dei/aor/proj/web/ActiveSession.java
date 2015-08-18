@@ -128,14 +128,17 @@ public class ActiveSession implements Serializable {
 	}
 
 	private void redirect() {
-		String redirect = "/projfinal-web/login.xhtml";
+		String redirect = "/projfinal-webplatf/login.xhtml";
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletResponse response = (HttpServletResponse) context
 				.getExternalContext().getResponse();
+		logger.info("No ActiveSession.redirect() antes do response.sendRedirect '/projfinal-webplatf/login.xhtml'");
 		try {
 			response.sendRedirect(redirect);
+			logger.info("No ActiveSession.redirect() depois do response.sendRedirect '/projfinal-webplatf/login.xhtml'");
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			logger.info("No ActiveSession.redirect() deu excepção = "+e.getMessage());
 		}
 	}
 

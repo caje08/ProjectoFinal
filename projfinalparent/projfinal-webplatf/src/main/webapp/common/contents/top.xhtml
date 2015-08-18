@@ -7,12 +7,12 @@
 <h:head></h:head>
 <h:body>
 
-	<ui:composition>		
-
+	<ui:composition>	
+			
 		<div id="user_logout">
-			<h:form>
-				<h:commandButton value="#{activeSession.activeUser.name}" />
-				<h:commandButton action="#{activeSession.logout()}" value="Logout" />
+			<h:form>			    
+				<h:commandButton value="#{activeSession.activeUser.name}" disabled="true"/>
+				<h:commandButton action="#{loginMB.logout()}" value="Logout" />
 			</h:form>
 		</div>
 

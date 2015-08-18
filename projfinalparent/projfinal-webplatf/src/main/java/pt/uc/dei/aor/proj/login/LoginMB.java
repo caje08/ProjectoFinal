@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -24,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.proj.ejb.PasswordEJB;
 import pt.uc.dei.aor.proj.ejb.VirtualEJB;
+import pt.uc.dei.aor.proj.entities.Role;
 import pt.uc.dei.aor.proj.entities.UserEntity;
 import pt.uc.dei.aor.proj.facade.UserFacade;
 import pt.uc.dei.aor.proj.web.ActiveSession;
@@ -43,6 +45,8 @@ public class LoginMB implements Serializable{
 	private String email;
 	private String password;
 	private String errorMessage;
+	private String activeuser;
+
 	@EJB
 	private UserFacade userFacade;
 
@@ -85,6 +89,14 @@ public class LoginMB implements Serializable{
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+
+	public String getActiveuser() {
+		return activeuser;
+	}
+
+	public void setActiveuser(String activeuser) {
+		this.activeuser = activeuser;
 	}
 
 	public String getEmail() {
@@ -141,7 +153,21 @@ public class LoginMB implements Serializable{
 				session.init(tmp);
 				//retmpect();
 				//        	doLogin(0);
-				return "/pages/index";
+				logger.info("\nLogged_user profile= "+tmp.getRole());
+				System.out.println("\nLogged_user profile= "+tmp.getRole());
+				if(tmp.getRole().equals(Role.ADMIN)) {
+					logger.info("\nLoading main page = /pages/admin/index.xhtml?faces-redirect=true");
+					return "/pages/admin/index.xhtml?faces-redirect=true";
+				} else if(tmp.getRole().equals(Role.INTERVIEWER)) {
+					logger.info("\nLoading main page = /pages/interviewer/index.xhtml?faces-redirect=true");
+					return "/pages/interviewer/index.xhtml?faces-redirect=true";
+				} else if(tmp.getRole().equals(Role.MANAGER)) {
+					logger.info("\nLoading main page = /pages/manager/index.xhtml?faces-redirect=true");
+					return "/pages/manager/index.xhtml?faces-redirect=true";
+				} else {
+					logger.info("\nLoading login page = /login.xhtml?faces-redirect=true \n");
+					return "/login.xhtml?faces-redirect=true";
+				}
 			} else {
 				this.errorMessage = "Email/Password combination not found! Please try again";
 				logger.error(this.errorMessage);
@@ -213,32 +239,37 @@ public class LoginMB implements Serializable{
 	}
 
 	public String login(){
+		String webout="";
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
 
 		try{
 			logger.info("Email = "+email+", has requested to be logged");
 			request.login(email, password);
-			searchUser();
+			//	request.getSession().setAttribute(activeuser, userSession.getLoggedUser().getName());
+			webout=searchUser();
 		}catch (ServletException e){
 
 			logger.error("Wrong Email = "+email+" and passwd combination");
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			return "/login";
 		}
-		return "/pages/index";
+		logger.info("\nWithin LoginMB.login(), it's going to redirect to webpage --> \n"+webout);
+		return webout;
+		//return "/projfinal-webplatf/login.xhtml";
 	}
 	public String logout(){
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
 
 		try{
+			request.getSession().invalidate();
 			request.logout();
-
+			return "/login.xhtml?faces-redirect=true";
 		}catch (ServletException e){
-
+			context.addMessage(null, new FacesMessage("logout has failed!"));
 		}
-		return "/login.xhtml?faces-redirect=true";
+		return null;
 	}
 
 }
