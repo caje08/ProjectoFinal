@@ -1,10 +1,10 @@
 package pt.uc.dei.aor.proj.login;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -30,18 +30,17 @@ import pt.uc.dei.aor.proj.entities.UserEntity;
 import pt.uc.dei.aor.proj.facade.UserFacade;
 import pt.uc.dei.aor.proj.web.ActiveSession;
 
-
 /**
  *
  * @author
  */
 @Named("loginMB")
 @SessionScoped
-public class LoginMB implements Serializable{
+public class LoginMB implements Serializable {
 
 	private static final long serialVersionUID = -6202006843421064331L;
-	static Logger logger = LoggerFactory.getLogger(LoginMB.class);
-	//The credentials to search for
+	private static Logger logger = LoggerFactory.getLogger(LoginMB.class);
+	// The credentials to search for
 	private String email;
 	private String password;
 	private String errorMessage;
@@ -56,10 +55,10 @@ public class LoginMB implements Serializable{
 	private UserSession userSession;
 
 	@Inject
-	ActiveSession session;
+	private ActiveSession session;
 
 	@Inject
-	VirtualEJB ejb;
+	private VirtualEJB ejb;
 
 	/**
 	 * Creates a new instance of LoginMB
@@ -126,42 +125,42 @@ public class LoginMB implements Serializable{
 	public String searchUser() {
 
 		logger.info("Entrou no LoginMB.searchUser()");
-		String passw=pw.encrypt(password);
-		UserEntity tmp =null;
+		String passw = pw.encrypt(password);
+		UserEntity tmp = null;
 		try {
 			tmp = userFacade.findByEmailPass(email, passw);
-			if(tmp==null){
+			if (tmp == null) {
 				this.errorMessage = "Email/Password combination not found! Please try again";
-				this.password="";
-				this.email="";
+				this.password = "";
+				this.email = "";
 				logger.error(this.errorMessage);
 				return "/login";
 			}
 		} catch (Exception pe) {
-			//	System.out.println(pe.getMessage());
+			// System.out.println(pe.getMessage());
 			logger.error(pe.getMessage());
 			this.errorMessage = "Email/Password combination not found! Please try again";
-			this.password="";
-			this.email="";
+			this.password = "";
+			this.email = "";
 			return "/login";
 		}
 
-		if(!(tmp.equals(null))){
+		if (!(tmp.equals(null))) {
 			userSession.setLoggedUser(tmp);
 			if (userSession.getLoggedUser() != null) {
-				logger.info("Logged_user= "+this.email);
+				logger.info("Logged_user= " + this.email);
 				session.init(tmp);
-				//retmpect();
-				//        	doLogin(0);
-				logger.info("\nLogged_user profile= "+tmp.getRole());
-				System.out.println("\nLogged_user profile= "+tmp.getRole());
-				if(tmp.getRole().equals(Role.ADMIN)) {
+				// retmpect();
+				// doLogin(0);
+				logger.info("\nLogged_user profile= " + tmp.getRole());
+				System.out.println("\nLogged_user profile= " + tmp.getRole());
+				if (tmp.getRole().equals(Role.ADMIN)) {
 					logger.info("\nLoading main page = /pages/admin/index.xhtml?faces-redirect=true");
 					return "/pages/admin/index.xhtml?faces-redirect=true";
-				} else if(tmp.getRole().equals(Role.INTERVIEWER)) {
+				} else if (tmp.getRole().equals(Role.INTERVIEWER)) {
 					logger.info("\nLoading main page = /pages/interviewer/index.xhtml?faces-redirect=true");
 					return "/pages/interviewer/index.xhtml?faces-redirect=true";
-				} else if(tmp.getRole().equals(Role.MANAGER)) {
+				} else if (tmp.getRole().equals(Role.MANAGER)) {
 					logger.info("\nLoading main page = /pages/manager/index.xhtml?faces-redirect=true");
 					return "/pages/manager/index.xhtml?faces-redirect=true";
 				} else {
@@ -173,7 +172,7 @@ public class LoginMB implements Serializable{
 				logger.error(this.errorMessage);
 				return "/login";
 			}
-		}else {
+		} else {
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			logger.error(this.errorMessage);
 			return "/login";
@@ -182,7 +181,9 @@ public class LoginMB implements Serializable{
 	}
 
 	public String refreshUser() {
-		userSession.setLoggedUser(userFacade.findByEmailPass(userSession.getLoggedUser().getEmail(), userSession.getLoggedUser().getPassword()));
+		userSession.setLoggedUser(userFacade.findByEmailPass(userSession
+				.getLoggedUser().getEmail(), userSession.getLoggedUser()
+				.getPassword()));
 		if (userSession.getLoggedUser() != null) {
 
 			return "index";
@@ -192,16 +193,18 @@ public class LoginMB implements Serializable{
 		}
 	}
 
-	public void logged() throws IOException{
-		if(userSession.getLoggedUser() != null){
-			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	public void logged() throws IOException {
+		if (userSession.getLoggedUser() != null) {
+			ExternalContext ec = FacesContext.getCurrentInstance()
+					.getExternalContext();
 			ec.redirect(ec.getRequestContextPath() + "/pages/index.xhtml");
 		}
 	}
 
 	public void notLogged() throws IOException {
 		if (userSession.getLoggedUser() == null) {
-			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			ExternalContext ec = FacesContext.getCurrentInstance()
+					.getExternalContext();
 			ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
 		}
 	}
@@ -213,23 +216,22 @@ public class LoginMB implements Serializable{
 		return "login.xhtml?faces-redirect=true";
 	}
 
-	public UserEntity getLoggedUser(){
+	public UserEntity getLoggedUser() {
 		return userSession.getLoggedUser();
 	}
 
-
-	public void doLogin(){
+	public void doLogin() {
 		searchUser();
 
 	}
 
-	private void redirect(){
+	private void redirect() {
 
-		String redirect="index.xhtml";
-
+		String redirect = "index.xhtml";
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletResponse response = (HttpServletResponse)context.getExternalContext().getResponse();
+		HttpServletResponse response = (HttpServletResponse) context
+				.getExternalContext().getResponse();
 		try {
 			response.sendRedirect(redirect);
 		} catch (IOException e) {
@@ -238,35 +240,40 @@ public class LoginMB implements Serializable{
 
 	}
 
-	public String login(){
-		String webout="";
+	public String login() {
+		String webout = "";
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
+		HttpServletRequest request = (HttpServletRequest) context
+				.getExternalContext().getRequest();
 
-		try{
-			logger.info("Email = "+email+", has requested to be logged");
+		try {
+			logger.info("Email = " + email + ", has requested to be logged");
 			request.login(email, password);
-			//	request.getSession().setAttribute(activeuser, userSession.getLoggedUser().getName());
-			webout=searchUser();
-		}catch (ServletException e){
+			// request.getSession().setAttribute(activeuser,
+			// userSession.getLoggedUser().getName());
+			webout = searchUser();
+		} catch (ServletException e) {
 
-			logger.error("Wrong Email = "+email+" and passwd combination");
+			logger.error("Wrong Email = " + email + " and passwd combination");
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			return "/login";
 		}
-		logger.info("\nWithin LoginMB.login(), it's going to redirect to webpage --> \n"+webout);
+		logger.info("\nWithin LoginMB.login(), it's going to redirect to webpage --> \n"
+				+ webout);
 		return webout;
-		//return "/projfinal-webplatf/login.xhtml";
+		// return "/projfinal-webplatf/login.xhtml";
 	}
-	public String logout(){
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
 
-		try{
+	public String logout() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context
+				.getExternalContext().getRequest();
+
+		try {
 			request.getSession().invalidate();
 			request.logout();
 			return "/login.xhtml?faces-redirect=true";
-		}catch (ServletException e){
+		} catch (ServletException e) {
 			context.addMessage(null, new FacesMessage("logout has failed!"));
 		}
 		return null;

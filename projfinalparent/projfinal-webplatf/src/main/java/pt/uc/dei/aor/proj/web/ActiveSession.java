@@ -26,8 +26,7 @@ public class ActiveSession implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	static Logger logger = LoggerFactory.getLogger(ActiveSession.class);
-
+	private static Logger logger = LoggerFactory.getLogger(ActiveSession.class);
 
 	private HttpSession session;
 
@@ -38,9 +37,10 @@ public class ActiveSession implements Serializable {
 
 	private Part file;
 
-
 	private String mensagem;
 
+	public ActiveSession() {
+	}
 
 	public void init(UserEntity user) {
 		startSession();
@@ -53,7 +53,6 @@ public class ActiveSession implements Serializable {
 
 		UserEJB.increaseUserCount(activeUser);
 	}
-
 
 	public Part getFile() {
 		return file;
@@ -137,8 +136,9 @@ public class ActiveSession implements Serializable {
 			response.sendRedirect(redirect);
 			logger.info("No ActiveSession.redirect() depois do response.sendRedirect '/projfinal-webplatf/login.xhtml'");
 		} catch (IOException e) {
-			//e.printStackTrace();
-			logger.info("No ActiveSession.redirect() deu excepção = "+e.getMessage());
+			// e.printStackTrace();
+			logger.info("No ActiveSession.redirect() deu excepção = "
+					+ e.getMessage());
 		}
 	}
 

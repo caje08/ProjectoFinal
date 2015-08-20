@@ -17,23 +17,22 @@ public class VirtualEJB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
 	@EJB
 	private UserEJBLocal userEJB;
 	@EJB
 	private UserFacade userFacade;
 
-	static Logger logger = LoggerFactory.getLogger(VirtualEJB.class);
+	private static Logger logger = LoggerFactory.getLogger(VirtualEJB.class);
 
 	public void populate() {
 	}
 
 	// User
-	public UserEntity getUserByEmail(String email){
-		List<UserEntity>users=this.userEJB.getUsers();
+	public UserEntity getUserByEmail(String email) {
+		List<UserEntity> users = this.userEJB.getUsers();
 
-		for(UserEntity u:users){
-			if(u.getEmail().equals(email)) {
+		for (UserEntity u : users) {
+			if (u.getEmail().equals(email)) {
 				return u;
 			}
 		}

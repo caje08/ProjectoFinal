@@ -24,18 +24,15 @@ public class UserEJB implements UserEJBLocal {
 	@PersistenceContext(name = "myPU")
 	private EntityManager em;
 
-	String datanasc;
+	private String datanasc;
 	// SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
 
 	// Number of logged users
 	private static int userCount = 0;
 
-
-
-
 	private static HashMap<UserEntity, Integer> loggedUsers = new HashMap<>();
 
-	static Logger logger = LoggerFactory.getLogger(UserEJB.class);
+	private static Logger logger = LoggerFactory.getLogger(UserEJB.class);
 
 	public UserEJB() {
 		// TODO Auto-generated constructor stub
@@ -44,27 +41,35 @@ public class UserEJB implements UserEJBLocal {
 	@Override
 	public void populate() {
 
-		UserEntity usertmp1= new UserEntity("Carlos", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "carlos@gmail.com",
-				"1970/06/13", Role.MANAGER); //pass 123
-		System.out.println("Criou user "+usertmp1.getEmail()+" e sizeRoles= "+usertmp1.getRoles().size());
+		UserEntity usertmp1 = new UserEntity("Carlos",
+				"pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+				"carlos@gmail.com", "1970/06/13", Role.MANAGER); // pass 123
+		System.out.println("Criou user " + usertmp1.getEmail()
+				+ " e sizeRoles= " + usertmp1.getRoles().size());
 		usertmp1.setRoles(Role.MANAGER);
 		em.persist(usertmp1);
-		UserEntity	usertmp2 = new UserEntity("Catarina", "s6jg4fmrG/46NvIx9nb3i7MKUZ0rIebFMMDu6Ou0pdA=", "ciclapo@gmail.com",
-				"1985/10/21", Role.INTERVIEWER); //pass 456
-		System.out.println("Criou user "+usertmp2.getEmail()+" e sizeRoles= "+usertmp2.getRoles().size());
+		UserEntity usertmp2 = new UserEntity("Catarina",
+				"s6jg4fmrG/46NvIx9nb3i7MKUZ0rIebFMMDu6Ou0pdA=",
+				"ciclapo@gmail.com", "1985/10/21", Role.INTERVIEWER); // pass
+																		// 456
+		System.out.println("Criou user " + usertmp2.getEmail()
+				+ " e sizeRoles= " + usertmp2.getRoles().size());
 		usertmp2.setRoles(Role.INTERVIEWER);
 		em.persist(usertmp2);
-		UserEntity	usertmp3 = new UserEntity("Admin", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", "admin@admin",
-				"1985/10/21", Role.ADMIN); //pass admin
-		System.out.println("Criou user "+usertmp3.getEmail()+" e sizeRoles= "+usertmp3.getRoles().size());
+		UserEntity usertmp3 = new UserEntity("Admin",
+				"jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", "admin@admin",
+				"1985/10/21", Role.ADMIN); // pass admin
+		System.out.println("Criou user " + usertmp3.getEmail()
+				+ " e sizeRoles= " + usertmp3.getRoles().size());
 		usertmp3.setRoles(Role.ADMIN);
 		em.persist(usertmp3);
-		//		datanasc = "1970/06/13";
-		//		em.persist(new UserEntity("Carlos", "123", "carlosantos@gmail.com",
-		//				datanasc));
+		// datanasc = "1970/06/13";
+		// em.persist(new UserEntity("Carlos", "123", "carlosantos@gmail.com",
+		// datanasc));
 		//
-		//		datanasc = "1985/10/21";
-		//		em.persist(new UserEntity("Duarte", "456", "duarte@gmail.com", datanasc));
+		// datanasc = "1985/10/21";
+		// em.persist(new UserEntity("Duarte", "456", "duarte@gmail.com",
+		// datanasc));
 	}
 
 	@Override
@@ -82,7 +87,6 @@ public class UserEJB implements UserEJBLocal {
 		System.out.println("Depois de apresentar os resultados");
 
 		logger.info("Sample Depois info message");
-
 
 		return users;
 	}
@@ -134,10 +138,10 @@ public class UserEJB implements UserEJBLocal {
 	}
 
 	public static void increaseUserCount(UserEntity user) {
-		if(loggedUsers.containsKey(user)){
+		if (loggedUsers.containsKey(user)) {
 			int moreSession = loggedUsers.get(user) + 1;
 			loggedUsers.put(user, moreSession);
-		}else{
+		} else {
 			loggedUsers.put(user, 1);
 		}
 
@@ -146,10 +150,10 @@ public class UserEJB implements UserEJBLocal {
 	}
 
 	public static void decreaseUserCount(UserEntity user) {
-		if(loggedUsers.get(user)==1){
+		if (loggedUsers.get(user) == 1) {
 			loggedUsers.remove(user);
-		}else{
-			int lessSession = loggedUsers.get(user)-1;
+		} else {
+			int lessSession = loggedUsers.get(user) - 1;
 			loggedUsers.put(user, lessSession);
 		}
 
