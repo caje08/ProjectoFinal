@@ -13,11 +13,11 @@
 
 <h:body>
 	<h2>Admin web page</h2>
-	<h3>#{activeSession.activeUser.name}</h3>
+	<h3>#{activeSession.activeUser.username}</h3>
 
 	<h3>Users List in the system</h3>
 	<h:dataTable value="#{login.getUsers()}" var="user">
-		<h:column>#{user.name}</h:column>
+		<h:column>#{user.username}</h:column>
 		<h:column>#{user.password}</h:column>
 		<h:column>#{user.email}</h:column>
 	</h:dataTable>

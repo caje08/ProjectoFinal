@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @DiscriminatorValue("interviewer")
 
-public class InterviewerEntity extends UserGuide implements Serializable {
+public class InterviewerEntity extends UserEntity implements Serializable {
 
 	public InterviewerEntity() {
 

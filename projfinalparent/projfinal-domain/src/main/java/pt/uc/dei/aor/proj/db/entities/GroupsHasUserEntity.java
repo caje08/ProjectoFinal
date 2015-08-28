@@ -22,8 +22,8 @@ public  class GroupsHasUserEntity implements Serializable {
     @ManyToOne(targetEntity=GroupsEntity.class)
     private GroupsEntity groups;
 
-    @ManyToOne(targetEntity=UserGuide.class)
-    private UserGuide userGuide;
+    @ManyToOne(targetEntity=UserEntity.class)
+    private UserEntity userGuide;
 
     @Column(name="username")
     @Basic
@@ -48,11 +48,11 @@ public  class GroupsHasUserEntity implements Serializable {
         this.groups = groups;
     }
 
-   public UserGuide getUserGuide() {
+   public UserEntity getUserGuide() {
         return this.userGuide;
     }
 
-  public void setUserGuide (UserGuide userGuide) {
+  public void setUserGuide (UserEntity userGuide) {
         this.userGuide = userGuide;
     }
 

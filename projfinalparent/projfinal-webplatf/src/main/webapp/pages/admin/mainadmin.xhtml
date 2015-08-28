@@ -14,39 +14,39 @@
     <ui:define name="top">
         <h:form>
             <p:menubar >
-                <p:menuitem icon="ui-icon-home" action="/faces/admin/mainadmin.xhtml?faces-redirect=true" />
-                <p:submenu label="Welcome: #{activeSession.activeUser.name}" >
+                <p:menuitem icon="ui-icon-home" action="/pages/admin/mainadmin.xhtml?faces-redirect=true" />
+                <p:submenu label="Welcome: #{activeSession.activeUser.username}" >
                     <p:menuitem  value="Logout" action="#{loginMB.logout()}"  />
-                    <p:menuitem  value="Edit" action="/faces/admin/edituser.xhtml?faces-redirect=true"  />
+                    <p:menuitem  value="Edit" action="/pages/admin/edituser.xhtml?faces-redirect=true"  />
                 </p:submenu>
                 <p:submenu label="Positions" style="padding-left:20px" >
-                    <p:menuitem value="Add Position" action="/faces/admin/openPosition.xhtml?faces-redirect=true" />
-                    <p:menuitem value="Search All Positions" action="/faces/admin/searchpositions.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Add Position" action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
+                    <p:menuitem value="Search All Positions" action="/pages/admin/searchpositions.xhtml?faces-redirect=true"/>
                 </p:submenu>  
 
-                <p:menuitem value="Add new User" action="/faces/admin/addnewuser.xhtml?faces-redirect=true" style="padding-left:20px"/>
+                <p:menuitem value="Add new User" action="/pages/admin/addnewuser.xhtml?faces-redirect=true" style="padding-left:20px"/>
                 <p:submenu label="Applications" style="padding-left:20px">
-                    <p:menuitem value="Add Manual" action="/faces/admin/manualApply.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Non Spontaneous" action="/faces/admin/nonSpontaneousApplications.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Spontaneous" action="/faces/admin/spontaneousApplications.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Negotiation Process" action="/faces/admin/negotiation.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Offers" action="/faces/admin/lstOffers.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Add Manual" action="/pages/admin/manualApply.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Non Spontaneous" action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Spontaneous" action="/pages/admin/spontaneousApplications.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Negotiation Process" action="/pages/admin/negotiation.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Offers" action="/pages/admin/lstOffers.xhtml?faces-redirect=true"/>
                 </p:submenu>
-                <p:menuitem value="Applicants" action="/faces/admin/applicants.xhtml?faces-redirect=true" style="padding-left:20px"/>
+                <p:menuitem value="Applicants" action="/pages/admin/applicants.xhtml?faces-redirect=true" style="padding-left:20px"/>
                 <p:submenu label="Reports" style="padding-left:20px">
-                    <p:menuitem value="Applicants per time period" action="/faces/admin/reportpertime.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Applicants per position" action="/faces/admin/reportperposition.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Spontaneous applications" action="/faces/admin/reportspontaneous.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Rejected Applicants" action="/faces/admin/reportrejected.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Interview outcome" action="/faces/admin/reportinterview.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Offers" action="/faces/admin/report.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Average time to first interview" action="/faces/admin/searchpositions.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Average time for hiring" action="/faces/admin/searchpositions.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Applicants per time period" action="/pages/admin/reportpertime.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Applicants per position" action="/pages/admin/reportperposition.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Spontaneous applications" action="/pages/admin/reportspontaneous.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Rejected Applicants" action="/pages/admin/reportrejected.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Interview outcome" action="/pages/admin/reportinterview.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Offers" action="/pages/admin/report.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Average time to first interview" action="/pages/admin/searchpositions.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="Average time for hiring" action="/pages/admin/searchpositions.xhtml?faces-redirect=true"/>
                 </p:submenu>
-                <p:menuitem value="Interview guides" action="/faces/admin/guides.xhtml?faces-redirect=true" style="padding-left:20px"/>
+                <p:menuitem value="Interview guides" action="/pages/admin/guides.xhtml?faces-redirect=true" style="padding-left:20px"/>
                 <p:submenu label="Customize Styles" style="padding-left:20px">
-                    <p:menuitem value="Add new Style Configuration" action="/faces/admin/addcss.xhtml?faces-redirect=true" style="padding-left:20px"/>
-                    <p:menuitem value="All Css Styles" action="/faces/admin/css.xhtml?faces-redirect=true" style="padding-left:20px"/>
+                    <p:menuitem value="Add new Style Configuration" action="/pages/admin/addcss.xhtml?faces-redirect=true" style="padding-left:20px"/>
+                    <p:menuitem value="All Css Styles" action="/pages/admin/css.xhtml?faces-redirect=true" style="padding-left:20px"/>
                 </p:submenu>
 
             </p:menubar>
@@ -58,7 +58,7 @@
     </ui:define>
     <!--Main Content-->
 
-    <ui:define name="content">
+   <!--  <ui:define name="content">
         <h:form>    
             <p:galleria value="#{imagesView.images}"
                         effect="slide" 
@@ -71,7 +71,7 @@
             </p:galleria>
         </h:form>
 
-    </ui:define>
+    </ui:define> -->
 
 </ui:composition>
 

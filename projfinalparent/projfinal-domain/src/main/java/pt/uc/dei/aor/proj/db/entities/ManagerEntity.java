@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "manager")
 @XmlRootElement
 @DiscriminatorValue("manager")
-public  class ManagerEntity extends UserGuide implements Serializable {
+public  class ManagerEntity extends UserEntity implements Serializable {
 
 	public ManagerEntity(){
 

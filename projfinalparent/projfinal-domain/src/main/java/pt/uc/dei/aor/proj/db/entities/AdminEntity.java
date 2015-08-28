@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "adminguide")
 @XmlRootElement
 @DiscriminatorValue("adminguide")
-public class AdminEntity extends UserGuide implements Serializable {
+public class AdminEntity extends UserEntity implements Serializable {
 
 	public AdminEntity() {
 		super();

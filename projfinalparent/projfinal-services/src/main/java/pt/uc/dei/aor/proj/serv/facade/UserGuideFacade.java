@@ -16,7 +16,7 @@ import pt.uc.dei.aor.proj.db.entities.AdminEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
-import pt.uc.dei.aor.proj.db.entities.UserGuide;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.exceptions.EmailAlreadyExistsException;
 import pt.uc.dei.aor.proj.db.exceptions.InvalidAuthException;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
@@ -30,7 +30,7 @@ import pt.uc.dei.aor.proj.serv.tools.EncryptPassword;
  * @author
  */
 @Stateless
-public class UserGuideFacade extends AbstractFacade<UserGuide> {
+public class UserGuideFacade extends AbstractFacade<UserEntity> {
 
 	@PersistenceContext(unitName = "myPU")
 	private EntityManager em;
@@ -55,19 +55,19 @@ public class UserGuideFacade extends AbstractFacade<UserGuide> {
 
 
 	public UserGuideFacade() {
-		super(UserGuide.class);
+		super(UserEntity.class);
 	}
 
 	/**
 	 *
-	 * @return UserGuide if is an instance of ManagerEntity, AdminEntity and
+	 * @return UserEntity if is an instance of ManagerEntity, AdminEntity and
 	 * InterviewerEntity, and if it is not null.
 	 * @throws UserNotFoundException
-	 * @throws UserGuideException (Not a instanceof "childs" of UserGuide)
+	 * @throws UserGuideException (Not a instanceof "childs" of UserEntity)
 	 * @throws EJBException
 	 */
-	public UserGuide findUserByUsername() throws UserNotFoundException, UserGuideException, EJBException, NoResultException  {
-		UserGuide userGuide = (UserGuide) em.createNamedQuery("UserGuide.findByName").setParameter("username", ctx.getCallerPrincipal().getName()).getSingleResult();
+	public UserEntity findUserByUsername() throws UserNotFoundException, UserGuideException, EJBException, NoResultException  {
+		UserEntity userGuide = (UserEntity) em.createNamedQuery("UserEntity.findByName").setParameter("username", ctx.getCallerPrincipal().getName()).getSingleResult();
 		if (userGuide != null) {
 			if (userGuide instanceof ManagerEntity || userGuide instanceof AdminEntity || userGuide instanceof InterviewerEntity) {
 				return userGuide;
@@ -87,7 +87,7 @@ public class UserGuideFacade extends AbstractFacade<UserGuide> {
 	 * @throws UserNotFoundException
 	 */
 	public ApplicantEntity findApplicantByUsernameInput(String username) throws UserNotFoundException {
-		UserGuide userGuide = (UserGuide) em.createNamedQuery("UserGuide.findByName").setParameter("username", username).getSingleResult();
+		UserEntity userGuide = (UserEntity) em.createNamedQuery("UserEntity.findByName").setParameter("username", username).getSingleResult();
 		if (userGuide != null) {
 			return (ApplicantEntity) userGuide;
 		} else {
@@ -106,7 +106,7 @@ public class UserGuideFacade extends AbstractFacade<UserGuide> {
 	 * @throws UsernameAlreadyExists
 	 * @throws EJBException
 	 */
-	public void createNewUser(UserGuide user, String userType) throws InvalidAuthException, EmailAlreadyExistsException, UsernameAlreadyExists, EJBException {
+	public void createNewUser(UserEntity user, String userType) throws InvalidAuthException, EmailAlreadyExistsException, UsernameAlreadyExists, EJBException {
 		String to = user.getEmail();
 		String password = user.getPassword();
 		String passwordEncrypted = EncryptPassword.encrypt(user.getPassword());
@@ -163,7 +163,7 @@ public class UserGuideFacade extends AbstractFacade<UserGuide> {
 	 * @throws EmailAlreadyExistsException
 	 * @throws EJBException
 	 */
-	public void editUser(UserGuide user, String firstName, String lastName, String email, String password) throws InvalidAuthException, EmailAlreadyExistsException, EJBException {
+	public void editUser(UserEntity user, String firstName, String lastName, String email, String password) throws InvalidAuthException, EmailAlreadyExistsException, EJBException {
 		if (!mailAlreadyExists(user.getUsername())) {
 			user.setEmail(email);
 			user.setFirstName(firstName);
@@ -184,7 +184,7 @@ public class UserGuideFacade extends AbstractFacade<UserGuide> {
 	 */
 	public
 	boolean knowIfUsernameAlreadyExists(String username) {
-		Query query = em.createNamedQuery("UserGuide.findByName", UserGuide.class
+		Query query = em.createNamedQuery("UserEntity.findByName", UserEntity.class
 				);
 		query.setParameter(
 				"username", username);
@@ -199,7 +199,7 @@ public class UserGuideFacade extends AbstractFacade<UserGuide> {
 	 */
 	public
 	boolean mailAlreadyExists(String email) {
-		Query query = em.createNamedQuery("UserGuide.findByEmail", UserGuide.class
+		Query query = em.createNamedQuery("UserEntity.findByEmail", UserEntity.class
 				);
 		query.setParameter(
 				"email", email);

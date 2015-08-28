@@ -10,7 +10,7 @@ import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.persistence.NoResultException;
 
-import pt.uc.dei.aor.proj.db.entities.UserGuide;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.serv.facade.UserGuideFacade;
@@ -28,22 +28,22 @@ public class UserData implements Serializable {
 	@EJB
 	private UserGuideFacade userGuideFacade;
 
-	private UserGuide loggedUser;
+	private UserEntity loggedUser;
 
 	/**
 	 *
-	 * @return UserGuide, that will be the logged User during the entire time that will be on session
+	 * @return UserEntity, that will be the logged User during the entire time that will be on session
 	 * @throws UserNotFoundException
 	 * @throws UserGuideException
 	 */
-	public UserGuide getLoggedUser() throws UserNotFoundException, UserGuideException, NoResultException {
+	public UserEntity getLoggedUser() throws UserNotFoundException, UserGuideException, NoResultException {
 		loggedUser = userGuideFacade.findUserByUsername();
 		return loggedUser;
 	}
 
 	/////////////////////Getters && Setters////////////////////
 
-	public void setLoggedUser(UserGuide loggedUser) {
+	public void setLoggedUser(UserEntity loggedUser) {
 		this.loggedUser = loggedUser;
 	}
 

@@ -23,7 +23,7 @@ import pt.uc.dei.aor.proj.db.tools.StatusApplicant;
 @Table(name = "applicant")
 @XmlRootElement
 @DiscriminatorValue("applicant")
-public class ApplicantEntity extends UserGuide implements Serializable {
+public class ApplicantEntity extends UserEntity implements Serializable {
 
 	@Column(name = "country")
 	@Basic
