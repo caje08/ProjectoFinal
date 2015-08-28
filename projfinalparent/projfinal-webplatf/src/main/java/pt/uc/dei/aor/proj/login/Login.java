@@ -6,8 +6,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.ejb.UserEJBLocal;
-import pt.uc.dei.aor.proj.entities.UserEntity;
 
 @Named
 @RequestScoped

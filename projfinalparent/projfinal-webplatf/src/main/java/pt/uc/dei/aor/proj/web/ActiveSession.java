@@ -15,8 +15,8 @@ import javax.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.ejb.UserEJB;
-import pt.uc.dei.aor.proj.entities.UserEntity;
 
 @Named
 @SessionScoped
@@ -27,7 +27,6 @@ public class ActiveSession implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	static Logger logger = LoggerFactory.getLogger(ActiveSession.class);
-
 
 	private HttpSession session;
 
@@ -41,6 +40,8 @@ public class ActiveSession implements Serializable {
 
 	private String mensagem;
 
+	public ActiveSession() {
+	}
 
 	public void init(UserEntity user) {
 		startSession();

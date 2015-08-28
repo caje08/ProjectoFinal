@@ -9,8 +9,8 @@ import javax.enterprise.context.SessionScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.uc.dei.aor.proj.entities.UserEntity;
-import pt.uc.dei.aor.proj.facade.UserFacade;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
+import pt.uc.dei.aor.proj.serv.facade.UserFacade;
 
 @SessionScoped
 public class VirtualEJB implements Serializable {

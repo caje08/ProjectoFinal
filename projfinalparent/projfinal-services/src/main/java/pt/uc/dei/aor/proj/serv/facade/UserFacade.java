@@ -1,4 +1,4 @@
-package pt.uc.dei.aor.proj.facade;
+package pt.uc.dei.aor.proj.serv.facade;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import pt.uc.dei.aor.proj.entities.UserEntity;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 
 /**
  *

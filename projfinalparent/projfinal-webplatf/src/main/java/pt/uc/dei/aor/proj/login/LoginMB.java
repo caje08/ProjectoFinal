@@ -23,11 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.proj.db.entities.Role;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.ejb.PasswordEJB;
 import pt.uc.dei.aor.proj.ejb.VirtualEJB;
-import pt.uc.dei.aor.proj.entities.Role;
-import pt.uc.dei.aor.proj.entities.UserEntity;
-import pt.uc.dei.aor.proj.facade.UserFacade;
+import pt.uc.dei.aor.proj.serv.facade.UserFacade;
 import pt.uc.dei.aor.proj.web.ActiveSession;
 
 
@@ -56,10 +56,10 @@ public class LoginMB implements Serializable{
 	private UserSession userSession;
 
 	@Inject
-	ActiveSession session;
+	private ActiveSession session;
 
 	@Inject
-	VirtualEJB ejb;
+	private VirtualEJB ejb;
 
 	/**
 	 * Creates a new instance of LoginMB

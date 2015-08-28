@@ -8,7 +8,7 @@ package pt.uc.dei.aor.proj.login;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 
-import pt.uc.dei.aor.proj.entities.UserEntity;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 
 /**
  *

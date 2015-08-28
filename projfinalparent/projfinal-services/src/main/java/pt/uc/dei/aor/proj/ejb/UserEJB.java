@@ -12,8 +12,8 @@ import javax.persistence.TypedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.uc.dei.aor.proj.entities.Role;
-import pt.uc.dei.aor.proj.entities.UserEntity;
+import pt.uc.dei.aor.proj.db.entities.Role;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 
 /**
  * Session Bean implementation class UserEJB
@@ -24,14 +24,11 @@ public class UserEJB implements UserEJBLocal {
 	@PersistenceContext(name = "myPU")
 	private EntityManager em;
 
-	String datanasc;
+	private String datanasc;
 	// SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
 
 	// Number of logged users
 	private static int userCount = 0;
-
-
-
 
 	private static HashMap<UserEntity, Integer> loggedUsers = new HashMap<>();
 

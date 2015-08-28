@@ -14,26 +14,32 @@
 <h:body>
 	<h2>Admin web page</h2>
 	<h3>#{activeSession.activeUser.name}</h3>
-	
+
 	<h3>Users List in the system</h3>
 	<h:dataTable value="#{login.getUsers()}" var="user">
 		<h:column>#{user.name}</h:column>
 		<h:column>#{user.password}</h:column>
 		<h:column>#{user.email}</h:column>
 	</h:dataTable>
-	
+
 	<h:form>
 		<h:messages />
-		<h:button disabled="true" value="criar posição" />
+		<h:button value="Testa perfil"
+			outcome="perfilUsuario.xhtml?faces-redirect=true" />
+		<h:button value="outroteste"
+			outcome="testPrimefaces.xhtml?faces-redirect=true" />
+			<h:button value="MainTest"
+			outcome="mainadmin.xhtml?faces-redirect=true" />
 		<h:commandButton value="sair" action="#{loginMB.logout()}" />
 
 	</h:form>
-
-	<p:menu>
-		<p:submenu>
-			<p:menuitem value="Admin Internal" />
-		</p:submenu>
-	</p:menu>
+	<h:form>
+		<p:menu>
+			<p:submenu>
+				<p:menuitem value="Admin Internal" />
+			</p:submenu>
+		</p:menu>
+	</h:form>
 
 </h:body>
 

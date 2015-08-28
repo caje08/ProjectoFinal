@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import pt.uc.dei.aor.proj.entities.UserEntity;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 
 @Local
 public interface UserEJBLocal {

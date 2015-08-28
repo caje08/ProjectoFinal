@@ -1,4 +1,4 @@
-package pt.uc.dei.aor.proj.entities;
+package pt.uc.dei.aor.proj.db.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;

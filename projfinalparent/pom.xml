@@ -173,7 +173,7 @@
 					<version>${war-plugin-version}</version>
 					<configuration>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
-						<packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+						
 						<archive>
 							<manifest>
 								<addClasspath>true</addClasspath>
