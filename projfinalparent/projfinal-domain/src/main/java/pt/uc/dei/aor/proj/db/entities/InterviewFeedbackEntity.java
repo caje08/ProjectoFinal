@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,13 +15,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import pt.uc.dei.aor.proj.db.tools.InterviewType;
 import pt.uc.dei.aor.proj.db.tools.Outcome;
 
 @Entity
+@Table(name = "interviewfeedbackentity")
+@XmlRootElement
+@DiscriminatorValue("interviewfeedbackentity")
 @NamedQueries({
 	@NamedQuery(name = "InterviewFeedbackEntity.findEnum", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.application=:application and i.interviewType =pt.uc.dei.aor.proj.db.tools.InterviewType.PHONE"),
 	@NamedQuery(name = "InterviewFeedbackEntity.findInterview", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.application.applicationId=:applicationId"),

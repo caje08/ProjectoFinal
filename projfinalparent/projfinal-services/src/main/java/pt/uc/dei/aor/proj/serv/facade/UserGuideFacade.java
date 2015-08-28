@@ -16,13 +16,13 @@ import pt.uc.dei.aor.proj.db.entities.AdminEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
+import pt.uc.dei.aor.proj.db.entities.Role;
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.exceptions.EmailAlreadyExistsException;
 import pt.uc.dei.aor.proj.db.exceptions.InvalidAuthException;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.db.exceptions.UsernameAlreadyExists;
-import pt.uc.dei.aor.proj.serv.ejb.SendEmail;
 import pt.uc.dei.aor.proj.serv.tools.EncryptPassword;
 
 /**
@@ -36,13 +36,13 @@ public class UserGuideFacade extends AbstractFacade<UserEntity> {
 	private EntityManager em;
 
 	@Inject
-	private AdminGuideFacade adminGuideFacade;
+	private AdminFacade adminGuideFacade;
 	@Inject
 	private ManagerFacade managerFacade;
 	@Inject
 	private InterviewerFacade interviewerFacade;
-	@Inject
-	private SendEmail mail;
+	//	@Inject
+	//	private SendEmail mail;
 
 	@Resource
 	SessionContext ctx;
@@ -118,14 +118,16 @@ public class UserGuideFacade extends AbstractFacade<UserEntity> {
 		} else {
 			switch (userType) {
 			case "Admin":
-				AdminEntity adminGuide = new AdminEntity();
-				adminGuide.setFirstName(user.getFirstName());
-				adminGuide.setLastName(user.getLastName());
-				adminGuide.setEmail(user.getEmail());
-				adminGuide.setUsername(user.getUsername());
-				adminGuide.setPassword(user.getPassword());
-				adminGuideFacade.createAdmin(adminGuide);
-				mail.sendEMail("acertarorumoamj@gmail.com", "Chosen as new user", "Your login is " + user.getUsername() + " and your password is " + password, to);
+				AdminEntity adminentity = new AdminEntity();
+				adminentity.setFirstName(user.getFirstName());
+				adminentity.setLastName(user.getLastName());
+				adminentity.setEmail(user.getEmail());
+				adminentity.setUsername(user.getUsername());
+				adminentity.setPassword(user.getPassword());
+				adminentity.setRole(Role.ADMIN);
+				em.persist(adminentity);
+				//adminGuideFacade.createAdmin(adminentity);
+				//mail.sendEMail("acertarorumo@gmail.com", "Chosen as new user", "Your login is " + user.getUsername() + " and your password is " + password, to);
 				break;
 			case "ManagerEntity":
 				ManagerEntity manager = new ManagerEntity();
@@ -134,8 +136,10 @@ public class UserGuideFacade extends AbstractFacade<UserEntity> {
 				manager.setEmail(user.getEmail());
 				manager.setUsername(user.getUsername());
 				manager.setPassword(user.getPassword());
-				adminGuideFacade.createManager(manager);
-				mail.sendEMail("acertarorumoamj@gmail.com", "Chosen as new manager", "Your login is " + user.getUsername() + " and your password is " + password, to);
+				manager.setRole(Role.MANAGER);
+				em.persist(manager);
+				//adminGuideFacade.createManager(manager);
+				//mail.sendEMail("acertarorumo@gmail.com", "Chosen as new manager", "Your login is " + user.getUsername() + " and your password is " + password, to);
 
 				break;
 			default:
@@ -145,8 +149,10 @@ public class UserGuideFacade extends AbstractFacade<UserEntity> {
 				interviewer.setEmail(user.getEmail());
 				interviewer.setUsername(user.getUsername());
 				interviewer.setPassword(user.getPassword());
-				adminGuideFacade.createInterviewer(interviewer);
-				mail.sendEMail("acertarorumoamj@gmail.com", "Chosen as new interviewer", "Your login is " + user.getUsername() + " and your password is " + password, to);
+				interviewer.setRole(Role.INTERVIEWER);
+				em.persist(interviewer);
+				//adminGuideFacade.createInterviewer(interviewer);
+				//mail.sendEMail("acertarorumo@gmail.com", "Chosen as new interviewer", "Your login is " + user.getUsername() + " and your password is " + password, to);
 				break;
 			}
 		}
@@ -171,7 +177,7 @@ public class UserGuideFacade extends AbstractFacade<UserEntity> {
 			String passwordEncrypted = EncryptPassword.encrypt(password);
 			user.setPassword(passwordEncrypted);
 			edit(user);
-			mail.sendEMail("acertarorumoamj@gmail.com", "Edit user", "Your login is " + user.getUsername() + " and your password is " + password, user.getEmail());
+			//mail.sendEMail("acertarorumo@gmail.com", "Edit user", "Your login is " + user.getUsername() + " and your password is " + password, user.getEmail());
 		} else {
 			throw new EmailAlreadyExistsException();
 		}
@@ -216,11 +222,11 @@ public class UserGuideFacade extends AbstractFacade<UserEntity> {
 		this.em = em;
 	}
 
-	public AdminGuideFacade getAdminGuideFacade() {
+	public AdminFacade getAdminGuideFacade() {
 		return adminGuideFacade;
 	}
 
-	public void setAdminGuideFacade(AdminGuideFacade adminGuideFacade) {
+	public void setAdminGuideFacade(AdminFacade adminGuideFacade) {
 		this.adminGuideFacade = adminGuideFacade;
 	}
 

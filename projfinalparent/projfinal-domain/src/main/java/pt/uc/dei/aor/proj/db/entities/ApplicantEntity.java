@@ -19,10 +19,9 @@ import pt.uc.dei.aor.proj.db.tools.StatusApplicant;
 
 
 @Entity
-
-@Table(name = "applicant")
+@Table(name = "applicantentity")
 @XmlRootElement
-@DiscriminatorValue("applicant")
+@DiscriminatorValue("applicantentity")
 public class ApplicantEntity extends UserEntity implements Serializable {
 
 	@Column(name = "country")

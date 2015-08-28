@@ -11,9 +11,9 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "manager")
+@Table(name = "managerentity")
 @XmlRootElement
-@DiscriminatorValue("manager")
+@DiscriminatorValue("managerentity")
 public  class ManagerEntity extends UserEntity implements Serializable {
 
 	public ManagerEntity(){

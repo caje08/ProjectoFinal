@@ -25,7 +25,7 @@ import pt.uc.dei.aor.proj.db.exceptions.InvalidAuthException;
  * @author
  */
 @Stateless
-public class AdminGuideFacade extends AbstractFacade<AdminEntity> {
+public class AdminFacade extends AbstractFacade<AdminEntity> {
 
 	@PersistenceContext(unitName = "myPU")
 	private EntityManager em;
@@ -38,7 +38,7 @@ public class AdminGuideFacade extends AbstractFacade<AdminEntity> {
 		return em;
 	}
 
-	public AdminGuideFacade() {
+	public AdminFacade() {
 		super(AdminEntity.class);
 	}
 

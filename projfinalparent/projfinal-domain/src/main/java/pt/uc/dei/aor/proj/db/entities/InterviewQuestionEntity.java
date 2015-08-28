@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,10 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import pt.uc.dei.aor.proj.db.tools.AnswerType;
 
 @Entity
+@Table(name = "interviewquestionentity")
+@XmlRootElement
+@DiscriminatorValue("interviewquestionentity")
 @NamedQueries({
 	@NamedQuery(name = "InterviewQuestionEntity.findByInterviewGuideName", query = "SELECT iq FROM InterviewQuestionEntity iq WHERE iq.question = :interviewId "),
 	@NamedQuery(name = "InterviewQuestionEntity.findByInterview", query = "SELECT iq FROM InterviewQuestionEntity iq WHERE iq.interviewGuide.interviewId = :interviewId order by iq.questionNumber ASC")})

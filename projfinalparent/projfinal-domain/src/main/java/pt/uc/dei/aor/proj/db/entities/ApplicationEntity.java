@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,13 +16,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import pt.uc.dei.aor.proj.db.tools.RejectionMotive;
 import pt.uc.dei.aor.proj.db.tools.StatusApplication;
 
 @Entity
+@Table(name = "applicationentity")
+@XmlRootElement
+@DiscriminatorValue("applicationentity")
 @NamedQueries({
 
 	//    @NamedQuery(name = "ApplicationEntity.findBySpontaneousApplications", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = true and a.applicant.status!=pt.uc.dei.aor.proj.db.tools.StatusApplicant.REJECTED)"),

@@ -10,9 +10,9 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "interviewer")
+@Table(name = "interviewerentity")
 @XmlRootElement
-@DiscriminatorValue("interviewer")
+@DiscriminatorValue("interviewerentity")
 
 public class InterviewerEntity extends UserEntity implements Serializable {
 

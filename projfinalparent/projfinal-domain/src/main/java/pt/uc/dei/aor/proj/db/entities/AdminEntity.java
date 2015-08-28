@@ -10,9 +10,9 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "adminguide")
+@Table(name = "adminentity")
 @XmlRootElement
-@DiscriminatorValue("adminguide")
+@DiscriminatorValue("adminentity")
 public class AdminEntity extends UserEntity implements Serializable {
 
 	public AdminEntity() {

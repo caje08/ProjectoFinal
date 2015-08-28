@@ -4,16 +4,22 @@ import java.io.Serializable;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import pt.uc.dei.aor.proj.db.tools.AnswerType;
 
 @Entity
+@Table(name = "answerentity")
+@XmlRootElement
+@DiscriminatorValue("answerentity")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
 public class AnswerEntity implements Serializable {

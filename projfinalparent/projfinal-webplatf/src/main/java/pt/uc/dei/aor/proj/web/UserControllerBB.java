@@ -19,7 +19,7 @@ import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
-import pt.uc.dei.aor.proj.serv.facade.AdminGuideFacade;
+import pt.uc.dei.aor.proj.serv.facade.AdminFacade;
 import pt.uc.dei.aor.proj.serv.facade.UserGuideFacade;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.MaintainSession;
@@ -36,7 +36,7 @@ public class UserControllerBB {
 	@Inject
 	private UserData userData;
 	@Inject
-	private AdminGuideFacade adminGuideFacade;
+	private AdminFacade adminGuideFacade;
 	@Inject
 	private UserGuideFacade userGuideFacade;
 
@@ -143,11 +143,11 @@ public class UserControllerBB {
 		this.userData = userData;
 	}
 
-	public AdminGuideFacade getAdminGuideFacade() {
+	public AdminFacade getAdminGuideFacade() {
 		return adminGuideFacade;
 	}
 
-	public void setAdminGuideFacade(AdminGuideFacade adminGuideFacade) {
+	public void setAdminGuideFacade(AdminFacade adminGuideFacade) {
 		this.adminGuideFacade = adminGuideFacade;
 	}
 

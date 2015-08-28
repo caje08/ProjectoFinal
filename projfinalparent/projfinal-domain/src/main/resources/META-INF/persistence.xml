@@ -5,7 +5,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/postgresql</jta-data-source>
 
-		<class>pt.uc.dei.aor.proj.entities.UserEntity</class>
+		<class>pt.uc.dei.aor.proj.db.entities.UserEntity</class>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />

@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +15,17 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import pt.uc.dei.aor.proj.db.tools.InterviewType;
 
 @Entity
+@Table(name = "interviewentity")
+@XmlRootElement
+@DiscriminatorValue("interviewentity")
 @NamedQueries({
 	@NamedQuery(name = "InterviewEntity.findAll", query = "SELECT i FROM InterviewEntity i order by i asc"),
 	@NamedQuery(name = "InterviewEntity.findByName", query = "SELECT i FROM InterviewEntity i WHERE i.title = :title"),
