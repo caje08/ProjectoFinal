@@ -15,7 +15,7 @@
 		<h:commandButton action="#{login.populate}" value="submit" />
 	</h:form>
 	<h:dataTable value="#{login.getUsers()}" var="user">
-		<h:column>#{user.name}</h:column>
+		<h:column>#{user.username}</h:column>
 		<h:column>#{user.password}</h:column>
 		<h:column>#{user.email}</h:column>
 	</h:dataTable>

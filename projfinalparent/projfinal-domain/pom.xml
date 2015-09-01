@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>pt.uc.dei.aor.proj.carlos.catarina</groupId>
-	<artifactId>projfinalparent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+		<artifactId>projfinalparent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>projfinal-domain</artifactId>
-	<name>projfinal-domain</name>   
-   	<description>Entities</description>
+	<name>projfinal-domain</name>
+	<description>Entities</description>
 	<packaging>ejb</packaging>
 
 	<build>
@@ -42,7 +42,12 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.7</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.scribe</groupId>
+			<artifactId>scribe</artifactId>
+			<version>1.3.5</version>
+			<type>jar</type>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>

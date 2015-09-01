@@ -1,4 +1,4 @@
-package pt.uc.dei.aor.proj.facade;
+package pt.uc.dei.aor.proj.serv.facade;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
