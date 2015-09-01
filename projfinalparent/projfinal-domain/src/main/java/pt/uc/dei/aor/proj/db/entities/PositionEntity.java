@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -24,12 +25,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @DiscriminatorValue("positionentity")
 @NamedQueries({
 	@NamedQuery(name = "PositionEntity.findByVeracity", query = "SELECT p FROM PositionEntity p WHERE p.isPublic=true"),
-	@NamedQuery(name = "PositionEntity.findPhoneInterviewGuide", query = "SELECT p FROM PositionEntity p WHERE p.phoneInterviewGuide.interviewId = :interviewId"),
+	@NamedQuery(name = "PositionEntity.findPhoneInterviewEntity", query = "SELECT p FROM PositionEntity p WHERE p.phoneInterviewEntity.interviewId = :interviewId"),
 	@NamedQuery(name = "PositionEntity.findByManager", query = "SELECT p FROM PositionEntity p WHERE p.manager = :manager"),
 	@NamedQuery(name = "PositionEntity.findByManagerCanApply", query = "SELECT p FROM PositionEntity p WHERE p.manager = :manager AND p.isPublic=true AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate and p.vacancies>0 and p.status like 'Open'"),
 	@NamedQuery(name = "PositionEntity.findBeforeClosingDate", query = "SELECT p FROM PositionEntity p WHERE p.closingDate > :currentDate"),
 	@NamedQuery(name = "PositionEntity.findPublicBeforeClosingDate", query = "SELECT p FROM PositionEntity p WHERE p.isPublic=true AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate and p.vacancies>0 and p.status like 'Open'"),
-	@NamedQuery(name = "PositionEntity.findPresencialInterviewGuide", query = "SELECT p FROM PositionEntity p WHERE p.presencialInterviewGuide.interviewId = :interviewId"),
+	@NamedQuery(name = "PositionEntity.findPresencialInterviewEntity", query = "SELECT p FROM PositionEntity p WHERE p.presencialInterviewEntity.interviewId = :interviewId"),
 	//@NamedQuery(name = "PositionEntity.doNotApplied", query = "SELECT p FROM PositionEntity p WHERE p NOT IN (SELECT a.position FROM ApplicationEntity a WHERE a.applicant.userId=:applicantId and a.isSpontaneous=false) AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate  AND p.isPublic=true AND p.status like 'Open'"),
 	@NamedQuery(name = "PositionEntity.doNotApplied", query = "SELECT p FROM PositionEntity p WHERE p.title NOT IN (SELECT a.position FROM ApplicationEntity a WHERE a.applicant.userId=:applicantId and a.isSpontaneous=false) AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate  AND p.isPublic=true AND p.status like 'Open'"),
 	@NamedQuery(name = "PositionEntity.findByCode", query = "SELECT p FROM PositionEntity p WHERE p.positionCode = :positionCode")})
@@ -45,10 +46,10 @@ public class PositionEntity implements Serializable {
 	private ManagerEntity manager;
 
 	@ManyToOne(targetEntity = InterviewEntity.class)
-	private InterviewEntity phoneInterviewGuide;
+	private InterviewEntity phoneInterviewEntity;
 
 	@ManyToOne(targetEntity = InterviewEntity.class)
-	private InterviewEntity presencialInterviewGuide;
+	private InterviewEntity presencialInterviewEntity;
 
 	@Column(name = "positioncode")
 	@Id
@@ -88,8 +89,9 @@ public class PositionEntity implements Serializable {
 	@Basic
 	private String company;
 
-	@Column(name = "jobdescription", columnDefinition = "LONGTEXT")
+	@Column(name = "jobdescription")
 	@Basic
+	@Size(min = 1, max=10000)
 	private String jobDescription;
 
 	@Column(name = "publishingchannels")
@@ -119,20 +121,20 @@ public class PositionEntity implements Serializable {
 		this.manager = manager;
 	}
 
-	public InterviewEntity getPhoneInterviewGuide() {
-		return phoneInterviewGuide;
+	public InterviewEntity getPhoneInterviewEntity() {
+		return phoneInterviewEntity;
 	}
 
-	public void setPhoneInterviewGuide(InterviewEntity phoneInterviewGuide) {
-		this.phoneInterviewGuide = phoneInterviewGuide;
+	public void setPhoneInterviewEntity(InterviewEntity phoneInterviewEntity) {
+		this.phoneInterviewEntity = phoneInterviewEntity;
 	}
 
-	public InterviewEntity getPresencialInterviewGuide() {
-		return presencialInterviewGuide;
+	public InterviewEntity getPresencialInterviewEntity() {
+		return presencialInterviewEntity;
 	}
 
-	public void setPresencialInterviewGuide(InterviewEntity presencialInterviewGuide) {
-		this.presencialInterviewGuide = presencialInterviewGuide;
+	public void setPresencialInterviewEntity(InterviewEntity presencialInterviewEntity) {
+		this.presencialInterviewEntity = presencialInterviewEntity;
 	}
 
 	public Long getPositionCode() {

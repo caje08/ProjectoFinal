@@ -106,7 +106,7 @@ public class ApplicationEntity implements Serializable {
 	private ApplicantEntity applicant;
 
 	@OneToMany(targetEntity = InterviewFeedbackEntity.class)
-	private Collection<InterviewFeedbackEntity> interviewFeedbacks;
+	private Collection<InterviewFeedbackEntity> interviewFeedbackEntitys;
 
 	public ApplicationEntity() {
 	}
@@ -207,12 +207,12 @@ public class ApplicationEntity implements Serializable {
 		this.interviewer = interviewer;
 	}
 
-	public Collection<InterviewFeedbackEntity> getInterviewFeedbacks() {
-		return interviewFeedbacks;
+	public Collection<InterviewFeedbackEntity> getInterviewFeedbackEntitys() {
+		return interviewFeedbackEntitys;
 	}
 
-	public void setInterviewFeedbacks(Collection<InterviewFeedbackEntity> interviewFeedbacks) {
-		this.interviewFeedbacks = interviewFeedbacks;
+	public void setInterviewFeedbackEntitys(Collection<InterviewFeedbackEntity> interviewFeedbacks) {
+		this.interviewFeedbackEntitys = interviewFeedbacks;
 	}
 
 	@Override

@@ -1,66 +1,310 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../../template/platformtemplate.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	template="./../../template/platformtemplate.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 
-    <!--Top Content-->
+	<!--Top Content-->
 
-    <ui:define name="top">
-        <h:form>
-            <p:menubar >
-                <p:menuitem icon="ui-icon-home" action="/pages/admin/mainadmin.xhtml?faces-redirect=true" />
-                <p:submenu label="Welcome: #{activeSession.activeUser.username}" >
-                    <p:menuitem  value="Logout" action="#{loginMB.logout()}"  />
-                    <p:menuitem  value="Edit" action="/pages/admin/edituser.xhtml?faces-redirect=true"  />
-                </p:submenu>
-                <p:submenu label="Positions" style="padding-left:20px" >
-                    <p:menuitem value="Add Position" action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
-                    <p:menuitem value="Search All Positions" action="/pages/admin/searchpositions.xhtml?faces-redirect=true"/>
-                </p:submenu>  
+	<ui:define name="top">
+		<h:form>
+			<p:menubar>
+				<p:menuitem icon="ui-icon-home"
+					action="/pages/admin/mainadmin.xhtml?faces-redirect=true" />
+				<p:submenu label="Welcome: #{activeSession.activeUser.username}">
+					<p:menuitem value="Logout" action="#{loginMB.logout()}" />
+					<p:menuitem value="Edit"
+						action="/pages/admin/edituser.xhtml?faces-redirect=true" />
+				</p:submenu>
+				<p:submenu label="Positions" style="padding-left:20px">
+					<p:menuitem value="Add Position"
+						action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Search All Positions"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:submenu>
 
-                <p:menuitem value="Add new User" action="/pages/admin/addnewuser.xhtml?faces-redirect=true" style="padding-left:20px"/>
-                <p:submenu label="Applications" style="padding-left:20px">
-                    <p:menuitem value="Add Manual" action="/pages/admin/manualApply.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Non Spontaneous" action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Spontaneous" action="/pages/admin/spontaneousApplications.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Negotiation Process" action="/pages/admin/negotiation.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Offers" action="/pages/admin/lstOffers.xhtml?faces-redirect=true"/>
-                </p:submenu>
-                <p:menuitem value="Applicants" action="/pages/admin/applicants.xhtml?faces-redirect=true" style="padding-left:20px"/>
-                <p:submenu label="Reports" style="padding-left:20px">
-                    <p:menuitem value="Applicants per time period" action="/pages/admin/reportpertime.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Applicants per position" action="/pages/admin/reportperposition.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Spontaneous applications" action="/pages/admin/reportspontaneous.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Rejected Applicants" action="/pages/admin/reportrejected.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Interview outcome" action="/pages/admin/reportinterview.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Offers" action="/pages/admin/report.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Average time to first interview" action="/pages/admin/searchpositions.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Average time for hiring" action="/pages/admin/searchpositions.xhtml?faces-redirect=true"/>
-                </p:submenu>
-                <p:menuitem value="Interview guides" action="/pages/admin/guides.xhtml?faces-redirect=true" style="padding-left:20px"/>
-                <p:submenu label="Customize Styles" style="padding-left:20px">
-                    <p:menuitem value="Add new Style Configuration" action="/pages/admin/addcss.xhtml?faces-redirect=true" style="padding-left:20px"/>
-                    <p:menuitem value="All Css Styles" action="/pages/admin/css.xhtml?faces-redirect=true" style="padding-left:20px"/>
-                </p:submenu>
+				<p:menuitem value="Add new User"
+					action="/pages/admin/addnewuser.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:submenu label="Applications" style="padding-left:20px">
+					<p:menuitem value="Add Manual"
+						action="/pages/admin/manualApply.xhtml?faces-redirect=true" />
+					<p:menuitem value="Non Spontaneous"
+						action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous"
+						action="/pages/admin/spontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Negotiation Process"
+						action="/pages/admin/negotiation.xhtml?faces-redirect=true" />
+					<p:menuitem value="Offers"
+						action="/pages/admin/lstOffers.xhtml?faces-redirect=true" />
+				</p:submenu>
+				<p:menuitem value="Applicants"
+					action="/pages/admin/applicants.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:submenu label="Reports" style="padding-left:20px">
+					<p:menuitem value="Applicants per time period"
+						action="/pages/admin/reportpertime.xhtml?faces-redirect=true" />
+					<p:menuitem value="Applicants per position"
+						action="/pages/admin/reportperposition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous applications"
+						action="/pages/admin/reportspontaneous.xhtml?faces-redirect=true" />
+					<p:menuitem value="Rejected Applicants"
+						action="/pages/admin/reportrejected.xhtml?faces-redirect=true" />
+					<p:menuitem value="Interview outcome"
+						action="/pages/admin/reportinterview.xhtml?faces-redirect=true" />
+					<p:menuitem value="Offers"
+						action="/pages/admin/report.xhtml?faces-redirect=true" />
+					<p:menuitem value="Average time to first interview"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+					<p:menuitem value="Average time for hiring"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:submenu>
+				<p:menuitem value="Interview guides"
+					action="/pages/admin/guides.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:submenu label="Customize Styles" style="padding-left:20px">
+					<p:menuitem value="Add new Style Configuration"
+						action="/pages/admin/addcss.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+					<p:menuitem value="All Css Styles"
+						action="/pages/admin/css.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:submenu>
 
-            </p:menubar>
-            <div align="right">
-                <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
-            </div>
-        </h:form>
+			</p:menubar>
+			<div align="right">
+				<h:graphicImage library="images"
+					name="#{cssRequestBB.cssInUse.logoPath}" />
+			</div>
+		</h:form>
 
-    </ui:define>
-    <!--Main Content-->
+	</ui:define>
+	<!--Main Content-->
 
-   <!--  <ui:define name="content">
-        <h:form>    
-            <p:galleria value="#{imagesView.images}"
+	<ui:define name="content">
+	
+		<h:form id="form">
+             
+    <p:growl id="msgs" showDetail="true" />
+ 
+    <h3 style="margin-top:0">Basic</h3>
+    <p:tabView>
+        <p:tab title="Godfather Part I">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                <h:outputText
+                    value="The story begins as Don Vito Corleone..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Godfather Part II">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="Francis Ford Coppola's legendary..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Godfather Part III">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:panelGrid>
+        </p:tab>
+    </p:tabView>
+ 
+    <h3>On-Demand Loading</h3>
+    <p:tabView dynamic="true" cache="true">
+        <p:tab title="Godfather Part I">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                <h:outputText
+                    value="The story begins as Don Vito Corleone..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Godfather Part II">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="Francis Ford Coppola's legendary..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Godfather Part III">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:panelGrid>
+        </p:tab>
+    </p:tabView>
+ 
+    <h3>Change Event</h3>
+    <p:tabView>
+        <p:ajax event="tabChange" listener="#{tabbedView.onTabChange}" update=":form:msgs"/>
+        <p:ajax event="tabClose" listener="#{tabbedView.onTabClose}" update=":form:msgs"/>
+ 
+        <p:tab title="Godfather Part I">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                <h:outputText
+                    value="The story begins as Don Vito Corleone..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Godfather Part II" closable="true">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="Francis Ford Coppola's legendary..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Godfather Part III" closable="true">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:panelGrid>
+        </p:tab>
+    </p:tabView>
+ 
+    <h3>DataModel</h3>
+    <p:tabView value="#{tabbedView.cars}" var="car">
+        <p:tab title="Car - #{car.id}">
+            <h:panelGrid columns="2" cellpadding="5">
+                <f:facet name="header">
+                    <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" />
+                </f:facet>                    
+                <h:outputText value="Brand:" style="font-weight: bold"/>
+                <h:outputText value="#{car.brand}" />
+ 
+                <h:outputText value="Year:" style="font-weight: bold"/>
+                <h:outputText value="#{car.year}" />
+ 
+                <h:outputText value="Color:" style="font-weight: bold"/>
+                <h:outputText value="#{car.color}" />
+            </h:panelGrid>
+        </p:tab>
+    </p:tabView>
+ 
+    <h3>Scrollable</h3>
+    <p:tabView scrollable="true">
+        <p:tab title="Tab 1">Tab 1 Content</p:tab>
+        <p:tab title="Tab 2">Tab 2 Content</p:tab>
+        <p:tab title="Tab 3">Tab 3 Content</p:tab>
+        <p:tab title="Tab 4">Tab 4 Content</p:tab>
+        <p:tab title="Tab 5">Tab 5 Content</p:tab>
+        <p:tab title="Tab 6">Tab 6 Content</p:tab>
+        <p:tab title="Tab 7">Tab 7 Content</p:tab>
+        <p:tab title="Tab 8">Tab 8 Content</p:tab>
+        <p:tab title="Tab 9">Tab 9 Content</p:tab>
+        <p:tab title="Tab 10">Tab 10 Content</p:tab>
+        <p:tab title="Tab 11">Tab 11 Content</p:tab>
+        <p:tab title="Tab 12">Tab 12 Content</p:tab>
+        <p:tab title="Tab 13">Tab 13 Content</p:tab>
+        <p:tab title="Tab 14">Tab 14 Content</p:tab>
+        <p:tab title="Tab 15">Tab 15 Content</p:tab>
+        <p:tab title="Tab 16">Tab 16 Content</p:tab>
+        <p:tab title="Tab 17">Tab 17 Content</p:tab>
+        <p:tab title="Tab 18">Tab 18 Content</p:tab>
+        <p:tab title="Tab 19">Tab 19 Content</p:tab>
+        <p:tab title="Tab 20">Tab 20 Content</p:tab>
+        <p:tab title="Tab 21">Tab 21 Content</p:tab>
+        <p:tab title="Tab 22">Tab 22 Content</p:tab>
+        <p:tab title="Tab 23">Tab 23 Content</p:tab>
+        <p:tab title="Tab 24">Tab 24 Content</p:tab>
+        <p:tab title="Tab 25">Tab 25 Content</p:tab>                
+    </p:tabView>
+ 
+    <h3>Orientation - Top|Bottom|Left|Right</h3>
+    <p:tabView orientation="left">
+        <p:tab title="Godfather Part I">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                <h:outputText
+                    value="The story begins as Don Vito Corleone..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Godfather Part II">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="Francis Ford Coppola's legendary..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Godfather Part III">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:panelGrid>
+        </p:tab>
+    </p:tabView>
+</h:form>
+	
+		<!-- <h:form>
+
+			<p:tabView>
+				<p:tab title="Home Tab">
+					<p:menuitem value="Logout" outcome="#{loginMB.logout()}"></p:menuitem>
+					<p:menuitem value="Edit"
+						action="/pages/admin/edituser.xhtml?faces-redirect=true"></p:menuitem>
+				</p:tab>
+				<p:tab title="Positions">
+					<p:menuitem value="Add Position"
+						action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Search All Positions"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:tab>
+				<p:tab title="Applications">
+					<p:menuitem value="Add Manual"
+						action="/pages/admin/manualApply.xhtml?faces-redirect=true" />
+					<p:menuitem value="Non Spontaneous"
+						action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous"
+						action="/pages/admin/spontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Negotiation Process"
+						action="/pages/admin/negotiation.xhtml?faces-redirect=true" />
+					<p:menuitem value="Offers"
+						action="/pages/admin/lstOffers.xhtml?faces-redirect=true" />
+				</p:tab>
+				<p:tab title="Add New User">
+					<p:menuitem value="Add new User"
+						action="/pages/admin/addnewuser.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:tab>
+				<p:tab title="Applicants">
+					<p:menuitem value="Applicants"
+						action="/pages/admin/applicants.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:tab>
+				<p:tab title="Interviewes">
+					<p:menuitem value="Interview guides"
+						action="/pages/admin/guides.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:tab>
+				<p:tab title="Repports">
+					<p:menuitem value="Applicants per time period"
+						action="/pages/admin/reportpertime.xhtml?faces-redirect=true" />
+					<p:menuitem value="Applicants per position"
+						action="/pages/admin/reportperposition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous applications"
+						action="/pages/admin/reportspontaneous.xhtml?faces-redirect=true" />
+					<p:menuitem value="Rejected Applicants"
+						action="/pages/admin/reportrejected.xhtml?faces-redirect=true" />
+					<p:menuitem value="Interview outcome"
+						action="/pages/admin/reportinterview.xhtml?faces-redirect=true" />
+					<p:menuitem value="Offers"
+						action="/pages/admin/report.xhtml?faces-redirect=true" />
+					<p:menuitem value="Average time to first interview"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+					<p:menuitem value="Average time for hiring"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:tab>
+				<p:tab title="CSS Styles">
+					<p:menuitem value="Add new Style Configuration"
+						action="/pages/admin/addcss.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+					<p:menuitem value="All Css Styles"
+						action="/pages/admin/css.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:tab>
+			</p:tabView>
+			 <p:galleria value="#{imagesView.images}"
                         effect="slide" 
                         panelHeight="566" panelWidth="566"
                         var="image"
@@ -69,9 +313,26 @@
                                 alt="Image Description for #{image}" title="#{image}"/>
 
             </p:galleria>
-        </h:form>
-
-    </ui:define> -->
+		</h:form>
+		<h:form>
+			<p:tabMenu activeIndex="0">
+				<p:tab title="Home Tab">
+					<p:menuitem value="Logout" outcome="#{loginMB.logout()}"></p:menuitem>
+					<p:menuitem value="Edit"
+						action="/pages/admin/edituser.xhtml?faces-redirect=true"></p:menuitem>
+				</p:tab>
+				<p:menuitem value="Add new User"
+					outcome="/pages/admin/addnewuser.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:tab title="Positions">
+					<p:menuitem value="Add Position"
+						action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Search All Positions"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:tab>
+			</p:tabMenu>
+		</h:form> -->
+	</ui:define>
 
 </ui:composition>
 

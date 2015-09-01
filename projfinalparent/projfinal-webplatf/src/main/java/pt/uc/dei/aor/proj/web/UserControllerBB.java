@@ -23,7 +23,7 @@ import pt.uc.dei.aor.proj.serv.facade.AdminFacade;
 import pt.uc.dei.aor.proj.serv.facade.UserGuideFacade;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.MaintainSession;
-import pt.uc.dei.aor.proj.webplatf.userinfo.UserData;
+import pt.uc.dei.aor.proj.serv.tools.UserData;
 
 /**
  *

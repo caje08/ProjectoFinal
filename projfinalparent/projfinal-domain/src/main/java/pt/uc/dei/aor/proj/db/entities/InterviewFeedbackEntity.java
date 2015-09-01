@@ -70,7 +70,7 @@ public class InterviewFeedbackEntity implements Serializable {
 	private Outcome outcome;
 
 	@ManyToOne(targetEntity = InterviewEntity.class)
-	private InterviewEntity interviewGuide;
+	private InterviewEntity interviewEntity;
 
 	public InterviewFeedbackEntity() {
 	}
@@ -123,12 +123,12 @@ public class InterviewFeedbackEntity implements Serializable {
 		this.outcome = outcome;
 	}
 
-	public InterviewEntity getInterviewGuide() {
-		return interviewGuide;
+	public InterviewEntity getInterviewEntity() {
+		return interviewEntity;
 	}
 
-	public void setInterviewGuide(InterviewEntity interviewGuide) {
-		this.interviewGuide = interviewGuide;
+	public void setInterviewEntity(InterviewEntity interviewEntity) {
+		this.interviewEntity = interviewEntity;
 	}
 
 	public InterviewType getInterviewType() {

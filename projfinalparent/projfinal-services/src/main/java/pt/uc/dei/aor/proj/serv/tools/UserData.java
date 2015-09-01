@@ -1,7 +1,7 @@
 /*
  *
  */
-package pt.uc.dei.aor.proj.webplatf.userinfo;
+package pt.uc.dei.aor.proj.serv.tools;
 
 import java.io.Serializable;
 
