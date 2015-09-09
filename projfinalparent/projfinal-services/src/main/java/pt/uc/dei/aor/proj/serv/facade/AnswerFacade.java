@@ -5,8 +5,8 @@ package pt.uc.dei.aor.proj.serv.facade;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -29,9 +29,9 @@ public class AnswerFacade extends AbstractFacade<AnswerEntity> {
 	@PersistenceContext(unitName = "myPU")
 	private EntityManager em;
 
-	@Inject
+	@EJB
 	private ApplicationFacade applicationFacade;
-	@Inject
+	@EJB
 	private InterviewFeedbackFacade interviewFeedbackFacade;
 
 	@Override

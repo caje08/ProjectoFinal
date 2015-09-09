@@ -6,7 +6,6 @@ package pt.uc.dei.aor.proj.ejb;
  * and open the template in the editor.
  */
 
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -26,7 +25,7 @@ public class PasswordEJB {
 		if (null == password) {
 			return null;
 		}
-		MessageDigest digest;
+		
 		try {
 			// digest = MessageDigest.getInstance("SHA-1");
 			// digest.update(password.getBytes(), 0, password.length());

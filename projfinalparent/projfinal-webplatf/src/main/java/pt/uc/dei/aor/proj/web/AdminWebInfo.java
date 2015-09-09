@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.mail.MessagingException;
 
 import pt.uc.dei.aor.proj.db.entities.AdminEntity;
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
@@ -18,7 +19,7 @@ import pt.uc.dei.aor.proj.db.exceptions.EmailAlreadyExistsException;
 import pt.uc.dei.aor.proj.db.exceptions.InvalidAuthException;
 import pt.uc.dei.aor.proj.db.exceptions.UsernameAlreadyExists;
 import pt.uc.dei.aor.proj.serv.facade.AdminFacade;
-import pt.uc.dei.aor.proj.serv.facade.UserGuideFacade;
+import pt.uc.dei.aor.proj.serv.facade.UserEntityFacade;
 import pt.uc.dei.aor.proj.serv.tools.EncryptPassword;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 
@@ -28,7 +29,7 @@ import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
  */
 @Named(value = "adminRequestBean")
 @RequestScoped
-public class AdminRequestBB implements Serializable {
+public class AdminWebInfo implements Serializable {
 
 	private UserEntity user;
 	private AdminEntity admin;
@@ -36,15 +37,15 @@ public class AdminRequestBB implements Serializable {
 	private String userType;
 
 	@EJB
-	private AdminFacade adminGuideFacade;
+	private AdminFacade adminEntityFacade;
 
 	@EJB
-	private UserGuideFacade userGuideFacade;
+	private UserEntityFacade userEntityFacade;
 
 	//	@EJB
 	//	private GroupsFacade groupsFacade;
 
-	public AdminRequestBB() {
+	public AdminWebInfo() {
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class AdminRequestBB implements Serializable {
 	public void addingAdminUserToDB(){
 		//	public UserEntity(String firstName, String lastName, String password, String email, String username)
 		//	UserEntity	usertmp6 = new UserEntity("Admin", "SurnameAdmin","jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", "admin@admin",
-		System.out.println("Entrou em AdminRequestBB.addingAdminUserToDB()\n");
+		System.out.println("Entrou em AdminWebInfo.addingAdminUserToDB()\n");
 		createGroups();
 
 		//this.user = new UserEntity("Admin", "SurnameAdmin","admin", "admin@admin","admin@admin"); //pass admin
@@ -71,7 +72,7 @@ public class AdminRequestBB implements Serializable {
 		this.user.setUsername("admin@admin");
 		this.userType="Admin";
 		createNewUser();
-		//	System.out.println("Em AdminRequestBB.addingAdminUserToDB() -->Criou user "+user.getEmail());
+		//	System.out.println("Em AdminWebInfo.addingAdminUserToDB() -->Criou user "+user.getEmail());
 		//ManagerEntity usertmp4= new ManagerEntity("Carlos", "Santos", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", 1L, "carlos@gmail.com",
 		//this.user= new UserEntity("Carlos", "Santos", "123", "carlos@gmail.com", "carlos@gmail.com"); //pass 123
 		this.user= new UserEntity();
@@ -82,7 +83,7 @@ public class AdminRequestBB implements Serializable {
 		this.user.setUsername("carlos@gmail.com");
 		this.userType="Manager";
 		createNewUser();
-		//System.out.println("Em AdminRequestBB.addingAdminUserToDB() --> Criou user "+user.getEmail());
+		//System.out.println("Em AdminWebInfo.addingAdminUserToDB() --> Criou user "+user.getEmail());
 
 		//InterviewerEntity	usertmp5 = new InterviewerEntity("Catarina", "Lapo", "s6jg4fmrG/46NvIx9nb3i7MKUZ0rIebFMMDu6Ou0pdA=",2L, "ciclapo@gmail.com",
 		//this.user = new UserEntity("Catarina", "Lapo", "456", "ciclapo@gmail.com","ciclapo@gmail.com"); //pass 456
@@ -94,7 +95,7 @@ public class AdminRequestBB implements Serializable {
 		this.user.setUsername("ciclapo@gmail.com");
 		this.userType="Interviewer";
 		createNewUser();
-		//System.out.println("Em AdminRequestBB.addingAdminUserToDB() --> Criou user "+user.getEmail());
+		//System.out.println("Em AdminWebInfo.addingAdminUserToDB() --> Criou user "+user.getEmail());
 	}
 
 	/**
@@ -106,11 +107,11 @@ public class AdminRequestBB implements Serializable {
 		try {
 			//	groupsFacade.createInitialGroups();
 		} catch (Exception ex) {
-			Logger.getLogger(AdminRequestBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AdminWebInfo.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage("Error creating initial groups in user");
 		}
-		JSFUtil.addSuccessMessage("Initial groups were created in AdminRequestBB.createGroups()");
-		System.out.println("In AdminRequestBB.createGroups-->Initial groups were created in AdminRequestBB.createGroups()");
+		JSFUtil.addSuccessMessage("Initial groups were created in AdminWebInfo.createGroups()");
+		System.out.println("In AdminWebInfo.createGroups-->Initial groups were created in AdminWebInfo.createGroups()");
 	}
 
 	/**
@@ -120,15 +121,21 @@ public class AdminRequestBB implements Serializable {
 	public String createNewUser() {
 
 		try {
-			System.out.println("In AdminRequestBB.createNewuser() before creating newuser= "+user.getEmail());
-			userGuideFacade.createNewUser(user, userType);
-			System.out.println("Em AdminRequestBB.createNewuser() --> Criou user "+user.getEmail()+" userType= "+userType);
+			System.out.println("In AdminWebInfo.createNewuser() before creating newuser= "+user.getEmail());
+			try {
+				userEntityFacade.createNewUser(user, userType);
+			} catch (MessagingException e) {
+				Logger.getLogger(AdminWebInfo.class.getName()).log(Level.SEVERE, null, e);
+				JSFUtil.addErrorMessage(e.getMessage());
+				return null;
+			}
+			System.out.println("Em AdminWebInfo.createNewuser() --> Criou user "+user.getEmail()+" userType= "+userType);
 		} catch (UsernameAlreadyExists | EmailAlreadyExistsException ex) {
-			Logger.getLogger(AdminRequestBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AdminWebInfo.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 			return null;
 		} catch (InvalidAuthException | EJBException ex) {
-			Logger.getLogger(AdminRequestBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AdminWebInfo.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage("Error creating new user");
 		}
 		return "/pages/admin/succAddUser.xhtml?faces-redirect=true";
@@ -154,11 +161,11 @@ public class AdminRequestBB implements Serializable {
 	}
 
 	public AdminFacade getAdminGuideFacade() {
-		return adminGuideFacade;
+		return adminEntityFacade;
 	}
 
-	public void setAdminGuideFacade(AdminFacade adminGuideFacade) {
-		this.adminGuideFacade = adminGuideFacade;
+	public void setAdminGuideFacade(AdminFacade adminEntityFacade) {
+		this.adminEntityFacade = adminEntityFacade;
 	}
 
 	public EncryptPassword getEp() {

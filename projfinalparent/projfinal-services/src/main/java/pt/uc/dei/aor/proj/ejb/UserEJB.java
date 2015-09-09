@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.proj.ejb;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,12 +28,10 @@ public class UserEJB implements UserEJBLocal {
 	@PersistenceContext(name = "myPU")
 	private EntityManager em;
 
-<<<<<<< HEAD
+
 	private String datanasc;
 	// SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
 
-=======
->>>>>>> B2CS_testes
 	// Number of logged users
 	private static int userCount = 0;
 
@@ -47,8 +46,7 @@ public class UserEJB implements UserEJBLocal {
 	@Override
 	public void populate() {
 
-<<<<<<< HEAD
-		UserEntity usertmp1 = new UserEntity("Carlos",
+	/*	UserEntity usertmp1 = new UserEntity("Carlos",
 				"pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
 				"carlos@gmail.com", "1970/06/13", Role.MANAGER); // pass 123
 		System.out.println("Criou user " + usertmp1.getEmail()
@@ -69,14 +67,15 @@ public class UserEJB implements UserEJBLocal {
 		System.out.println("Criou user " + usertmp3.getEmail()
 				+ " e sizeRoles= " + usertmp3.getRoles().size());
 		usertmp3.setRoles(Role.ADMIN);
-		em.persist(usertmp3);
+		em.persist(usertmp3);*/
 		// datanasc = "1970/06/13";
 		// em.persist(new UserEntity("Carlos", "123", "carlosantos@gmail.com",
 		// datanasc));
-=======
+
 		UserEntity usertmp1= new ManagerEntity("Carlos", "Santos","pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "carlos@gmail.com",
 				"carlos@gmail.com"); //pass 123
 		usertmp1.setRole(Role.MANAGER);
+		usertmp1.setRoles(Role.INTERVIEWER);
 
 		em.persist(usertmp1);
 		System.out.println("Criou user "+usertmp1.getEmail()+" e sizeRoles= "+usertmp1.getRoles().size());
@@ -91,7 +90,8 @@ public class UserEJB implements UserEJBLocal {
 		UserEntity	usertmp3 = new AdminEntity("Admin","admin", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", "admin@admin",
 				"admin@admin");
 		usertmp3.setRole(Role.ADMIN); //pass admin
-		//	usertmp3.setRoles(Role.ADMIN);
+		usertmp3.setRoles(Role.MANAGER);
+		usertmp3.setRoles(Role.INTERVIEWER);
 		em.persist(usertmp3);
 		System.out.println("Criou user "+usertmp3.getEmail()+" e sizeRoles= "+usertmp3.getRoles().size());
 
@@ -113,7 +113,7 @@ public class UserEJB implements UserEJBLocal {
 		//		datanasc = "1970/06/13";
 		//		em.persist(new UserEntity("Carlos", "123", "carlosantos@gmail.com",
 		//				datanasc));
->>>>>>> B2CS_testes
+
 		//
 		// datanasc = "1985/10/21";
 		// em.persist(new UserEntity("Duarte", "456", "duarte@gmail.com",
@@ -158,6 +158,23 @@ public class UserEJB implements UserEJBLocal {
 			System.err.println("Single result not found: " + e);
 			return null;
 		}
+	}	
+	
+	@Override
+	public Collection<Role> getUserListOfRoles(String email){
+		UserEntity tmpuser;
+		Collection<Role> roles;
+		TypedQuery<UserEntity> q = em.createNamedQuery("UserEntity.findByEmail",
+				UserEntity.class);
+		q.setParameter("email", email);
+		try {
+			tmpuser = q.getSingleResult();
+		} catch (Exception e) {
+			System.err.println("Single result not found: " + e);
+			return null;
+		}
+		roles=tmpuser.getRoles();	
+		return roles;
 	}
 
 	@Override

@@ -51,6 +51,8 @@ public class LoginMB implements Serializable {
 
 	@EJB
 	private PasswordEJB pw;
+//	@EJB
+//	private EncryptPassword pw;
 	@Inject
 	private UserSession userSession;
 
@@ -69,10 +71,17 @@ public class LoginMB implements Serializable {
 	public PasswordEJB getPw() {
 		return pw;
 	}
+//	public EncryptPassword getPw() {
+//		return pw;
+//	}
 
 	public void setPw(PasswordEJB pw) {
 		this.pw = pw;
 	}
+	
+//	public void setPw(EncryptPassword pw) {
+//		this.pw = pw;
+//	}
 
 	public UserSession getuserSession() {
 		return userSession;
@@ -155,8 +164,8 @@ public class LoginMB implements Serializable {
 				logger.info("\nLogged_user profile= " + tmp.getRole());
 				System.out.println("\nLogged_user profile= " + tmp.getRole());
 				if (tmp.getRole().equals(Role.ADMIN)) {
-					logger.info("\nLoading main page = /pages/admin/index.xhtml?faces-redirect=true");
-					return "/pages/admin/index.xhtml?faces-redirect=true";
+					logger.info("\nLoading main page = /pages/admin/mainadmin.xhtml?faces-redirect=true");
+					return "/pages/admin/mainadmin.xhtml?faces-redirect=true";
 				} else if (tmp.getRole().equals(Role.INTERVIEWER)) {
 					logger.info("\nLoading main page = /pages/interviewer/index.xhtml?faces-redirect=true");
 					return "/pages/interviewer/index.xhtml?faces-redirect=true";
@@ -254,7 +263,7 @@ public class LoginMB implements Serializable {
 			webout = searchUser();
 		} catch (ServletException e) {
 
-			logger.error("Wrong Email = " + email + " and passwd combination");
+			logger.error("Wrong Email = " + email +","+password+ " and passwd combination");
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			return "/login";
 		}

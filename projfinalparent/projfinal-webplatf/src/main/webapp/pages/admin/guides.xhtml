@@ -8,7 +8,7 @@
           xmlns:ui="http://java.sun.com/jsf/facelets"
           xmlns:p="http://primefaces.org/ui">
         <body>
-            <ui:composition template="./oldmainadmin.xhtml"> 
+            <ui:composition template="./mainadmin.xhtml"> 
                 <ui:define name="content">
 
                     <p:growl/>
@@ -131,7 +131,7 @@
                             <p:commandButton rendered="#{guideWebManagem.couldAddQuestions()}" value="Add new Question" oncomplete="PF('question1').show();" update=":createQuestion"/>
 
                             <div align="left"> 
-                                <p:commandButton icon="ui-icon-arrowreturnthick-1-w" action="/faces/admin/guides.xhtml?faces-redirect=true"/>
+                                <p:commandButton icon="ui-icon-arrowreturnthick-1-w" action="/pages/admin/guides.xhtml?faces-redirect=true"/>
                             </div>
 
 

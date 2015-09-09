@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 	@NamedQuery(name = "UserEntity.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
 	@NamedQuery(name = "UserEntity.findByEmailPass", query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password"),
 	@NamedQuery(name = "UserEntity.findById", query = "SELECT u FROM UserEntity u WHERE u.userId = :userId"),
+	@NamedQuery(name = "UserEntity.findLstRolesByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
 	@NamedQuery(name = "ApplicantEntity.findByEmail", query = "SELECT a FROM ApplicantEntity a WHERE a.email = :email")})
 
 
@@ -179,6 +180,10 @@ public class UserEntity implements Serializable {
 
 	public void setRoles(Role cargo) {
 		this.roles.add(cargo);
+	}
+	
+	public void setRoles(Collection<Role> cargos) {
+		this.roles=cargos;
 	}
 
 	@Override

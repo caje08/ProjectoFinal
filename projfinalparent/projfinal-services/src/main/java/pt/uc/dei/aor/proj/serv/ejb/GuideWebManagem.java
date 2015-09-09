@@ -79,7 +79,8 @@ public class GuideWebManagem implements Serializable {
 		try {
 			interviewEntityFacade.createGuide(guideName, guideType);
 		} catch (InterviewEntityNameException ex) {
-			Logger.getLogger(GuideWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(GuideWebManagem.class.getName()).log(Level.SEVERE,
+					null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 	}
@@ -101,8 +102,8 @@ public class GuideWebManagem implements Serializable {
 	 */
 	public void removeGuide() {
 		interviewEntityFacade.remove(selectedInterviewEntity);
-		FacesContext.getCurrentInstance()
-		.addMessage(null, new FacesMessage("Interview Guide removed with sucess"));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage("Interview Guide removed with sucess"));
 
 	}
 
@@ -112,7 +113,10 @@ public class GuideWebManagem implements Serializable {
 	 * @return true if is possible to remove a Interview Guide
 	 */
 	public boolean isPossibleToRemoveGuide(InterviewEntity interviewGuide) {
-		return positionFacade.getInterviewEntity(interviewGuide.getInterviewId()).isEmpty() && positionFacade.getPresentialInterviewEntity(interviewGuide.getInterviewId()).isEmpty();
+		return positionFacade.getInterviewEntity(
+				interviewGuide.getInterviewId()).isEmpty()
+				&& positionFacade.getPresentialInterviewEntity(
+						interviewGuide.getInterviewId()).isEmpty();
 
 	}
 
@@ -127,9 +131,12 @@ public class GuideWebManagem implements Serializable {
 			lstInterviewQuestionEntity.get(i).setQuestionNumber(i + 1);
 			interviewQuestionFacade.edit(lstInterviewQuestionEntity.get(i));
 		}
-		lstInterviewQuestionEntity = interviewQuestionFacade.getInterviewQuestionEntityByInterview(selectedInterviewEntity.getInterviewId());
+		lstInterviewQuestionEntity = interviewQuestionFacade
+				.getInterviewQuestionEntityByInterview(selectedInterviewEntity
+						.getInterviewId());
 
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row Moved with succes", null);
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Row Moved with succes", null);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 	}
@@ -137,10 +144,11 @@ public class GuideWebManagem implements Serializable {
 	/**
 	 *
 	 * @return true if is possible to add more questions of a selected interview
-	 * guide
+	 *         guide
 	 */
 	public boolean couldAddQuestions() {
-		return positionFacade.getInterviewEntity(selectedInterviewEntity.getInterviewId()).isEmpty();
+		return positionFacade.getInterviewEntity(
+				selectedInterviewEntity.getInterviewId()).isEmpty();
 
 	}
 
@@ -149,13 +157,21 @@ public class GuideWebManagem implements Serializable {
 	 */
 	public void createQuestionsForGuide() {
 		try {
-			InterviewQuestionEntity interviewQuestion = interviewQuestionFacade.createQuestionForGuide(questionName, selectedInterviewEntity, answerType);
-			lstInterviewQuestionEntity = interviewQuestionFacade.getInterviewQuestionEntityByInterview(selectedInterviewEntity.getInterviewId());
-			interviewEntityFacade.mergeQuestionsInGuide(selectedInterviewEntity, interviewQuestion);
+			InterviewQuestionEntity interviewQuestion = interviewQuestionFacade
+					.createQuestionForGuide(questionName,
+							selectedInterviewEntity, answerType);
+			lstInterviewQuestionEntity = interviewQuestionFacade
+					.getInterviewQuestionEntityByInterview(selectedInterviewEntity
+							.getInterviewId());
+			interviewEntityFacade.mergeQuestionsInGuide(
+					selectedInterviewEntity, interviewQuestion);
 		} catch (EJBException ex) {
-			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InterviewQuestionNameAlreadyExistsException | MustIntroduceInterviewQuestionException ex) {
-			Logger.getLogger(GuideWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} catch (InterviewQuestionNameAlreadyExistsException
+				| MustIntroduceInterviewQuestionException ex) {
+			Logger.getLogger(GuideWebManagem.class.getName()).log(Level.SEVERE,
+					null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 	}
@@ -165,12 +181,16 @@ public class GuideWebManagem implements Serializable {
 	 */
 	public void editQuestion() {
 		try {
-			interviewQuestionFacade.editInterviewQuestionEntity(selectedInterviewQuestionEntity);
-		} catch (InterviewQuestionNameAlreadyExistsException | MustIntroduceInterviewQuestionException ex) {
-			Logger.getLogger(GuideWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			interviewQuestionFacade
+					.editInterviewQuestionEntity(selectedInterviewQuestionEntity);
+		} catch (InterviewQuestionNameAlreadyExistsException
+				| MustIntroduceInterviewQuestionException ex) {
+			Logger.getLogger(GuideWebManagem.class.getName()).log(Level.SEVERE,
+					null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
-			lstInterviewQuestionEntity = interviewQuestionFacade.
-					getInterviewQuestionEntityByInterview(selectedInterviewEntity.getInterviewId());
+			lstInterviewQuestionEntity = interviewQuestionFacade
+					.getInterviewQuestionEntityByInterview(selectedInterviewEntity
+							.getInterviewId());
 		}
 	}
 
@@ -179,7 +199,7 @@ public class GuideWebManagem implements Serializable {
 	 */
 	public void showSecondPanel() {
 		panelGroup.setRendered(false);
-		//Initalizes to false
+		// Initalizes to false
 		panelInterviewQuestions.setRendered(true);
 	}
 
@@ -189,13 +209,14 @@ public class GuideWebManagem implements Serializable {
 	 */
 	public void showPanel(InterviewEntity interviewGuide) {
 		selectedInterviewEntity = interviewGuide;
-		lstInterviewQuestionEntity = interviewQuestionFacade.
-				getInterviewQuestionEntityByInterview(selectedInterviewEntity.getInterviewId());
+		lstInterviewQuestionEntity = interviewQuestionFacade
+				.getInterviewQuestionEntityByInterview(selectedInterviewEntity
+						.getInterviewId());
 		panelGroup.setRendered(true);
 		panelInterviewQuestions.setRendered(false);
 	}
 
-	/////////////////////Getters && Setters////////////////////
+	// ///////////////////Getters && Setters////////////////////
 
 	public List<InterviewEntity> getLstInterviews() {
 		return interviewEntityFacade.findAll();
@@ -217,7 +238,8 @@ public class GuideWebManagem implements Serializable {
 		return selectedInterviewEntity;
 	}
 
-	public void setSelectedInterviewEntity(InterviewEntity selectedInterviewEntity) {
+	public void setSelectedInterviewEntity(
+			InterviewEntity selectedInterviewEntity) {
 		this.selectedInterviewEntity = selectedInterviewEntity;
 	}
 
@@ -249,7 +271,8 @@ public class GuideWebManagem implements Serializable {
 		return interviewEntityFacade;
 	}
 
-	public void setInterviewEntityFacade(InterviewEntityFacade interviewEntityFacade) {
+	public void setInterviewEntityFacade(
+			InterviewEntityFacade interviewEntityFacade) {
 		this.interviewEntityFacade = interviewEntityFacade;
 	}
 
@@ -257,7 +280,8 @@ public class GuideWebManagem implements Serializable {
 		return interviewQuestionFacade;
 	}
 
-	public void setInterviewQuestionFacade(InterviewQuestionFacade interviewQuestionFacade) {
+	public void setInterviewQuestionFacade(
+			InterviewQuestionFacade interviewQuestionFacade) {
 		this.interviewQuestionFacade = interviewQuestionFacade;
 	}
 
@@ -297,7 +321,8 @@ public class GuideWebManagem implements Serializable {
 		return lstInterviewQuestionEntity;
 	}
 
-	public void setLstInterviewQuestionEntity(List<InterviewQuestionEntity> lstInterviewQuestionEntity) {
+	public void setLstInterviewQuestionEntity(
+			List<InterviewQuestionEntity> lstInterviewQuestionEntity) {
 		this.lstInterviewQuestionEntity = lstInterviewQuestionEntity;
 	}
 
@@ -305,7 +330,8 @@ public class GuideWebManagem implements Serializable {
 		return selectedInterviewQuestionEntity;
 	}
 
-	public void setSelectedInterviewQuestionEntity(InterviewQuestionEntity selectedInterviewQuestionEntity) {
+	public void setSelectedInterviewQuestionEntity(
+			InterviewQuestionEntity selectedInterviewQuestionEntity) {
 		this.selectedInterviewQuestionEntity = selectedInterviewQuestionEntity;
 	}
 

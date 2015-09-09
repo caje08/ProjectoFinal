@@ -74,7 +74,7 @@ public class PositionWebManagem implements Serializable {
 
 	//	@Inject
 	private UserData userData;
-	//	@Inject
+	@EJB
 	private StatefulPosition statefulPosition;
 	@EJB
 	private InterviewEntityFacade interviewGuideFacade;
@@ -202,14 +202,17 @@ public class PositionWebManagem implements Serializable {
 	 */
 	public String createApplication() {
 		try {
+			System.out.println("\nInside PositionWebManagem.createApplication() and before applicationFacade.createApplicationOfNewApplicant() where position title="+statefulPosition.getPosition());
 			applicationFacade.createApplicationOfNewApplicant(applicant, application, uploadedFiles.getCvUploadName(), uploadedFiles.getClUploadName(), statefulPosition.getPosition());
 		} catch (InvalidAuthException | EmailAlreadyExistsException | NumberOfMobilePhoneDigitsException | DoNotUploadCVFileException | DoNotUploadCoverLetterException ex) {
 			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
+			System.out.println("\nInside PositionWebManagem.createApplication() and before returning null\n");
 			return null;
 		} catch (EJBException | EmailAndPasswordNotCorrespondingToLinkedinCredentialsException ex) {
 			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		System.out.println("\nInside PositionWebManagem.createApplication() and before returning to 'nonSpontaneousApplications.xhtml?faces-redirect=true'\n");
 		return "nonSpontaneousApplications.xhtml?faces-redirect=true";
 	}
 
@@ -347,15 +350,15 @@ public class PositionWebManagem implements Serializable {
 	}
 
 	public void setTheSelectedManager() {
-		position.setManager(selectedManager);
+		selectedPosition.setManager(selectedManager);		
 	}
 
 	public void setTheSelectedPhoneGuideInterview() {
-		position.setPhoneInterviewEntity(selectedInterviewGuide);
+		selectedPosition.setPhoneInterviewEntity(selectedInterviewGuide);
 	}
 
 	public void setTheSelectedPresentialGuideInterview() {
-		position.setPresencialInterviewEntity(selectedInterviewGuide);
+		selectedPosition.setPresencialInterviewEntity(selectedInterviewGuide);
 	}
 
 	public List<InterviewEntity> getLstInterviews() {

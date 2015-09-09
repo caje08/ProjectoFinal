@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<title>Facelets Hello World</title>
+	<title>Populate DB</title>
 </h:head>
 <h:body>
 	<h1> ProjFinal Users DB creation!</h1>
@@ -14,12 +14,32 @@
 	<h:form>
 		<h:commandButton action="#{login.populate}" value="submit" />
 	</h:form>
+	<p></p>
+	<h3> Tabela de Utilizadores na BD</h3>
+	<p></p>
 	<h:dataTable value="#{login.getUsers()}" var="user">
 		<h:column>#{user.username}</h:column>
 		<h:column>#{user.password}</h:column>
 		<h:column>#{user.email}</h:column>
 	</h:dataTable>
-
+	<p></p>
+	<h3> Tabela de Posições Abertas na BD</h3>
+	<p></p>
+	<h:dataTable value="#{positionWebManagem.lstPositions}" var="position">
+		<h:column>#{position.title}</h:column>
+		<h:column>#{position.positionCode}</h:column>
+		<h:column>#{position.openingDate}</h:column>
+		<h:column>#{position.closingDate}</h:column>
+	</h:dataTable>
+	<p></p>
+	<h3> Tabela de Posições Abertas antes da data actual na BD</h3>
+	<p></p>
+	<h:dataTable value="#{positionWebManagem.lstPositionsBeforeAtualDate}" var="postoapp">
+		<h:column>#{postoapp.positionCode}</h:column>
+		<h:column>#{postoapp.title}</h:column>
+		<h:column>#{postoapp.openingDate}</h:column>
+		<h:column>#{postoapp.closingDate}</h:column>
+	</h:dataTable>
 	
 </h:body>
 </html>

@@ -10,10 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.component.UIPanel;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import javax.persistence.NoResultException;
@@ -74,19 +74,19 @@ public class ApplicationWebManagem implements Serializable {
 	private Date interviewDate;
 	private UploadedFiles uploadedFiles;
 
-	@Inject
+	@EJB
 	private AnswerFacade answerFacade;
-	@Inject
+	@EJB
 	private InterviewEntityFacade interviewGuideFacade;
-	@Inject
+	@EJB
 	private InterviewFeedbackFacade interviewFeedbackFacade;
-	@Inject
+	@EJB
 	private ApplicationFacade applicationFacade;
-	@Inject
+	@EJB
 	private StatefulApplication statefulApplication;
-	@Inject
+	@EJB
 	private InterviewerFacade interviewerFacade;
-	@Inject
+	@EJB
 	private UserData userData;
 
 	/**
@@ -134,6 +134,7 @@ public class ApplicationWebManagem implements Serializable {
 	 */
 	public void createNewInterview() {
 		if (interviewFeedbackFacade.numberOfInterviews(statefulApplication.getApplication().getApplicationId()) == 0) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO, "Inside createNewInterview() with numberOfInterviews=0");
 			try {
 				interviewFeedbackFacade.createInterview(interviewDate, selectedInterviewer, statefulApplication.getApplication().getPosition().getPhoneInterviewEntity(), statefulApplication.getApplication(), uploadedFiles.getCVDESTINATION());
 			} catch (FirstInterviewAfterAtualDateException | InterviewerSameDateException | SecondInterviewAfterFirstInterviewException ex) {
@@ -148,6 +149,7 @@ public class ApplicationWebManagem implements Serializable {
 
 		} else {
 			try {
+				Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO, "Inside createNewInterview() with numberOfInterviews!=0");
 				interviewFeedbackFacade.createInterview(interviewDate, selectedInterviewer, (statefulApplication.getApplication().getPosition()).getPresencialInterviewEntity(), statefulApplication.getApplication(), uploadedFiles.getCVDESTINATION());
 			} catch (FirstInterviewAfterAtualDateException | InterviewerSameDateException | SecondInterviewAfterFirstInterviewException ex) {
 				Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
@@ -320,7 +322,9 @@ public class ApplicationWebManagem implements Serializable {
 	 */
 	public boolean canSubmitFeedback(InterviewFeedbackEntity interviewFeedback) {
 		//if the select interview has the same interviewer as the logged user and don ´t have any feedback the interviewer logged user can submit feedback
+		if(interviewFeedback!=null){
 		try {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO, "Inside canSubmitFeedback() interviewFeedback="+interviewFeedback.getInterviewType());
 			return interviewFeedbackFacade.knowIfIsTheCurrentInterviewer((InterviewerEntity) userData.getLoggedUser()) && !feedbackGiven(interviewFeedback);
 		} catch (NoResultException
 				| pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException
@@ -329,6 +333,9 @@ public class ApplicationWebManagem implements Serializable {
 			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return false;
+		} else {
+			return false;
+		}
 
 	}
 

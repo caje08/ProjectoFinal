@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="./../../template/platformtemplate.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+	<!--Top Content-->
+
+	<ui:define name="top">
+		<h:form>
+			<p:menubar>
+				<p:menuitem icon="ui-icon-home"
+					action="/pages/admin/mainadmin.xhtml?faces-redirect=true" />
+				<p:submenu label="Welcome: #{activeSession.activeUser.username}">
+					<p:menuitem value="Logout" action="#{loginMB.logout()}" />
+					<p:menuitem value="Edit"
+						action="/pages/admin/edituser.xhtml?faces-redirect=true" />
+				</p:submenu>
+				<p:submenu label="Positions" style="padding-left:20px">
+					<p:menuitem value="Add Position"
+						action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Search All Positions"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:submenu>
+
+				<p:menuitem value="Add new User"
+					action="/pages/admin/addnewuser.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:submenu label="Applications" style="padding-left:20px">
+					<p:menuitem value="Add Manual"
+						action="/pages/admin/manualApply.xhtml?faces-redirect=true" />
+					<p:menuitem value="Non Spontaneous"
+						action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous"
+						action="/pages/admin/spontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Negotiation Process"
+						action="/pages/admin/negotiation.xhtml?faces-redirect=true" />
+					<p:menuitem value="Offers"
+						action="/pages/admin/lstOffers.xhtml?faces-redirect=true" />
+				</p:submenu>
+				<p:menuitem value="Applicants"
+					action="/pages/admin/applicants.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:submenu label="Reports" style="padding-left:20px">
+					<p:menuitem value="Applicants per time period"
+						action="/pages/admin/reportpertime.xhtml?faces-redirect=true" />
+					<p:menuitem value="Applicants per position"
+						action="/pages/admin/reportperposition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous applications"
+						action="/pages/admin/reportspontaneous.xhtml?faces-redirect=true" />
+					<p:menuitem value="Rejected Applicants"
+						action="/pages/admin/reportrejected.xhtml?faces-redirect=true" />
+					<p:menuitem value="Interview outcome"
+						action="/pages/admin/reportinterview.xhtml?faces-redirect=true" />
+					<p:menuitem value="Offers"
+						action="/pages/admin/report.xhtml?faces-redirect=true" />
+					<p:menuitem value="Average time to first interview"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+					<p:menuitem value="Average time for hiring"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:submenu>
+				<p:menuitem value="Interview guides"
+					action="/pages/admin/guides.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:submenu label="Customize Styles" style="padding-left:20px">
+					<p:menuitem value="Add new Style Configuration"
+						action="/pages/admin/addcss.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+					<p:menuitem value="All Css Styles"
+						action="/pages/admin/css.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:submenu>
+
+			</p:menubar>
+			<div align="right">
+				<h:graphicImage library="images"
+					name="#{cssRequestBB.cssInUse.logoPath}" />
+			</div>
+		</h:form>
+
+	</ui:define>
+	<!--Main Content-->
+
+	<ui:define name="content">
+
+		<h:form id="form">
+
+			<p:growl id="msgs" showDetail="true" />
+
+			<h3>Welcome: #{activeSession.activeUser.username}</h3>
+			<p:tabView dynamic="true" cache="true">
+				
+				<p:tab title="Positions">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+						<h:outputText value="Francis Ford Coppola's legendary..." />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="CV Applications">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+						<h:outputText value="After a break of more than 15 years..." />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Add New User">
+
+					<h:panelGrid columns="2">
+						<p:outputLabel value="First Name*" />
+						<p:inputText id="newfirstname" required="true" label="firstname"
+							size="40" requiredMessage="Please enter your First Name"
+							value="#{userViewBB.firstName}">
+						</p:inputText>
+						<p:watermark for="firstname" value="First Name" />
+						<p:message for="firstname" />
+
+
+						<p:outputLabel value="Last Name*" />
+						<p:inputText id="lastname" required="true" label="lastname"
+							size="40" requiredMessage="Please enter your last name."
+							value="#{adminRequestBean.user.lastName}">
+						</p:inputText>
+						<p:watermark for="lastname" value="Last Name" />
+						<p:message for="lastname" />
+
+						<p:outputLabel value="Email*" />
+						<p:inputText id="email" required="true" label="email" size="40"
+							requiredMessage="Please enter your email."
+							value="#{adminRequestBean.user.email}">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
+						<p:watermark for="email" value="Email " />
+						<p:message for="email" />
+
+						<p:outputLabel value="Username*" />
+						<p:inputText id="username" required="true" label="username"
+							size="40" requiredMessage="Please enter your username."
+							value="#{adminRequestBean.user.username}">
+						</p:inputText>
+						<p:watermark for="username" value="Username " />
+						<p:message for="username" />
+
+						<p:outputLabel value="Password*" />
+						<p:password id="password" required="true" label="password"
+							size="40" requiredMessage="Please enter your password."
+							match="confirmPassword" value="#{adminRequestBean.user.password}"
+							maxlength="20">
+						</p:password>
+						<p:watermark for="password" value="Password" />
+						<p:message for="password" />
+
+						<p:outputLabel value="Confirm Password*" />
+						<p:password id="confirmPassword" required="true" size="40"
+							requiredMessage="Please confirm your password."
+							label="confirmPassword" value="#{adminRequestBean.user.password}"
+							maxlength="20">
+						</p:password>
+						<p:watermark for="confirmPassword" value="Type Password Again" />
+						<p:message for="confirmPassword" />
+
+					</h:panelGrid>
+
+
+					<p:selectOneMenu id="userType" value="#{adminRequestBean.userType}">
+						<f:selectItem itemLabel="Admin" itemValue="Admin" />
+						<f:selectItem itemLabel="Manager" itemValue="Manager" />
+						<f:selectItem itemLabel="Interviewer" itemValue="Interviewer" />
+					</p:selectOneMenu>
+
+					<h:outputText></h:outputText>
+
+					<h:commandButton value="Add"
+						style="width:100px; height:45px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+						action="#{adminRequestBean.createNewUser()}" />
+
+
+				</p:tab>
+			</p:tabView>
+			
+
+			<h3>DataModel</h3>
+			<p:tabView value="#{tabbedView.cars}" var="car">
+				<p:tab title="Car - #{car.id}">
+					<h:panelGrid columns="2" cellpadding="5">
+						<f:facet name="header">
+							<p:graphicImage name="demo/images/car/#{car.brand}-big.gif" />
+						</f:facet>
+						<h:outputText value="Brand:" style="font-weight: bold" />
+						<h:outputText value="#{car.brand}" />
+
+						<h:outputText value="Year:" style="font-weight: bold" />
+						<h:outputText value="#{car.year}" />
+
+						<h:outputText value="Color:" style="font-weight: bold" />
+						<h:outputText value="#{car.color}" />
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+
+			<h3>Orientation - Top|Bottom|Left|Right</h3>
+			<p:tabView orientation="left">
+				<p:tab title="Godfather Part I">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+						<h:outputText value="The story begins as Don Vito Corleone..." />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Godfather Part II">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+						<h:outputText value="Francis Ford Coppola's legendary..." />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Godfather Part III">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+						<h:outputText value="After a break of more than 15 years..." />
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+
+		<!-- <h:form>
+
+			<p:tabView>
+				<p:tab title="Home Tab">
+					<p:menuitem value="Logout" outcome="#{loginMB.logout()}"></p:menuitem>
+					<p:menuitem value="Edit"
+						action="/pages/admin/edituser.xhtml?faces-redirect=true"></p:menuitem>
+				</p:tab>
+				<p:tab title="Positions">
+					<p:menuitem value="Add Position"
+						action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Search All Positions"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:tab>
+				<p:tab title="Applications">
+					<p:menuitem value="Add Manual"
+						action="/pages/admin/manualApply.xhtml?faces-redirect=true" />
+					<p:menuitem value="Non Spontaneous"
+						action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous"
+						action="/pages/admin/spontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Negotiation Process"
+						action="/pages/admin/negotiation.xhtml?faces-redirect=true" />
+					<p:menuitem value="Offers"
+						action="/pages/admin/lstOffers.xhtml?faces-redirect=true" />
+				</p:tab>
+				<p:tab title="Add New User">
+					<p:menuitem value="Add new User"
+						action="/pages/admin/addnewuser.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:tab>
+				<p:tab title="Applicants">
+					<p:menuitem value="Applicants"
+						action="/pages/admin/applicants.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:tab>
+				<p:tab title="Interviewes">
+					<p:menuitem value="Interview guides"
+						action="/pages/admin/guides.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:tab>
+				<p:tab title="Repports">
+					<p:menuitem value="Applicants per time period"
+						action="/pages/admin/reportpertime.xhtml?faces-redirect=true" />
+					<p:menuitem value="Applicants per position"
+						action="/pages/admin/reportperposition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous applications"
+						action="/pages/admin/reportspontaneous.xhtml?faces-redirect=true" />
+					<p:menuitem value="Rejected Applicants"
+						action="/pages/admin/reportrejected.xhtml?faces-redirect=true" />
+					<p:menuitem value="Interview outcome"
+						action="/pages/admin/reportinterview.xhtml?faces-redirect=true" />
+					<p:menuitem value="Offers"
+						action="/pages/admin/report.xhtml?faces-redirect=true" />
+					<p:menuitem value="Average time to first interview"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+					<p:menuitem value="Average time for hiring"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:tab>
+				<p:tab title="CSS Styles">
+					<p:menuitem value="Add new Style Configuration"
+						action="/pages/admin/addcss.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+					<p:menuitem value="All Css Styles"
+						action="/pages/admin/css.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+				</p:tab>
+			</p:tabView>
+			 <p:galleria value="#{imagesView.images}"
+                        effect="slide" 
+                        panelHeight="566" panelWidth="566"
+                        var="image"
+                        >
+                <p:graphicImage value="../resources/images/#{image}" cache="false" 
+                                alt="Image Description for #{image}" title="#{image}"/>
+
+            </p:galleria>
+		</h:form>
+		<h:form>
+			<p:tabMenu activeIndex="0">
+				<p:tab title="Home Tab">
+					<p:menuitem value="Logout" outcome="#{loginMB.logout()}"></p:menuitem>
+					<p:menuitem value="Edit"
+						action="/pages/admin/edituser.xhtml?faces-redirect=true"></p:menuitem>
+				</p:tab>
+				<p:menuitem value="Add new User"
+					outcome="/pages/admin/addnewuser.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:tab title="Positions">
+					<p:menuitem value="Add Position"
+						action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
+					<p:menuitem value="Search All Positions"
+						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
+				</p:tab>
+			</p:tabMenu>
+		</h:form> -->
+	</ui:define>
+
+</ui:composition>
+
+
+

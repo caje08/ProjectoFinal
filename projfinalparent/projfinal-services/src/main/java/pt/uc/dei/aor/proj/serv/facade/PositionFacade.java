@@ -35,7 +35,7 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 	@PersistenceContext(unitName = "myPU")
 	private EntityManager em;
 
-	//@Inject
+	@EJB
 	private SendEmail mail;
 	@EJB
 	private ApplicationFacade applicationFacade;
@@ -115,7 +115,7 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 					position.setSla(sla);
 					create(position);
 					//send email to new manager
-					//	mail.sendEMail("acertarorumo@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "PositionEntity " +position.getTitle()+" was created.", to);
+					//	mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "PositionEntity " +position.getTitle()+" was created.", to);
 
 				} else if (position.getManager() == null) {
 					throw new ManagerNotIntroducedException();
@@ -146,7 +146,7 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 			if (position.getManager() != null && position.getPhoneInterviewEntity() != null && position.getPresencialInterviewEntity() != null) {
 				edit(position);
 				//send email to new manager
-				mail.sendEMail("acertarorumoamj@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "The positon " +position.getTitle()+" was edited", to);
+				mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "The positon " +position.getTitle()+" was edited", to);
 			}
 		} else if (position.getManager() == null) {
 			throw new ManagerNotIntroducedException();
@@ -165,8 +165,44 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 	 * @return List of position where closing date is after atual date
 	 */
 	public List<PositionEntity> lstPositionAtualDateBeforeClosingDate(Date currentDate) {
+		/*Date today=new Date();
+		Date strToDate = null;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String DateToStr = format.format(today);
+		System.out.println("\nToday's date="+today);
+		String data="2015-09-04";
+		System.out.println(" 2. " + DateFormat.getInstance().format(today));
+		// Get the default MEDIUM/SHORT DateFormat
+        DateFormat dateformat = DateFormat.getDateInstance(DateFormat.SHORT);
+		 // Parse the date
+        try {
+            today = dateformat.parse(data);
+            System.out.println("Original string: " + data);
+            System.out.println("Parsed date    : " + 
+                 today.toString());
+        }
+        catch(ParseException pe) {
+            System.out.println("ERROR: could not parse date in string \"" +
+                data + "\"");
+        }
+		
+		System.out.println("\n Inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with current string data="+data);
+		
+		try {
+			// News date
+			strToDate = format.parse(DateToStr);
+			System.out.println("Parsing to Date --> strToDate="+strToDate);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("Exception inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with message="+e.getMessage());
+		}*/
+		
+		System.out.println("\n Inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with current date ="+currentDate+"\n");
 		Query query = em.createNamedQuery("PositionEntity.findPublicBeforeClosingDate", PositionEntity.class);
 		query.setParameter("currentDate", currentDate);
+		System.out.println("\nInside PositionFacade.lstPositionAtualDateBeforeClosingDate() where list.size ="+query.getResultList().size());
 		return query.getResultList();
 	}
 

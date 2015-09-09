@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+    <!--Top Content-->
+    <h:form>
+       
+        <p:menubar>
+            <p:menuitem icon="ui-icon-home" action="/faces/interviewer/maininterviewer.xhtml?faces-redirect=true" style="padding-left:20px"/>
+            <p:submenu label="Welcome: #{activeSession.activeUser.username}" style="padding-left:20px" >
+                <p:menuitem  value="Edit" action="/faces/interviewer/edituser.xhtml?faces-redirect=true"  />
+                <p:menuitem  value="Logout" action="#{loginMB.logout()}"  />
+            </p:submenu>
+            <p:menuitem value="My Interviews" action="/pages/interviewer/myInterviews.xhtml?faces-redirect=true" style="padding-left:20px"/>
+        </p:menubar>
+         <div align="right">
+            <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
+        </div>
+
+    </h:form>
+</html>
+
+
+

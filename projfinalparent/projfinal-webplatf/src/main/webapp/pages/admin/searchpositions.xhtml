@@ -4,7 +4,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <body>
-        <ui:composition template="./oldmainadmin.xhtml">
+        <ui:composition template="./mainadmin.xhtml">
             <ui:define name="content">
 
                 <h:form>
@@ -203,6 +203,7 @@
 
                             <h:outputText></h:outputText>
                             <h:commandButton  value="Edit" action="#{positionWebManagem.editPosition()}" style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                            <h:commandButton  value="Cancel" action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />  
                         </h:panelGrid>
 
                     </h:panelGroup>

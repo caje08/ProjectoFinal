@@ -37,7 +37,7 @@ public class SendEmail {
 		email.setHostName("smtp.gmail.com");
 		email.setSmtpPort(465);
 		email.setDebug(true);
-		email.setAuthentication("acertarorumoamj@gmail.com", "acertar2015");
+		email.setAuthentication("acertarrumo2015@gmail.com", "acertar2015");
 		email.setSSL(true);
 	}
 
