@@ -40,6 +40,7 @@ import pt.uc.dei.aor.proj.db.tools.Outcome;
 	@NamedQuery(name = "InterviewFeedbackEntity.findByOutcomeRejectedPhone", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.outcome = pt.uc.dei.aor.proj.db.tools.Outcome.REJECTED AND i.interviewType = pt.uc.dei.aor.proj.db.tools.InterviewType.PHONE"),
 	@NamedQuery(name = "InterviewFeedbackEntity.findByOutcomeRejectedPresential", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.outcome = pt.uc.dei.aor.proj.db.tools.Outcome.REJECTED AND i.interviewType = pt.uc.dei.aor.proj.db.tools.InterviewType.PRESENTIAL"),
 	@NamedQuery(name = "InterviewFeedbackEntity.findByInterviewTypePHONE", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.interviewType = pt.uc.dei.aor.proj.db.tools.InterviewType.PHONE")})
+
 public class InterviewFeedbackEntity implements Serializable {
 
 	@ManyToOne(targetEntity = InterviewerEntity.class)

@@ -7,10 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -41,11 +43,11 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	@PersistenceContext(unitName = "myPU")
 	private EntityManager em;
 
-	@Inject
+	@EJB
 	private ApplicationFacade applicationFacade;
-	@Inject
+	@EJB
 	private SendEmail mail;
-	@Inject
+	@EJB
 	private SendEmailAttachedFiles emailAttachedFiled;
 
 	@Override
@@ -84,11 +86,17 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 */
 	public void createInterview(Date interviewDate, InterviewerEntity interviewer, InterviewEntity interviewGuide, ApplicationEntity application, String cvDestination) throws FirstInterviewAfterAtualDateException, InterviewerSameDateException, MessagingException, EJBException, SecondInterviewAfterFirstInterviewException, MustIntroduceInterviewerException {
 		InterviewFeedbackEntity interviewFeedback = new InterviewFeedbackEntity();
+		//em.persist(interviewFeedback);
+		Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(Level.INFO, "Inside createInterview()");
+		System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before checking recruiter availability");
 		//see if intervew date is after the current date and selected interviewer is available
 		if (interviewDate.after(new Date()) && checkRecruiterAvailability(interviewer, interviewDate) && interviewer != null) {
 			interviewFeedback.setInterviewer(interviewer);
 			interviewFeedback.setInterviewDate(interviewDate);
+			//interviewFeedback.setAnswer(null);
 			interviewFeedback.setInterviewEntity(interviewGuide);
+			//em.persist(interviewFeedback);
+			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() , if statement, after checking recruiter availability");
 			//if an interview feedback do not have a Interview Phone set it
 			if (knowIfInterviewHasPhoneInterviewEntity(InterviewType.PHONE, application)) {
 				interviewFeedback.setInterviewType(InterviewType.PHONE);
@@ -100,22 +108,35 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 					throw new SecondInterviewAfterFirstInterviewException();
 				}
 			}
+			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before interviewFeedback.setApplication(application)");
 			interviewFeedback.setApplication(application);
+		//	em.persist(interviewFeedback);
 			application.setInterviewer(interviewer);
 			application.getInterviewFeedbackEntitys().add(interviewFeedback);
 			application.setStatus(StatusApplication.INTERVIEWING);
-			applicationFacade.edit(application);
+			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before applicationFacade.edit(application)");
+		//	applicationFacade.edit(application);
+
+			InterviewEntity tmpinterv = interviewFeedback.getInterviewEntity();
+			System.out.println("\n InterviewEntity = "+tmpinterv.getType());
+			System.out.println("\ninterviewFeedback.getInterviewer().getEmail()-->"+interviewFeedback.getInterviewer().getEmail());
+			System.out.println("\ninterviewFeedback.getApplication().getApplicant().getEmail()-->"+interviewFeedback.getApplication().getApplicant().getEmail());
+			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before sending email");
+			
+			//em.persist(interviewFeedback);
 			String[] attachFiles = new String[1];
 			attachFiles[0] = cvDestination + application.getCv();
 
 			SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			String finalFormat = format1.format(interviewDate);
 			String link = BundleUtils.getSettings("host") + "interviewer/applicationDetails.xhtml?applicantid=" + application.getApplicant().getUserId() + "&applicationid=" + application.getApplicationId();
-			//send email with atached files
-			SendEmailAttachedFiles.sendEmailWithAttachments(interviewer.getEmail(),
-					"New Interview has been made", "You have an interview at " + finalFormat + " and the user link is:\n" + link, attachFiles);
+			//send email with atached files - IMPORTANTE ACTIVAR PRÓXIMA LINHA
+//			SendEmailAttachedFiles.sendEmailWithAttachments(interviewer.getEmail(),
+//					"New Interview has been made", "You have an interview at " + finalFormat + " and the user link is:\n" + link, attachFiles);
+			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before em.persist(interviewFeedback)");
 			em.persist(interviewFeedback);
-
+			//em.merge(interviewFeedback);
+			
 		} else if (!checkRecruiterAvailability(interviewer, interviewDate)) {
 			throw new InterviewerSameDateException();
 		} else if (interviewer == null) {

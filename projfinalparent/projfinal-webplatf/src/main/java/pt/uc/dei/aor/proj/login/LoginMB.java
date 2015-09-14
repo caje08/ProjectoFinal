@@ -51,6 +51,8 @@ public class LoginMB implements Serializable {
 
 	@EJB
 	private PasswordEJB pw;
+//	@EJB
+//	private EncryptPassword pw;
 	@Inject
 	private UserSession userSession;
 
@@ -69,10 +71,17 @@ public class LoginMB implements Serializable {
 	public PasswordEJB getPw() {
 		return pw;
 	}
+//	public EncryptPassword getPw() {
+//		return pw;
+//	}
 
 	public void setPw(PasswordEJB pw) {
 		this.pw = pw;
 	}
+	
+//	public void setPw(EncryptPassword pw) {
+//		this.pw = pw;
+//	}
 
 	public UserSession getuserSession() {
 		return userSession;
@@ -248,13 +257,15 @@ public class LoginMB implements Serializable {
 
 		try {
 			logger.info("Email = " + email + ", has requested to be logged");
+//			String testpw=pw.encrypt(password);
+//			request.login(email, testpw);
 			request.login(email, password);
 			// request.getSession().setAttribute(activeuser,
 			// userSession.getLoggedUser().getName());
 			webout = searchUser();
 		} catch (ServletException e) {
 
-			logger.error("Wrong Email = " + email + " and passwd combination");
+			logger.error("Wrong Email = " + email +","+password+ " and passwd combination");
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			return "/login";
 		}

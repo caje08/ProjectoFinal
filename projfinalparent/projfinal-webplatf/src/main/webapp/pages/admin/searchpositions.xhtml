@@ -4,7 +4,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <body>
-        <ui:composition template="./oldmainadmin.xhtml">
+        <ui:composition template="./mainadmin.xhtml">
             <ui:define name="content">
 
                 <h:form>
@@ -23,8 +23,6 @@
                 </h:form>
 
                 <h:form id="searchpositions">
-
-
 
                     <!--list of all Positions-->
 
@@ -91,8 +89,6 @@
                                     More Details about this position
                                 </f:facet>
 
-
-
                                 <h:outputText value="Manager" />
                                 <h:outputText value="#{position.manager.username}" />
 
@@ -116,14 +112,14 @@
 
 
                         <p:column headerText="Insert new Application" width="70" styleClass="centeredColumn" >
-                            <p:commandButton rendered="#{positionWebManagem.canAssociatePositionToApplication(position)}"  action="#{positionWebManagem.goToApplicationForm(position)}" icon="ui-icon-plus"  title="Add"   >
-                                <f:setPropertyActionListener value="#{position}" target="#{positionWebManagem.selectedPosition}"  />
+                            <p:commandButton rendered="#{manageApplicationWeb.canAssociatePositionToApplication(position)}"  action="#{manageApplicationWeb.goToApplicationForm(position)}" icon="ui-icon-plus"  title="Add Application candidate to this position"   >
+                                <f:setPropertyActionListener value="#{position}" target="#{manageApplicationWeb.selectedPosition}"  />
                             </p:commandButton>
                         </p:column>
 
 
                         <p:column headerText="Edit" width="40" styleClass="centeredColumn" >
-                            <p:commandButton rendered="#{positionWebManagem.canEditPosition(position)}"   action="#{positionWebManagem.showPanel()}" icon="ui-icon-pencil" title="View"  ajax="false"  >
+                            <p:commandButton rendered="#{positionWebManagem.canEditPosition(position)}"   action="#{positionWebManagem.showPanel(position)}" icon="ui-icon-pencil" title="View"  ajax="false"  >
                                 <f:setPropertyActionListener value="#{position}" target="#{positionWebManagem.selectedPosition}"  />
                             </p:commandButton>
                         </p:column>
@@ -134,11 +130,11 @@
 
                 <!--Edition of specific Position-->
 
-                <h:form>
-                    <p:growl showDetail="true"/>
-                    <h:panelGroup binding="#{positionWebManagem.panelGroup}" rendered="false">
-                        <div align="left">
-                            <h1> Please, edit #{positionWebManagem.selectedPosition.title}</h1>
+                <h:form id="editposit">
+                    <p:growl id="growl" showDetail="true"/>
+                    <h:panelGroup id="panel" binding="#{positionWebManagem.panelGroup}" rendered="false">
+                        <div id="divedit" align="left">
+                            <h1> Please, edit #{positionWebManagem.activePosition.activePosition.title}</h1>
                         </div>
 
                         <h:panelGrid columns="2" cellpadding="5">
@@ -147,51 +143,51 @@
                             <h:outputLabel value="Title"/>
                             <h:inputText  required="true" label="title"
                                           size="40" requiredMessage="Please enter a title"
-                                          value="#{positionWebManagem.selectedPosition.title}" />
+                                          value="#{positionWebManagem.activePosition.activePosition.title}" />
 
                             <h:outputLabel value="Job Description" />
-                            <h:inputTextarea  title="Job Description"  value="#{positionWebManagem.selectedPosition.jobDescription}" required="true" requiredMessage="Job Description" style="width:900px; height:80px;"/>
+                            <h:inputTextarea  title="Job Description"  value="#{positionWebManagem.activePosition.activePosition.jobDescription}" required="true" requiredMessage="Job Description" style="width:900px; height:80px;"/>
 
                             <h:outputLabel value="Publishing channels" />
-                            <h:inputText id="publishingChannels" title="Publishing channels"  value="#{positionWebManagem.selectedPosition.publishingChannels}" required="true" requiredMessage="Publishing channels."/>
+                            <h:inputText id="publishingChannels" title="Publishing channels"  value="#{positionWebManagem.activePosition.activePosition.publishingChannels}" required="true" requiredMessage="Publishing channels."/>
 
                             <p:outputLabel for="location" value="Location: " />
-                            <p:selectOneMenu id="location" value="#{positionWebManagem.selectedPosition.location}">
+                            <p:selectOneMenu id="location" value="#{positionWebManagem.activePosition.activePosition.location}">
                                 <f:selectItem itemLabel="Lisboa" itemValue="LISBOA" />
                                 <f:selectItem itemLabel="Porto" itemValue="PORTO" />
                                 <f:selectItem itemLabel="Coimbra" itemValue="COIMBRA" />
                             </p:selectOneMenu>
 
                             <p:outputLabel for="status" value="Status " />
-                            <p:selectOneMenu id="status" value="#{positionWebManagem.selectedPosition.status}">
+                            <p:selectOneMenu id="status" value="#{positionWebManagem.activePosition.activePosition.status}">
                                 <f:selectItem itemLabel="Open" itemValue="OPEN" />
                                 <f:selectItem itemLabel="Close" itemValue="CLOSED" />
                                 <f:selectItem itemLabel="On Hold" itemValue="ONHOLD" />
                             </p:selectOneMenu>
 
                             <p:outputLabel for="public" value="Is public:" />
-                            <h:selectOneRadio id="public" value="#{positionWebManagem.selectedPosition.isPublic}">
+                            <h:selectOneRadio id="public" value="#{positionWebManagem.activePosition.activePosition.isPublic}">
                                 <f:selectItem itemLabel="Yes" itemValue="True"   />
                                 <f:selectItem itemLabel="No" itemValue="False" />
                             </h:selectOneRadio>
 
 
                             <h:outputLabel for="vacancies" value="Number of vacancies: " />
-                            <p:spinner id="vacancies" value="#{positionWebManagem.selectedPosition.vacancies}" min="0" />
+                            <p:spinner id="vacancies" value="#{positionWebManagem.activePosition.activePosition.vacancies}" min="0" />
                             <!--Pop up of guides -->
 
                             <p:commandButton  value="Choose a phone Guide Interview" oncomplete="PF('phoneguide').show()" update=":phoneguideTable" >
                                 <f:setPropertyActionListener value="#{guide}" target="#{positionWebManagem.selectedInterviewGuide}" />
                             </p:commandButton>
 
-                            <p:outputLabel  value="#{positionWebManagem.selectedPosition.phoneInterviewEntity.title}" />
+                            <p:outputLabel  value="#{positionWebManagem.activePosition.activePosition.phoneInterviewEntity.title}" />
 
                             <p:commandButton  value="Choose a presential Guide Interview" oncomplete="PF('presentialguide').show()" update=":presentialguideTable" >
                                 <f:setPropertyActionListener value="#{guide}" target="#{positionWebManagem.selectedInterviewGuide}" />
                             </p:commandButton>
 
 
-                            <p:outputLabel value="#{positionWebManagem.selectedPosition.presencialInterviewEntity.title}" />
+                            <p:outputLabel value="#{positionWebManagem.activePosition.activePosition.presencialInterviewEntity.title}" />
 
                             <!--Pop up of managers -->
 
@@ -199,10 +195,10 @@
                                 <f:setPropertyActionListener value="#{manager}" target="#{positionWebManagem.selectedManager}" />
                             </p:commandButton>
 
-                            <h:outputText value="#{positionWebManagem.selectedPosition.manager.username}"/>
+                            <h:outputText value="#{positionWebManagem.activePosition.activePosition.manager.username}"/>
 
                             <h:outputText></h:outputText>
-                            <h:commandButton  value="Edit" action="#{positionWebManagem.editPosition()}" style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                            <h:commandButton  value="Save" action="#{positionWebManagem.savePosition()}" style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
                         </h:panelGrid>
 
                     </h:panelGroup>
@@ -234,7 +230,7 @@
 
                 <h:form id="phoneguideTable" >
                     <p:dialog header="Guides" widgetVar="phoneguide" modal="true" height="500" width="500"  >
-                        <p:dataTable id="theguide" selectionMode="single" rowKey="#{guide.interviewId}" selection="#{positionWebManagem.selectedInterviewGuide}"
+                        <p:dataTable id="theguide1" selectionMode="single" rowKey="#{guide.interviewId}" selection="#{positionWebManagem.selectedInterviewGuide}"
                                      value="#{positionWebManagem.lstPhoneInterviewsInUse}" var="guide"  >
 
                             <p:column styleClass="centeredColumn"  headerText="Title"  filterBy="#{guide.title}" filterMatchMode="contains">
@@ -270,7 +266,7 @@
 
                 <h:form id="managersTable" >
                     <p:dialog header="Managers" widgetVar="managers" modal="true" height="500" width="500"  >
-                        <p:dataTable id="themanager" selectionMode="single" rowKey="#{manager.userId}" selection="#{reportAverageBB.selectedManager}"
+                        <p:dataTable id="the1manager" selectionMode="single" rowKey="#{manager.userId}" selection="#{reportAverageBB.selectedManager}"
                                      value="#{reportAverageBB.lstManagers}" var="manager"  >
 
                             <p:column styleClass="centeredColumn"  headerText="Manager"  filterBy="#{manager.firstName}" filterMatchMode="contains">

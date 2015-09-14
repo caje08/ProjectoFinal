@@ -11,7 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import pt.uc.dei.aor.proj.db.tools.AnswerType;
@@ -33,8 +35,9 @@ public class AnswerEntity implements Serializable {
 	@Basic
 	private String question;
 
-	@Column(name = "answer", columnDefinition = "LONGTEXT")
+	@Column(name = "answer")
 	@Basic
+	@Size(min = 1, max=10000)
 	private String answer;
 
 	@Column(name = "answertype")
@@ -45,6 +48,9 @@ public class AnswerEntity implements Serializable {
 	@Basic
 	private Integer questionNumber;
 
+	@ManyToOne(targetEntity=InterviewFeedbackEntity.class)
+	private InterviewFeedbackEntity interviewFeedback;
+	
 	public AnswerEntity() {
 	}
 
@@ -86,6 +92,14 @@ public class AnswerEntity implements Serializable {
 
 	public void setQuestionNumber(Integer questionNumber) {
 		this.questionNumber = questionNumber;
+	}
+
+	public InterviewFeedbackEntity getInterviewFeedback() {
+		return interviewFeedback;
+	}
+
+	public void setInterviewFeedback(InterviewFeedbackEntity interviewFeedback) {
+		this.interviewFeedback = interviewFeedback;
 	}
 
 }

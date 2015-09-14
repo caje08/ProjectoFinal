@@ -42,7 +42,7 @@ public class SendEmailAttachedFiles {
 	public static void sendEmailWithAttachments(String toAddress,
 			String subject, String message, String[] attachFiles)
 					throws AddressException, MessagingException {
-		final String username = "acertarorumoamj@gmail.com";
+		final String username = "acertarrumo2015@gmail.com";
 		final String password = "acertar2015";
 		// sets SMTP server properties
 		Properties properties = new Properties();

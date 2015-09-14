@@ -4,6 +4,8 @@
 package pt.uc.dei.aor.proj.serv.tools;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -13,7 +15,7 @@ import javax.persistence.NoResultException;
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
-import pt.uc.dei.aor.proj.serv.facade.UserGuideFacade;
+import pt.uc.dei.aor.proj.serv.facade.UserEntityFacade;
 
 /**
  *
@@ -26,7 +28,7 @@ public class UserData implements Serializable {
 	private static final long serialVersionUID = -4578972853700713733L;
 
 	@EJB
-	private UserGuideFacade userGuideFacade;
+	private UserEntityFacade userGuideFacade;
 
 	private UserEntity loggedUser;
 
@@ -38,6 +40,7 @@ public class UserData implements Serializable {
 	 */
 	public UserEntity getLoggedUser() throws UserNotFoundException, UserGuideException, NoResultException {
 		loggedUser = userGuideFacade.findUserByUsername();
+		Logger.getLogger(UserData.class.getName()).log(Level.INFO, "\nLogged User = "+loggedUser.getEmail());
 		return loggedUser;
 	}
 
@@ -47,11 +50,11 @@ public class UserData implements Serializable {
 		this.loggedUser = loggedUser;
 	}
 
-	public UserGuideFacade getUserGuideFacade() {
+	public UserEntityFacade getUserGuideFacade() {
 		return userGuideFacade;
 	}
 
-	public void setUserGuideFacade(UserGuideFacade userGuideFacade) {
+	public void setUserGuideFacade(UserEntityFacade userGuideFacade) {
 		this.userGuideFacade = userGuideFacade;
 	}
 

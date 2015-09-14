@@ -1,6 +1,6 @@
 /*
  */
-package pt.uc.dei.aor.proj.serv.ejb;
+package pt.uc.dei.aor.proj.web;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,8 +11,9 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIPanel;
-import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
 
@@ -24,6 +25,7 @@ import pt.uc.dei.aor.proj.db.entities.InterviewEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.entities.PositionEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
+import pt.uc.dei.aor.proj.serv.ejb.SendEmail;
 import pt.uc.dei.aor.proj.serv.exceptions.BeforeDateNotBeforeClosingDate;
 import pt.uc.dei.aor.proj.serv.exceptions.DoNotUploadCVFileException;
 import pt.uc.dei.aor.proj.serv.exceptions.DoNotUploadCoverLetterException;
@@ -34,8 +36,6 @@ import pt.uc.dei.aor.proj.serv.exceptions.ManagerNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.exceptions.NumberOfMobilePhoneDigitsException;
 import pt.uc.dei.aor.proj.serv.exceptions.OpeningDateAfterAtualDate;
 import pt.uc.dei.aor.proj.serv.exceptions.PhoneInterviewEntityNotIntroducedException;
-import pt.uc.dei.aor.proj.serv.exceptions.PositionNotIntroducedException;
-import pt.uc.dei.aor.proj.serv.exceptions.PositionOfAnApplicantAlreadyIntroducedOnSPonException;
 import pt.uc.dei.aor.proj.serv.exceptions.PresentialInterviewEntityNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.facade.ApplicationFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewEntityFacade;
@@ -45,12 +45,13 @@ import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.StatefulPosition;
 import pt.uc.dei.aor.proj.serv.tools.UploadedFiles;
 import pt.uc.dei.aor.proj.serv.tools.UserData;
+
 /**
  *
  * @author
  */
 @Named
-@ViewScoped
+@RequestScoped
 public class PositionWebManagem implements Serializable {
 
 	private static final int ONEWEEKONMS = 604800000;
@@ -72,9 +73,9 @@ public class PositionWebManagem implements Serializable {
 	private ApplicantEntity applicant;
 	private ApplicationEntity application;
 
-	//	@Inject
+	// @Inject
 	private UserData userData;
-	//	@Inject
+	@EJB
 	private StatefulPosition statefulPosition;
 	@EJB
 	private InterviewEntityFacade interviewGuideFacade;
@@ -86,6 +87,8 @@ public class PositionWebManagem implements Serializable {
 	private PositionFacade positionFacade;
 	@EJB
 	private SendEmail mail;
+	@Inject
+	private ActiveSession activePosition;
 
 	/**
 	 * Creates a new instance of PositionViewBean
@@ -102,18 +105,53 @@ public class PositionWebManagem implements Serializable {
 		this.position = new PositionEntity();
 		this.application = new ApplicationEntity();
 		this.applicant = new ApplicantEntity();
+		
 	}
 
 	/**
 	 * Creates a new PositionEntity
+	 * 
 	 * @return
 	 */
 	public String addPosition() {
-		try {
-			positionFacade.createPosition(selectedManager, position, ONEWEEKONMS);
-			return "searchpositions?faces-redirect=true";
-		} catch (ManagerNotIntroducedException | PhoneInterviewEntityNotIntroducedException | PresentialInterviewEntityNotIntroducedException | BeforeDateNotBeforeClosingDate | OpeningDateAfterAtualDate ex) {
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+		position = activePosition.getActivePosition();
+		selectedManager=position.getManager();
+		Logger.getLogger(PositionWebManagem.class.getName()).log(
+				Level.INFO,
+				"addPosition() --> Before creating Position = "
+						+ position.getTitle()
+						+ " and manager ="+selectedManager.getEmail());
+		try {			
+			if (positionFacade.createPosition(selectedManager, position,
+					ONEWEEKONMS)) {
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.INFO,
+						"addPosition() --> Position = "
+								+ position.getTitle()
+								+ " has been created successfully!");
+				JSFUtil.addSuccessMessage("addPosition() --> Position = "
+						+ position.getTitle()
+						+ " has been created successfully!");
+				//stopShowPanel();
+				position = new PositionEntity();
+				activePosition.setActivePosition(position);
+			} else {
+				Logger.getLogger(PositionWebManagem.class.getName())
+						.log(Level.SEVERE,
+								"addPosition() --> Position = "
+										+ position.getTitle()
+										+ " was unable to be created! Fix the issue and try again.");
+				JSFUtil.addErrorMessage("addPosition() --> Position = "
+						+ position.getTitle()
+						+ " was unable to be created! Please, fix the issue and try again.");
+			}
+			return "searchpositions.xhtml?faces-redirect=true";
+		} catch (ManagerNotIntroducedException
+				| PhoneInterviewEntityNotIntroducedException
+				| PresentialInterviewEntityNotIntroducedException
+				| BeforeDateNotBeforeClosingDate | OpeningDateAfterAtualDate ex) {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 			return null;
 		}
@@ -121,14 +159,42 @@ public class PositionWebManagem implements Serializable {
 
 	/**
 	 * Edit PositionEntity
+	 * 
 	 * @return
 	 */
-	public String editPosition() {
+	public String savePosition() {
 		try {
-			positionFacade.editPosition(selectedPosition);
+			selectedPosition = activePosition.getActivePosition();
+			if (positionFacade.editAndSavePosition(selectedPosition)) {
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.INFO,
+						"savePosition() --> Position = "
+								+ selectedPosition.getTitle()
+								+ " has been saved successfully!");
+				JSFUtil.addSuccessMessage("savePosition() --> Position = "
+						+ selectedPosition.getTitle()
+						+ " has been saved successfully!");
+				stopShowPanel();
+				position = new PositionEntity();
+				activePosition.setActivePosition(position);
+
+			} else {
+				Logger.getLogger(PositionWebManagem.class.getName())
+						.log(Level.SEVERE,
+								"savePosition() --> Position = "
+										+ selectedPosition.getTitle()
+										+ " was unable to be saved! Fix the issue and try again.");
+				JSFUtil.addErrorMessage("savePosition() --> Position = "
+						+ selectedPosition.getTitle()
+						+ " was unable to be saved! Please, fix the issue and try again.");
+			}
 			return "searchpositions?faces-redirect=true";
-		} catch (ManagerNotIntroducedException | PhoneInterviewEntityNotIntroducedException | PresentialInterviewEntityNotIntroducedException | BeforeDateNotBeforeClosingDate ex) {
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (ManagerNotIntroducedException
+				| PhoneInterviewEntityNotIntroducedException
+				| PresentialInterviewEntityNotIntroducedException
+				| BeforeDateNotBeforeClosingDate ex) {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 			return null;
 		}
@@ -136,90 +202,158 @@ public class PositionWebManagem implements Serializable {
 
 	/**
 	 * Associates an ApplicationEntity to a PositionEntity
+	 * 
 	 * @return
 	 */
-	public String associateApplicationToPosition() {
+	/*public String associateApplicationToPosition() {
 		try {
-			positionFacade.associateApplicationToPosition(selectedApplication, selectedPosition);
+			Logger.getLogger(PositionWebManagem.class.getName())
+					.log(Level.INFO,
+							"Inside associateApplicationToPosition() with selectedApplication.getApplicant().getEmail()="
+									+ selectedApplication.getApplicant()
+											.getEmail()
+									+ "selectedPosition.getTitle="
+									+ selectedPosition.getTitle());
+			positionFacade.associateApplicationToPosition(selectedApplication,
+					selectedPosition);
 			return "nonSpontaneousApplications?faces-redirect=true";
-		} catch (PositionNotIntroducedException | PositionOfAnApplicantAlreadyIntroducedOnSPonException ex) {
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (PositionNotIntroducedException
+				| PositionOfAnApplicantAlreadyIntroducedOnSPonException ex) {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 			return null;
 		} catch (EJBException ex) {
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 			return null;
 		}
 	}
-
+*/
 	/**
 	 * Uploads CV
+	 * 
 	 * @param event
 	 */
 	public void uploadCV1(FileUploadEvent event) {
 		uploadedFiles.upload(event, "cv");
-		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName() + " was uploaded.");
+		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName()
+				+ " was uploaded.");
 	}
 
 	/**
 	 * Uploads CV
+	 * 
 	 * @param event
 	 */
 	public void uploadCV(FileUploadEvent event) {
 		uploadedFiles.upload(event, "cv");
-		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName() + " was uploaded.");
+		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName()
+				+ " was uploaded.");
 	}
 
 	/**
 	 * Uploads Cover Letter
+	 * 
 	 * @param event
 	 */
 	public void uploadMotivationLetter(FileUploadEvent event) {
 		uploadedFiles.upload(event, "cl");
-		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName() + " was uploaded.");
+		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName()
+				+ " was uploaded.");
 	}
 
 	/**
 	 * Creates an ApplicationEntity
+	 * 
 	 * @return
 	 */
 	public String createManualApplication() {
 		try {
-			applicationFacade.createSpontaneousApplicationOfNewApplicant(applicant,application, uploadedFiles.getCvUploadName(), uploadedFiles.getClUploadName());
-		} catch (InvalidAuthException | EmailAlreadyExistsException | NumberOfMobilePhoneDigitsException | DoNotUploadCVFileException | DoNotUploadCoverLetterException ex) {
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			applicationFacade.createSpontaneousApplicationOfNewApplicant(
+					applicant, application, uploadedFiles.getCvUploadName(),
+					uploadedFiles.getClUploadName());
+		} catch (InvalidAuthException | EmailAlreadyExistsException
+				| NumberOfMobilePhoneDigitsException
+				| DoNotUploadCVFileException | DoNotUploadCoverLetterException ex) {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 			return null;
-		} catch (EJBException | EmailAndPasswordNotCorrespondingToLinkedinCredentialsException ex) {
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (
+				EJBException
+				| EmailAndPasswordNotCorrespondingToLinkedinCredentialsException ex) {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 		}
 		return "spontaneousApplications.xhtml?faces-redirect=true";
 	}
 
 	/**
 	 * Creates an ApplicationEntity
+	 * 
 	 * @return
 	 */
-	public String createApplication() {
+	/*public String createApplication() {
 		try {
-			applicationFacade.createApplicationOfNewApplicant(applicant, application, uploadedFiles.getCvUploadName(), uploadedFiles.getClUploadName(), statefulPosition.getPosition());
-		} catch (InvalidAuthException | EmailAlreadyExistsException | NumberOfMobilePhoneDigitsException | DoNotUploadCVFileException | DoNotUploadCoverLetterException ex) {
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			try {
+				Logger.getLogger(PositionWebManagem.class.getName())
+						.log(Level.INFO,
+								"Inside createApplication() and before applicationFacade.createApplicationOfNewApplicant() where statefulPosition.getPosition().getTitle="
+										+ statefulPosition.getPosition()
+												.getTitle());
+			} catch (Exception e) {
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.SEVERE, null, e);
+			}
+
+			applicationFacade.createApplicationOfNewApplicant(applicant,
+					application, uploadedFiles.getCvUploadName(),
+					uploadedFiles.getClUploadName(),
+					statefulPosition.getPosition());
+		} catch (InvalidAuthException | EmailAlreadyExistsException
+				| NumberOfMobilePhoneDigitsException
+				| DoNotUploadCVFileException | DoNotUploadCoverLetterException ex) {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
+			System.out
+					.println("\nInside PositionWebManagem.createApplication() and before returning null\n");
 			return null;
-		} catch (EJBException | EmailAndPasswordNotCorrespondingToLinkedinCredentialsException ex) {
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (
+				EJBException
+				| EmailAndPasswordNotCorrespondingToLinkedinCredentialsException ex) {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 		}
+		System.out
+				.println("\nInside PositionWebManagem.createApplication() and before returning to 'nonSpontaneousApplications.xhtml?faces-redirect=true'\n");
+		Logger.getLogger(PositionWebManagem.class.getName())
+				.log(Level.INFO,
+						"Inside PositionWebManagem.createApplication() and before returning to 'nonSpontaneousApplications.xhtml?faces-redirect=true'\n");
 		return "nonSpontaneousApplications.xhtml?faces-redirect=true";
 	}
-
+*/
 	/**
 	 *
 	 * @param otherPosition
 	 * @return
 	 */
 	public String goToApplicationForm(PositionEntity otherPosition) {
+		Logger.getLogger(PositionWebManagem.class.getName()).log(
+				Level.INFO,
+				"Inside goToApplicationForm() and otherPosition.title is="
+						+ otherPosition.getTitle());
 		statefulPosition.setPosition(otherPosition);
+		position = statefulPosition.getPosition();
+		Logger.getLogger(PositionWebManagem.class.getName())
+				.log(Level.INFO,
+						"Inside goToApplicationForm() and after setting position where position().getTitle() is="
+								+ position.getTitle());
+		Logger.getLogger(PositionWebManagem.class.getName())
+				.log(Level.INFO,
+						"Inside goToApplicationForm() and after setting position where statefulPosition.getPosition().getTitle() is="
+								+ statefulPosition.getPosition().getTitle());
 		return "apply.xhtml?faces-redirect=true";
 	}
 
@@ -238,17 +372,45 @@ public class PositionWebManagem implements Serializable {
 	 * @return true if it is possible to an ApplicationEntity to that position
 	 */
 	public boolean canAssociatePositionToApplication(PositionEntity position) {
-		return position.getStatus().equals("OPEN") && position.getVacancies()>0;
+		return position.getStatus().equals("OPEN")
+				&& position.getVacancies() > 0;
 	}
 
 	/**
 	 *
 	 */
-	public void showPanel() {
+	public void openNewPosition() {
+		Logger.getLogger(PositionWebManagem.class.getName()).log(
+				Level.INFO,
+				"Inside openNewPosition() and before setting activePosition=new position ");
+		this.activePosition.setActivePosition(position);
+		Logger.getLogger(PositionWebManagem.class.getName()).log(
+				Level.INFO,
+				"Inside openNewPosition() and after setting activePosition=new position ");
+		
+	}
+	/**
+	 *
+	 */
+	public void showPanel(PositionEntity position) {
+		Logger.getLogger(PositionWebManagem.class.getName()).log(
+				Level.INFO,
+				"Inside showPanel() and position.title is="
+						+ position.getTitle());
+		this.selectedPosition = position;
+		this.activePosition.setActivePosition(position);
+		Logger.getLogger(PositionWebManagem.class.getName()).log(
+				Level.INFO,
+				"Inside showPanel() and selectedPosition.title is="
+						+ selectedPosition.getTitle());
 		panelGroup.setRendered(true);
 	}
 
-	/////////////////////Getters && Setters////////////////////
+	public void stopShowPanel() {
+		panelGroup.setRendered(false);
+	}
+
+	// ///////////////////Getters && Setters////////////////////
 
 	public List<ManagerEntity> getLstManagers() {
 		return managerFacade.findAll();
@@ -347,15 +509,25 @@ public class PositionWebManagem implements Serializable {
 	}
 
 	public void setTheSelectedManager() {
+		position=activePosition.getActivePosition();		
 		position.setManager(selectedManager);
+		activePosition.setActivePosition(position);
 	}
 
 	public void setTheSelectedPhoneGuideInterview() {
+		position = activePosition.getActivePosition();
 		position.setPhoneInterviewEntity(selectedInterviewGuide);
+		activePosition.setActivePosition(position);
 	}
 
 	public void setTheSelectedPresentialGuideInterview() {
+		position = activePosition.getActivePosition();
 		position.setPresencialInterviewEntity(selectedInterviewGuide);
+		activePosition.setActivePosition(position);
+	}
+	
+	public void saveTemporaryDataPosition(){
+		activePosition.setActivePosition(position);
 	}
 
 	public List<InterviewEntity> getLstInterviews() {
@@ -366,7 +538,8 @@ public class PositionWebManagem implements Serializable {
 		return interviewGuideFacade;
 	}
 
-	public void setInterviewGuideFacade(InterviewEntityFacade interviewGuideFacade) {
+	public void setInterviewGuideFacade(
+			InterviewEntityFacade interviewGuideFacade) {
 		this.interviewGuideFacade = interviewGuideFacade;
 	}
 
@@ -374,7 +547,8 @@ public class PositionWebManagem implements Serializable {
 		return interviewGuideFacade.lstPhoneInterviewsInUseWithQuestions();
 	}
 
-	public void setLstPhoneInterviewsInUse(List<InterviewEntity> lstPhoneInterviewsInUse) {
+	public void setLstPhoneInterviewsInUse(
+			List<InterviewEntity> lstPhoneInterviewsInUse) {
 		this.lstPhoneInterviewsInUse = lstPhoneInterviewsInUse;
 	}
 
@@ -382,7 +556,8 @@ public class PositionWebManagem implements Serializable {
 		return interviewGuideFacade.lstPresentialInterviewsInUseWithQuestions();
 	}
 
-	public void setLstPresentialInterviewsInUse(List<InterviewEntity> lstPresentialInterviewsInUse) {
+	public void setLstPresentialInterviewsInUse(
+			List<InterviewEntity> lstPresentialInterviewsInUse) {
 		this.lstPresentialInterviewsInUse = lstPresentialInterviewsInUse;
 	}
 
@@ -390,7 +565,8 @@ public class PositionWebManagem implements Serializable {
 		return positionFacade.lstPositionAtualDateBeforeClosingDate(new Date());
 	}
 
-	public void setLstPositionsBeforeAtualDate(List<PositionEntity> lstPositionsBeforeAtualDate) {
+	public void setLstPositionsBeforeAtualDate(
+			List<PositionEntity> lstPositionsBeforeAtualDate) {
 		this.lstPositionsBeforeAtualDate = lstPositionsBeforeAtualDate;
 	}
 
@@ -434,23 +610,36 @@ public class PositionWebManagem implements Serializable {
 		this.userData = userData;
 	}
 
+	public ActiveSession getActivePosition() {
+		return activePosition;
+	}
+
+	public void setActivePosition(ActiveSession activePosition) {
+		this.activePosition = activePosition;
+	}
+
 	public List<PositionEntity> getLstPositionsofAManager() {
 		try {
 			try {
-				lstPositionsofAManager = positionFacade.lstPositionsOfManager((ManagerEntity) userData.getLoggedUser());
+				lstPositionsofAManager = positionFacade
+						.lstPositionsOfManager((ManagerEntity) userData
+								.getLoggedUser());
 			} catch (UserNotFoundException
 					| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
 				// TODO Auto-generated catch block
-				Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, e);
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.SEVERE, null, e);
 			}
 		} catch (NoResultException ex) {
 			// TODO Auto-generated catch block
-			Logger.getLogger(PositionWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 		}
 		return lstPositionsofAManager;
 	}
 
-	public void setLstPositionsofAManager(List<PositionEntity> lstPositionsofAManager) {
+	public void setLstPositionsofAManager(
+			List<PositionEntity> lstPositionsofAManager) {
 		this.lstPositionsofAManager = lstPositionsofAManager;
 	}
 

@@ -7,10 +7,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -41,9 +43,9 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	@PersistenceContext(unitName = "myPU")
 	private EntityManager em;
 
-	@Inject
+	@EJB
 	private ApplicantFacade applicantFacade;
-	@Inject
+	@EJB
 	private SendEmail sendEmail;
 
 
@@ -241,18 +243,25 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	 */
 	public void createApplicationOfNewApplicant(ApplicantEntity applicant,  ApplicationEntity application, String cvUploadName, String clUploadName, PositionEntity position) throws InvalidAuthException, EmailAlreadyExistsException, NumberOfMobilePhoneDigitsException, DoNotUploadCVFileException, DoNotUploadCoverLetterException, EJBException, EmailAndPasswordNotCorrespondingToLinkedinCredentialsException {
 		applicantFacade.createApplicant(applicant);
+		Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before setting (application) properties ");
 		if (cvUploadName != null && clUploadName != null) {
 			application.setApplicant(applicant);
 			application.setCv(cvUploadName);
 			application.setCoverLetter(clUploadName);
-			application.setIsSpontaneous(false);
+			//application.setIsSpontaneous(false);
 			application.setStatus(StatusApplication.SUBMITTED);
 			application.setIsSpontaneous(false);
 			application.setApplicationDate(new Date());
-			//	application.setPosition(position);  IMPORTANT TO ACTIVATE THIS LINE
+			if(position!=null){
+			 application.setPosition(position); // IMPORTANT TO ACTIVATE THIS LINE
+			 Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before create(application) with application.getPosition().getTitle()= "+application.getPosition().getTitle());
+			}
+			Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before create(application) with application.getApplicant().getEmail()= "+application.getApplicant().getEmail());
+			
+			Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before sending email stating  New ApplicationEntity has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
 			create(application);
 			//send an email to new ApplicantEntity --->  IMPORTANT TO ACTIVATE NEXT LINE
-			//	sendEmail.sendEMail("acertarorumoamj@gmail.com", "New application has been made", "New ApplicationEntity has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
+			sendEmail.sendEMail("acertarrumo2015@gmail.com", "New application has been made", "New ApplicationEntity has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
 		} else {
 			if (cvUploadName == null) {
 				throw new DoNotUploadCVFileException();
@@ -338,7 +347,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 			application.setSource(source);
 			application.setIsSpontaneous(false);
 			//	application.setPosition(position); --> IMPORTANT TO ACTIVATE THIS AND NEXT LINE
-			//	sendEmail.sendEMail("acertarorumoamj@gmail.com", "New ApplicationEntity has been made", "New ApplicationEntity has been made by " + loggedUser.getFirstName() + loggedUser.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
+			//	sendEmail.sendEMail("acertarrumo2015@gmail.com", "New ApplicationEntity has been made", "New ApplicationEntity has been made by " + loggedUser.getFirstName() + loggedUser.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
 			create(application);
 		} else {
 			if (cvUploadName == null) {
