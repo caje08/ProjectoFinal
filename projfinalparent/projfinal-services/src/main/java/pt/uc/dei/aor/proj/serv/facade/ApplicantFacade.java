@@ -8,10 +8,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -20,8 +20,10 @@ import javax.persistence.Query;
 import pt.uc.dei.aor.proj.db.entities.AdminEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.GroupsEntity;
+import pt.uc.dei.aor.proj.db.entities.Role;
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.tools.StatusApplicant;
+import pt.uc.dei.aor.proj.ejb.PasswordEJB;
 import pt.uc.dei.aor.proj.serv.ejb.SendEmail;
 import pt.uc.dei.aor.proj.serv.exceptions.EmailAlreadyExistsException;
 import pt.uc.dei.aor.proj.serv.exceptions.EmailAndPasswordNotCorrespondingToLinkedinCredentialsException;
@@ -30,7 +32,6 @@ import pt.uc.dei.aor.proj.serv.exceptions.InvalidAuthException;
 import pt.uc.dei.aor.proj.serv.exceptions.NumberOfMobilePhoneDigitsException;
 import pt.uc.dei.aor.proj.serv.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.serv.tools.AutomaticUsername;
-import pt.uc.dei.aor.proj.serv.tools.EncryptPassword;
 import pt.uc.dei.aor.proj.serv.tools.RandomNumber;
 
 /**
@@ -48,10 +49,12 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 
 	//    @Inject
 	//    private TokenLinkedin tokenLinkedin;
-	@Inject
+	@EJB
 	private SendEmail sendEmail;
-	@Inject
+	@EJB
 	private GroupsHasUserGuideFacade groupsHasUserGuideFacade;
+	@EJB
+	private PasswordEJB pw;
 
 	@Override
 	protected EntityManager getEntityManager() {
@@ -105,7 +108,7 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 		if (existEmail(email, password)) {
 			ApplicantEntity applicant = (ApplicantEntity) findByEmailAndPassword(email, password);
 			//send an email to applicant who forget username with his username
-			sendEmail.sendEMail("acertarorumoamj@gmail.com", "Recovery username", "Your username " + applicant.getUsername(), applicant.getEmail());
+			sendEmail.sendEMail("acertarrumo2015@gmail.com", "Recovery username", "Your username " + applicant.getUsername(), applicant.getEmail());
 		} else {
 			throw new EmailOrUsernameNotFoundException();
 		}
@@ -121,7 +124,7 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 	public Object findByEmailAndPassword(String email, String password) {
 		Query query = em.createNamedQuery("ApplicantEntity.findByEmailAndPass", UserEntity.class);
 		query.setParameter("email", email);
-		query.setParameter("password", EncryptPassword.encrypt(password));
+		query.setParameter("password", pw.encrypt(password));
 		return query.getSingleResult();
 	}
 
@@ -134,7 +137,7 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 	public boolean existEmail(String email, String password) {
 		Query query = em.createNamedQuery("ApplicantEntity.findByEmailAndPass", UserEntity.class);
 		query.setParameter("email", email);
-		query.setParameter("password", EncryptPassword.encrypt(password));
+		query.setParameter("password", pw.encrypt(password));
 		return !query.getResultList().isEmpty();
 
 	}
@@ -153,9 +156,10 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 		//if phone mobile number has more than 8 digits
 		if (applicant.getMobile().length() >= 9) {
 			//if user do not exists
+			System.out.println("\nInside ApplicantFacade.createApplicant() before checking if mailAlreadyExists("+applicant.getUsername()+")\n");
 			if (!mailAlreadyExists(applicant.getUsername())) {
 				String password = applicant.getPassword();
-				String encrypted = EncryptPassword.encrypt(applicant.getPassword());
+				String encrypted = pw.encrypt(applicant.getPassword());
 				//generate a username
 				String automaticUserName = AutomaticUsername.getUsername(applicant.getFirstName(), applicant.getLastName(), applicant.getMobile());
 				applicant.setPassword(encrypted);
@@ -167,18 +171,20 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 				}
 				//set applicant status to submitted
 				applicant.setStatus(StatusApplicant.SUBMITTED);
+				applicant.setRole(Role.CANDIDATE);
+				System.out.println("\nInside ApplicantFacade.createApplicant() before creating applicant="+applicant.toString()+")\n");
 				create(applicant);
 				//persist applicant in GroupsHasUserguide entity
 
-				try {
+				/*try {
 					groupsHasUserGuideFacade.persistApplicant(applicant);
 				} catch (pt.uc.dei.aor.proj.db.exceptions.InvalidAuthException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 
 				//send email to new user
-				sendEmail.sendEMail("acertarorumoamj@gmail.com", "Chosen as new user", "Your login is " + applicant.getUsername() + " and your password is " + password, applicant.getEmail());
+				sendEmail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new user", "Your login is " + applicant.getUsername() + " and your password is " + password, applicant.getEmail());
 			} else {
 				throw new EmailAlreadyExistsException();
 			}

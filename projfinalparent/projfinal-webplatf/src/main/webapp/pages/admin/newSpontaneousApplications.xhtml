@@ -1,0 +1,83 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <body>
+        <ui:composition template="./mainadmin.xhtml"> 
+            <ui:define name="content">
+                <h:form id="form">
+                    <p:growl/>
+
+                    <!--Spontaneous Applications form-->
+
+                    <p:dataTable var="item" value="#{applicationWebManagem.lstSpontaneousApplication}" 
+                                 paginator="true" rows="10" paginatorPosition="top" editable="false"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{item.applicationId}" selection="#{manageApplicationWeb.selectedApplication}">
+                        <f:facet name="header">
+                            List of Spontaneous Applications
+                        </f:facet>
+
+
+                        <p:column styleClass="centeredColumn" filterBy="#{item.applicant.username}" headerText="Username"  filterMatchMode="contains" style="width:20%">
+                            <a href="applicationDetails.xhtml?applicantid=#{item.getApplicant().getUserId()}&amp;applicationid=#{item.applicationId}">#{item.applicant.username}</a>
+                        </p:column>
+
+
+                        <p:column styleClass="centeredColumn"  filterBy="#{item.status}" filterMatchMode="contains" headerText="Status"  style="width:20%">
+                            <p:outputLabel value="#{item.status}" />
+                        </p:column>
+
+
+                        <p:column styleClass="centeredColumn"  headerText="Associate to Position"  style="width:20%">
+                            <p:commandButton  id="addPosition" icon="ui-icon-plus" oncomplete="PF('addPosition').show();" update=":applicationClone" >
+                                <f:setPropertyActionListener value="#{item}" target="#{manageApplicationWeb.selectedApplication}"  />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+
+
+                <!--Pop up to make a clone of that application into a position-->
+
+                <h:form id="applicationClone">
+                    <p:dialog  header="Choose a Position" widgetVar="addPosition" modal="true" height="auto" width="auto">
+                        <p:dataTable id="allpositions"  widgetVar="positionTable" editable="false" 
+                                     selectionMode="single" rowKey="#{position.positionCode}" selection="#{manageApplicationWeb.selectedPosition}"
+                                     value="#{manageApplicationWeb.lstPositionsBeforeAtualDate}" var="position" >
+
+                            <p:column styleClass="centeredColumn" headerText="Title"  filterBy="#{position.title}" filterMatchMode="contains" >
+                                #{position.title}
+                            </p:column>
+
+                            <p:column styleClass="centeredColumn" headerText="Position Code"  filterBy="#{position.positionCode}" filterMatchMode="contains" >
+                                #{position.positionCode}
+                            </p:column>
+
+                            <p:column styleClass="centeredColumn" headerText="Opening date"  filterBy="#{position.openingDate}" filterMatchMode="contains" >
+                                <h:outputText value="#{position.openingDate}" >
+                                    <f:convertDateTime type="DATE" pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column styleClass="centeredColumn" headerText="Closing date" filterBy="#{position.closingDate}"  filterMatchMode="contains" >
+                                <h:outputText value="#{position.closingDate}" >
+                                    <f:convertDateTime type="DATE" pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                        </p:dataTable>
+                        <h:commandButton value="Associate" action="#{manageApplicationWeb.associateApplicationToPosition()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+
+
+                    </p:dialog>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

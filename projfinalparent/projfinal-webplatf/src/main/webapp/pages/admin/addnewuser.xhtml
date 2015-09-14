@@ -4,7 +4,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <body>
-        <ui:composition template="./oldmainadmin.xhtml"> 
+        <ui:composition template="./mainadmin.xhtml"> 
             <ui:define name="content">
                 <p:growl/>
                 <h3 > Values with * are mandatory </h3>
@@ -12,40 +12,44 @@
                 <p></p>
 
                 <h:form>
-                    <h:panelGrid columns="1">
+                    <h:panelGrid columns="3">
                     <p:outputLabel value="First Name*"/>
                     <p:inputText id="firstname" required="true" label="firstname"
                                  size="40" requiredMessage="Please enter your First Name"
                                  value="#{adminRequestBean.user.firstName}">
+                                 <p:watermark for="firstname" value="First Name" />
                     </p:inputText>
-                    <p:watermark for="firstname" value="First Name" />
+                    
                     <p:message for="firstname" />
-
 
                     <p:outputLabel value="Last Name*"/>
                     <p:inputText id="lastname" required="true" label="lastname"
                                  size="40" requiredMessage="Please enter your last name."
                                  value="#{adminRequestBean.user.lastName}">
+                                 <p:watermark for="lastname" value="Last Name" />
                     </p:inputText>
-                    <p:watermark for="lastname" value="Last Name" />
+                   
                     <p:message for="lastname" />
 
                     <p:outputLabel value="Email*"/>
                     <p:inputText id="email" required="true" label="email"
                                  size="40" requiredMessage="Please enter your email."
                                  value="#{adminRequestBean.user.email}">
+                                 <p:watermark for="email" value="Email " />
                         <f:validateRegex
                             pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            
                     </p:inputText>
-                    <p:watermark for="email" value="Email " />
+                    
                     <p:message for="email" />
 
                     <p:outputLabel value="Username*"/>
                     <p:inputText id="username" required="true" label="username"
                                  size="40" requiredMessage="Please enter your username."
                                  value="#{adminRequestBean.user.username}">
+                                 <p:watermark for="username" value="Username " />
                     </p:inputText>
-                    <p:watermark for="username" value="Username " />
+                    
                     <p:message for="username" />
 
                     <p:outputLabel value="Password*"/>
@@ -53,8 +57,9 @@
                                 requiredMessage="Please enter your password."
                                 match="confirmPassword" value="#{adminRequestBean.user.password}"
                                 maxlength="20">
+                                <p:watermark for="password" value="Password" />
                     </p:password>
-                    <p:watermark for="password" value="Password" />
+                    
                     <p:message for="password"  />
 
                     <p:outputLabel value="Confirm Password*"/>
@@ -62,8 +67,9 @@
                                 requiredMessage="Please confirm your password."
                                 label="confirmPassword" value="#{adminRequestBean.user.password}"
                                 maxlength="20">
+                                <p:watermark for="confirmPassword" value="Type Password Again" />
                     </p:password>
-                    <p:watermark for="confirmPassword" value="Type Password Again" />
+                   
                     <p:message for="confirmPassword" />
                     
                     </h:panelGrid>

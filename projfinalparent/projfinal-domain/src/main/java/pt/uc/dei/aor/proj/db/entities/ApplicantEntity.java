@@ -1,6 +1,8 @@
 package pt.uc.dei.aor.proj.db.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -75,7 +77,8 @@ public class ApplicantEntity extends UserEntity implements Serializable {
 	private Date hiringDate;
 
 	public ApplicantEntity() {
-
+		this.roles=new ArrayList<Role>();
+		this.roles.add(Role.CANDIDATE);
 	}
 
 	public String getCountry() {
@@ -192,4 +195,23 @@ public class ApplicantEntity extends UserEntity implements Serializable {
 		return new Token(acessToken, secretToken, rawResponse);
 	}
 
+	@Override
+	public Role getRole() {
+		return role;
+	}
+
+	@Override
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	@Override
+	public void setRoles(Role cargo) {
+		this.roles.add(cargo);
+	}
 }

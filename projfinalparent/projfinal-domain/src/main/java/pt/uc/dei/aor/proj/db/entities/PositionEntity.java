@@ -2,6 +2,7 @@ package pt.uc.dei.aor.proj.db.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 	@NamedQuery(name = "PositionEntity.findByManager", query = "SELECT p FROM PositionEntity p WHERE p.manager = :manager"),
 	@NamedQuery(name = "PositionEntity.findByManagerCanApply", query = "SELECT p FROM PositionEntity p WHERE p.manager = :manager AND p.isPublic=true AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate and p.vacancies>0 and p.status like 'Open'"),
 	@NamedQuery(name = "PositionEntity.findBeforeClosingDate", query = "SELECT p FROM PositionEntity p WHERE p.closingDate > :currentDate"),
-	@NamedQuery(name = "PositionEntity.findPublicBeforeClosingDate", query = "SELECT p FROM PositionEntity p WHERE p.isPublic=true AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate and p.vacancies>0 and p.status like 'Open'"),
+	//@NamedQuery(name = "PositionEntity.findPublicBeforeClosingDate", query = "SELECT p FROM PositionEntity p WHERE p.isPublic=true AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate and p.vacancies>0 and p.status like 'Open'"),
+	@NamedQuery(name = "PositionEntity.findPublicBeforeClosingDate", query = "SELECT p FROM PositionEntity p WHERE p.isPublic=true AND p.closingDate > :currentDate AND p.vacancies>0 and p.status like 'OPEN'"),
 	@NamedQuery(name = "PositionEntity.findPresencialInterviewEntity", query = "SELECT p FROM PositionEntity p WHERE p.presencialInterviewEntity.interviewId = :interviewId"),
 	//@NamedQuery(name = "PositionEntity.doNotApplied", query = "SELECT p FROM PositionEntity p WHERE p NOT IN (SELECT a.position FROM ApplicationEntity a WHERE a.applicant.userId=:applicantId and a.isSpontaneous=false) AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate  AND p.isPublic=true AND p.status like 'Open'"),
 	@NamedQuery(name = "PositionEntity.doNotApplied", query = "SELECT p FROM PositionEntity p WHERE p.title NOT IN (SELECT a.position FROM ApplicationEntity a WHERE a.applicant.userId=:applicantId and a.isSpontaneous=false) AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate  AND p.isPublic=true AND p.status like 'Open'"),
@@ -50,6 +53,9 @@ public class PositionEntity implements Serializable {
 
 	@ManyToOne(targetEntity = InterviewEntity.class)
 	private InterviewEntity presencialInterviewEntity;
+	
+	@OneToMany
+	private List<ApplicationEntity> applications;
 
 	@Column(name = "positioncode")
 	@Id
@@ -135,6 +141,26 @@ public class PositionEntity implements Serializable {
 
 	public void setPresencialInterviewEntity(InterviewEntity presencialInterviewEntity) {
 		this.presencialInterviewEntity = presencialInterviewEntity;
+	}	
+
+	public List<ApplicationEntity> getApplications() {
+		return applications;
+	}
+
+	public void setApplications(List<ApplicationEntity> applications) {
+		this.applications = applications;
+	}
+	
+	public void addApplication(ApplicationEntity app){
+		this.applications.add(app);
+	}
+
+	public boolean isPublic() {
+		return isPublic;
+	}
+
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
 	}
 
 	public Long getPositionCode() {

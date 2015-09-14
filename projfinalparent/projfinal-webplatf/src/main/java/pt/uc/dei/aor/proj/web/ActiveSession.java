@@ -15,6 +15,7 @@ import javax.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.proj.db.entities.PositionEntity;
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.ejb.UserEJB;
 
@@ -31,8 +32,10 @@ public class ActiveSession implements Serializable {
 	private HttpSession session;
 
 	private UserEntity activeUser;
+	private UserEntity temporaryUser;
+	private PositionEntity activePosition;
+	private PositionEntity temporaryPosition;
 
-	private String newPlayListName;
 	private String search;
 
 	private Part file;
@@ -44,8 +47,6 @@ public class ActiveSession implements Serializable {
 
 	public void init(UserEntity user) {
 		startSession();
-
-		this.newPlayListName = "";
 
 		this.activeUser = user;
 
@@ -70,14 +71,6 @@ public class ActiveSession implements Serializable {
 		this.search = search;
 	}
 
-	public String getNewPlayListName() {
-		return newPlayListName;
-	}
-
-	public void setNewPlayListName(String newPlayListName) {
-		this.newPlayListName = newPlayListName;
-	}
-
 	public String getMensagem() {
 		return mensagem;
 	}
@@ -92,6 +85,30 @@ public class ActiveSession implements Serializable {
 
 	public void setActiveUser(UserEntity activeUser) {
 		this.activeUser = activeUser;
+	}
+	
+	public UserEntity getTemporaryUser() {
+		return temporaryUser;
+	}
+
+	public void setTemporaryUser(UserEntity temporaryUser) {
+		this.temporaryUser = temporaryUser;
+	}	
+
+	public PositionEntity getActivePosition() {
+		return activePosition;
+	}
+
+	public void setActivePosition(PositionEntity activePosition) {
+		this.activePosition = activePosition;
+	}
+
+	public PositionEntity getTemporaryPosition() {
+		return temporaryPosition;
+	}
+
+	public void setTemporaryPosition(PositionEntity temporaryPosition) {
+		this.temporaryPosition = temporaryPosition;
 	}
 
 	// Logout

@@ -4,6 +4,8 @@ package pt.uc.dei.aor.proj.serv.facade;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -35,7 +37,7 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 	@PersistenceContext(unitName = "myPU")
 	private EntityManager em;
 
-	//@Inject
+	@EJB
 	private SendEmail mail;
 	@EJB
 	private ApplicationFacade applicationFacade;
@@ -104,19 +106,30 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 	 * @throws BeforeDateNotBeforeClosingDate
 	 * @throws OpeningDateAfterAtualDate
 	 */
-	public void createPosition(ManagerEntity manager, PositionEntity position, int onWeekOnms) throws ManagerNotIntroducedException, PhoneInterviewEntityNotIntroducedException, PresentialInterviewEntityNotIntroducedException, BeforeDateNotBeforeClosingDate, OpeningDateAfterAtualDate {
+	public boolean createPosition(ManagerEntity manager, PositionEntity position, int onWeekOnms) throws ManagerNotIntroducedException, PhoneInterviewEntityNotIntroducedException, PresentialInterviewEntityNotIntroducedException, BeforeDateNotBeforeClosingDate, OpeningDateAfterAtualDate {
+		boolean out=false;
+		Logger.getLogger(PositionFacade.class.getName()).log(
+				Level.INFO,
+				"createPosition() --> Before 'if' Position = "
+						+ position.getTitle()
+						+ " and manager ="+manager.getEmail());
 		if (position.getOpeningDate().after(new Date())) {
 			if (position.getClosingDate().after(position.getOpeningDate())) {
 				if (position.getManager() != null && position.getPhoneInterviewEntity() != null && position.getPresencialInterviewEntity() != null) {
+					
 					String to = manager.getEmail();
 					long slagetTime = (long) (position.getClosingDate().getTime() - position.getOpeningDate().getTime());
 					//get number of weeks for a position
 					int sla = (int) (slagetTime / onWeekOnms);
 					position.setSla(sla);
+					Logger.getLogger(PositionFacade.class.getName()).log(
+							Level.INFO,	"acreatingPosition() --> after 'if' and before creating Position = "
+									+ position.getTitle()
+									+ " and manager ="+manager.getEmail());
 					create(position);
 					//send email to new manager
-					//	mail.sendEMail("acertarorumo@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "PositionEntity " +position.getTitle()+" was created.", to);
-
+					mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "PositionEntity " +position.getTitle()+" was created.", to);
+					out = true;
 				} else if (position.getManager() == null) {
 					throw new ManagerNotIntroducedException();
 				} else if (position.getPhoneInterviewEntity() == null) {
@@ -130,6 +143,7 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 		} else {
 			throw new OpeningDateAfterAtualDate();
 		}
+		return out;
 	}
 
 	/**
@@ -140,13 +154,15 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 	 * @throws PresentialInterviewEntityNotIntroducedException
 	 * @throws BeforeDateNotBeforeClosingDate
 	 */
-	public void editPosition(PositionEntity position) throws ManagerNotIntroducedException, PhoneInterviewEntityNotIntroducedException, PresentialInterviewEntityNotIntroducedException, BeforeDateNotBeforeClosingDate {
+	public boolean editAndSavePosition(PositionEntity position) throws ManagerNotIntroducedException, PhoneInterviewEntityNotIntroducedException, PresentialInterviewEntityNotIntroducedException, BeforeDateNotBeforeClosingDate {
+		boolean out=false;
 		String to = position.getManager().getEmail();
 		if (position.getClosingDate().after(position.getOpeningDate())) {
 			if (position.getManager() != null && position.getPhoneInterviewEntity() != null && position.getPresencialInterviewEntity() != null) {
 				edit(position);
 				//send email to new manager
-				mail.sendEMail("acertarorumoamj@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "The positon " +position.getTitle()+" was edited", to);
+				mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "The positon " +position.getTitle()+" was edited", to);
+				out = true;
 			}
 		} else if (position.getManager() == null) {
 			throw new ManagerNotIntroducedException();
@@ -157,6 +173,8 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 		} else {
 			throw new BeforeDateNotBeforeClosingDate();
 		}
+		
+		return out;
 	}
 
 	/**
@@ -165,8 +183,45 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 	 * @return List of position where closing date is after atual date
 	 */
 	public List<PositionEntity> lstPositionAtualDateBeforeClosingDate(Date currentDate) {
+		/*Date today=new Date();
+		Date strToDate = null;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String DateToStr = format.format(today);
+		System.out.println("\nToday's date="+today);
+		String data="2015-09-04";
+		System.out.println(" 2. " + DateFormat.getInstance().format(today));
+		// Get the default MEDIUM/SHORT DateFormat
+        DateFormat dateformat = DateFormat.getDateInstance(DateFormat.SHORT);
+		 // Parse the date
+        try {
+            today = dateformat.parse(data);
+            System.out.println("Original string: " + data);
+            System.out.println("Parsed date    : " + 
+                 today.toString());
+        }
+        catch(ParseException pe) {
+            System.out.println("ERROR: could not parse date in string \"" +
+                data + "\"");
+        }
+		
+		System.out.println("\n Inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with current string data="+data);
+		
+		try {
+			// News date
+			strToDate = format.parse(DateToStr);
+			System.out.println("Parsing to Date --> strToDate="+strToDate);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("Exception inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with message="+e.getMessage());
+		}*/
+		Logger.getLogger(PositionFacade.class.getName()).log(Level.INFO,"\n Inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with current date ="+currentDate+"\n");
+		//System.out.println("\n Inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with current date ="+currentDate+"\n");
 		Query query = em.createNamedQuery("PositionEntity.findPublicBeforeClosingDate", PositionEntity.class);
 		query.setParameter("currentDate", currentDate);
+		Logger.getLogger(PositionFacade.class.getName()).log(Level.INFO,"\nInside PositionFacade.lstPositionAtualDateBeforeClosingDate() where list.size ="+query.getResultList().size());
+		//System.out.println("\nInside PositionFacade.lstPositionAtualDateBeforeClosingDate() where list.size ="+query.getResultList().size());
 		return query.getResultList();
 	}
 

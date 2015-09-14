@@ -21,23 +21,29 @@
 					<p:menuitem value="Edit"
 						action="/pages/admin/edituser.xhtml?faces-redirect=true" />
 				</p:submenu>
+
+				<p:submenu label="Users" style="padding-left:20px">
+					<p:menuitem value="Add New User"
+						action="/pages/admin/addnewuser.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+					<p:menuitem value="Searching Users"
+						action="/pages/admin/searchusers.xhtml?faces-redirect=true" />
+				</p:submenu>
+
 				<p:submenu label="Positions" style="padding-left:20px">
 					<p:menuitem value="Add Position"
-						action="/pages/admin/openPosition.xhtml?faces-redirect=true" />
+						action="/pages/admin/addPosition.xhtml?faces-redirect=true" />
 					<p:menuitem value="Search All Positions"
 						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
 				</p:submenu>
 
-				<p:menuitem value="Add new User"
-					action="/pages/admin/addnewuser.xhtml?faces-redirect=true"
-					style="padding-left:20px" />
 				<p:submenu label="Applications" style="padding-left:20px">
 					<p:menuitem value="Add Manual"
-						action="/pages/admin/manualApply.xhtml?faces-redirect=true" />
+						action="/pages/admin/newManualApplic.xhtml?faces-redirect=true" />
 					<p:menuitem value="Non Spontaneous"
 						action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
 					<p:menuitem value="Spontaneous"
-						action="/pages/admin/spontaneousApplications.xhtml?faces-redirect=true" />
+						action="/pages/admin/newSpontaneousApplications.xhtml?faces-redirect=true" />
 					<p:menuitem value="Negotiation Process"
 						action="/pages/admin/negotiation.xhtml?faces-redirect=true" />
 					<p:menuitem value="Offers"
@@ -83,159 +89,672 @@
 			</div>
 		</h:form>
 
+
+
+
 	</ui:define>
 	<!--Main Content-->
 
 	<ui:define name="content">
-	
+
 		<h:form id="form">
-             
-    <p:growl id="msgs" showDetail="true" />
- 
-    <h3 style="margin-top:0">Basic</h3>
-    <p:tabView>
-        <p:tab title="Godfather Part I">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
-                <h:outputText
-                    value="The story begins as Don Vito Corleone..." />
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part II">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="Francis Ford Coppola's legendary..." />
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part III">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                <h:outputText value="After a break of more than 15 years..." />
-            </h:panelGrid>
-        </p:tab>
-    </p:tabView>
- 
-    <h3>On-Demand Loading</h3>
-    <p:tabView dynamic="true" cache="true">
-        <p:tab title="Godfather Part I">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
-                <h:outputText
-                    value="The story begins as Don Vito Corleone..." />
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part II">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="Francis Ford Coppola's legendary..." />
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part III">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                <h:outputText value="After a break of more than 15 years..." />
-            </h:panelGrid>
-        </p:tab>
-    </p:tabView>
- 
-    <h3>Change Event</h3>
-    <p:tabView>
-        <p:ajax event="tabChange" listener="#{tabbedView.onTabChange}" update=":form:msgs"/>
-        <p:ajax event="tabClose" listener="#{tabbedView.onTabClose}" update=":form:msgs"/>
- 
-        <p:tab title="Godfather Part I">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
-                <h:outputText
-                    value="The story begins as Don Vito Corleone..." />
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part II" closable="true">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="Francis Ford Coppola's legendary..." />
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part III" closable="true">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                <h:outputText value="After a break of more than 15 years..." />
-            </h:panelGrid>
-        </p:tab>
-    </p:tabView>
- 
-    <h3>DataModel</h3>
-    <p:tabView value="#{tabbedView.cars}" var="car">
-        <p:tab title="Car - #{car.id}">
-            <h:panelGrid columns="2" cellpadding="5">
-                <f:facet name="header">
-                    <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" />
-                </f:facet>                    
-                <h:outputText value="Brand:" style="font-weight: bold"/>
-                <h:outputText value="#{car.brand}" />
- 
-                <h:outputText value="Year:" style="font-weight: bold"/>
-                <h:outputText value="#{car.year}" />
- 
-                <h:outputText value="Color:" style="font-weight: bold"/>
-                <h:outputText value="#{car.color}" />
-            </h:panelGrid>
-        </p:tab>
-    </p:tabView>
- 
-    <h3>Scrollable</h3>
-    <p:tabView scrollable="true">
-        <p:tab title="Tab 1">Tab 1 Content</p:tab>
-        <p:tab title="Tab 2">Tab 2 Content</p:tab>
-        <p:tab title="Tab 3">Tab 3 Content</p:tab>
-        <p:tab title="Tab 4">Tab 4 Content</p:tab>
-        <p:tab title="Tab 5">Tab 5 Content</p:tab>
-        <p:tab title="Tab 6">Tab 6 Content</p:tab>
-        <p:tab title="Tab 7">Tab 7 Content</p:tab>
-        <p:tab title="Tab 8">Tab 8 Content</p:tab>
-        <p:tab title="Tab 9">Tab 9 Content</p:tab>
-        <p:tab title="Tab 10">Tab 10 Content</p:tab>
-        <p:tab title="Tab 11">Tab 11 Content</p:tab>
-        <p:tab title="Tab 12">Tab 12 Content</p:tab>
-        <p:tab title="Tab 13">Tab 13 Content</p:tab>
-        <p:tab title="Tab 14">Tab 14 Content</p:tab>
-        <p:tab title="Tab 15">Tab 15 Content</p:tab>
-        <p:tab title="Tab 16">Tab 16 Content</p:tab>
-        <p:tab title="Tab 17">Tab 17 Content</p:tab>
-        <p:tab title="Tab 18">Tab 18 Content</p:tab>
-        <p:tab title="Tab 19">Tab 19 Content</p:tab>
-        <p:tab title="Tab 20">Tab 20 Content</p:tab>
-        <p:tab title="Tab 21">Tab 21 Content</p:tab>
-        <p:tab title="Tab 22">Tab 22 Content</p:tab>
-        <p:tab title="Tab 23">Tab 23 Content</p:tab>
-        <p:tab title="Tab 24">Tab 24 Content</p:tab>
-        <p:tab title="Tab 25">Tab 25 Content</p:tab>                
-    </p:tabView>
- 
-    <h3>Orientation - Top|Bottom|Left|Right</h3>
-    <p:tabView orientation="left">
-        <p:tab title="Godfather Part I">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
-                <h:outputText
-                    value="The story begins as Don Vito Corleone..." />
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part II">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="Francis Ford Coppola's legendary..." />
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part III">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                <h:outputText value="After a break of more than 15 years..." />
-            </h:panelGrid>
-        </p:tab>
-    </p:tabView>
-</h:form>
-	
+
+			<p:growl id="msgs" showDetail="true" />
+
+			<!--  menu horizontal -->
+			<div>
+				<h3>Welcome Admin</h3>
+				<p:tabView dynamic="true" cache="true">
+					<p:tab title="Positions">
+						<!--  menu vertical -->
+						<p:tabView orientation="left">
+							<p:tab title="Add Positions">
+
+								<h3 class="center">Values with * are mandatory</h3>
+								<h1 class="center">Add a new Position</h1>
+								<!--Position form -->
+
+								<h:form id="newposition">
+
+									<h:panelGrid columns="4" cellpadding="5" class="center">
+
+										<p:outputLabel value="Title:*" />
+										<p:inputText id="title" required="true" label="title"
+											size="40" requiredMessage="Please, enter a title"
+											value="#{positionWebManagem.position.title}" />
+
+										<p:outputLabel for="openingDate" value="Opening date:" />
+										<p:calendar id="openingDate"
+											value="#{positionWebManagem.position.openingDate}"
+											pattern="MM/dd/yyyy HH:mm"
+											requiredMessage="Please enter a Opening Date" required="true" />
+
+										<p:outputLabel for="closingDate" value="Closing date:" />
+										<p:calendar id="closingDate"
+											value="#{positionWebManagem.position.closingDate}"
+											pattern="MM/dd/yyyy HH:mm"
+											requiredMessage="Please, enter a Closing date"
+											required="true" />
+
+										<p:outputLabel value="Company:*" />
+										<p:inputText id="company" title="company"
+											value="#{positionWebManagem.position.company}"
+											required="true" requiredMessage="Please, enter a Company" />
+
+										<p:outputLabel value="Technical Area:*" />
+										<p:inputText id="technicalArea" title="Technical Area"
+											value="#{positionWebManagem.position.technicalArea}"
+											required="true"
+											requiredMessage="Please, enter a Technical Area" />
+
+										<p:outputLabel value="Job Description:*" />
+										<p:inputTextarea id="jobDescription" title="Job Description"
+											value="#{positionWebManagem.position.jobDescription}"
+											required="true"
+											requiredMessage="Please, enter a Job Description." />
+
+										<p:outputLabel value="Publishing channels:*" />
+										<p:inputText id="publishingChannels"
+											title="Publishing channels"
+											value="#{positionWebManagem.position.publishingChannels}"
+											required="true"
+											requiredMessage="Please, enter a Publishing channels." />
+
+										<p:outputLabel for="location" value="Location: " />
+										<p:selectOneMenu id="location"
+											value="#{positionWebManagem.position.location}">
+											<f:selectItem itemLabel="Lisboa" itemValue="LISBOA" />
+											<f:selectItem itemLabel="Porto" itemValue="PORTO" />
+											<f:selectItem itemLabel="Coimbra" itemValue="COIMBRA" />
+											<f:selectItem itemLabel="Coimbra and Lisboa"
+												itemValue="COIMBRA_LISBOA" />
+											<f:selectItem itemLabel="Coimbra and Porto"
+												itemValue="COIMBRA_PORTO" />
+											<f:selectItem itemLabel="Lisboa and Porto"
+												itemValue="LISBOA_PORTO" />
+											<f:selectItem itemLabel="Coimbra, Lisboa and Porto"
+												itemValue="COIMBRA_LISBOA_PORTO" />
+										</p:selectOneMenu>
+
+										<p:outputLabel for="status" value="Status: " />
+										<p:selectOneMenu id="status"
+											value="#{positionWebManagem.position.status}">
+											<f:selectItem itemLabel="Open" itemValue="OPEN" />
+											<f:selectItem itemLabel="Close" itemValue="CLOSED" />
+											<f:selectItem itemLabel="On Hold" itemValue="ONHOLD" />
+										</p:selectOneMenu>
+
+										<p:outputLabel for="public" value="Is public:" />
+										<h:selectOneRadio id="public"
+											value="#{positionWebManagem.position.isPublic}">
+											<f:selectItem itemLabel="Yes" itemValue="True" />
+											<f:selectItem itemLabel="No" itemValue="False" />
+										</h:selectOneRadio>
+
+
+										<p:outputLabel for="vacancies" value="Number of vacancies: " />
+										<p:spinner id="vacancies"
+											value="#{positionWebManagem.position.vacancies}" min="0" />
+
+
+
+										<!-- 
+									Button which shows pop up of guides
+									
+									
+										<p:commandButton id="phoneguideToChooseButton"
+										value="Choose a phone Guide Interview*"
+										oncomplete="PF('phoneguide').show()" update="phoneguideTable">
+										<f:setPropertyActionListener value="#{guide}"
+											target="#{positionWebManagem.selectedInterviewGuide}" />
+									</p:commandButton>
+
+
+									<p:outputLabel id="thephoneguide"
+										value="#{positionWebManagem.position.phoneInterviewEntity.title}" />
+
+
+									<p:commandButton id="presentialguideToChooseButton"
+										value="Choose a presential Guide Interview*"
+										oncomplete="PF('presentialguide').show()"
+										update=":presentialguideTable">
+										<f:setPropertyActionListener value="#{guide}"
+											target="#{positionWebManagem.selectedInterviewGuide}" />
+									</p:commandButton>
+
+
+
+									<p:outputLabel id="thepresentialguide"
+										value="#{positionWebManagem.position.presencialInterviewEntity.title}" />
+
+										Button which shows pop up of managers
+
+										 
+										<p:commandButton id="managerToChooseButton"
+										value="Choose a Manager for this position*"
+										oncomplete="PF('manager').show()" update=":managerTable">
+										<f:setPropertyActionListener value="#{manager}"
+											target="#{positionWebManagem.selectedManager}" />
+									</p:commandButton>
+
+
+									<p:outputLabel id="manager"
+										value="#{positionWebManagem.position.manager.username}" />
+
+									<h:outputLabel></h:outputLabel>
+
+									<h:commandButton value="Add Position"
+										style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+										action="#{positionWebManagem.addPosition()}" />
+
+								</h:panelGrid>
+
+							</h:form>
+
+
+							
+								Pop up of Presential Guides
+
+								     <h:form id="presentialguideTable">
+								<p:dialog header="Guides" widgetVar="presentialguide"
+									modal="true" height="500" width="500">
+									<p:dataTable id="theguide" selectionMode="single"
+										rowKey="#{guide.interviewId}"
+										selection="#{positionWebManagem.selectedInterviewGuide}"
+										value="#{positionWebManagem.lstPresentialInterviewsInUse}"
+										var="guide">
+
+										<p:column styleClass="centeredColumn" headerText="Title"
+											filterBy="#{guide.title}" filterMatchMode="contains">
+                                #{guide.title}
+                            </p:column>
+
+										<p:column styleClass="centeredColumn"
+											headerText="Creation Date" filterBy="#{guide.creationDate}"
+											filterMatchMode="contains">
+                                #{guide.creationDate}
+                            </p:column>
+
+
+									</p:dataTable>
+									<h:commandButton value="Add Presential Guide for this position"
+										action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
+										style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+
+								</p:dialog>
+							</h:form>
+
+                Pop up of Phone Guides
+
+                <h:form id="phoneguideTable">
+								<p:dialog header="Guides" widgetVar="phoneguide" modal="true"
+									height="500" width="500">
+									<p:dataTable id="theguide" selectionMode="single"
+										rowKey="#{guide.interviewId}"
+										selection="#{positionWebManagem.selectedInterviewGuide}"
+										value="#{positionWebManagem.lstPhoneInterviewsInUse}"
+										var="guide">
+
+										<p:column styleClass="centeredColumn" headerText="Title"
+											filterBy="#{guide.title}" filterMatchMode="contains">
+                                #{guide.title}
+                            </p:column>
+
+										<p:column styleClass="centeredColumn"
+											headerText="Creation Date" filterBy="#{guide.creationDate}"
+											filterMatchMode="contains">
+                                #{guide.creationDate}
+                            </p:column>
+
+
+									</p:dataTable>
+									<h:commandButton value="Add Phone Guide for this position"
+										action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}"
+										style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+								</p:dialog>
+							</h:form>
+
+                Pop up of managers
+
+                <h:form id="managerTable">
+								<p:dialog header="Managers" widgetVar="manager" modal="true"
+									height="300" width="300">
+									<f:facet name="header">
+                            List of Managers
+                        </f:facet>
+									<p:dataTable id="manager" selectionMode="single"
+										rowKey="#{manager.userId}"
+										selection="#{positionWebManagem.selectedManager}"
+										value="#{positionWebManagem.lstManagers}" var="manager">
+										<p:column styleClass="centeredColumn" headerText="Username"
+											filterBy="#{manager.username}" filterMatchMode="contains">
+                                #{manager.username}
+                            </p:column>
+										<p:column styleClass="centeredColumn" headerText="First Name"
+											filterBy="#{manager.firstName}" filterMatchMode="contains">
+                                #{manager.firstName}
+                            </p:column>
+										<p:column styleClass="centeredColumn" headerText="Last Name"
+											filterBy="#{manager.lastName}" filterMatchMode="contains">
+                                #{manager.lastName}
+                            </p:column>
+
+									</p:dataTable>
+									<h:commandButton value="Add Manager for this position"
+										action="#{positionWebManagem.setTheSelectedManager()}"
+										style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+								</p:dialog>
+							</h:form>
+
+										</p:tab> -->
+
+
+										<!-- Search all positions -->
+										<p:tab title="Search all Positions">
+
+										</p:tab>
+
+									</h:panelGrid>
+								</h:form>
+
+
+							</p:tab>
+
+							<p:tab title="Search all Positions">
+
+								<!-- 	  <h:form>
+                    <h:panelGrid columns="2">
+                        <h3> Average Time until first Interview: </h3>
+                        <h:outputLabel value="#{reportAverageBB.averageTimeToInterview()}" />
+                        <h3> Average Time to Hire: </h3>
+                        <h:outputLabel value="#{reportAverageBB.averageTimeToHire()}" />
+
+                        <p:commandButton id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
+                            <f:setPropertyActionListener value="#{manager}" target="#{reportAverageBB.selectedManager}" />
+                        </p:commandButton>
+
+                        <p:outputLabel id="themanager" value="#{reportAverageBB.manager.email}" />
+                    </h:panelGrid>
+                </h:form>
+
+                <h:form id="searchpositions">
+
+
+
+                    list of all Positions
+
+                    <p:dataTable id="allpositions"  widgetVar="positionTable" paginator="true" rows="10" paginatorPosition="top" editable="false" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{position.positionCode}" selection="#{positionWebManagem.selectedPosition}"
+                                 value="#{positionWebManagem.lstPositions}" var="position" >
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search all fields:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('positionTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>
+
+                        <p:column styleClass="centeredColumn" headerText="Title"  filterBy="#{position.title}" filterMatchMode="contains" >
+                            #{position.title}
+                        </p:column>
+
+                        <p:column styleClass="centeredColumn" headerText="Position Code"  filterBy="#{position.positionCode}" filterMatchMode="contains" >
+                            #{position.positionCode}
+                        </p:column>
+
+                        <p:column styleClass="centeredColumn" headerText="Opening date"  filterBy="#{position.openingDate}" filterMatchMode="contains" >
+                            <h:outputText value="#{position.openingDate}" >
+                                <f:convertDateTime type="DATE" pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column styleClass="centeredColumn" headerText="Closing date" filterBy="#{position.closingDate}"  filterMatchMode="contains" >
+                            <h:outputText value="#{position.closingDate}" >
+                                <f:convertDateTime type="DATE" pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column styleClass="centeredColumn" headerText="Status"  filterMatchMode="contains" filterBy="#{position.status}">
+                            #{position.status}
+                        </p:column>
+
+
+                        <p:column styleClass="centeredColumn" headerText="Location"  filterMatchMode="contains" filterBy="#{position.location}">
+                            #{position.location}
+                        </p:column>
+
+                        <p:column styleClass="centeredColumn" headerText="Company"   filterMatchMode="contains" filterBy="#{position.company}">
+                            #{position.company}
+                        </p:column>
+
+                        <p:column styleClass="centeredColumn" headerText="Technical Area"   filterMatchMode="contains" filterBy="#{position.technicalArea}">
+                            #{position.technicalArea}
+                        </p:column>
+
+                        <p:rowExpansion>
+                            <h:panelGrid columns="1">
+                                <h3>Job Description</h3>
+                                #{position.jobDescription}"
+                            </h:panelGrid>
+                            <h:panelGrid  columns="2" style="width:300px">
+                                <f:facet name="header">
+                                    More Details about this position
+                                </f:facet>
+
+
+
+                                <h:outputText value="Manager" />
+                                <h:outputText value="#{position.manager.username}" />
+
+                                <h:outputText value="SLA (weeks)" />
+                                <h:outputText value="#{position.sla}" />
+
+                                <h:outputText value="Public" />
+                                <h:outputText value="#{position.isPublic}" />
+
+                                <h:outputText value="Phone Interview Guide" />
+                                <h:outputText value="#{position.phoneInterviewEntity.title}" />
+
+                                <h:outputText value="Presential Interview Guide" />
+                                <h:outputText value="#{position.presencialInterviewEntity.title}" />
+
+                                <h:outputText value="Number of vacancies" />
+                                <h:outputText value="#{position.vacancies}" />
+
+                            </h:panelGrid>
+                        </p:rowExpansion>
+
+
+                        <p:column headerText="Insert new Application" width="70" styleClass="centeredColumn" >
+                            <p:commandButton rendered="#{positionWebManagem.canAssociatePositionToApplication(position)}"  action="#{positionWebManagem.goToApplicationForm(position)}" icon="ui-icon-plus"  title="Add"   >
+                                <f:setPropertyActionListener value="#{position}" target="#{positionWebManagem.selectedPosition}"  />
+                            </p:commandButton>
+                        </p:column>
+
+
+                        <p:column headerText="Edit" width="40" styleClass="centeredColumn" >
+                            <p:commandButton rendered="#{positionWebManagem.canEditPosition(position)}"   action="#{positionWebManagem.showPanel()}" icon="ui-icon-pencil" title="View"  ajax="false"  >
+                                <f:setPropertyActionListener value="#{position}" target="#{positionWebManagem.selectedPosition}"  />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form>
+
+                Edition of specific Position
+
+                <h:form>
+                    <p:growl showDetail="true"/>
+                    <h:panelGroup binding="#{positionWebManagem.panelGroup}" rendered="false">
+                        <div align="left">
+                            <h1> Please, edit #{positionWebManagem.selectedPosition.title}</h1>
+                        </div>
+
+                        <h:panelGrid columns="2" cellpadding="5">
+
+
+                            <h:outputLabel value="Title"/>
+                            <h:inputText  required="true" label="title"
+                                          size="40" requiredMessage="Please enter a title"
+                                          value="#{positionWebManagem.selectedPosition.title}" />
+
+                            <h:outputLabel value="Job Description" />
+                            <h:inputTextarea  title="Job Description"  value="#{positionWebManagem.selectedPosition.jobDescription}" required="true" requiredMessage="Job Description" style="width:900px; height:80px;"/>
+
+                            <h:outputLabel value="Publishing channels" />
+                            <h:inputText id="publishingChannels" title="Publishing channels"  value="#{positionWebManagem.selectedPosition.publishingChannels}" required="true" requiredMessage="Publishing channels."/>
+
+                            <p:outputLabel for="location" value="Location: " />
+                            <p:selectOneMenu id="location" value="#{positionWebManagem.selectedPosition.location}">
+                                <f:selectItem itemLabel="Lisboa" itemValue="LISBOA" />
+                                <f:selectItem itemLabel="Porto" itemValue="PORTO" />
+                                <f:selectItem itemLabel="Coimbra" itemValue="COIMBRA" />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="status" value="Status " />
+                            <p:selectOneMenu id="status" value="#{positionWebManagem.selectedPosition.status}">
+                                <f:selectItem itemLabel="Open" itemValue="OPEN" />
+                                <f:selectItem itemLabel="Close" itemValue="CLOSED" />
+                                <f:selectItem itemLabel="On Hold" itemValue="ONHOLD" />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="public" value="Is public:" />
+                            <h:selectOneRadio id="public" value="#{positionWebManagem.selectedPosition.isPublic}">
+                                <f:selectItem itemLabel="Yes" itemValue="True"   />
+                                <f:selectItem itemLabel="No" itemValue="False" />
+                            </h:selectOneRadio>
+
+
+                            <h:outputLabel for="vacancies" value="Number of vacancies: " />
+                            <p:spinner id="vacancies" value="#{positionWebManagem.selectedPosition.vacancies}" min="0" />
+                            Pop up of guides
+
+                            <p:commandButton  value="Choose a phone Guide Interview" oncomplete="PF('phoneguide').show()" update=":phoneguideTable" >
+                                <f:setPropertyActionListener value="#{guide}" target="#{positionWebManagem.selectedInterviewGuide}" />
+                            </p:commandButton>
+
+                            <p:outputLabel  value="#{positionWebManagem.selectedPosition.phoneInterviewEntity.title}" />
+
+                            <p:commandButton  value="Choose a presential Guide Interview" oncomplete="PF('presentialguide').show()" update=":presentialguideTable" >
+                                <f:setPropertyActionListener value="#{guide}" target="#{positionWebManagem.selectedInterviewGuide}" />
+                            </p:commandButton>
+
+
+                            <p:outputLabel value="#{positionWebManagem.selectedPosition.presencialInterviewEntity.title}" />
+
+                            Pop up of managers
+
+                            <p:commandButton  value="Choose a Manager for this position" oncomplete="PF('manager').show()" update=":managerTable" >
+                                <f:setPropertyActionListener value="#{manager}" target="#{positionWebManagem.selectedManager}" />
+                            </p:commandButton>
+
+                            <h:outputText value="#{positionWebManagem.selectedPosition.manager.username}"/>
+
+                            <h:outputText></h:outputText>
+                            <h:commandButton  value="Edit" action="#{positionWebManagem.editPosition()}" style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                        </h:panelGrid>
+
+                    </h:panelGroup>
+                </h:form>
+
+                Pop up of Presential Guides
+
+                <h:form id="presentialguideTable" >
+                    <p:dialog header="Guides" widgetVar="presentialguide" modal="true" height="500" width="500"  >
+                        <p:dataTable id="theguide" selectionMode="single" rowKey="#{guide.interviewId}" selection="#{positionWebManagem.selectedInterviewGuide}"
+                                     value="#{positionWebManagem.lstPresentialInterviewsInUse}" var="guide"  >
+
+                            <p:column styleClass="centeredColumn"  headerText="Title"  filterBy="#{guide.title}" filterMatchMode="contains">
+                                #{guide.title}
+                            </p:column>
+
+                            <p:column  styleClass="centeredColumn" headerText="Creation Date"  filterBy="#{guide.creationDate}" filterMatchMode="contains">
+                                #{guide.creationDate}
+                            </p:column>
+
+
+                        </p:dataTable>
+                        <h:commandButton value="Add Presential Guide for this position" action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
+
+                    </p:dialog>
+                </h:form>
+
+                Pop up of Phone Guides
+
+                <h:form id="phoneguideTable" >
+                    <p:dialog header="Guides" widgetVar="phoneguide" modal="true" height="500" width="500"  >
+                        <p:dataTable id="theguide" selectionMode="single" rowKey="#{guide.interviewId}" selection="#{positionWebManagem.selectedInterviewGuide}"
+                                     value="#{positionWebManagem.lstPhoneInterviewsInUse}" var="guide"  >
+
+                            <p:column styleClass="centeredColumn"  headerText="Title"  filterBy="#{guide.title}" filterMatchMode="contains">
+                                #{guide.title}
+                            </p:column>
+
+                            <p:column styleClass="centeredColumn" headerText="Creation Date"  filterBy="#{guide.creationDate}" filterMatchMode="contains">
+                                #{guide.creationDate}
+                            </p:column>
+
+
+                        </p:dataTable>
+                        <h:commandButton value="Add Phone Guide for this position" action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="managerTable">
+                    <p:dialog header="Managers" widgetVar="manager" modal="true" height="300" width="300">
+                        <p:dataTable id="manager" selectionMode="single" rowKey="#{manager.userId}"
+                                     selection="#{positionWebManagem.selectedManager}" value="#{positionWebManagem.lstManagers}" var="manager">
+                            <p:column headerText="Username" sortBy="#{manager.username}">
+                                #{manager.username}
+                            </p:column>
+
+
+                        </p:dataTable>
+                        <h:commandButton value="Add Manager for this position" action="#{positionWebManagem.setTheSelectedManager()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  >
+
+                        </h:commandButton>
+                    </p:dialog>
+
+                </h:form>
+
+                <h:form id="managersTable" >
+                    <p:dialog header="Managers" widgetVar="managers" modal="true" height="500" width="500"  >
+                        <p:dataTable id="themanager" selectionMode="single" rowKey="#{manager.userId}" selection="#{reportAverageBB.selectedManager}"
+                                     value="#{reportAverageBB.lstManagers}" var="manager"  >
+
+                            <p:column styleClass="centeredColumn"  headerText="Manager"  filterBy="#{manager.firstName}" filterMatchMode="contains">
+                                #{manager.firstName}
+                            </p:column>
+
+                            <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.lastName}" filterMatchMode="contains">
+                                #{manager.lastName}
+                            </p:column>
+
+                            <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.email}" filterMatchMode="contains">
+                                #{manager.email}
+                            </p:column>
+
+                        </p:dataTable>
+                        <h:commandButton value="Send email to this Manager" action="#{reportAverageBB.toPdf()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
+                    </p:dialog>
+                </h:form> -->
+
+
+
+							</p:tab>
+						</p:tabView>
+						<!-- fim menu vertical -->
+					</p:tab>
+
+
+
+					<!-- ADICIONARNOVO UTLIZADOR	 -->
+
+
+					<p:tab title="Add New User">
+						<h3>Values with * are mandatory</h3>
+						<h1>Add a new User</h1>
+						<p></p>
+
+						<h:form>
+							<h:panelGrid columns="2">
+								<p:outputLabel value="First Name*" />
+								<p:inputText id="firstname" required="true" label="firstname"
+									size="40" requiredMessage="Please enter your First Name"
+									value="#{adminRequestBean.user.firstName}">
+								</p:inputText>
+								<p:watermark for="firstname" value="First Name" />
+								<p:message for="firstname" />
+
+
+								<p:outputLabel value="Last Name*" />
+								<p:inputText id="lastname" required="true" label="lastname"
+									size="40" requiredMessage="Please enter your last name."
+									value="#{adminRequestBean.user.lastName}">
+								</p:inputText>
+								<p:watermark for="lastname" value="Last Name" />
+								<p:message for="lastname" />
+
+								<p:outputLabel value="Email*" />
+								<p:inputText id="email" required="true" label="email" size="40"
+									requiredMessage="Please enter your email."
+									value="#{adminRequestBean.user.email}">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</p:inputText>
+								<p:watermark for="email" value="Email " />
+								<p:message for="email" />
+
+								<p:outputLabel value="Username*" />
+								<p:inputText id="username" required="true" label="username"
+									size="40" requiredMessage="Please enter your username."
+									value="#{adminRequestBean.user.username}">
+								</p:inputText>
+								<p:watermark for="username" value="Username " />
+								<p:message for="username" />
+
+								<p:outputLabel value="Password*" />
+								<p:password id="password" required="true" label="password"
+									size="40" requiredMessage="Please enter your password."
+									match="confirmPassword"
+									value="#{adminRequestBean.user.password}" maxlength="20">
+								</p:password>
+								<p:watermark for="password" value="Password" />
+								<p:message for="password" />
+
+								<p:outputLabel value="Confirm Password*" />
+								<p:password id="confirmPassword" required="true" size="40"
+									requiredMessage="Please confirm your password."
+									label="confirmPassword"
+									value="#{adminRequestBean.user.password}" maxlength="20">
+								</p:password>
+								<p:watermark for="confirmPassword" value="Type Password Again" />
+								<p:message for="confirmPassword" />
+
+							</h:panelGrid>
+
+
+							<p:selectOneMenu id="userType"
+								value="#{adminRequestBean.userType}">
+								<f:selectItem itemLabel="Admin" itemValue="Admin" />
+								<f:selectItem itemLabel="Manager" itemValue="Manager" />
+								<f:selectItem itemLabel="Interviewer" itemValue="Interviewer" />
+							</p:selectOneMenu>
+
+							<h:outputText></h:outputText>
+
+							<h:commandButton value="Add"
+								style="width:100px; height:45px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+								action="#{adminRequestBean.createNewUser()}" />
+
+						</h:form>
+					</p:tab>
+
+
+					<!-- 			
+			CANDIDATURAS	 -->
+
+					<p:tab title="Applications">
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+							<h:outputText value="After a break of more than 15 years..." />
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+			</div>
+
+		</h:form>
+
+
+
+
+
 		<!-- <h:form>
 
 			<p:tabView>
@@ -252,7 +771,7 @@
 				</p:tab>
 				<p:tab title="Applications">
 					<p:menuitem value="Add Manual"
-						action="/pages/admin/manualApply.xhtml?faces-redirect=true" />
+						action="/pages/admin/manualApplic.xhtml?faces-redirect=true" />
 					<p:menuitem value="Non Spontaneous"
 						action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
 					<p:menuitem value="Spontaneous"

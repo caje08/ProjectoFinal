@@ -6,9 +6,9 @@ package pt.uc.dei.aor.proj.web;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.serv.facade.AdminFacade;
-import pt.uc.dei.aor.proj.serv.facade.UserGuideFacade;
+import pt.uc.dei.aor.proj.serv.facade.UserEntityFacade;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.MaintainSession;
 import pt.uc.dei.aor.proj.serv.tools.UserData;
@@ -31,16 +31,16 @@ import pt.uc.dei.aor.proj.serv.tools.UserData;
  */
 @Named
 @RequestScoped
-public class UserControllerBB {
+public class UserCheck {
 
-	@Inject
+	@EJB
 	private UserData userData;
-	@Inject
+	@EJB
 	private AdminFacade adminGuideFacade;
-	@Inject
-	private UserGuideFacade userGuideFacade;
+	@EJB
+	private UserEntityFacade userGuideFacade;
 
-	private static final Logger log = Logger.getLogger(UserControllerBB.class.getName());
+	private static final Logger log = Logger.getLogger(UserCheck.class.getName());
 	private String errorMessage;
 
 	/**
@@ -48,7 +48,7 @@ public class UserControllerBB {
 	 * @return to index if logout is made correctly
 	 */
 	public String logout() {
-		String destination = "/faces/index?faces-redirect=true";
+		String destination = "/login?faces-redirect=true";
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request
@@ -58,7 +58,7 @@ public class UserControllerBB {
 		session.invalidate();
 		MaintainSession.clear();
 
-		((UserControllerBB) request).logout();
+		((UserCheck) request).logout();
 		//        try {
 		//            HttpSession session = request.getSession();
 		//            session.invalidate();
@@ -82,10 +82,10 @@ public class UserControllerBB {
 			return userData.getLoggedUser().getUsername();
 		} catch (NoResultException ex) {
 			errorMessage = ex.getMessage();
-			Logger.getLogger(UserControllerBB.class.getName()).log(Level.SEVERE, null, ex);
-			return "/faces/login.xhtml?faces-redirect=true";
+			Logger.getLogger(UserCheck.class.getName()).log(Level.SEVERE, null, ex);
+			return "/login.xhtml?faces-redirect=true";
 		} catch (UserGuideException ex) {
-			Logger.getLogger(UserControllerBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(UserCheck.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return null;
 	}
@@ -98,7 +98,7 @@ public class UserControllerBB {
 		try {
 			return userData.getLoggedUser() instanceof AdminEntity;
 		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
-			Logger.getLogger(UserControllerBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(UserCheck.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 		return false;
@@ -113,7 +113,7 @@ public class UserControllerBB {
 		try {
 			return userData.getLoggedUser() instanceof ManagerEntity;
 		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
-			Logger.getLogger(UserControllerBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(UserCheck.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 		return false;
@@ -127,7 +127,7 @@ public class UserControllerBB {
 		try {
 			return userData.getLoggedUser() instanceof InterviewerEntity;
 		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
-			Logger.getLogger(UserControllerBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(UserCheck.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 		return false;
@@ -151,11 +151,11 @@ public class UserControllerBB {
 		this.adminGuideFacade = adminGuideFacade;
 	}
 
-	public UserGuideFacade getUserGuideFacade() {
+	public UserEntityFacade getUserGuideFacade() {
 		return userGuideFacade;
 	}
 
-	public void setUserGuideFacade(UserGuideFacade userGuideFacade) {
+	public void setUserGuideFacade(UserEntityFacade userGuideFacade) {
 		this.userGuideFacade = userGuideFacade;
 	}
 

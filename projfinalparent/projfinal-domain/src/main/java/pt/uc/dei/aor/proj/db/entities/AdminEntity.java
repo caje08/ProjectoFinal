@@ -23,6 +23,8 @@ public class AdminEntity extends UserEntity implements Serializable {
 		super(firstName, lastName, password, email, username);
 		this.roles=new ArrayList<Role>();
 		this.roles.add(Role.ADMIN);
+		this.roles.add(Role.MANAGER);
+		this.roles.add(Role.INTERVIEWER);
 	}
 
 	@Override

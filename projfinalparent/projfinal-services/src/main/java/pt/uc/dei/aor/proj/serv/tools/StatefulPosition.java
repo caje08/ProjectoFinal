@@ -3,6 +3,8 @@
 package pt.uc.dei.aor.proj.serv.tools;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
@@ -28,6 +30,7 @@ public class StatefulPosition implements Serializable {
 
 	public void setPosition(PositionEntity position) {
 		this.position = position;
+		Logger.getLogger(StatefulPosition.class.getName()).log(Level.INFO, "inside setPosition() and stating  positionentity where title is =" + position.getTitle());
 	}
 
 

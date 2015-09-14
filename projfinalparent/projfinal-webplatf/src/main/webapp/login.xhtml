@@ -10,6 +10,7 @@
 		<ui:define name="top">
 			<div id="search">
 				<h:form>
+					<f:event listener="#{appDetailsStatus.init()}" type="preRenderView" />
 					<f:event listener="#{loginMB.logged()}" type="preRenderView" />
 
 					<table>
@@ -38,7 +39,7 @@
 
 			<div id="user_logout">
 				<h:form rendered="#{render.active}">
-					<h:commandButton value="#{activeSession.activeUser.name}" />
+					<h:commandButton value="#{activeSession.activeUser.firstName}" />
 					<table>
 						<tr>
 							<td><h:commandButton action="index" value="Continue Session" /></td>
@@ -57,6 +58,24 @@
 				name="critSW2_large.png" />
 		</ui:define>
 		<ui:define name="bottom" />
+		
+<!-- 		 <h:body>
+        <f:event listener="#{appDetailsStatus.init()}" type="preRenderView" />
+        <div id="box" align="left">
+            <h3>Welcome to the Login Page</h3>
+            <form method="post" action="j_security_check">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="User Name"/>
+                    <input type="text" name="j_username" />
+                    <h:outputLabel value="Password"/>
+                    <input type="password" name="j_password" />
+                    <input type="submit" value="Login" />
+                    <h:link outcome="/index" value="To Home Page" />
+                </h:panelGrid>
+            </form> 
+        </div>
+    </h:body> -->
+		
 	</ui:composition>
 </h:body>
 

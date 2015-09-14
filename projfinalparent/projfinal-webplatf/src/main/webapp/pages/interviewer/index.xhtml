@@ -7,7 +7,7 @@
 <h:body>
 	<ui:composition template="/common/layout.xhtml" />
 
-	<ui:insert name="browser">
+	<ui:define name="browser">
 
 
 		<!-- Open Opportunities Browser -->
@@ -24,7 +24,8 @@
 				<h:column>#{user.password}</h:column>
 				<h:column>#{user.email}</h:column>
 			</h:dataTable>
-	</ui:insert>
+		</h:form>
+	</ui:define>
 	</ui:composition>
 
 </h:body>

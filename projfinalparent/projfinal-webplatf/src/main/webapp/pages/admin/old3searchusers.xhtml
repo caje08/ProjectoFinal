@@ -1,0 +1,193 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<body>
+	<ui:composition template="./mainadmin.xhtml">
+		<ui:define name="content">
+
+			<h:form id="searchusers">
+
+				<!--list of all Users-->
+
+				<p:dataTable id="allusers" widgetVar="userTable" paginator="true"
+					rows="10" paginatorPosition="top" editable="false"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30" selectionMode="single"
+					rowKey="#{userapp.email}" selection="#{userWebView.selectedUser}"
+					value="#{userWebView.lstUsers}" var="userapp">
+
+					<p:ajax event="rowSelect" update="@form" />
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Search all fields:" />
+							<p:inputText id="globalFilter" onkeyup="PF('userTable').filter()"
+								style="width:150px" placeholder="Enter keyword" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column styleClass="centeredColumn" headerText="First Name"
+						filterBy="#{userapp.firstName}" filterMatchMode="contains">
+                            #{userapp.firstName}
+                        </p:column>
+
+					<p:column styleClass="centeredColumn" headerText="Last Name"
+						filterBy="#{userapp.lastName}" filterMatchMode="contains">
+                            #{userapp.lastName}
+                        </p:column>
+
+					<p:column styleClass="centeredColumn" headerText="Email"
+						filterBy="#{userapp.email}" filterMatchMode="contains">
+                            #{userapp.email}
+                        </p:column>
+
+					<p:column styleClass="centeredColumn" headerText="Roles"
+						filterBy="#{userapp.role}" filterMatchMode="contains">
+                            #{userapp.roles}
+                        </p:column>
+
+
+					<p:column headerText="Edit" width="40" styleClass="centeredColumn">
+						<p:dialog header="edit user" widgetVar="editUser">
+							<h3>Values with * are mandatory</h3>
+							<h1>Edit User Profile</h1>
+
+							<h:panelGrid columns="2" cellpadding="4">
+
+								<p:outputLabel value="First Name*" />
+							
+								<p:inputText id="firstname" required="true" label="firstname"
+									size="40" requiredMessage="Please enter your First Name"
+									value="#{userapp.firstName}">
+								</p:inputText>
+
+								<p:outputLabel value="Last Name*" />
+								<p:inputText id="lastname" required="true" label="lastname"
+									size="40" requiredMessage="Please enter your last name."
+									value="#{userapp.lastName}">
+								</p:inputText>
+
+								<p:outputLabel value="Email" />
+								<p:outputLabel value="#{userapp.email}" />
+								
+								<p:outputLabel value="Password*" />
+								<p:password id="password" required="true" label="password"
+									size="40" requiredMessage="Please enter your password."
+									match="confirmPassword" value="#{userWebView.password}"
+									maxlength="20">
+									<p:watermark for="password" value="Password " />
+								</p:password>
+								<p:message for="password" />
+
+								<p:outputLabel value="Confirm Password*" />
+								<p:password id="confirmPassword" required="true" size="40"
+									requiredMessage="Please confirm your password."
+									label="confirmPassword" value="#{userWebView.password}"
+									maxlength="20">
+									<p:watermark for="confirmPassword" value="Type Password Again" />
+								</p:password>
+								<p:message for="confirmPassword" />
+
+								<p:outputLabel value="Roles: " />
+								<p:selectCheckboxMenu value="#{userapp.roles}"
+									label="Roles" filterMatchMode="contains" filter="on"
+									type="Collection-type">
+									<f:selectItems value="#{userapp.roles}" />
+								</p:selectCheckboxMenu>
+								
+							</h:panelGrid>
+
+							<h:commandButton value="Update User Profile"
+								style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+								action="#{userWebView.showPanel()}" />
+							<h:commandButton value="Cancel"
+								style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+								action="/pages/admin/searchusers.xhtml?faces-redirect=true" />
+						</p:dialog>
+						<p:commandButton type="button" value="edit"
+							onclick="PF('editUser').show(); return false;" />
+
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+
+			<!--Edition of specific User Profile-->
+
+			<h:form>
+				<p:growl showDetail="true" />
+				<h:panelGroup binding="#{userWebView.panelGroup}" rendered="false">
+					<div align="left">
+						<h1>Please, edit #{userWebView.selectedUser.email}</h1>
+					</div>
+
+					<h:panelGrid columns="2" cellpadding="5">
+
+						<p:outputLabel value="First Name*" />
+						<p:inputText id="firstname2" required="true" label="firstname"
+							size="40" requiredMessage="Please enter your First Name"
+							value="#{userWebView.firstName}">
+						</p:inputText>
+						<p:watermark for="firstname2" value="First Name" />
+
+						<p:outputLabel value="Last Name*" />
+						<p:inputText id="lastname2" required="true" label="lastname"
+							size="40" requiredMessage="Please enter your last name."
+							value="#{userWebView.lastName}">
+						</p:inputText>
+						<p:watermark for="lastname2" value="Last Name" />
+
+						<p:outputLabel value="Email" />
+						<p:outputLabel value="#{userWebView.email}" />
+
+						<p:outputLabel value="Password*" />
+						<p:password id="password2" required="true" label="password"
+							size="40" requiredMessage="Please enter your password."
+							match="confirmPassword" value="#{userWebView.password}"
+							maxlength="20">
+						</p:password>
+						<p:watermark for="password2" value="Password " />
+						<p:message for="password" />
+
+						<p:outputLabel value="Confirm Password*" />
+						<p:password id="confirmPassword2" required="true" size="40"
+							requiredMessage="Please confirm your password."
+							label="confirmPassword" value="#{userWebView.password}"
+							maxlength="20">
+						</p:password>
+						<p:watermark for="confirmPassword2" value="Type Password Again" />
+						<p:message for="confirmPassword" />
+						<p:outputLabel value="Roles: " />
+						<p:selectCheckboxMenu value="#{userWebView.userRoles}"
+							label="Roles" filterMatchMode="contains" filter="on"
+							type="Collection">
+							<f:selectItems value="#{userWebView.userRoles}" />
+						</p:selectCheckboxMenu>
+
+						<p:selectOneMenu id="activerole"
+							value="#{userWebView.selectedUser.role}" var="r">
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItems value="#{userWebView.userRoles}" var="lst"
+								itemLabel="Role" itemValue="#{userWebView.selectedUser.role}" />
+							<p:column>
+									#{r.role}
+								</p:column>
+
+						</p:selectOneMenu>
+
+						<h:outputText></h:outputText>
+						<h:commandButton value="Update user profile"
+							action="#{userWebView.editUserProfile()}"
+							style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+					</h:panelGrid>
+
+				</h:panelGroup>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
