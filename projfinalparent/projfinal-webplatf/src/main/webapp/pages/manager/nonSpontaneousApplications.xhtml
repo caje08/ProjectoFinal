@@ -9,19 +9,19 @@
         <ui:composition template="./mainmanager.xhtml"> 
 
             <ui:define name="top">
-                <ui:include src="/topmenu/topmanager.xhtml" />
+                <ui:include src="menumanager.xhtml" />
             </ui:define>
             <ui:define name="content">
                 <h:form id="form">
                     <p:growl id="messages" showDetail="true"/>
-                    <h:panelGroup binding="#{applicationViewBB.panelInterviews}">
+                    <h:panelGroup binding="#{applicationWebManagem.panelInterviews}">
 
                         <!--List of Non Spontaneous Applications -->
 
-                        <p:dataTable var="item" value="#{applicationViewBB.lstNonSpontaneousApplication}" 
+                        <p:dataTable var="item" value="#{applicationWebManagem.lstNonSpontaneousApplication}" 
                                      paginator="true" rows="10" paginatorPosition="top" editable="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{item.applicationId}" selection="#{applicationViewBB.selectedApplication}">
+                                     rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{item.applicationId}" selection="#{applicationWebManagem.selectedApplication}">
                             <f:facet name="header">
                                 List of Non Spontaneous Applications
                             </f:facet>

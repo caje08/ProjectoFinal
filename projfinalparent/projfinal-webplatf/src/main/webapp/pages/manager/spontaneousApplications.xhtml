@@ -9,7 +9,7 @@
         <ui:composition template="./mainmanager.xhtml"> 
               
             <ui:define name="top">
-                <ui:include src="/topmenu/topmanager.xhtml" />
+                <ui:include src="menumanager.xhtml" />
             </ui:define>
             
             <ui:define name="content">
@@ -18,10 +18,10 @@
 
                     <!--Spontaneous Applications form-->
 
-                    <p:dataTable var="item" value="#{applicationViewBB.lstSpontaneousApplication}" 
+                    <p:dataTable var="item" value="#{applicationWebManagem.lstSpontaneousApplication}" 
                                  paginator="true" rows="5" paginatorPosition="top" editable="false"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15" selectionMode="single" rowKey="#{item.applicationId}" selection="#{positionViewBB.selectedApplication}">
+                                 rowsPerPageTemplate="5,10,15" selectionMode="single" rowKey="#{item.applicationId}" selection="#{positionWebManagem.selectedApplication}">
                         <f:facet name="header">
                             List of Spontaneous Applications
                         </f:facet>
@@ -39,7 +39,7 @@
 
                         <p:column styleClass="centeredColumn"  headerText="Associate to Position"  style="width:20%">
                             <p:commandButton  id="addPosition" icon="ui-icon-plus" oncomplete="PF('addPosition').show();" update=":applicationClone" >
-                                <f:setPropertyActionListener value="#{item}" target="#{positionViewBB.selectedApplication}"  />
+                                <f:setPropertyActionListener value="#{item}" target="#{positionWebManagem.selectedApplication}"  />
                             </p:commandButton>
                         </p:column>
 
@@ -52,8 +52,8 @@
                 <h:form id="applicationClone">
                     <p:dialog  header="Choose a Position" widgetVar="addPosition" modal="true" height="auto" width="auto">
                         <p:dataTable id="allpositions"  widgetVar="positionTable" editable="false" 
-                                     selectionMode="single" rowKey="#{position.positionCode}" selection="#{positionViewBB.selectedPosition}"
-                                     value="#{positionViewBB.lstPositionsofAManager}" var="position" >
+                                     selectionMode="single" rowKey="#{position.positionCode}" selection="#{positionWebManagem.selectedPosition}"
+                                     value="#{positionWebManagem.lstPositionsofAManager}" var="position" >
 
                             <p:column styleClass="centeredColumn" headerText="Title"  filterBy="#{position.title}" filterMatchMode="contains" >
                                 #{position.title}
@@ -76,7 +76,7 @@
                             </p:column>
 
                         </p:dataTable>
-                        <h:commandButton value="Associate" action="#{positionViewBB.associateApplicationToPosition()}" style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+                        <h:commandButton value="Associate" action="#{positionWebManagem.associateApplicationToPosition()}" style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
 
 
                     </p:dialog>
