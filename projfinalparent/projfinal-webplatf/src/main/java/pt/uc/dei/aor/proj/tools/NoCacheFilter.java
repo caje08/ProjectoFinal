@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(servletNames={"FacesServlet"}) // Must match <servlet-name> of your FacesServlet.
+@WebFilter(servletNames={"FacesServlet"}) // Must match <servlet-name> 
 public class NoCacheFilter implements Filter {
 
     @Override

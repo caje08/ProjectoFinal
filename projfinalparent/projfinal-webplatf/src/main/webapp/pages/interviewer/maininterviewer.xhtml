@@ -12,12 +12,12 @@
     <ui:define name="top">
         <h:form>
             <p:menubar>
-                <p:menuitem icon="ui-icon-home" action="/faces/admin/maininterviewer.xhtml?faces-redirect=true" style="padding-left:20px"/>
-                <p:submenu label="Welcome: #{userControllerBB.name}" style="padding-left:20px">
-                    <p:menuitem  value="Edit" action="/faces/interviewer/edituser.xhtml?faces-redirect=true"  />
-                    <p:menuitem  value="Logout" action="#{userControllerBB.logout()}"  />
+                <p:menuitem icon="ui-icon-home" action="/pages/admin/maininterviewer.xhtml?faces-redirect=true" style="padding-left:20px"/>
+                <p:submenu label="Welcome: #{activeSession.activeUser.username}" style="padding-left:20px">
+                    <p:menuitem  value="Edit" action="/pages/interviewer/edituser.xhtml?faces-redirect=true"  />
+                    <p:menuitem  value="Logout" action="#{loginMB.logout()}"  />
                 </p:submenu>
-                <p:menuitem value="My Interviews" action="/faces/interviewer/myInterviews.xhtml?faces-redirect=true" style="padding-left:20px"/>
+                <p:menuitem value="My Interviews" action="/pages/interviewer/myInterviews.xhtml?faces-redirect=true" style="padding-left:20px"/>
             </p:menubar>
 
         </h:form>
@@ -28,7 +28,7 @@
 
     </ui:define>
     <!--Main Content-->
-
+<!-- 
     <ui:define name="content" >
 
 
@@ -46,7 +46,7 @@
             </h:form>
         </div>
 
-    </ui:define>
+    </ui:define> -->
 
 </ui:composition>
 

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#xA0;"> 
+    ]>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="./mainadmin.xhtml">
+		<ui:define name="content">
+
+			<p:panel>
+				<h:form id="hform" prependId="false">
+					<p:dataTable id="tbl" var="outcome"
+						value="#{chartReps.offerOutcomes}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						paginator="true" rows="10" style="margin-bottom:20px">
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Outcome" />
+							</f:facet>
+							<h:outputText value="#{outcome}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="# of Applicants" />
+							</f:facet>
+							<h:outputText
+								value="#{chartReps.lstApplicantsByOfferOutcomeSize(outcome)}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="%" />
+							</f:facet>
+							<h:outputText
+								value="#{chartReps.lstApplicantsByOfferOutcomeSize(outcome)/chartReps.lstAllOffersSize()*100}" />
+						</p:column>
+					</p:dataTable>
+					
+					<p:dataTable rendered="false" />
+					
+					<p:chart type="bar" model="#{chartReps.barModelOffer}" title="Offers Outcome"
+						style="width:500px;height:300px" widgetVar="chart1" />
+
+					<p:commandButton id="email" value="Send report by email"
+						oncomplete="PF('managers').show()" update=":managersTable">
+						<f:setPropertyActionListener value="#{manager}"
+							target="#{chartReps.selectedmanager}" />
+					</p:commandButton>
+
+					<p:outputLabel id="themanager" value="#{chartReps.manager.email}" />
+				</h:form>
+			</p:panel>
+
+			<h:form id="managersTable">
+				<p:dialog header="Managers" widgetVar="managers" modal="true"
+					height="500" width="500">
+					<p:dataTable id="themanager" selectionMode="single"
+						rowKey="#{manager.userId}" selection="#{chartReps.selectedmanager}"
+						value="#{chartReps.lstManagers}" var="manager">
+
+						<p:column styleClass="centeredColumn" headerText="Manager"
+							filterBy="#{manager.firstName}" filterMatchMode="contains">
+                                    #{manager.firstName}
+                                </p:column>
+
+						<p:column styleClass="centeredColumn" headerText=""
+							filterBy="#{manager.lastName}" filterMatchMode="contains">
+                                    #{manager.lastName}
+                                </p:column>
+
+						<p:column styleClass="centeredColumn" headerText=""
+							filterBy="#{manager.email}" filterMatchMode="contains">
+                                    #{manager.email}
+                                </p:column>
+
+					</p:dataTable>
+					<h:commandButton value="Send email to this Manager"
+						action="#{chartReps.sendOffersReport()}"
+						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+				</p:dialog>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

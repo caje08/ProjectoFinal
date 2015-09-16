@@ -186,7 +186,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @return List of  Phone Interview Feedbacks with accepted outcome
 	 */
 	public List<InterviewFeedbackEntity> lstInterviewFeedbackAcceptedPhone() {
-		Query query = em.createNamedQuery("InterviewFeedback.findByOutcomeAcceptedPhone", InterviewFeedbackEntity.class
+		Query query = em.createNamedQuery("InterviewFeedbackEntity.findByOutcomeAcceptedPhone", InterviewFeedbackEntity.class
 				);
 		return query.getResultList();
 	}
@@ -355,9 +355,9 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @throws NoResultException
 	 */
 	public Double avgTimeToInterview() throws Exception, NoResultException {
-		String mysql = "select AVG (DATEDIFF(interviewFeedback.interviewDate, application.applicationDate))\n"
-				+ "FROM interviewFeedback, application\n"
-				+ "WHERE interviewfeedback.APPLICATION_applicationid = application.applicationid and interviewType = 'PHONE';";
+		String mysql = "select AVG (DATE_PART('day',interviewfeedbackentity.interviewDate, applicationentity.applicationDate))\n"
+				+ "FROM interviewfeedbackentity, applicationentity\n"
+				+ "WHERE interviewfeedbackentity.APPLICATION_applicationid = applicationentity.applicationid and interviewType = 'PHONE';";
 		Query query = em.createNativeQuery(mysql);
 		double result;
 		if (query.getSingleResult() != null) {

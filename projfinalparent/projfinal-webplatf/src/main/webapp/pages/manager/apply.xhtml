@@ -1,0 +1,134 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <body>
+        <ui:composition template="./mainmanager.xhtml">
+            
+            <ui:define name="top">
+                <ui:include src="/topmenu/topmanager.xhtml" />
+            </ui:define>
+            
+            <ui:define name="content">
+                <h:form enctype="multipart/form-data">
+                    
+                    <p:growl showDetail="true"/>
+                    <h3> Values with * are mandatory </h3>
+                    <h1 > Submit a New Application</h1>
+
+                    <h:panelGrid columns="1" cellpadding="1" >
+                        <p:outputLabel value="First Name*"/>
+                        <p:inputText id="firstname" required="true" label="firstname"
+                                     size="40" requiredMessage="Please enter your First Name"
+                                     value="#{positionViewBB.applicant.firstName}">
+                        </p:inputText>
+                        <p:watermark for="firstname" value="First Name" />
+
+                        <p:outputLabel value="Last Name*"/>
+                        <p:inputText id="lastname" required="true" label="lastname"
+                                     size="40" requiredMessage="Please enter your last name."
+                                     value="#{positionViewBB.applicant.lastName}">
+                        </p:inputText>
+                        <p:watermark for="lastname" value="Last Name" />
+
+                        <p:outputLabel value="Email*"/>
+                        <p:inputText id="email" required="true" label="email"
+                                     size="40" requiredMessage="Please enter your email."
+                                     value="#{positionViewBB.applicant.email}">
+                            <f:validateRegex
+                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                        </p:inputText>
+                        <p:watermark for="email" value="Email " />
+
+                        <p:outputLabel value="Address*"/>
+                        <p:inputText id="address" required="true" label="address"
+                                     size="40" requiredMessage="Please enter your Address."
+                                     value="#{positionViewBB.applicant.address}">
+                        </p:inputText>
+                        <p:watermark for="address" value="Address " />
+
+                        <p:outputLabel value="City*"/>
+                        <p:inputText id="city" required="true" label="city"
+                                     size="40" requiredMessage="Please enter your city."
+                                     value="#{positionViewBB.applicant.city}">
+                        </p:inputText>
+                        <p:watermark for="city" value="City " />
+
+                        <p:outputLabel value="Phone"/>
+                        <p:inputText id="phone" label="phone"
+                                     size="40" 
+                                     value="#{positionViewBB.applicant.phone}">
+                        </p:inputText>
+                        <p:watermark for="phone" value="Phone " />
+
+                        <p:outputLabel value="Mobile Phone*"/>
+                        <p:inputText id="mobilphone" required="true" label="mobilphone"
+                                     size="40" requiredMessage="Please enter your mobil phone with 9 digits or more"
+                                     value="#{positionViewBB.applicant.mobile}">
+                        </p:inputText>
+                        <p:watermark for="mobilphone" value="Mobile Phone " />
+
+                        <p:outputLabel value="Country*"/>
+                        <p:inputText id="country" required="true" label="country"
+                                     size="40" requiredMessage="Please enter your country."
+                                     value="#{positionViewBB.applicant.country}">
+                        </p:inputText>
+                        <p:watermark for="country" value="Country " />
+
+                        <p:outputLabel value="Degree*"/>
+                        <p:inputText id="degree" required="true" label="degree"
+                                     size="40" requiredMessage="Please enter your degree."
+                                     value="#{positionViewBB.applicant.degree}">
+                        </p:inputText>
+                        <p:watermark for="degree" value="Degree " />
+
+                        <p:outputLabel value="School*"/>
+                        <p:inputText id="school" required="true" label="school"
+                                     size="40" requiredMessage="Please enter your school."
+                                     value="#{positionViewBB.applicant.school}">
+                        </p:inputText>
+                        <p:watermark for="school" value="School " />
+
+                        <p:outputLabel value="Source*"/>
+                        <p:inputText id="source" required="true" label="source"
+                                     size="40" requiredMessage="Please enter your source."
+                                     value="#{positionViewBB.application.source}">
+                        </p:inputText>
+                        <p:watermark for="source" value="Source " />
+
+                        <p:outputLabel value="Password*"/>
+                        <p:password id="password" required="true" label="password" size="40"
+                                    requiredMessage="Please enter your password."
+                                    match="confirmPassword" value="#{positionViewBB.applicant.password}"
+                                    maxlength="20">
+                        </p:password>
+                        <p:watermark for="password" value="Password " />
+
+                        <p:outputLabel value="Confirm Password*"/>
+                        <p:password id="confirmPassword" required="true" size="40"
+                                    requiredMessage="Please confirm your password."
+                                    label="confirmPassword" value="#{positionViewBB.applicant.password}"
+                                    maxlength="20">
+                        </p:password>
+                        <p:watermark for="confirmPassword" value="Type Password Again" />
+
+                        <p:fileUpload update="cv1"  mode="advanced" auto="true"  id="cv"  previewWidth="40" required="true" fileUploadListener="#{positionViewBB.uploadCV}" label="Upload CV*" styleClass="fileUploadClass"
+                                      allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800" requiredMessage="Please upload CV" />
+                        <p:growl id="cv1" showDetail="true" />
+
+                        <p:fileUpload update="cl1" id="ml" auto="true"  required="true" fileUploadListener="#{positionViewBB.uploadMotivationLetter}" label="Upload Cover Letter*"  requiredMessage="Please upload Cover Letter"
+                                      allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800" styleClass="fileUploadClass"/>
+                        <p:growl id="cl1" showDetail="true" />
+
+                    </h:panelGrid>
+
+                    <h:commandButton value="Submit" style="width:100px; height:50px; background-color: ##{cssRequestBB.cssInUse.backgroundButtonColor}; Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+                                     action="#{positionViewBB.createApplication()}"/>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

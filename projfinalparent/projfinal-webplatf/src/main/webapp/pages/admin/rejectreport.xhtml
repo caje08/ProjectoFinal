@@ -1,0 +1,77 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#xA0;"> 
+    ]>
+
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:p="http://primefaces.org/ui">
+        <body>
+            <ui:composition template="./mainadmin.xhtml"> 
+                <ui:define name="content">
+
+                    <!-- Form of Guide List-->
+
+                    <h:form id="form">
+                        <p:chart type="pie" model="#{chartReps.pieModelRejected}" style="width:400px;height:300px" />
+
+                        <p:dataTable id="tbl" var="rejectionMotive" value="#{chartReps.rejectionMotives}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginator="true" rows="10" style="margin-bottom:20px">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Rejection Motive" />
+                                </f:facet>
+                                <h:outputText value="#{rejectionMotive}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="# of Applicants"/>
+                                </f:facet>
+                                <h:outputText value="#{chartReps.lstApplicantsByRejectionMotiveSize(rejectionMotive)}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="%"/>
+                                </f:facet>
+                                <h:outputText value="#{chartReps.lstApplicantsByRejectionMotiveSize(rejectionMotive)/viewChart.rejectionMotivePercentage()*100}" />
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:commandButton id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
+                            <f:setPropertyActionListener value="#{manager}" target="#{chartReps.selectedmanager}" />
+                        </p:commandButton>
+
+                        <p:outputLabel id="themanager" value="#{chartReps.manager.email}" />
+                    </h:form>
+
+                    <h:form id="managersTable" >
+                        <p:dialog header="Managers" widgetVar="managers" modal="true" height="500" width="500"  >
+                            <p:dataTable id="themanager" selectionMode="single" rowKey="#{manager.userId}" selection="#{chartReps.selectedmanager}"
+                                         value="#{chartReps.lstManagers}" var="manager"  >
+
+                                <p:column styleClass="centeredColumn"  headerText="Manager"  filterBy="#{manager.firstName}" filterMatchMode="contains">
+                                    #{manager.firstName}
+                                </p:column>
+
+                                <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.lastName}" filterMatchMode="contains">
+                                    #{manager.lastName}
+                                </p:column>
+
+                                <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.email}" filterMatchMode="contains">
+                                    #{manager.email}
+                                </p:column>
+
+                            </p:dataTable>
+                            <h:commandButton value="Send email to this Manager" action="#{chartReps.sendRejectedReport()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
+                        </p:dialog>
+                    </h:form>
+
+                </ui:define>
+            </ui:composition>
+        </body>
+    </html>

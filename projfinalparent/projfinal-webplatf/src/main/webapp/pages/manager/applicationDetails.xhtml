@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+        <ui:composition template="./mainmanager.xhtml"> 
+            <ui:define name="content">
+
+                <h:form> 
+                    <h2 >Application details of #{applicationDetailsViewBB.applicant.username}</h2>
+                    <h:panelGrid columns="2"  >
+                        <h:outputText value="First Name" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.firstName}" />
+
+                        <h:outputText value="Last Name:" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.lastName}" />
+
+                        <h:outputText value="CV" />
+                        <h:link outcome="#{applicationDetailsViewBB.cvPath}" style="color: #{cssRequestBB.cssInUse.labelCommandLink}"  target="_blank" value="cv">
+                        </h:link>
+
+                        <h:outputText value="Cover Letter" />
+                        <h:link outcome="#{applicationDetailsViewBB.coverLetterPath}" style="color: #{cssRequestBB.cssInUse.labelCommandLink}" target="_blank" value="cl">
+                        </h:link>
+
+                        <h:outputText value="Email:" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.email}" />
+
+                        <h:outputText value="Address:" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.address}" />
+
+                        <h:outputText value="City:" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.city}" />
+
+                        <h:outputText value="Phone:" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.phone}" />
+
+                        <h:outputText value="Mobile Phone:" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.mobile}" />
+
+                        <h:outputText value="Country:" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.country}" />
+
+                        <h:outputText value="Degree:" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.degree}" />
+
+                        <h:outputText value="School" />
+                        <h:outputText value="#{applicationDetailsViewBB.applicant.school}" />
+
+                    </h:panelGrid>  
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
