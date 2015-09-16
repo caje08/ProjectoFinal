@@ -128,8 +128,10 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 									+ " and manager ="+manager.getEmail());
 					create(position);
 					//send email to new manager
+
 					mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "PositionEntity " +position.getTitle()+" was created.", to);
 					out = true;
+
 				} else if (position.getManager() == null) {
 					throw new ManagerNotIntroducedException();
 				} else if (position.getPhoneInterviewEntity() == null) {
@@ -162,7 +164,9 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 				edit(position);
 				//send email to new manager
 				mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "The positon " +position.getTitle()+" was edited", to);
+
 				out = true;
+
 			}
 		} else if (position.getManager() == null) {
 			throw new ManagerNotIntroducedException();
@@ -216,12 +220,14 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 			e.printStackTrace();
 			System.out.println("Exception inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with message="+e.getMessage());
 		}*/
+
 		Logger.getLogger(PositionFacade.class.getName()).log(Level.INFO,"\n Inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with current date ="+currentDate+"\n");
 		//System.out.println("\n Inside PositionFacade.lstPositionAtualDateBeforeClosingDate() with current date ="+currentDate+"\n");
 		Query query = em.createNamedQuery("PositionEntity.findPublicBeforeClosingDate", PositionEntity.class);
 		query.setParameter("currentDate", currentDate);
 		Logger.getLogger(PositionFacade.class.getName()).log(Level.INFO,"\nInside PositionFacade.lstPositionAtualDateBeforeClosingDate() where list.size ="+query.getResultList().size());
 		//System.out.println("\nInside PositionFacade.lstPositionAtualDateBeforeClosingDate() where list.size ="+query.getResultList().size());
+
 		return query.getResultList();
 	}
 

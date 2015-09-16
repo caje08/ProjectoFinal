@@ -252,6 +252,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 			application.setStatus(StatusApplication.SUBMITTED);
 			application.setIsSpontaneous(false);
 			application.setApplicationDate(new Date());
+
 			if(position!=null){
 			 application.setPosition(position); // IMPORTANT TO ACTIVATE THIS LINE
 			 Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before create(application) with application.getPosition().getTitle()= "+application.getPosition().getTitle());
@@ -259,6 +260,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 			Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before create(application) with application.getApplicant().getEmail()= "+application.getApplicant().getEmail());
 			
 			Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before sending email stating  New ApplicationEntity has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
+
 			create(application);
 			//send an email to new ApplicantEntity --->  IMPORTANT TO ACTIVATE NEXT LINE
 			sendEmail.sendEMail("acertarrumo2015@gmail.com", "New application has been made", "New ApplicationEntity has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
@@ -287,7 +289,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	 * @throws EmailAndPasswordNotCorrespondingToLinkedinCredentialsException
 	 */
 	public void createSpontaneousApplicationOfNewApplicant(ApplicantEntity applicant,  ApplicationEntity application, String cvUploadName, String clUploadName) throws InvalidAuthException, EmailAlreadyExistsException, NumberOfMobilePhoneDigitsException, DoNotUploadCVFileException, DoNotUploadCoverLetterException, EJBException, EmailAndPasswordNotCorrespondingToLinkedinCredentialsException {
-		applicantFacade.createApplicant(applicant);
+		//applicantFacade.createApplicant(applicant);
 		if (cvUploadName != null && clUploadName != null) {
 			application.setApplicant(applicant);
 			application.setCv(cvUploadName);

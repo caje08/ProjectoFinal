@@ -34,7 +34,9 @@ import pt.uc.dei.aor.proj.db.tools.StatusApplication;
 	    @NamedQuery(name = "ApplicationEntity.findBySpontaneousApplicationsOfManager", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = true and a.position.manager=:manager and a.applicant.status!=pt.uc.dei.aor.proj.db.tools.StatusApplicant.REJECTED "),
 	    @NamedQuery(name = "ApplicationEntity.findByNonSpontaneousApplications", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = false and a.applicant.status!=pt.uc.dei.aor.proj.db.tools.StatusApplicant.REJECTED"),
 	    @NamedQuery(name = "ApplicationEntity.findByNonSpontaneousApplicationsOfManager", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = false and a.position.manager=:manager and a.applicant.status!=pt.uc.dei.aor.proj.db.tools.StatusApplicant.REJECTED"),
-//	@NamedQuery(name = "ApplicationEntity.findBySpontaneousApplications", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = true and not(a.applicant.status=:REJECTED)"),
+
+	//@NamedQuery(name = "ApplicationEntity.findBySpontaneousApplications", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = true and not(a.applicant.status=:REJECTED)"),
+
 //	@NamedQuery(name = "ApplicationEntity.findBySpontaneousApplicationsOfManager", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = true and a.position.manager=:manager and not(a.applicant.status=:REJECTED) "),
 //	@NamedQuery(name = "ApplicationEntity.findByNonSpontaneousApplications", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = false and not(a.applicant.status=:REJECTED)"),
 //	@NamedQuery(name = "ApplicationEntity.findByNonSpontaneousApplicationsOfManager", query = "SELECT a FROM ApplicationEntity a WHERE a.isSpontaneous = false and a.position.manager=:manager and not(a.applicant.status=:REJECTED)"),

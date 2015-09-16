@@ -296,6 +296,7 @@ public class PositionWebManagem implements Serializable {
 	 */
 	/*public String createApplication() {
 		try {
+
 			try {
 				Logger.getLogger(PositionWebManagem.class.getName())
 						.log(Level.INFO,
@@ -319,6 +320,7 @@ public class PositionWebManagem implements Serializable {
 			JSFUtil.addErrorMessage(ex.getMessage());
 			System.out
 					.println("\nInside PositionWebManagem.createApplication() and before returning null\n");
+
 			return null;
 		} catch (
 				EJBException
@@ -326,11 +328,15 @@ public class PositionWebManagem implements Serializable {
 			Logger.getLogger(PositionWebManagem.class.getName()).log(
 					Level.SEVERE, null, ex);
 		}
+<<<<<<< HEAD:projfinalparent/projfinal-webplatf/src/main/java/pt/uc/dei/aor/proj/web/PositionWebManagem.java
 		System.out
 				.println("\nInside PositionWebManagem.createApplication() and before returning to 'nonSpontaneousApplications.xhtml?faces-redirect=true'\n");
 		Logger.getLogger(PositionWebManagem.class.getName())
 				.log(Level.INFO,
 						"Inside PositionWebManagem.createApplication() and before returning to 'nonSpontaneousApplications.xhtml?faces-redirect=true'\n");
+=======
+		System.out.println("\nInside PositionWebManagem.createApplication() and before returning to 'nonSpontaneousApplications.xhtml?faces-redirect=true'\n");
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6:projfinalparent/projfinal-services/src/main/java/pt/uc/dei/aor/proj/serv/ejb/PositionWebManagem.java
 		return "nonSpontaneousApplications.xhtml?faces-redirect=true";
 	}
 */
@@ -509,6 +515,7 @@ public class PositionWebManagem implements Serializable {
 	}
 
 	public void setTheSelectedManager() {
+
 		position=activePosition.getActivePosition();		
 		position.setManager(selectedManager);
 		activePosition.setActivePosition(position);
@@ -528,6 +535,7 @@ public class PositionWebManagem implements Serializable {
 	
 	public void saveTemporaryDataPosition(){
 		activePosition.setActivePosition(position);
+
 	}
 
 	public List<InterviewEntity> getLstInterviews() {

@@ -3,8 +3,11 @@
 package pt.uc.dei.aor.proj.serv.facade;
 
 import java.util.List;
+<<<<<<< HEAD
 import java.util.logging.Level;
 import java.util.logging.Logger;
+=======
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -89,6 +92,7 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 		}
 	}
 
+<<<<<<< HEAD
 	/**
 	 *
 	 * @return UserEntity if is an instance of ManagerEntity, AdminEntity and
@@ -111,6 +115,8 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 		}
 		
 	}
+=======
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 
 	/**
 	 *
@@ -162,8 +168,11 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 				//new AdminEntity("Admin","admin", "jGl2qRg=", "admin@admin", "admin@admin");
 				AdminEntity adminentity = new AdminEntity(user.getFirstName(),user.getLastName(),user.getPassword(),user.getEmail(),user.getUsername());
 				adminentity.setRole(Role.ADMIN);
+<<<<<<< HEAD
 //				adminentity.setRole(Role.MANAGER);
 //				adminentity.setRole(Role.INTERVIEWER);
+=======
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 				em.persist(adminentity);
 				//adminEntityFacade.createAdmin(adminentity);
 				mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new user", "Your login is " + user.getUsername() + " and your password is " + password, to);
@@ -180,7 +189,10 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 //						"carlos@gmail.com"); //pass 123
 				ManagerEntity manager = new ManagerEntity(user.getFirstName(),user.getLastName(),user.getPassword(),user.getEmail(),user.getUsername());
 				manager.setRole(Role.MANAGER);
+<<<<<<< HEAD
 				//manager.setRole(Role.INTERVIEWER);
+=======
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 				em.persist(manager);
 				//adminEntityFacade.createManager(manager);
 				//mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new manager", "Your login is " + user.getUsername() + " and your password is " + password, to);
@@ -216,6 +228,7 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws EmailAlreadyExistsException
 	 * @throws EJBException
 	 */
+<<<<<<< HEAD
 	public void editUser(UserEntity user, String firstName, String lastName, String email, String password, String usernam) throws InvalidAuthException, EmailAlreadyExistsException, EJBException {
 		if (mailAlreadyExists(user.getEmail())) {
 			Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO, "EditUser() --> Exists User email. Updating user profile for email="+email);
@@ -231,6 +244,18 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 			edit(user);
 			//ACTIVATE THE NEXT LINE TO START SENDING EMAILS TO THE USER
 			mail.sendEMail("acertarrumo2015@gmail.com", "Edit user", "Your login is " + user.getEmail() + " and your password is " + user.getPassword(),user.getEmail());
+=======
+	public void editUser(UserEntity user, String firstName, String lastName, String email, String password) throws InvalidAuthException, EmailAlreadyExistsException, EJBException {
+		if (!mailAlreadyExists(user.getUsername())) {
+			user.setEmail(email);
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			//String passwordEncrypted = EncryptPassword.encrypt(password);
+			String passwordEncrypted = pw.encrypt(user.getPassword());
+			user.setPassword(passwordEncrypted);
+			edit(user);
+			//mail.sendEMail("acertarrumo2015@gmail.com", "Edit user", "Your login is " + user.getUsername() + " and your password is " + password, user.getEmail());
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 		} else {
 			throw new EmailAlreadyExistsException();
 		}
@@ -248,17 +273,27 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws EJBException
 	 */
 	public void updateUserProfile(UserEntity user, String firstName, String lastName, String email, String password, List<Role> roles) throws InvalidAuthException, EmailDoesNotExistsException, EJBException {
+<<<<<<< HEAD
 		if (mailAlreadyExists(user.getEmail())) {
+=======
+		if (mailAlreadyExists(user.getUsername())) {
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 			//user.setEmail(email);
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
 			//String passwordEncrypted = EncryptPassword.encrypt(password);
 			String passwordEncrypted = pw.encrypt(user.getPassword());
 			user.setPassword(passwordEncrypted);
+<<<<<<< HEAD
 			//user.setRoles(roles);
 			edit(user);
 			mail.sendEMail("acertarrumo2015@gmail.com", "Edit user", "Your login is " + user.getUsername() + " and your password is " + password, user.getEmail());
 			Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO, "updateUserProfile() --> User with email= "+email+" has been updated and an email has been sent to inform about the update!");
+=======
+			user.setRoles(roles);
+			edit(user);
+			//mail.sendEMail("acertarrumo2015@gmail.com", "Edit user", "Your login is " + user.getUsername() + " and your password is " + password, user.getEmail());
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 		} else {
 			throw new EmailDoesNotExistsException();
 		}

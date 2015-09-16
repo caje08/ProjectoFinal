@@ -147,7 +147,8 @@ public class GuideWebManagem implements Serializable {
 	 *         guide
 	 */
 	public boolean couldAddQuestions() {
-		return positionFacade.getInterviewEntity(selectedInterviewEntity.getInterviewId()).isEmpty();
+		return positionFacade.getInterviewEntity(
+				selectedInterviewEntity.getInterviewId()).isEmpty();
 
 	}
 

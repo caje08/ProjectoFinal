@@ -100,7 +100,9 @@
 			<http-method>OPTIONS</http-method>
 			<http-method>TRACE</http-method>
 			<http-method>DELETE</http-method>
+
 		</web-resource-collection>
+
 		<auth-constraint>
 			<role-name>ADMIN</role-name>
 			<role-name>INTERVIEWER</role-name>
@@ -122,7 +124,9 @@
 			<http-method>OPTIONS</http-method>
 			<http-method>TRACE</http-method>
 			<http-method>DELETE</http-method>
+
 		</web-resource-collection>
+
 		<auth-constraint>
 			<role-name>ADMIN</role-name>
 			<role-name>CANDIDATE</role-name>
@@ -145,6 +149,7 @@
 		<role-name>CANDIDATE</role-name>
 	</security-role>
 
+
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>aristo</param-value>
@@ -163,4 +168,22 @@
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
 
+
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>humanity</param-value>
+  </context-param>
+  <context-param>
+    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.UPLOADER</param-name>
+    <param-value>commons</param-value>
+  </context-param>
+  <listener>
+    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+  </listener>
+	
 </web-app>

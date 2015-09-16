@@ -78,11 +78,18 @@ public class UserEJB implements UserEJBLocal {
 		// em.persist(new UserEntity("Carlos", "123", "carlosantos@gmail.com",
 		// datanasc));
 
+<<<<<<< HEAD
 		password =pw.encrypt("123");
 		UserEntity usertmp1= new ManagerEntity("Carlos", "Santos",password, "carlos@gmail.com",
 				"carlos@gmail.com"); //pass 123
 		usertmp1.setRole(Role.MANAGER);
 		//usertmp1.setRoles(Role.INTERVIEWER);
+=======
+		UserEntity usertmp1= new ManagerEntity("Carlos", "Santos","pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "carlos@gmail.com",
+				"carlos@gmail.com"); //pass 123
+		usertmp1.setRole(Role.MANAGER);
+		usertmp1.setRoles(Role.INTERVIEWER);
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 
 		em.persist(usertmp1);
 		System.out.println("Criou user "+usertmp1.getEmail()+" e sizeRoles= "+usertmp1.getRoles().size());
@@ -97,8 +104,13 @@ public class UserEJB implements UserEJBLocal {
 		UserEntity	usertmp3 = new AdminEntity("Admin","admin", password, "admin@admin",
 				"admin@admin");
 		usertmp3.setRole(Role.ADMIN); //pass admin
+<<<<<<< HEAD
 //		usertmp3.setRoles(Role.MANAGER);
 //		usertmp3.setRoles(Role.INTERVIEWER);
+=======
+		usertmp3.setRoles(Role.MANAGER);
+		usertmp3.setRoles(Role.INTERVIEWER);
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 		em.persist(usertmp3);
 		System.out.println("Criou user "+usertmp3.getEmail()+" e sizeRoles= "+usertmp3.getRoles().size());
 

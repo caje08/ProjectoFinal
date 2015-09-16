@@ -37,7 +37,9 @@ import pt.uc.dei.aor.proj.serv.tools.UserData;
  * @author
  */
 @Named
+
 @RequestScoped
+
 public class UserWebView implements Serializable {
 
 	@EJB
@@ -51,13 +53,16 @@ public class UserWebView implements Serializable {
 	private String lastName;
 	private String email;
 	private String password;
+
 	private String oldpassword;
 	private String newpassword;
+
 	private String username;
 	private List<UserEntity> lstUsers;
 	private List<Role> userroles;
 	private UserEntity selectedUser;
 	private Boolean testrender;
+
 	private boolean testpw;
 	private UIPanel panelGroup;
 	private UIPanel panelListUsers;
@@ -67,6 +72,7 @@ public class UserWebView implements Serializable {
 	public UserWebView() {
 		this.testrender=false;
 		this.testpw=false;
+
 	}
 
 //	@PostConstruct
@@ -83,7 +89,7 @@ public class UserWebView implements Serializable {
 	public void setLoggedUser(UserData loggedUser) {
 		this.loggedUser = loggedUser;
 	}
-	
+
 	public void checkUserPw(){
 		boolean out=false;
 		String emailuser=activeUser.getActiveUser().getEmail();
@@ -126,6 +132,7 @@ public class UserWebView implements Serializable {
 		//return "/pages/admin/searchusers.xhtml";
 	}
 	
+
 	public UserEntityFacade getUserGuideFacade() {
 		return userEntityFacade;
 	}
@@ -141,6 +148,7 @@ public class UserWebView implements Serializable {
 	public Collection<Role> getUserRoles() {
 		String useremail= selectedUser.getEmail();
 		System.out.println("\n Inside UserWebView.getUserRoles()  useremail="+useremail);
+
 		Collection<Role> userroles= new ArrayList<>();
 		userroles = userEJB.getUserListOfRoles(useremail);
 		return userroles;
@@ -173,6 +181,7 @@ public class UserWebView implements Serializable {
 				   }
 			
 			return "/pages/admin/mainadmin.xhtml?faces-redirect=true";
+
 		} catch (UserGuideException | UserNotFoundException | InvalidAuthException | EmailAlreadyExistsException ex) {
 			Logger.getLogger(UserWebView.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
@@ -186,12 +195,15 @@ public class UserWebView implements Serializable {
 	
 	public String showUserProfileDetails(UserEntity userSelected){
 		this.selectedUser=userSelected;
+
 		this.activeUser.setTemporaryUser(userSelected);
 		System.out.println("\n Selected User="+this.selectedUser.getEmail()+"TemporaryUser="+this.activeUser.getTemporaryUser().getEmail());
+
 		return "/pages/admin/editUserProfile.xhtml?faces-redirect=true";
 	}
 
 	public String editUserProfile() {
+
 		this.selectedUser=this.activeUser.getTemporaryUser();
 		this.firstName=this.selectedUser.getFirstName();
 		this.lastName=this.selectedUser.getLastName();
@@ -199,6 +211,7 @@ public class UserWebView implements Serializable {
 		this.password=this.selectedUser.getPassword();
 		this.userroles=(List<Role>) this.selectedUser.getRoles();
 		Logger.getLogger(UserWebView.class.getName()).log(Level.INFO, "Before updating user profile with selectedUser.email="+this.selectedUser.getEmail());
+
 		try {
 			if (loggedUser.getLoggedUser() instanceof AdminEntity) {
 				userEntityFacade.updateUserProfile(selectedUser, firstName, lastName,email, password, userroles);
@@ -320,6 +333,7 @@ public class UserWebView implements Serializable {
 		this.selectedUser = selectedUser;
 	}
 	
+
 	public void showPanel(UserEntity userentity) {
 		this.selectedUser=userentity;
 		this.activeUser.setTemporaryUser(userentity);
@@ -327,6 +341,7 @@ public class UserWebView implements Serializable {
 		System.out.println("\n UserWebView.showPanel() -->Selected User="+this.selectedUser.getEmail()+"TemporaryUser="+this.activeUser.getTemporaryUser().getEmail());
 		this.panelGroup.setRendered(true);
 		
+
 	}
 	
 	public void showRender() {
@@ -346,9 +361,11 @@ public class UserWebView implements Serializable {
 	}
 
 	public List<UserEntity> getLstUsers() {
+
 		List<UserEntity> listroles= new ArrayList<>();
 		listroles = userEntityFacade.findAll();
 		return listroles;
+
 	}
 
 	public void setLstUsers(List<UserEntity> lstUsers) {
@@ -362,6 +379,7 @@ public class UserWebView implements Serializable {
 	public void setTestrender(boolean testrender) {
 		this.testrender = testrender;
 	}
+
 
 	public String getOldpassword() {
 		return oldpassword;
@@ -402,5 +420,6 @@ public class UserWebView implements Serializable {
 	public void setPanelListUsers(UIPanel panelListUsers) {
 		this.panelListUsers = panelListUsers;
 	}
+
 	
 }

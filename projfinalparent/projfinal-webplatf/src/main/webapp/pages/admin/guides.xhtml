@@ -2,6 +2,7 @@
     <!ENTITY nbsp "&#xA0;"> 
     ]>
 
+<<<<<<< HEAD
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -27,6 +28,29 @@
 						rowKey="#{item.interviewId}" styleClass="mystyle"
 						rowStyleClass="order-table-odd-row,order-table-even-row">
 						<f:facet name="header">
+=======
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:p="http://primefaces.org/ui">
+        <body>
+            <ui:composition template="./mainadmin.xhtml"> 
+                <ui:define name="content">
+
+                    <p:growl/>
+
+                    <!-- Form of Guide List-->
+
+                    <h:form id="form">
+                        <p:growl id="messages" showDetail="true"/>
+                        <h:panelGroup binding="#{guideWebManagem.panelInterviewQuestions}">
+                            <p:dataTable   var="item" value="#{guideWebManagem.lstInterviews}"
+                                           paginator="true" rows="10" paginatorPosition="top" editable="false"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                           rowsPerPageTemplate="10,20,30" selectionMode="single" selection="#{guideWebManagem.selectedInterviewEntity}" rowKey="#{item.interviewId}" styleClass="mystyle" rowStyleClass="order-table-odd-row,order-table-even-row" >
+                                <f:facet name="header">
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
                                     List of Interview Guides
                                 </f:facet>
 
@@ -144,6 +168,7 @@
                                     List of Interview Guide's Questions of #{guideWebManagem.selectedInterviewEntity.title}
                                 </f:facet>
 
+<<<<<<< HEAD
 						<p:column styleClass="centeredColumn"
 							filterBy="#{question.question}" filterMatchMode="contains"
 							headerText="Title" style="width:20%">
@@ -284,3 +309,101 @@
 	</ui:composition>
 </body>
 </html>
+=======
+                                <p:column  styleClass="centeredColumn" filterBy="#{question.question}" filterMatchMode="contains" headerText="Title" style="width:20%">
+                                    <p:outputLabel value="#{question.question}" />
+                                </p:column>
+
+                                <p:column  styleClass="centeredColumn" filterBy="#{question.answerType}" filterMatchMode="contains" headerText="Answer Type" style="width:20%">
+                                    <p:outputLabel value="#{question.answerType}" />
+                                </p:column>
+
+                                <p:column  styleClass="centeredColumn" filterBy="#{question.questionNumber}" filterMatchMode="contains" headerText="Question Number" style="width:20%">
+                                    <p:outputLabel value="#{question.questionNumber}" />
+                                </p:column>
+
+                                <p:column styleClass="centeredColumn" headerText="Edit" style="width:20%">
+                                    <p:commandButton  rendered="#{guideWebManagem.isPossibleToRemoveGuide(guideWebManagem.selectedInterviewEntity)}"  icon="ui-icon-wrench " oncomplete="PF('editq').show()" update=":editQuestion" process="@this" >
+                                        <f:setPropertyActionListener value="#{question}" target="#{guideWebManagem.selectedInterviewQuestionEntity}"   />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+                            <p:commandButton rendered="#{guideWebManagem.couldAddQuestions()}" value="Add new Question" oncomplete="PF('question1').show();" update=":createQuestion"/>
+
+                            <div align="left"> 
+                                <p:commandButton icon="ui-icon-arrowreturnthick-1-w" action="/pages/admin/guides.xhtml?faces-redirect=true"/>
+                            </div>
+
+
+                        </h:panelGroup>
+
+
+                    </h:form>
+
+                    <!--Pop up to introduce name of questions-->
+
+                    <h:form id="createQuestion">
+                        <p:dialog  header="New Question" widgetVar="question1" modal="true" height="auto" width="auto">
+                            <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
+                                <h:outputLabel value="Introduce Name of Question*: " for="QuestionName" />
+                                <h:inputText label="Name of Question" id="QuestionName" value="#{guideWebManagem.questionName}"/>
+                                <h:message for="Question Name"/>
+                                <p:selectOneMenu id="userType" value="#{guideWebManagem.answerType}" >
+                                    <f:selectItem itemLabel="Answer from 1 to 5" itemValue="INTEGER"  />
+                                    <f:selectItem itemLabel="Yes or No" itemValue="BOOLEAN" />
+                                    <f:selectItem itemLabel="Free Answer" itemValue="TEXT" />
+                                </p:selectOneMenu>
+                                <h:commandButton  action="#{guideWebManagem.createQuestionsForGuide()}" value="Add New Question" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+
+                    <!--Pop up to edit a specific question-->
+
+                    <h:form id="editQuestion">
+                        <p:dialog  header="Please, edit #{guideWebManagem.selectedInterviewQuestionEntity.question}" widgetVar="editq" modal="true" height="auto" width="auto">
+                            <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
+                                <h:outputLabel value="Name of Question: " for="questionName" />
+                                <h:inputText label="Name of Question" id="questionName1" value="#{guideWebManagem.selectedInterviewQuestionEntity.question}"/>
+                                <h:message for="questionName"/>
+                                <p:selectOneMenu id="userType" value="#{guideWebManagem.selectedInterviewQuestionEntity.answerType}" >
+                                    <f:selectItem itemLabel="Answer from 1 to 5" itemValue="INTEGER"  />
+                                    <f:selectItem itemLabel="Yes or No" itemValue="BOOLEAN" />
+                                    <f:selectItem itemLabel="Free Answer" itemValue="TEXT" />
+                                </p:selectOneMenu>
+                                <h:commandButton action="#{guideWebManagem.editQuestion()}" value="Edit" style="background-color: ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+
+                    <!--Pop up to confirm removal of the selected guide-->
+
+                    <h:form id="confirmRemoveGuide">
+                        <p:dialog  header="New name" widgetVar="removeGuide" modal="true" height="auto" width="auto">
+                            <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
+                                <h:outputLabel value="Are you sure you want to remove this Interview Guide?" for="GuideName" />
+                                <h:commandButton action="#{guideWebManagem.removeGuide()}" value="Yes" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                                <h:commandButton action="guides?faces-redirect=true" value="Cancel" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+
+                    <!--Pop up to confirm edit of the in use-->
+
+                    <h:form id="inuse">
+                        <p:dialog  header="Edit in Use" widgetVar="useguide" modal="true" height="auto" width="auto">
+                            <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
+                                <h:outputLabel value="Are you sure you want to change the use of this Interview Guide?"/>
+                                <h:commandButton action="#{guideWebManagem.editGuide()}" value="Yes" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                                <h:commandButton action="guides?faces-redirect=true" value="Cancel" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+
+
+                </ui:define>
+            </ui:composition>
+        </body>
+    </html>
+>>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6

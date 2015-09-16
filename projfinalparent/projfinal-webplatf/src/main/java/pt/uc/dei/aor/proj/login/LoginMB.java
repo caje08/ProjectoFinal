@@ -164,8 +164,8 @@ public class LoginMB implements Serializable {
 				logger.info("\nLogged_user profile= " + tmp.getRole());
 				System.out.println("\nLogged_user profile= " + tmp.getRole());
 				if (tmp.getRole().equals(Role.ADMIN)) {
-					logger.info("\nLoading main page = /pages/admin/index.xhtml?faces-redirect=true");
-					return "/pages/admin/index.xhtml?faces-redirect=true";
+					logger.info("\nLoading main page = /pages/admin/mainadmin.xhtml?faces-redirect=true");
+					return "/pages/admin/mainadmin.xhtml?faces-redirect=true";
 				} else if (tmp.getRole().equals(Role.INTERVIEWER)) {
 					logger.info("\nLoading main page = /pages/interviewer/index.xhtml?faces-redirect=true");
 					return "/pages/interviewer/index.xhtml?faces-redirect=true";
