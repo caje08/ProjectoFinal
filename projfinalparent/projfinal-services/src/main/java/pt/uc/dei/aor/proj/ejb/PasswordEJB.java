@@ -6,10 +6,8 @@ package pt.uc.dei.aor.proj.ejb;
  * and open the template in the editor.
  */
 
-<<<<<<< HEAD
+
 import java.io.UnsupportedEncodingException;
-=======
->>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -32,8 +30,6 @@ public class PasswordEJB {
 			return null;
 		}
 		
-<<<<<<< HEAD
-		
 //			try {
 //	            MessageDigest md = MessageDigest.getInstance("SHA-256");
 //	            md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
@@ -45,9 +41,7 @@ public class PasswordEJB {
 //	            Logger.getLogger(EncryptPassword.class.getName()).log(Level.SEVERE, null, ex);
 //	            return ex.getMessage();
 //	        }
-=======
-		try {
->>>>>>> 5e823c2f5a61818d78e41e3ca12efeaf180278f6
+
 			// digest = MessageDigest.getInstance("SHA-1");
 			// digest.update(password.getBytes(), 0, password.length());
 			// sha1 = new BigInteger(1, digest.digest()).toString(16);
