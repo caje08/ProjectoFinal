@@ -1,0 +1,133 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#xA0;"> 
+    ]>
+
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:p="http://primefaces.org/ui">
+        <body>
+            <ui:composition template="./mainadmin.xhtml"> 
+                <ui:define name="content">
+
+                    <h:form id="form">
+                        <p:chart type="bar" model="#{reppApplicantsBB.zoomModelPosition}" style="height:300px" widgetVar="chart"/>
+                        <p:commandButton type="button" value="Reset" icon="ui-icon-cancel" onclick="PF('chart').resetZoom()"/>
+                    </h:form>
+
+                    <h:form id="position">
+                        <h:panelGrid columns="3" cellpadding="5">
+
+                            <p:commandButton id="positionChooseButton" value="Choose a Position" oncomplete="PF('position').show()" update=":positionTable" >
+                                <f:setPropertyActionListener value="#{position}" target="#{reppApplicantsBB.selectedPosition}" />
+                            </p:commandButton>
+
+                            <p:outputLabel id="position" value="#{reppApplicantsBB.position}"/>
+
+                        </h:panelGrid>
+
+                    </h:form>
+
+                    <h:form id="positionTable" >
+                        <p:dialog header="Positions" widgetVar="position" modal="true" height="500" width="500"  >
+                            <p:dataTable id="theposition" selectionMode="single" rowKey="#{position.positionCode}" selection="#{reppApplicantsBB.selectedPosition}"
+                                         value="#{reppApplicantsBB.positions}" var="position"  >
+
+                                <p:column styleClass="centeredColumn"  headerText="Position Code"  filterBy="#{position.positionCode}" filterMatchMode="contains">
+                                    #{position.positionCode}
+                                </p:column>
+
+                                <p:column styleClass="centeredColumn" headerText="Title"  filterBy="#{position.title}" filterMatchMode="contains">
+                                    #{position.title}
+                                </p:column>
+
+
+                            </p:dataTable>
+                            <h:commandButton value="Choose Position" action="#{reppApplicantsBB.lstApplicantsByPosition()}"  />
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form>
+                        <p:dataTable id="tbl" var="applicant" value="#{reppApplicantsBB.applicantsByPosition}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginator="true" rows="10" style="margin-bottom:20px"
+                                     rendered="#{!reppApplicantsBB.showTablePosition(positionCode)}">   
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Applicant" />
+                                </f:facet>
+                                <h:outputText value="#{applicant.firstName}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Applicant" />
+                                </f:facet>
+                                <h:outputText value="#{applicant.lastName}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="E-mail"/>
+                                </f:facet>
+                                <h:outputText value="#{applicant.email}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Mobile Phone"/>
+                                </f:facet>
+                                <h:outputText value="#{applicant.mobile}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Degree"/>
+                                </f:facet>
+                                <h:outputText value="#{applicant.degree}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="School"/>
+                                </f:facet>
+                                <h:outputText value="#{applicant.school}" />
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:commandButton id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
+                            <f:setPropertyActionListener value="#{manager}" target="#{reppApplicantsBB.selectedmanager}" />
+                        </p:commandButton>
+
+                        <p:outputLabel id="themanager" value="#{reppApplicantsBB.manager.email}" />
+
+                    </h:form>
+
+                    <h:form id="managersTable" >
+                        <p:dialog header="Managers" widgetVar="managers" modal="true" height="500" width="500"  >
+                            <p:dataTable id="themanager" selectionMode="single" rowKey="#{manager.userId}" selection="#{reppApplicantsBB.selectedmanager}"
+                                         value="#{reppApplicantsBB.lstManagers}" var="manager"  >
+
+                                <p:column styleClass="centeredColumn"  headerText="Manager"  filterBy="#{manager.firstName}" filterMatchMode="contains">
+                                    #{manager.firstName}
+                                </p:column>
+
+                                <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.lastName}" filterMatchMode="contains">
+                                    #{manager.lastName}
+                                </p:column>
+
+                                <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.email}" filterMatchMode="contains">
+                                    #{manager.email}
+                                </p:column>
+
+                            </p:dataTable>
+                            <h:commandButton value="Send email to this Manager" action="#{reppApplicantsBB.sendPositionsReport()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
+                        </p:dialog>
+                    </h:form>
+
+                </ui:define>
+            </ui:composition>
+        </body>
+    </html>

@@ -21,7 +21,15 @@
 					<p:menuitem value="Edit"
 						action="/pages/admin/edituser.xhtml?faces-redirect=true" />
 				</p:submenu>
-
+				
+				<p:submenu label="Other Profiles" style="padding-left:20px">
+					<p:menuitem value="Manager Menu"
+						action="/pages/manager/mainmanager.xhtml?faces-redirect=true"
+						style="padding-left:20px" />
+					<p:menuitem value="Interviewer Menu"
+						action="/pages/interviewer/maininterviewer.xhtml?faces-redirect=true" />
+				</p:submenu>
+				
 				<p:submenu label="Users" style="padding-left:20px">
 					<p:menuitem value="Add New User"
 						action="/pages/admin/addnewuser.xhtml?faces-redirect=true"
@@ -54,17 +62,17 @@
 					style="padding-left:20px" />
 				<p:submenu label="Reports" style="padding-left:20px">
 					<p:menuitem value="Applicants per time period"
-						action="/pages/admin/reportpertime.xhtml?faces-redirect=true" />
+						action="/pages/admin/pertimerepport.xhtml?faces-redirect=true" />
 					<p:menuitem value="Applicants per position"
-						action="/pages/admin/reportperposition.xhtml?faces-redirect=true" />
+						action="/pages/admin/perpositionrepport.xhtml?faces-redirect=true" />
 					<p:menuitem value="Spontaneous applications"
-						action="/pages/admin/reportspontaneous.xhtml?faces-redirect=true" />
+						action="/pages/admin/spontaneousrepport.xhtml?faces-redirect=true" />
 					<p:menuitem value="Rejected Applicants"
-						action="/pages/admin/reportrejected.xhtml?faces-redirect=true" />
+						action="/pages/admin/rejectreport.xhtml?faces-redirect=true" />
 					<p:menuitem value="Interview outcome"
-						action="/pages/admin/reportinterview.xhtml?faces-redirect=true" />
+						action="/pages/admin/interviewrepport.xhtml?faces-redirect=true" />
 					<p:menuitem value="Offers"
-						action="/pages/admin/report.xhtml?faces-redirect=true" />
+						action="/pages/admin/offereport.xhtml?faces-redirect=true" />
 					<p:menuitem value="Average time to first interview"
 						action="/pages/admin/searchpositions.xhtml?faces-redirect=true" />
 					<p:menuitem value="Average time for hiring"

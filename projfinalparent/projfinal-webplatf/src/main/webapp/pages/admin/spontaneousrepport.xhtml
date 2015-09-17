@@ -1,0 +1,127 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#xA0;"> 
+    ]>
+
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:p="http://primefaces.org/ui">
+        <body>
+            <ui:composition template="./mainadmin.xhtml"> 
+                <ui:define name="content">
+
+                    <h:form id="spontaneous">
+                        <h:panelGrid columns="3" cellpadding="5">
+
+                            <p:outputLabel for="openingDate" value="Opening date:" />
+                            <p:calendar id="openingDate" required="true" value="#{reppApplicantsBB.begin}" requiredMessage="Please enter a Date" />
+                            <h:outputText></h:outputText>
+
+
+                            <p:outputLabel for="closingDate" value="Closing date:" />
+                            <p:calendar id="closingDate" required="true" value="#{reppApplicantsBB.end}" />
+                            <h:outputText></h:outputText>
+
+                            <h:commandLink value="Select this link to Show statistics" style="margin:20px"
+                                           action="#{reppApplicantsBB.lstSpontaneousApplications(reppApplicantsBB.begin, reppApplicantsBB.end)}" />
+
+                        </h:panelGrid>
+
+                    </h:form>
+
+                    <h:form>
+                        <p:panel header="Applicants" rendered="#{!reppApplicantsBB.showTableTime(begin, end)}">
+                            <p:dataTable id="tbl" var="spontaneousapplication" value="#{reppApplicantsBB.spontaneousApplications}"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                         paginator="true" rows="10" style="margin-bottom:20px">
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Applicant" />
+                                    </f:facet>
+                                    <h:outputText value="#{spontaneousapplication.applicant.firstName}" />
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Applicant" />
+                                    </f:facet>
+                                    <h:outputText value="#{spontaneousapplication.applicant.lastName}" />
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="E-mail"/>
+                                    </f:facet>
+                                    <h:outputText value="#{spontaneousapplication.applicant.email}" />
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Mobile Phone"/>
+                                    </f:facet>
+                                    <h:outputText value="#{spontaneousapplication.applicant.mobile}" />
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Application Date"/>
+                                    </f:facet>
+                                    <h:outputText value="#{spontaneousapplication.applicationDate}" />
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Cover Letter"/>
+                                    </f:facet>
+                                    <h:outputText value="#{spontaneousapplication.coverLetter}" />
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="CV"/>
+                                    </f:facet>
+                                    <h:outputText value="#{spontaneousapplication.cv}" />
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:chart type="line" model="#{reppApplicantsBB.dateSpontaneousModel}" style="height:400px;"/>
+
+                        </p:panel>
+
+                        <p:commandButton id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
+                            <f:setPropertyActionListener value="#{manager}" target="#{reppApplicantsBB.selectedmanager}" />
+                        </p:commandButton>
+
+                        <p:outputLabel id="themanager" value="#{reppApplicantsBB.manager.email}" />
+
+                    </h:form>
+
+                    <h:form id="managersTable" >
+                        <p:dialog header="Managers" widgetVar="managers" modal="true" height="500" width="500"  >
+                            <p:dataTable id="themanager" selectionMode="single" rowKey="#{manager.userId}" selection="#{reppApplicantsBB.selectedmanager}"
+                                         value="#{reppApplicantsBB.lstManagers}" var="manager"  >
+
+                                <p:column styleClass="centeredColumn"  headerText="Manager"  filterBy="#{manager.firstName}" filterMatchMode="contains">
+                                    #{manager.firstName}
+                                </p:column>
+
+                                <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.lastName}" filterMatchMode="contains">
+                                    #{manager.lastName}
+                                </p:column>
+
+                                <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.email}" filterMatchMode="contains">
+                                    #{manager.email}
+                                </p:column>
+
+                            </p:dataTable>
+                            <h:commandButton value="Send email to this Manager" action="#{reppApplicantsBB.sendSpontaneousReport()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
+                        </p:dialog>
+                    </h:form>
+                    
+                </ui:define>
+            </ui:composition>
+        </body>
+    </html>

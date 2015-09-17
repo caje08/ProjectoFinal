@@ -11,10 +11,10 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIPanel;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.primefaces.event.ReorderEvent;
@@ -36,7 +36,7 @@ import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
  * @author
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class GuideWebManagem implements Serializable {
 
 	private List<InterviewEntity> lstInterviews;
@@ -147,8 +147,7 @@ public class GuideWebManagem implements Serializable {
 	 *         guide
 	 */
 	public boolean couldAddQuestions() {
-		return positionFacade.getInterviewEntity(
-				selectedInterviewEntity.getInterviewId()).isEmpty();
+		return positionFacade.getInterviewEntity(selectedInterviewEntity.getInterviewId()).isEmpty();
 
 	}
 

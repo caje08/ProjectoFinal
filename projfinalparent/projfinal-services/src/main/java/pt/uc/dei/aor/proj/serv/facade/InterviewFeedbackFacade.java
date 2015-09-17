@@ -87,7 +87,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	public void createInterview(Date interviewDate, InterviewerEntity interviewer, InterviewEntity interviewGuide, ApplicationEntity application, String cvDestination) throws FirstInterviewAfterAtualDateException, InterviewerSameDateException, MessagingException, EJBException, SecondInterviewAfterFirstInterviewException, MustIntroduceInterviewerException {
 		InterviewFeedbackEntity interviewFeedback = new InterviewFeedbackEntity();
 		//em.persist(interviewFeedback);
-		Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(Level.INFO, "Inside createInterview()");
+		Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(Level.INFO, "Inside createInterview() before checking recruiter availability");
 		System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before checking recruiter availability");
 		//see if intervew date is after the current date and selected interviewer is available
 		if (interviewDate.after(new Date()) && checkRecruiterAvailability(interviewer, interviewDate) && interviewer != null) {
@@ -186,7 +186,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @return List of  Phone Interview Feedbacks with accepted outcome
 	 */
 	public List<InterviewFeedbackEntity> lstInterviewFeedbackAcceptedPhone() {
-		Query query = em.createNamedQuery("InterviewFeedback.findByOutcomeAcceptedPhone", InterviewFeedbackEntity.class
+		Query query = em.createNamedQuery("InterviewFeedbackEntity.findByOutcomeAcceptedPhone", InterviewFeedbackEntity.class
 				);
 		return query.getResultList();
 	}
@@ -211,7 +211,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @return date of first interview of given application
 	 */
 	public Date dateFirstFeedbackInterview(ApplicationEntity application) {
-		Query query = em.createNamedQuery("InterviewFeedbackEntity.findDateOfFirstInterviewOfAnApplication", InterviewFeedbackEntity.class);
+		Query query = em.createNamedQuery("InterviewFeedbackEntity.findDateOfFirstInterviewOfAnApplication", Date.class);
 		query.setParameter("application", application);
 		return (Date) query.getSingleResult();
 	}
@@ -355,9 +355,9 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @throws NoResultException
 	 */
 	public Double avgTimeToInterview() throws Exception, NoResultException {
-		String mysql = "select AVG (DATEDIFF(interviewFeedback.interviewDate, application.applicationDate))\n"
-				+ "FROM interviewFeedback, application\n"
-				+ "WHERE interviewfeedback.APPLICATION_applicationid = application.applicationid and interviewType = 'PHONE';";
+		String mysql = "select AVG (DATEDIFF(interviewfeedbackentity.interviewDate, applicationentity.applicationDate))\n"
+				+ "FROM interviewfeedbackentity, applicationentity\n"
+				+ "WHERE interviewfeedbackentity.APPLICATION_applicationid = applicationentity.applicationid and interviewType = 'PHONE';";
 		Query query = em.createNativeQuery(mysql);
 		double result;
 		if (query.getSingleResult() != null) {

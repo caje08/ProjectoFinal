@@ -194,7 +194,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	 * @return List of applicants of given position
 	 */
 	public List<ApplicantEntity> lstApplicantsByPosition(PositionEntity position) {
-		Query query = em.createNamedQuery("ApplicationEntity.findApplicantByPosition", ApplicationEntity.class);
+		Query query = em.createNamedQuery("ApplicationEntity.findApplicantByPosition", ApplicantEntity.class);
 		query.setParameter("position", position);
 		return query.getResultList();
 	}
@@ -206,7 +206,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	 * @return List of applicants of have made an application between begin and end dates
 	 */
 	public List<ApplicantEntity> lstApplicantsPerTime(Date begin, Date end) {
-		Query query = em.createNamedQuery("ApplicationEntity.findApplicantByDate", ApplicationEntity.class);
+		Query query = em.createNamedQuery("ApplicationEntity.findApplicantByDate", ApplicantEntity.class);
 		query.setParameter("startDate", begin);
 		query.setParameter("endDate", end);
 		return query.getResultList();
@@ -426,8 +426,8 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	 * @throws java.lang.Exception
 	 */
 	public Double avgTimeToHire() throws Exception, NoResultException {
-		String mysql = "select AVG (DATEDIFF(application.hiringDate, application.applicationDate))\n"
-				+ "FROM application;";
+		String mysql = "select AVG (DATEDIFF(applicationentity.hiringDate, applicationentity.applicationDate))\n"
+				+ "FROM applicationentity;";
 		Query query = em.createNativeQuery(mysql);
 		double result;
 		if (query.getSingleResult() != null) {
