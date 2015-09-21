@@ -241,7 +241,7 @@ public class UserEJB implements UserEJBLocal {
 		UserEntity usertmp1= new UserEntity("user1pub name", "user1 publast",password, "user1pub@gmail.com",
 				"user1pub usernam"); //pass 123
 		System.out.println("Vai colocar  usertmp1.setRole(Role.USERPUBLIC)");
-		usertmp1.setRole(Role.USERPUBLIC);
+		usertmp1.setRole(Role.CANDIDATE);
 		usertmp1.initArray();
 		//usertmp1.setRoles(Role.INTERVIEWER);
 		System.out.println("Vai persistir usertmp1");
@@ -250,7 +250,7 @@ public class UserEJB implements UserEJBLocal {
 		password =pw.encrypt("456");
 		UserEntity usertmp2= new UserEntity("user2pub name", "user2 publast",password, "user2pub@gmail.com",
 				"user2pub usernam");  //pass 456
-		usertmp2.setRole(Role.USERPUBLIC);
+		usertmp2.setRole(Role.CANDIDATE);
 		usertmp2.initArray();
 		//usertmp2.setRoles(Role.INTERVIEWER);
 		em.persist(usertmp2);
@@ -258,7 +258,7 @@ public class UserEJB implements UserEJBLocal {
 		password =pw.encrypt("789");
 		UserEntity usertmp3= new UserEntity("user3pub name", "user3 publast",password, "user3pub@gmail.com",
 				"user3pub usernam");
-		usertmp3.setRole(Role.USERPUBLIC); //pass 789
+		usertmp3.setRole(Role.CANDIDATE); //pass 789
 		usertmp3.initArray();
 //		usertmp3.setRoles(Role.MANAGER);
 //		usertmp3.setRoles(Role.INTERVIEWER);

@@ -136,8 +136,9 @@ public class InfoUser implements Serializable {
 	 * @return to user apply
 	 */
 	public String goToApplicationFormRA(PositionEntity otherPosition) {
+		activePosition.setActivePosition(otherPosition);
 		statefulPosition.setPosition(otherPosition);
-		return "userapply.xhtml?faces-redirect=true";
+		return "submituserapplication.xhtml?faces-redirect=true";
 	}
 
 	/**
@@ -170,7 +171,7 @@ public class InfoUser implements Serializable {
 
 	/**
 	 *
-	 * @return to page successaplied if exception is not occurred and new
+	 * @return to mainpage if exception is not occurring and new
 	 * ApplicationEntity is created
 	 */
 	public String createApplication() {
@@ -221,7 +222,11 @@ public class InfoUser implements Serializable {
 	 */
 	public String createUserApplications() {
 		try {
-			applicationFacade.createUserApplications(application, uploadedFiles.getCvUploadName(), uploadedFiles.getClUploadName(), statefulPosition.getPosition(), application.getSource(), loggedUser.getLoggedUser());
+			applicant = (ApplicantEntity) activeSession.getActiveUser();
+			selectedPosition=activePosition.getActivePosition();
+			Logger.getLogger(InfoUser.class.getName()).log(Level.INFO, "Inside createUserApplications(), with selectedPosition="+selectedPosition+" and Applicant.email="+applicant.getEmail());
+			applicationFacade.createUserApplications(application, uploadedFiles.getCvUploadName(), uploadedFiles.getClUploadName(), selectedPosition, application.getSource(), applicant);
+			//applicationFacade.createUserApplications(application, uploadedFiles.getCvUploadName(), uploadedFiles.getClUploadName(), statefulPosition.getPosition(), application.getSource(), loggedUser.getLoggedUser());
 			return "/pages/candidate/indexmainuser.xhtml?faces-redirect=true";
 		} catch (DoNotUploadCVFileException | DoNotUploadCoverLetterException ex) {
 			// or CV and Cover Letter were not uploaded
@@ -271,7 +276,9 @@ public class InfoUser implements Serializable {
 	 * @return List of Positions that loggedUser(Aplicant) can apply.
 	 */
 	public List<PositionEntity> getLstApplicantPositions() {
-		lstApplicantPositions = positionFacade.lstPositionThatApplicantCanApply((ApplicantEntity) loggedUser.getLoggedUser());
+		applicant = (ApplicantEntity) activeSession.getActiveUser();
+		//lstApplicantPositions = positionFacade.lstPositionThatApplicantCanApply((ApplicantEntity) loggedUser.getLoggedUser());
+		lstApplicantPositions = positionFacade.lstPositionThatApplicantCanApply(applicant);
 		return lstApplicantPositions;
 	}
 

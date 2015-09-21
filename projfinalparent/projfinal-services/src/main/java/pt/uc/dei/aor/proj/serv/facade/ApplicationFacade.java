@@ -346,8 +346,8 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 			application.setApplicationDate(new Date());
 			application.setSource(source);
 			application.setIsSpontaneous(false);
-			//	application.setPosition(position); --> IMPORTANT TO ACTIVATE THIS AND NEXT LINE
-			//	sendEmail.sendEMail("acertarrumo2015@gmail.com", "New Application has been made", "New Application has been made by " + loggedUser.getFirstName() + loggedUser.getLastName() + " to the Position " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
+			application.setPosition(position);// --> IMPORTANT TO ACTIVATE THIS AND NEXT LINE
+			sendEmail.sendEMail("acertarrumo2015@gmail.com", "New Application has been made", "New Application has been made by " + loggedUser.getFirstName() + loggedUser.getLastName() + " to the Position &, manager = " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
 			create(application);
 		} else {
 			if (cvUploadName == null) {

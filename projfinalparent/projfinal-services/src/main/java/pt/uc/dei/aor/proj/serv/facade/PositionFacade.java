@@ -243,9 +243,12 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 	 */
 	public List<PositionEntity> lstPositionThatApplicantCanApply(ApplicantEntity applicant) {
 		//query to know which opened positions were not applied by applicant
+		Date date = new Date();
+		Long dayafter = date.getTime()+ 86400000;
+		date= new Date(dayafter);
 		Query query = em.createNamedQuery("PositionEntity.doNotApplied", PositionEntity.class);
 		query.setParameter("applicantId", applicant.getUserId());
-		query.setParameter("currentDate", new Date());
+		query.setParameter("currentDate", date);
 		List<PositionEntity> lstApplicantPosition = query.getResultList();
 		return lstApplicantPosition;
 	}
