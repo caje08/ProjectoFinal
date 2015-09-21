@@ -22,6 +22,7 @@ import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.GroupsEntity;
 import pt.uc.dei.aor.proj.db.entities.Role;
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
+import pt.uc.dei.aor.proj.db.tools.RejectionMotive;
 import pt.uc.dei.aor.proj.db.tools.StatusApplicant;
 import pt.uc.dei.aor.proj.ejb.PasswordEJB;
 import pt.uc.dei.aor.proj.serv.ejb.SendEmail;
@@ -32,6 +33,7 @@ import pt.uc.dei.aor.proj.serv.exceptions.InvalidAuthException;
 import pt.uc.dei.aor.proj.serv.exceptions.NumberOfMobilePhoneDigitsException;
 import pt.uc.dei.aor.proj.serv.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.serv.tools.AutomaticUsername;
+import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.RandomNumber;
 
 /**
@@ -156,8 +158,9 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 		//if phone mobile number has more than 8 digits
 		if (applicant.getMobile().length() >= 9) {
 			//if user do not exists
-			System.out.println("\nInside ApplicantFacade.createApplicant() before checking if mailAlreadyExists("+applicant.getUsername()+")\n");
-			if (!mailAlreadyExists(applicant.getUsername())) {
+			Logger.getLogger(ApplicantFacade.class.getName()).log(Level.INFO, "Inside ApplicantFacade.createApplicant() before checking if mailAlreadyExists("+applicant.getUsername()+")\n");
+			//System.out.println("\nInside ApplicantFacade.createApplicant() before checking if mailAlreadyExists("+applicant.getUsername()+")\n");
+			if (!mailAlreadyExists(applicant.getEmail())){//.getUsername())) {
 				String password = applicant.getPassword();
 				String encrypted = pw.encrypt(applicant.getPassword());
 				//generate a username
@@ -172,7 +175,8 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 				//set applicant status to submitted
 				applicant.setStatus(StatusApplicant.SUBMITTED);
 				applicant.setRole(Role.CANDIDATE);
-				System.out.println("\nInside ApplicantFacade.createApplicant() before creating applicant="+applicant.toString()+")\n");
+				//System.out.println("\nInside ApplicantFacade.createApplicant() before creating applicant="+applicant.toString()+")\n");
+				Logger.getLogger(ApplicantFacade.class.getName()).log(Level.INFO, "Inside ApplicantFacade.createApplicant() before creating applicant="+applicant.toString()+")\n");
 				create(applicant);
 				//persist applicant in GroupsHasUserguide entity
 
@@ -185,10 +189,14 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 
 				//send email to new user
 				sendEmail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new user", "Your login is " + applicant.getUsername() + " and your password is " + password, applicant.getEmail());
+				JSFUtil.addSuccessMessage("Applicant account has been created and an email sent with details! Please, check your email!");
+				Logger.getLogger(ApplicantFacade.class.getName()).log(Level.INFO, "Inside ApplicantFacade.createApplicant() after sending email to new applicant="+applicant.getEmail()+")\n");
 			} else {
+				JSFUtil.addErrorMessage("Email already exists. Please Login before submitting the application.");
 				throw new EmailAlreadyExistsException();
 			}
 		} else {
+			JSFUtil.addErrorMessage("Mobile number is having more digits than expected!.");
 			throw new NumberOfMobilePhoneDigitsException();
 		}
 	}
@@ -251,6 +259,7 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 	 */
 	public void toBlackList(ApplicantEntity applicant) throws EJBException {
 		applicant.setStatus(StatusApplicant.REJECTED);
+		applicant.setMotive(RejectionMotive.CV);
 		edit(applicant);
 	}
 

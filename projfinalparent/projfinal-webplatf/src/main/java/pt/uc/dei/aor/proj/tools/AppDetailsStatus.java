@@ -54,9 +54,9 @@ public class AppDetailsStatus implements Serializable {
 	@EJB
 	private InterviewFeedbackFacade interviewFeedbackFacade;
 
-	private final String CVDESTINATION = "C:/CSANTOS/DEI/projecto/DirsProjFinal/UploadFiles/CV";
-	private final String COVERLETTERDESTINATION = "C:/CSANTOS/DEI/projecto/DirsProjFinal/UploadFiles/CL";
-	private final String LOGODESTINATION = "C:/CSANTOS/DEI/projecto/DirsProjFinal/UploadFiles/Img";
+	private final String CVDESTINATION = "/CV/";
+	private final String COVERLETTERDESTINATION = "/CL/";
+	private final String LOGODESTINATION = "/Img/";
 	
 	public AppDetailsStatus() {
 	}

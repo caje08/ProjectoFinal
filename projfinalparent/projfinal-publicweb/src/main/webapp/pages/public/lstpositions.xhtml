@@ -1,0 +1,86 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;"> 
+    ]>
+
+    <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                    template="./../../template/template.xhtml"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui">
+        <!--Top Content-->
+
+        <ui:define name="top">
+            <h:form>
+                <h:link outcome="/pages/candidate/indexmainuser" value="Login" style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp;
+                <h:link outcome="/pages/public/lstpositions" value="Career Oportunity" style="color: ##{cssRequestBB.cssInUse.labelCommandLink}" />&nbsp;&nbsp;
+                <h:link outcome="/publogin" value="Main Page" style="color: ##{cssRequestBB.cssInUse.labelCommandLink}" />
+            </h:form>
+            <div align="right">
+                <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
+            </div>
+        </ui:define>
+
+
+        <!--Main Content-->
+
+        <ui:define name="content">
+            <h:form enctype="multipart/form-data">
+                <h3 >Apply now</h3>
+                <p:dataTable id="openpositions" paginator="true" rows="10" paginatorPosition="top" editable="false" 
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{position.positionCode}" selection="#{infoUser.selectedPosition}"
+                             value="#{infoUser.lstOpenPositions}"  styleClass="mystyle" rowStyleClass="order-table-odd-row,order-table-even-row" var="position"   >
+
+                    <f:facet name="header">
+                        List of Opening Positions
+                    </f:facet>
+                    <p:column style="width:16px">
+                        <p:rowToggler />
+                    </p:column>
+
+                    <p:column styleClass="centeredColumn"  headerText="Opening date"  filterBy="#{position.openingDate}" filterMatchMode="contains" >
+                        <h:outputText value="#{position.openingDate}" >
+                            <f:convertDateTime type="DATE" pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column styleClass="centeredColumn" headerText="Name of Position"  filterBy="#{position.title}" filterMatchMode="contains" >
+                        #{position.title}
+                    </p:column>
+
+                    <p:column styleClass="centeredColumn"  headerText="Location"  filterBy="#{position.location}" filterMatchMode="contains" >
+                        #{position.location}
+                    </p:column>
+
+                    <p:column styleClass="centeredColumn"  headerText="# of openings"  filterBy="#{position.vacancies}" filterMatchMode="contains" >
+                        #{position.vacancies}
+                    </p:column>
+
+                    <p:column styleClass="centeredColumn" headerText="Company"  filterBy="#{position.company}" filterMatchMode="contains" >
+                        #{position.company}
+                    </p:column>
+
+
+                    <p:column styleClass="centeredColumn"  headerText="Apply as Candidate"  >
+                        <p:commandButton  id="selectButton1" icon="ui-icon-plus"  action="#{infoUser.goToApplicationForm(position)}" ajax="false"  />
+
+                    </p:column>
+
+                    <p:rowExpansion>
+                        <h:panelGrid  columns="1">
+                            <h3>Job Description</h3>
+                            <p:inputTextarea value="#{position.jobDescription}" />
+                        </h:panelGrid>
+
+                    </p:rowExpansion>
+
+                </p:dataTable>
+
+                <p:commandButton  id="selectButton3" value="Spontaneous Application"  action="spontaneousApply.xhtml" ajax="false"  />
+
+            </h:form>
+
+        </ui:define>
+    </ui:composition>

@@ -2,7 +2,6 @@
  */
 package pt.uc.dei.aor.proj.serv.facade;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -355,13 +354,13 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @throws NoResultException
 	 */
 	public Double avgTimeToInterview() throws Exception, NoResultException {
-		String mysql = "select AVG (DATEDIFF(interviewfeedbackentity.interviewDate, applicationentity.applicationDate))\n"
+		String mysql = "select AVG (DATE_PART('day',interviewfeedbackentity.interviewDate-applicationentity.applicationDate))\n"
 				+ "FROM interviewfeedbackentity, applicationentity\n"
-				+ "WHERE interviewfeedbackentity.APPLICATION_applicationid = applicationentity.applicationid and interviewType = 'PHONE';";
+				+ "WHERE interviewfeedbackentity.APPLICATION_applicationid = applicationentity.applicationid and interviewType = 0;";//	+ InterviewType.PHONE+";";
 		Query query = em.createNativeQuery(mysql);
 		double result;
 		if (query.getSingleResult() != null) {
-			BigDecimal bd = (BigDecimal) query.getSingleResult();
+			Double bd = (Double) query.getSingleResult();
 			result = bd.doubleValue();
 		} else {
 			throw new NoResultException();

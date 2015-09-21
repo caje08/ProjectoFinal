@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="common/layout.xhtml">
+
+		<ui:define name="top">
+			<div id="search">
+				<h:form>
+					<!-- <f:event listener="#{pubAppDetailsStatus.init()}" type="preRenderView" /> -->
+					<f:event listener="#{pubLoginMB.logged()}" type="preRenderView" />
+
+					<table>
+						<tr>
+							<td><h:graphicImage library="images" name="critSW_small.png" /></td>
+
+							<td><label>Email: </label></td>
+
+							<td><h:inputText value="#{pubLoginMB.email}" /></td>
+
+							<td><label>Password: </label></td>
+
+							<td><h:inputSecret value="#{pubLoginMB.password}" /></td>
+
+							<td><h:commandButton action="#{pubLoginMB.login()}"
+									value="Submit" /></td>
+
+							<td><h:commandButton value="New User" action="/pages/public/pubregistry" /></td>
+
+							<td><h:outputText style="color:red"
+									value="#{pubLoginMB.errorMessage}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+
+			<div id="user_logout">
+				<h:form rendered="#{render.active}">
+					<h:commandButton value="#{pubActiveSession.activeUser.firstName}" />
+					<table>
+						<tr>
+							<td><h:commandButton action="index" value="Continue Session" /></td>
+							<td><h:commandButton action="#{pubActiveSession.logout()}"
+									value="Logout" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+		</ui:define>
+
+		<ui:define name="left" />
+		<ui:define name="right" />
+		<ui:define name="browser">			
+			<h2>"Public Web Page</h2>
+		
+			<h3>Please, start login with your user credentials</h3>
+		
+			<!-- <h:graphicImage styleClass="displayed" library="images"
+				name="CRitic_sw3.png" /> -->
+				<!--Main Content-->
+
+            <h:form enctype="multipart/form-data">
+                <h3 >Apply now</h3>
+                <p:dataTable id="openpositions" paginator="true" rows="10" paginatorPosition="top" editable="false" 
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{position.positionCode}" selection="#{infoUser.selectedPosition}"
+                             value="#{infoUser.lstOpenPositions}"  styleClass="mystyle" rowStyleClass="order-table-odd-row,order-table-even-row" var="position"   >
+
+                    <f:facet name="header">
+                        List of Opening Positions
+                    </f:facet>
+                    <p:column style="width:16px">
+                        <p:rowToggler />
+                    </p:column>
+
+                    <p:column styleClass="centeredColumn"  headerText="Opening date"  filterBy="#{position.openingDate}" filterMatchMode="contains" >
+                        <h:outputText value="#{position.openingDate}" >
+                            <f:convertDateTime type="DATE" pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column styleClass="centeredColumn" headerText="Name of Position"  filterBy="#{position.title}" filterMatchMode="contains" >
+                        #{position.title}
+                    </p:column>
+
+                    <p:column styleClass="centeredColumn"  headerText="Location"  filterBy="#{position.location}" filterMatchMode="contains" >
+                        #{position.location}
+                    </p:column>
+
+                    <p:column styleClass="centeredColumn"  headerText="# of openings"  filterBy="#{position.vacancies}" filterMatchMode="contains" >
+                        #{position.vacancies}
+                    </p:column>
+
+                    <p:column styleClass="centeredColumn" headerText="Company"  filterBy="#{position.company}" filterMatchMode="contains" >
+                        #{position.company}
+                    </p:column>
+
+
+                    <p:column styleClass="centeredColumn"  headerText="Send Application as Candidate"  >
+                        <p:commandButton  id="selectButton1" icon="ui-icon-plus"  action="#{infoUser.goToApplicationForm(position)}" ajax="false"  />
+
+                    </p:column>
+
+                    <p:rowExpansion>
+                        <h:panelGrid  columns="1">
+                            <h3>Job Description</h3>
+                            <p:inputTextarea value="#{position.jobDescription}" />
+                        </h:panelGrid>
+
+                    </p:rowExpansion>
+
+                </p:dataTable>
+				<br />
+                <p:commandButton  id="selectButton3" value="Spontaneous Application"  action="/pages/public/spontaneousApply.xhtml" ajax="false"  />
+
+            </h:form>
+
+		</ui:define>
+		<ui:define name="bottom" />
+
+		<!-- 		 <h:body>
+        <f:event listener="#{appDetailsStatus.init()}" type="preRenderView" />
+        <div id="box" align="left">
+            <h3>Welcome to the Login Page</h3>
+            <form method="post" action="j_security_check">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="User Name"/>
+                    <input type="text" name="j_username" />
+                    <h:outputLabel value="Password"/>
+                    <input type="password" name="j_password" />
+                    <input type="submit" value="Login" />
+                    <h:link outcome="/index" value="To Home Page" />
+                </h:panelGrid>
+            </form> 
+        </div>
+    </h:body> -->
+
+	</ui:composition>
+</h:body>
+
+</html>

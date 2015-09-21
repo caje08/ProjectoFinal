@@ -40,7 +40,7 @@ import com.itextpdf.text.pdf.PdfWriter;
  */
 @Named
 @ViewScoped
-public class AverageBB implements Serializable {
+public class AverageValues implements Serializable {
 
 	private static final String PDFDESTINATION = BundleUtils.getSettings("pdfgeneratefile");
 
@@ -60,7 +60,7 @@ public class AverageBB implements Serializable {
 	@EJB
 	private UserData userData;
 
-	public AverageBB() {
+	public AverageValues() {
 	}
 
 	public UserData getUserData() {
@@ -143,7 +143,7 @@ public class AverageBB implements Serializable {
 		try {
 			return String.valueOf(interviewFeedbackFacade.avgTimeToInterview() + " days");
 		} catch (Exception ex) {
-			Logger.getLogger(AverageBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AverageValues.class.getName()).log(Level.SEVERE, null, ex);
 			return "N/A";
 		}
 
@@ -157,7 +157,7 @@ public class AverageBB implements Serializable {
 		try {
 			return String.valueOf(applicationFacade.avgTimeToHire()+ " days");
 		} catch (Exception ex) {
-			Logger.getLogger(AverageBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AverageValues.class.getName()).log(Level.SEVERE, null, ex);
 			return "N/A";
 		}
 	}
@@ -184,15 +184,15 @@ public class AverageBB implements Serializable {
 				doc.add(new Paragraph(avgHire));
 				doc.close();
 			} catch (FileNotFoundException ex) {
-				Logger.getLogger(AverageBB.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(AverageValues.class.getName()).log(Level.SEVERE, null, ex);
 			} catch (IOException ex) {
-				Logger.getLogger(AverageBB.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(AverageValues.class.getName()).log(Level.SEVERE, null, ex);
 			} catch (DocumentException ex) {
-				Logger.getLogger(AverageBB.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(AverageValues.class.getName()).log(Level.SEVERE, null, ex);
 			}
 			sendEmail(selectedManager.getEmail(), userData.getLoggedUser().getUsername());
 		} catch (UserNotFoundException | UserGuideException ex) {
-			Logger.getLogger(AverageBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AverageValues.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 	}
@@ -208,7 +208,7 @@ public class AverageBB implements Serializable {
 		try {
 			SendEmailAttachedFiles.sendEmailWithAttachments(email, "Report", adminName + " has sent you the enclosed report", attachFiles);
 		} catch (MessagingException | EJBException ex) {
-			Logger.getLogger(AverageBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AverageValues.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage("Error sending email");
 		}
 	}

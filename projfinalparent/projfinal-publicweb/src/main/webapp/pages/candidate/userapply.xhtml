@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template/templateuser.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:define name="top">
+        <h:form>
+            <p:menubar>
+                <p:menuitem icon="ui-icon-home" action="/pages/candidate/mainuser.xhtml?faces-redirect=true"/>
+                <p:submenu label="Welcome: #{pubActiveSession.activeUser.username}" style="padding-left:20px" >
+                    <p:menuitem  value="Logout" action="#{pubLoginMB.logout()}" />
+                    <p:menuitem  value="Edit" action="/pages/candidate/edituser.xhtml?faces-redirect=true"  />
+                </p:submenu>
+                <p:submenu label="Applications" style="padding-left:20px">
+                    <p:menuitem value="Open Positions" action="/pages/candidate/openpositions.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="New Spontaneous Application" action="/pages/candidate/spontaneousapplications.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="My applications" action="/pages/candidate/userapplications.xhtml?faces-redirect=true"/>
+                </p:submenu>   
+            </p:menubar>
+        </h:form>
+        <div align="right">
+            <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
+        </div>
+    </ui:define> 
+    <ui:define name="content">
+        
+        <h3> Values with * are required </h3>
+        <h:form enctype="multipart/form-data">
+
+            <h:panelGrid columns="1" cellpadding="1" >
+                <p:outputLabel value="Source*"/>
+                <p:inputText id="source" required="true" label="source"
+                             size="40" requiredMessage="Please enter your source."
+                             value="#{infoUser.application.source}">
+                </p:inputText>
+                <p:watermark for="source" value="Source " />
+                <p:message for="source" />
+
+                <p:fileUpload update="cv1" id="cv" auto="true" fileUploadListener="#{infoUser.uploadCV}" label="Upload CV*" 
+                              allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000" />
+                <p:growl id="cv1" showDetail="true" />
+
+
+                <p:fileUpload update="cl1" id="ml" auto="true" fileUploadListener="#{infoUser.uploadMotivationLetter}" label="Upload Motivation Letter*" 
+                              allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000" />
+                <p:growl id="cl1" showDetail="true" />
+
+            </h:panelGrid>
+
+            <h:commandButton value="Apply" style="height:50px; width:100px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+                             action="#{infoUser.createUserApplications()}"/>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

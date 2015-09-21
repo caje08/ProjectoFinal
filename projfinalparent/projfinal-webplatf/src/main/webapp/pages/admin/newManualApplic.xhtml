@@ -108,12 +108,18 @@
                                     <p:watermark for="confirmPassword" value="Type Password Again" />
                         </p:password>
                         
+                        <p:outputLabel value="CV Filename:"/>
+                        <h:outputText value="#{manageApplicationWeb.cvname}"/>                        
                         <p:fileUpload update="cv1"  mode="advanced" auto="true"  id="cv"  previewWidth="40" required="true" fileUploadListener="#{manageApplicationWeb.uploadCV}" label="Upload CV*" styleClass="fileUploadClass"
                                       allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000" requiredMessage="Please upload CV" />
                         <p:growl id="cv1" showDetail="true" />
+                        
+                        <p:outputLabel value="Cover Letter Filename:"/>
+                        <h:outputText value="#{manageApplicationWeb.clname}"/> 
                         <p:fileUpload update="cl1" id="ml" auto="true"  required="true" fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}" label="Upload Cover Letter*"  requiredMessage="Please upload Cover Letter"
                                       allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000" styleClass="fileUploadClass"/>
                         <p:growl id="cl1" showDetail="true" />
+                        
 
                     </h:panelGrid>
 

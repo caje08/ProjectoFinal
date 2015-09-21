@@ -47,6 +47,7 @@ public class ApplicantCheck {
 	public String sendApplicantToBlackList() {
 		try {
 			applicantFacade.toBlackList(applicantData.getApplicant());
+			Logger.getLogger(ApplicantCheck.class.getName()).log(Level.INFO, "Applicant to blacklist in sendApplicantToBlackList() with applicant="+applicantData.getApplicant());
 			return "applicants.xhtml?faces-redirect=true";
 		} catch (EJBException ex) {
 			Logger.getLogger(ApplicantCheck.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +71,14 @@ public class ApplicantCheck {
 	 */
 	public String goToblacklist(ApplicantEntity applicant) {
 		applicantData.setApplicant(applicant);
-		return "blacklist.xhtml?faces-redirect=true";
+		Logger.getLogger(ApplicantCheck.class.getName()).log(Level.INFO, "Applicant to blacklist in goToblacklist() with applicant="+applicantData.getApplicant());
+		//return "appblacklist.xhtml?faces-redirect=true";
+		String out = sendApplicantToBlackList();
+		if(!out.isEmpty() && out!=null) {
+			return out;
+		} else {
+			return "/pages/admin/mainadmin.xhtml?faces-redirect=true";
+		}
 	}
 
 

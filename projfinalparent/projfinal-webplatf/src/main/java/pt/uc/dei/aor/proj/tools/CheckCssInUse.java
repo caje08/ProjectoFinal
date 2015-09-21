@@ -13,8 +13,8 @@ import pt.uc.dei.aor.proj.serv.facade.CSSFacade;
  * @author
  */
 @RequestScoped
-@Named("CssInUse")
-public class CssInUseBB {
+@Named("CheckCssInUse")
+public class CheckCssInUse {
 
 	@EJB
 	private CSSFacade cSSFacade;

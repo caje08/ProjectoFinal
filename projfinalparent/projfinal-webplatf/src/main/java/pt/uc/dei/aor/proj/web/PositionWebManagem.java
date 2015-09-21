@@ -114,6 +114,10 @@ public class PositionWebManagem implements Serializable {
 	 * @return
 	 */
 	public String addPosition() {
+		
+		position = activePosition.getActivePosition();
+		position.setCompany("CRITICAL SW");
+		activePosition.setActivePosition(position);
 		position = activePosition.getActivePosition();
 		selectedManager=position.getManager();
 		Logger.getLogger(PositionWebManagem.class.getName()).log(

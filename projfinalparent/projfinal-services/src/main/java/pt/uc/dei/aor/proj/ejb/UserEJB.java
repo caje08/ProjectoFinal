@@ -130,19 +130,12 @@ public class UserEJB implements UserEJBLocal {
 	@Override
 	public List<UserEntity> getUsers() {
 
-		logger.info("Sample Antes info message");
-
-		System.out.println("Antes de criar a query");
+		logger.info("UserEJB.getUsers() --> before creating the query");
 
 		Query q = em.createQuery("from UserEntity u");
 		List<UserEntity> users = q.getResultList();
-
-		System.out.println(users);
-
-		System.out.println("Depois de apresentar os resultados");
-
-		logger.info("Sample Depois info message");
-
+		logger.info("UserEJB.getUsers() --> after creating the query to get users:"+users);
+		
 		return users;
 	}
 
@@ -238,6 +231,53 @@ public class UserEJB implements UserEJBLocal {
 
 	public static HashMap<UserEntity, Integer> getLoggedUsers() {
 		return loggedUsers;
+	}
+
+	@Override
+	public void populateCandidates() {
+		System.out.println("Em UserEJB.populateCandidates() vai criar user1");
+		password =pw.encrypt("123");
+		System.out.println("\nPassw ="+password);
+		UserEntity usertmp1= new UserEntity("user1pub name", "user1 publast",password, "user1pub@gmail.com",
+				"user1pub usernam"); //pass 123
+		System.out.println("Vai colocar  usertmp1.setRole(Role.USERPUBLIC)");
+		usertmp1.setRole(Role.USERPUBLIC);
+		usertmp1.initArray();
+		//usertmp1.setRoles(Role.INTERVIEWER);
+		System.out.println("Vai persistir usertmp1");
+		em.persist(usertmp1);
+		System.out.println("Criou user "+usertmp1.getEmail()+" e sizeRoles= "+usertmp1.getRoles().size());
+		password =pw.encrypt("456");
+		UserEntity usertmp2= new UserEntity("user2pub name", "user2 publast",password, "user2pub@gmail.com",
+				"user2pub usernam");  //pass 456
+		usertmp2.setRole(Role.USERPUBLIC);
+		usertmp2.initArray();
+		//usertmp2.setRoles(Role.INTERVIEWER);
+		em.persist(usertmp2);
+		System.out.println("Criou user "+usertmp2.getEmail()+" e sizeRoles= "+usertmp2.getRoles().size());
+		password =pw.encrypt("789");
+		UserEntity usertmp3= new UserEntity("user3pub name", "user3 publast",password, "user3pub@gmail.com",
+				"user3pub usernam");
+		usertmp3.setRole(Role.USERPUBLIC); //pass 789
+		usertmp3.initArray();
+//		usertmp3.setRoles(Role.MANAGER);
+//		usertmp3.setRoles(Role.INTERVIEWER);
+		em.persist(usertmp3);
+		System.out.println("Criou user "+usertmp3.getEmail()+" e sizeRoles= "+usertmp3.getRoles().size());
+
+		
+	}
+
+	@Override
+	public List<UserEntity> getCandidateUsers() {
+		logger.info("UserEJB.getCandidateUsers() --> before creating the query");
+
+		Query q = em.createQuery("from UserEntity u where u.role LIKE 'CANDIDATE' or u.role LIKE 'USERPUBLIC'");
+		List<UserEntity> users = q.getResultList();
+		logger.info("UserEJB.getUsers() --> after creating the query to get users:"+users);
+		
+		return users;
+		
 	}
 
 }

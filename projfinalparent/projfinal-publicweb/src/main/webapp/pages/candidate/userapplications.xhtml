@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../template/templateuser.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:define name="top">
+        <h:form>
+            <p:menubar>
+                <p:menuitem icon="ui-icon-home" action="/pages/candidate/mainuser.xhtml?faces-redirect=true"/>
+                <p:submenu label="Welcome: #{pubActiveSession.activeUser.username}" style="padding-left:20px" >
+                    <p:menuitem  value="Logout" action="#{pubLoginMB.logout()}" />
+                    <p:menuitem  value="Edit" action="/pages/candidate/edituser.xhtml?faces-redirect=true"  />
+                </p:submenu>
+                <p:submenu label="Applications" style="padding-left:20px">
+                    <p:menuitem value="Open Positions" action="/pages/candidate/openpositions.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="New Spontaneous Application" action="/pages/candidate/spontaneousapplications.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="My applications" action="/pages/candidate/userapplications.xhtml?faces-redirect=true"/>
+                </p:submenu>   
+            </p:menubar>
+        </h:form>
+         <div align="right">
+            <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
+        </div>
+    </ui:define> 
+    <ui:define name="content">
+        <h1>My applications</h1>
+        <h:form enctype="multipart/form-data">
+
+            <p:dataTable id="myapplications"  paginator="true" rows="10" paginatorPosition="top" editable="false" 
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{myapplication.applicationId}" selection="#{infoUser.application}"
+                         value="#{infoUser.lstApplications}" var="myapplication" >
+
+                <p:column styleClass="centeredColumn"  headerText="Position"  filterBy="#{myapplication.position.title}" filterMatchMode="contains">
+                    #{myapplication.position.title}
+                </p:column>
+
+                <p:column styleClass="centeredColumn"  headerText="Source"  filterBy="#{myapplication.source}" filterMatchMode="contains">
+                    #{myapplication.source}
+                </p:column>
+
+                <p:column styleClass="centeredColumn"  headerText="Application Date"  filterBy="#{myapplication.applicationDate}" filterMatchMode="contains" >
+                    <h:outputText value="#{myapplication.applicationDate}" >
+                        <f:convertDateTime type="DATE" pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column styleClass="centeredColumn"  headerText="Status"  filterBy="#{myapplication.status}" filterMatchMode="contains" >
+                    #{myapplication.status}
+                </p:column>
+
+                <p:column  styleClass="centeredColumn"  headerText="Edit" >
+                    <p:commandButton rendered="#{infoUser.couldEdit(myapplication)}"  icon="ui-icon-wrench" update=":editApplication" oncomplete="PF('editApp').show();" >
+                        <f:setPropertyActionListener value="#{myapplication}" target="#{infoUser.selectedApplication}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+        <h:form id="editApplication" enctype="multipart/form-data">
+            <p:dialog id="modalDialog" header="Edit application" widgetVar="editApp" modal="true" height="auto" width="auto">
+                <h:panelGrid columns="1" columnClasses="rightalign" cellpadding="0" cellspacing="2">
+                    <p:outputLabel value="Source*"/>
+                    <p:inputText id="source" required="true" label="source"
+                                 size="40" requiredMessage="Please enter a source"
+                                 value="#{infoUser.selectedApplication.source}">
+                    </p:inputText>
+                    <p:watermark for="source" value="Source" />
+                    <p:message for="source"/>
+
+                    <p:fileUpload update="cv1" id="cv" auto="true" fileUploadListener="#{infoUser.uploadCV}" label="Upload CV*" 
+                                  allowTypes="/(\.|\/)(pdf|doc|txt)$/" sizeLimit="60000000" />
+                    <p:growl id="cv1" showDetail="true" />
+
+
+                    <p:fileUpload update="cl1" id="ml" auto="true" fileUploadListener="#{infoUser.uploadMotivationLetter}" label="Upload Motivation Letter*" 
+                                  allowTypes="/(\.|\/)(pdf|doc|txt)$/" sizeLimit="60000000" />
+                    <p:growl id="cl1" showDetail="true" />
+
+                    <h:commandButton value="Edit" action="#{infoUser.editApplication()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/> 
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

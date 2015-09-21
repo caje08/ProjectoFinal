@@ -44,6 +44,7 @@ import pt.uc.dei.aor.proj.db.tools.StatusApplication;
 	@NamedQuery(name = "ApplicationEntity.findByPosition", query = "SELECT a FROM ApplicationEntity a WHERE a.position = :position"),
 	@NamedQuery(name = "ApplicationEntity.findPositionsInApplication", query = "SELECT a.position FROM ApplicationEntity a WHERE a.position = :position"),
 	@NamedQuery(name = "ApplicationEntity.findPositionsInApplicant", query = "SELECT a.position FROM ApplicationEntity a WHERE a.applicant=:applicant"),
+	@NamedQuery(name = "ApplicationEntity.findApplicationsOfApplicant",	query = "SELECT a FROM ApplicationEntity a WHERE a.applicant = :applicant ORDER BY a.applicationDate"),
 	@NamedQuery(name = "ApplicationEntity.findByApplicantAndPosition", query = "SELECT a FROM ApplicationEntity a WHERE a.position = :position and a.applicant=:applicant"),
 	@NamedQuery(name = "ApplicationEntity.findByApplicantAndPositionAndNonSpontaneous", query = "SELECT a FROM ApplicationEntity a WHERE a.position = :position and a.applicant=:applicant and a.isSpontaneous = false"),
 	@NamedQuery(name = "ApplicationEntity.findByRejectionMotiveCV", query = "SELECT a FROM ApplicationEntity a WHERE a.motive = pt.uc.dei.aor.proj.db.tools.RejectionMotive.CV"),

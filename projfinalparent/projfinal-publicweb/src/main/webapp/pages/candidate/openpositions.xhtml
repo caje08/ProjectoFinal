@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/templateuser.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:define name="top">
+        <h:form>
+            <p:menubar>
+                <p:menuitem icon="ui-icon-home" action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true"/>
+                <p:submenu label="Welcome: #{pubActiveSession.activeUser.username}" style="padding-left:20px" >
+                    <p:menuitem  value="Logout" action="#{pubLoginMB.logout()}" />
+                    <p:menuitem  value="Edit" action="/pages/candidate/edituser.xhtml?faces-redirect=true"  />
+                </p:submenu>
+                <p:submenu label="Applications" style="padding-left:20px">
+                    <p:menuitem value="Open Positions" action="/pages/candidate/openpositions.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="New Spontaneous Application" action="/pages/candidate/spontaneousapplications.xhtml?faces-redirect=true"/>
+                    <p:menuitem value="My applications" action="/pages/candidate/userapplications.xhtml?faces-redirect=true"/>
+                </p:submenu>   
+            </p:menubar>
+        </h:form>
+        <div align="right">
+            <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
+        </div>
+    </ui:define> 
+
+
+    <ui:define name="content">
+        <h:form id="allpositions">
+            <h1>List Of All Positions </h1>
+            <p:dataTable id="openpositions"  paginator="true" rows="10" paginatorPosition="top" editable="false" 
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,30"  rowKey="#{position.positionCode}" selectionMode="single" selection="#{infoUser.selectedPosition}"
+                         value="#{infoUser.lstApplicantPositions}"  styleClass="mystyle" rowStyleClass="order-table-odd-row,order-table-even-row" var="position"   >
+
+                <p:column style="width:16px">
+                    <p:rowToggler />
+                </p:column>
+
+                <p:column styleClass="centeredColumn"  headerText="Opening date"  filterBy="#{position.openingDate}" filterMatchMode="contains" >
+                    <h:outputText value="#{position.openingDate}" >
+                        <f:convertDateTime type="DATE" pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column styleClass="centeredColumn" headerText="Name of Position"  filterBy="#{position.title}" filterMatchMode="contains" >
+                    #{position.title}
+                </p:column>
+
+                <p:column styleClass="centeredColumn"  headerText="Location"  filterBy="#{position.location}" filterMatchMode="contains" >
+                    #{position.location}
+                </p:column>
+
+                <p:column styleClass="centeredColumn"  headerText="# of openings"  filterBy="#{position.vacancies}" filterMatchMode="contains" >
+                    #{position.vacancies}
+                </p:column>
+
+                <p:column styleClass="centeredColumn" headerText="Company"  filterBy="#{position.company}" filterMatchMode="contains" >
+                    #{position.company}
+                </p:column>
+
+
+                <p:column styleClass="centeredColumn"  headerText="Apply"  >
+                    <p:commandButton  id="selectButton1" icon="ui-icon-plus"  action="#{infoUser.goToApplicationFormRA(position)}" ajax="false"  />
+                </p:column>
+
+                <p:rowExpansion>
+                    <h:panelGrid  columns="1">
+                        <h3>Job Description</h3>
+                        <p:inputTextarea value="#{position.jobDescription}" />
+                    </h:panelGrid>
+
+                </p:rowExpansion>
+
+            </p:dataTable>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

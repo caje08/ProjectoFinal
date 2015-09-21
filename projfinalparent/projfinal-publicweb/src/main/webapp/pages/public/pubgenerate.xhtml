@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Populate DB</title>
+</h:head>
+<h:body>
+	<h1> ProjFinal Users DB creation!</h1>
+	<h:form>
+		<h:commandButton action="#{pubLoginMB.logout}" value="Logout" />
+	</h:form>
+	<h:form>
+		<h:commandButton action="#{pubLogin.populateCandidates()}" value="submit" />
+	</h:form>
+	<p></p>
+	<h3> Tabela de Utilizadores na BD</h3>
+	<p></p>
+	<h:dataTable value="#{pubLogin.getUsers()}" var="user">
+		<h:column>#{user.username}</h:column>
+		<h:column>#{user.password}</h:column>
+		<h:column>#{user.email}</h:column>
+	</h:dataTable>
+	<p></p>
+	<h3> Tabela de Posições Abertas na BD</h3>
+	<p></p>
+	<h:dataTable value="#{positionWebManagem.lstPositions}" var="position">
+		<h:column>#{position.title}</h:column>
+		<h:column>#{position.positionCode}</h:column>
+		<h:column>#{position.openingDate}</h:column>
+		<h:column>#{position.closingDate}</h:column>
+	</h:dataTable>
+	<p></p>
+	<h3> Tabela de Posições Abertas antes da data actual na BD</h3>
+	<p></p>
+	<h:dataTable value="#{positionWebManagem.lstPositionsBeforeAtualDate}" var="postoapp">
+		<h:column>#{postoapp.positionCode}</h:column>
+		<h:column>#{postoapp.title}</h:column>
+		<h:column>#{postoapp.openingDate}</h:column>
+		<h:column>#{postoapp.closingDate}</h:column>
+	</h:dataTable>
+	
+</h:body>
+</html>

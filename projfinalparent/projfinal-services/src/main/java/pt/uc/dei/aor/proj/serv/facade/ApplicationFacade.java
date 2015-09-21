@@ -2,7 +2,6 @@
  */
 package pt.uc.dei.aor.proj.serv.facade;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -257,11 +256,11 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 			 Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before create(application) with application.getPosition().getTitle()= "+application.getPosition().getTitle());
 			}
 			Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before create(application) with application.getApplicant().getEmail()= "+application.getApplicant().getEmail());
-			
-			Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before sending email stating  New ApplicationEntity has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
 			create(application);
+			Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "inside createApplicationOfNewApplicant() and before sending email stating  New ApplicationEntity has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
+			
 			//send an email to new ApplicantEntity --->  IMPORTANT TO ACTIVATE NEXT LINE
-			sendEmail.sendEMail("acertarrumo2015@gmail.com", "New application has been made", "New ApplicationEntity has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
+			sendEmail.sendEMail("acertarrumo2015@gmail.com", "New application has been made", "New Application has been made by " + applicant.getFirstName() + applicant.getLastName() + " to the Position " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
 		} else {
 			if (cvUploadName == null) {
 				throw new DoNotUploadCVFileException();
@@ -288,6 +287,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	 */
 	public void createSpontaneousApplicationOfNewApplicant(ApplicantEntity applicant,  ApplicationEntity application, String cvUploadName, String clUploadName) throws InvalidAuthException, EmailAlreadyExistsException, NumberOfMobilePhoneDigitsException, DoNotUploadCVFileException, DoNotUploadCoverLetterException, EJBException, EmailAndPasswordNotCorrespondingToLinkedinCredentialsException {
 		applicantFacade.createApplicant(applicant);
+		
 		if (cvUploadName != null && clUploadName != null) {
 			application.setApplicant(applicant);
 			application.setCv(cvUploadName);
@@ -347,7 +347,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 			application.setSource(source);
 			application.setIsSpontaneous(false);
 			//	application.setPosition(position); --> IMPORTANT TO ACTIVATE THIS AND NEXT LINE
-			//	sendEmail.sendEMail("acertarrumo2015@gmail.com", "New ApplicationEntity has been made", "New ApplicationEntity has been made by " + loggedUser.getFirstName() + loggedUser.getLastName() + " to the PositionEntity " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
+			//	sendEmail.sendEMail("acertarrumo2015@gmail.com", "New Application has been made", "New Application has been made by " + loggedUser.getFirstName() + loggedUser.getLastName() + " to the Position " + application.getPosition().getTitle(), application.getPosition().getManager().getEmail());
 			create(application);
 		} else {
 			if (cvUploadName == null) {
@@ -426,12 +426,12 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	 * @throws java.lang.Exception
 	 */
 	public Double avgTimeToHire() throws Exception, NoResultException {
-		String mysql = "select AVG (DATEDIFF(applicationentity.hiringDate, applicationentity.applicationDate))\n"
+		String mysql = "select AVG (DATE_PART('day',applicationentity.hiringDate-applicationentity.applicationDate))\n"
 				+ "FROM applicationentity;";
 		Query query = em.createNativeQuery(mysql);
 		double result;
 		if (query.getSingleResult() != null) {
-			BigDecimal bd = (BigDecimal) query.getSingleResult();
+			Double bd = (Double) query.getSingleResult();
 			result = bd.doubleValue();
 		} else {
 			throw new NoResultException();

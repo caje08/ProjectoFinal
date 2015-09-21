@@ -74,6 +74,8 @@ public class ManageApplicationWeb implements Serializable {
 	private UploadedFiles uploadedFiles;
 	private ApplicantEntity applicant;
 	private ApplicationEntity application;
+	private String cvname;
+	private String clname;
 
 	// @Inject
 	private UserData userData;
@@ -107,7 +109,7 @@ public class ManageApplicationWeb implements Serializable {
 		this.position = new PositionEntity();
 		this.application = new ApplicationEntity();
 		this.applicant = new ApplicantEntity();
-		
+
 	}
 
 	/**
@@ -117,24 +119,23 @@ public class ManageApplicationWeb implements Serializable {
 	 */
 	public String addPosition() {
 		position = activePosition.getActivePosition();
-		selectedManager=position.getManager();
+		selectedManager = position.getManager();
 		Logger.getLogger(ManageApplicationWeb.class.getName()).log(
 				Level.INFO,
 				"addPosition() --> Before creating Position = "
-						+ position.getTitle()
-						+ " and manager ="+selectedManager.getEmail());
-		try {			
+						+ position.getTitle() + " and manager ="
+						+ selectedManager.getEmail());
+		try {
 			if (positionFacade.createPosition(selectedManager, position,
 					ONEWEEKONMS)) {
 				Logger.getLogger(ManageApplicationWeb.class.getName()).log(
 						Level.INFO,
-						"addPosition() --> Position = "
-								+ position.getTitle()
+						"addPosition() --> Position = " + position.getTitle()
 								+ " has been created successfully!");
 				JSFUtil.addSuccessMessage("addPosition() --> Position = "
 						+ position.getTitle()
 						+ " has been created successfully!");
-				//stopShowPanel();
+				// stopShowPanel();
 				position = new PositionEntity();
 				activePosition.setActivePosition(position);
 			} else {
@@ -238,9 +239,16 @@ public class ManageApplicationWeb implements Serializable {
 	 * @param event
 	 */
 	public void uploadCV1(FileUploadEvent event) {
-		uploadedFiles.upload(event, "cv");
-		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName()
-				+ " was uploaded.");
+		try {
+			uploadedFiles.upload(event, "cv");
+			this.cvname = event.getFile().getFileName();
+			JSFUtil.addSuccessMessage("Success!! " + cvname + " was uploaded.");
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.INFO, "Inside uploadCV1() download file= " + cvname+" ou "+ uploadedFiles.getFinalCvDestination());
+		} catch (Exception e) {
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.SEVERE, null, "uploadCV1() error=" + e.getMessage());
+		}
 	}
 
 	/**
@@ -249,9 +257,16 @@ public class ManageApplicationWeb implements Serializable {
 	 * @param event
 	 */
 	public void uploadCV(FileUploadEvent event) {
-		uploadedFiles.upload(event, "cv");
-		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName()
-				+ " was uploaded.");
+		try {
+			uploadedFiles.upload(event, "cv");
+			this.cvname = event.getFile().getFileName();
+			JSFUtil.addSuccessMessage("Success!! " + cvname + " was uploaded.");
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.INFO, "Inside uploadCV() download file= " + cvname+" ou "+ uploadedFiles.getFinalCvDestination());
+		} catch (Exception e) {
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.SEVERE, null, "uploadCV() error=" + e.getMessage());
+		}
 	}
 
 	/**
@@ -260,9 +275,18 @@ public class ManageApplicationWeb implements Serializable {
 	 * @param event
 	 */
 	public void uploadMotivationLetter(FileUploadEvent event) {
-		uploadedFiles.upload(event, "cl");
-		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName()
-				+ " was uploaded.");
+		try {
+			uploadedFiles.upload(event, "cl");
+			this.clname = event.getFile().getFileName();
+			JSFUtil.addSuccessMessage("Success!! " + clname + " was uploaded.");
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.INFO,
+					"Inside uploadMotivationLetter() download file= " + clname+" ou "+ uploadedFiles.getFinalCoverLetterDestination());
+		} catch (Exception e) {
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.SEVERE, null,
+					"uploadMotivationLetter() error=" + e.getMessage());
+		}
 	}
 
 	/**
@@ -298,7 +322,7 @@ public class ManageApplicationWeb implements Serializable {
 	 */
 	public String createApplication() {
 		try {
-			selectedPosition=activePosition.getActivePosition();
+			selectedPosition = activePosition.getActivePosition();
 			try {
 				Logger.getLogger(ManageApplicationWeb.class.getName())
 						.log(Level.INFO,
@@ -311,11 +335,11 @@ public class ManageApplicationWeb implements Serializable {
 
 			applicationFacade.createApplicationOfNewApplicant(applicant,
 					application, uploadedFiles.getCvUploadName(),
-					uploadedFiles.getClUploadName(),
-					selectedPosition);
-			Logger.getLogger(ManageApplicationWeb.class.getName()).log(Level.INFO,
-					"Inside createApplication() and after applicationFacade.createApplicationOfNewApplicant() where selectedPosition.getTitle="
-							+ selectedPosition.getTitle());
+					uploadedFiles.getClUploadName(), selectedPosition);
+			Logger.getLogger(ManageApplicationWeb.class.getName())
+					.log(Level.INFO,
+							"Inside createApplication() and after applicationFacade.createApplicationOfNewApplicant() where selectedPosition.getTitle="
+									+ selectedPosition.getTitle());
 		} catch (InvalidAuthException | EmailAlreadyExistsException
 				| NumberOfMobilePhoneDigitsException
 				| DoNotUploadCVFileException | DoNotUploadCoverLetterException ex) {
@@ -350,17 +374,17 @@ public class ManageApplicationWeb implements Serializable {
 				"Inside goToApplicationForm() and otherPosition.title is="
 						+ otherPosition.getTitle());
 		activePosition.setActivePosition(otherPosition);
-//		statefulPosition.setPosition(otherPosition);
-//		position = statefulPosition.getPosition();
+		// statefulPosition.setPosition(otherPosition);
+		// position = statefulPosition.getPosition();
 		position = activePosition.getActivePosition();
 		Logger.getLogger(ManageApplicationWeb.class.getName())
 				.log(Level.INFO,
 						"Inside goToApplicationForm() and after setting position where position().getTitle() is="
 								+ position.getTitle());
-//		Logger.getLogger(ManageApplicationWeb.class.getName())
-//				.log(Level.INFO,
-//						"Inside goToApplicationForm() and after setting position where statefulPosition.getPosition().getTitle() is="
-//								+ statefulPosition.getPosition().getTitle());
+		// Logger.getLogger(ManageApplicationWeb.class.getName())
+		// .log(Level.INFO,
+		// "Inside goToApplicationForm() and after setting position where statefulPosition.getPosition().getTitle() is="
+		// + statefulPosition.getPosition().getTitle());
 		return "newApplicationToPosition.xhtml?faces-redirect=true";
 	}
 
@@ -387,15 +411,16 @@ public class ManageApplicationWeb implements Serializable {
 	 *
 	 */
 	public void openNewPosition() {
-		Logger.getLogger(ManageApplicationWeb.class.getName()).log(
-				Level.INFO,
-				"Inside openNewPosition() and before setting activePosition=new position ");
+		Logger.getLogger(ManageApplicationWeb.class.getName())
+				.log(Level.INFO,
+						"Inside openNewPosition() and before setting activePosition=new position ");
 		this.activePosition.setActivePosition(position);
-		Logger.getLogger(ManageApplicationWeb.class.getName()).log(
-				Level.INFO,
-				"Inside openNewPosition() and after setting activePosition=new position ");
-		
+		Logger.getLogger(ManageApplicationWeb.class.getName())
+				.log(Level.INFO,
+						"Inside openNewPosition() and after setting activePosition=new position ");
+
 	}
+
 	/**
 	 *
 	 */
@@ -516,7 +541,7 @@ public class ManageApplicationWeb implements Serializable {
 	}
 
 	public void setTheSelectedManager() {
-		position=activePosition.getActivePosition();		
+		position = activePosition.getActivePosition();
 		position.setManager(selectedManager);
 		activePosition.setActivePosition(position);
 	}
@@ -532,8 +557,8 @@ public class ManageApplicationWeb implements Serializable {
 		position.setPresencialInterviewEntity(selectedInterviewGuide);
 		activePosition.setActivePosition(position);
 	}
-	
-	public void saveTemporaryDataPosition(){
+
+	public void saveTemporaryDataPosition() {
 		activePosition.setActivePosition(position);
 	}
 
@@ -648,6 +673,22 @@ public class ManageApplicationWeb implements Serializable {
 	public void setLstPositionsofAManager(
 			List<PositionEntity> lstPositionsofAManager) {
 		this.lstPositionsofAManager = lstPositionsofAManager;
+	}
+
+	public String getCvname() {
+		return cvname;
+	}
+
+	public void setCvname(String cvname) {
+		this.cvname = cvname;
+	}
+
+	public String getClname() {
+		return clname;
+	}
+
+	public void setClname(String clname) {
+		this.clname = clname;
 	}
 
 }

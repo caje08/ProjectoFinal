@@ -5,6 +5,7 @@ public enum Role {
 	ADMIN,
 	INTERVIEWER,
 	MANAGER,
+	USERPUBLIC,
 	CANDIDATE;
 
 	public String getRole() {

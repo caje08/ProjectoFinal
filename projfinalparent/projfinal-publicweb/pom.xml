@@ -30,7 +30,7 @@
 			<exclusions>
 				<exclusion>
 					<artifactId>projfinal-domain</artifactId>
-					<groupId>pt.uc.dei.aor.proj</groupId>
+					<groupId>pt.uc.dei.aor.proj.db</groupId>
 				</exclusion>
 			</exclusions>
           </dependency>

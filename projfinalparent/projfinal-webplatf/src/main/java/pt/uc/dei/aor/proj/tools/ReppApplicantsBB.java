@@ -416,8 +416,8 @@ public class ReppApplicantsBB implements Serializable {
 		dateModel.getAxis(AxisType.Y).setLabel("# of Applicants");
 		DateAxis axis = new DateAxis("Dates");
 		axis.setTickAngle(-50);
-		axis.setMin("2014-07-01");
-		axis.setMax("2014-07-31");
+		axis.setMin("2015-09-01");
+		axis.setMax("2015-09-31");
 		axis.setTickFormat("%b %#d, %y");
 		dateModel.getAxes().put(AxisType.X, axis);
 	}
@@ -440,8 +440,8 @@ public class ReppApplicantsBB implements Serializable {
 		dateSpontaneousModel.getAxis(AxisType.Y).setLabel("# of Applicants");
 		DateAxis axis = new DateAxis("Dates");
 		axis.setTickAngle(-50);
-		axis.setMin("2014-07-01");
-		axis.setMax("2014-07-31");
+		axis.setMin("2015-09-01");
+		axis.setMax("2015-09-31");
 		axis.setTickFormat("%b %#d, %y");
 		dateSpontaneousModel.getAxes().put(AxisType.X, axis);
 	}

@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.proj.db.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Basic;
@@ -118,6 +119,11 @@ public class UserEntity implements Serializable {
 		//this.roles=new ArrayList<Role>();
 	}
 
+	public void initArray(){
+		this.roles=new ArrayList<Role>();
+		this.roles.add(Role.USERPUBLIC);
+	}
+	
 	public String getFirstName() {
 		return this.firstName;
 	}

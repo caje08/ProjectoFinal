@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -75,6 +78,9 @@ public class ApplicantEntity extends UserEntity implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Basic
 	private Date hiringDate;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<ApplicationEntity> applications;
 
 	public ApplicantEntity() {
 		this.roles=new ArrayList<Role>();
@@ -193,6 +199,14 @@ public class ApplicantEntity extends UserEntity implements Serializable {
 
 	public Token getToken(){
 		return new Token(acessToken, secretToken, rawResponse);
+	}
+	
+	public List<ApplicationEntity> getApplications() {
+		return applications;
+	}
+
+	public void setApplications(List<ApplicationEntity> applications) {
+		this.applications = applications;
 	}
 
 	@Override

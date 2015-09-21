@@ -41,7 +41,7 @@
                                 <p:outputLabel value="#{item.position.title}" />
                             </p:column>
 
-                            <p:column  styleClass="centeredColumn"  headerText="Do not go To Phone Interview?"  style="width:20%">
+                            <p:column  styleClass="centeredColumn"  headerText="Do not go To First Interview?"  style="width:20%">
                                 <p:commandButton rendered="#{applicationWebManagem.alreadyInInterviewProcess(item)}" id="editapplication" icon="ui-icon-closethick" oncomplete="PF('status').show()" update=":statusUpdate" >
                                     <f:setPropertyActionListener value="#{item}" target="#{applicationWebManagem.selectedApplication}" />
                                 </p:commandButton>
@@ -128,7 +128,7 @@
                 <h:form id="statusUpdate" >
                     <p:dialog header="Reject Application" widgetVar="status" modal="true" height="auto" width="auto"  >
                         <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
-                            <h:outputLabel value="Are you sure you want to reject this Application, even before the phone Interview?"  />
+                            <h:outputLabel value="Do you confirm the rejection of this Application before the first Interview?"  />
                             <h:commandButton action="#{applicationWebManagem.setRejectStatusBeforePhoneInterview()}" value="Yes" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
                             <h:commandButton action="nonSpontaneousApplications.xhtml?faces-redirect=true" value="Cancel" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
                         </h:panelGrid>

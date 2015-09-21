@@ -19,5 +19,9 @@ public interface UserEJBLocal {
 	public UserEntity findById(long id);
 
 	public Collection<Role> getUserListOfRoles(String email);
+	
+	public void populateCandidates();
+
+	public List<UserEntity> getCandidateUsers();
 
 }

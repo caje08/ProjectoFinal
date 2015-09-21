@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:body>
+	<ui:composition template="common/layout.xhtml">
+
+		<ui:define name="top">
+			<div id="search">
+				<h:form>
+					<f:event listener="#{pubLoginMB.logged()}" type="preRenderView" />
+
+					<table>
+						<tr>
+							<td><h:graphicImage library="images"
+									name="critSW_small.png" /></td>
+
+							<td><label>Name: </label></td>
+
+							<td><h:inputText value="#{pubRegistryMB.firstname}" /></td>
+
+							<td><label>Email: </label></td>
+
+							<td><h:inputText value="#{pubRegistryMB.email}" /></td>
+
+							<td><label>Password: </label></td>
+
+							<td><h:inputSecret value="#{pubRegistryMB.password}" /></td>
+
+							<td><label>Confirm Password: </label></td>
+
+							<td><h:inputSecret value="#{pubRegistryMB.confirmPassword}" /></td>
+
+							<td><h:commandButton action="#{pubRegistryMB.submit}"
+									value="Submit" /></td>
+
+							<td><h:commandButton action="#{pubRegistryMB.cancel()}"
+									value="Cancel" /></td>
+
+						</tr>
+					</table>
+				</h:form>
+			</div>
+
+			<div id="user_logout">
+				<h:form rendered="#{render.active}">
+					<h:commandButton value="#{activeSession.activeUser.name}" />
+					<table>
+						<tr>
+							<td><h:commandButton action="index" value="Continue Session" /></td>
+							<td><h:commandButton action="#{activeSession.logout()}"
+									value="Logout" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+		</ui:define>
+
+		<ui:define name="left" />
+		<ui:define name="right" />
+		<ui:define name="browser" />
+
+		<ui:define name="bottom">
+			<div id="bottom">
+				<h:form>
+					<table>
+						<tr>
+							<td><h:commandButton action="/pubgenerate" value="Generate DB" /></td>
+							<td><h:outputText value="#{pubRegistryMB.errorMessage}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+
+</html>

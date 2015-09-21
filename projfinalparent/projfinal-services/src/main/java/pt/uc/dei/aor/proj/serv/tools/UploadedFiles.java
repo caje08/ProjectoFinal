@@ -26,7 +26,7 @@ public class UploadedFiles {
 	private final String COVERLETTER = "cl";
 	private final String LOGO = "logo";
 	private final String CVDESTINATION = BundleUtils.getSettings("cvpath");
-	private final String COVERLETTERDESTINATION = BundleUtils.getSettings("clpath");
+	private final String COVERLETTERDESTINATION =  BundleUtils.getSettings("clpath");
 	private final String LOGODESTINATION = BundleUtils.getSettings("imgpath");
 
 	private String cvUploadName;
