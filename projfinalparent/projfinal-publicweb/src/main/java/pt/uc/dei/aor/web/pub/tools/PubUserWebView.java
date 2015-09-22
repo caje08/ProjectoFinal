@@ -149,19 +149,20 @@ public class PubUserWebView implements Serializable {
 
 	public String editUser() {
 		Logger.getLogger(PubUserWebView.class.getName()).log(Level.INFO, "0 - EditUser() --> Updating user profile for email="+email+","+newpassword+","+firstName+","+lastName+","+username);
+		selectedUser = activeUser.getActiveUser();
 		try {
-			if (loggedUser.getLoggedUser() instanceof AdminEntity) {
+			if (selectedUser instanceof AdminEntity) {
 				Logger.getLogger(PubUserWebView.class.getName()).log(Level.INFO, "EditUser() --> Updating user profile for email="+email+","+newpassword+","+firstName+","+lastName+","+username);
-				userEntityFacade.editUser(loggedUser.getLoggedUser(), firstName, lastName, email, newpassword, username);
+				userEntityFacade.editUser(selectedUser, firstName, lastName, email, newpassword, username);
 				
-			} else if (loggedUser.getLoggedUser() instanceof ManagerEntity) {
-				userEntityFacade.editUser(loggedUser.getLoggedUser(), firstName, lastName, email, newpassword, username);
+			} else if (selectedUser instanceof ManagerEntity) { //else if (loggedUser.getLoggedUser() instanceof ManagerEntity) {
+				userEntityFacade.editUser(selectedUser, firstName, lastName, email, newpassword, username);
 				
-			} else if (loggedUser.getLoggedUser() instanceof InterviewerEntity){
-				userEntityFacade.editUser(loggedUser.getLoggedUser(), firstName, lastName, email, newpassword, username);
+			} else if (selectedUser instanceof InterviewerEntity){
+				userEntityFacade.editUser(selectedUser, firstName, lastName, email, newpassword, username);
 			
 			} else{
-				JSFUtil.addErrorMessage("Logged_User is not recognized with a valid role = "+loggedUser.getLoggedUser().getEmail()+","+loggedUser.getLoggedUser().getRole());
+				JSFUtil.addErrorMessage("Logged_User is not recognized with a valid role = "+selectedUser.getEmail()+","+selectedUser.getRole());
 				Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, "EditUser() --> Logged_User is not recognized with a valid role = "+loggedUser.getLoggedUser().getEmail()+","+loggedUser.getLoggedUser().getRole());
 			}
 			try{
@@ -173,7 +174,7 @@ public class PubUserWebView implements Serializable {
 				     //System.out.println(e);
 				   }
 			
-			return "/pages/admin/mainadmin.xhtml?faces-redirect=true";
+			return "/pages/admin/indexmainuser.xhtml?faces-redirect=true";
 		} catch (UserGuideException | UserNotFoundException | InvalidAuthException | EmailAlreadyExistsException ex) {
 			Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
@@ -231,8 +232,10 @@ public class PubUserWebView implements Serializable {
 
 	public String getFirstName() {
 		try {
-			return loggedUser.getLoggedUser().getFirstName();
-		} catch (UserNotFoundException | UserGuideException ex) {
+			selectedUser = activeUser.getActiveUser();
+			return selectedUser.getFirstName();
+			//return loggedUser.getLoggedUser().getFirstName();
+		} catch (Exception ex) {
 			Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return null;
@@ -244,8 +247,9 @@ public class PubUserWebView implements Serializable {
 
 	public String getLastName() {
 		try {
-			lastName = loggedUser.getLoggedUser().getLastName();
-		} catch (UserNotFoundException | UserGuideException ex) {
+			//lastName = loggedUser.getLoggedUser().getLastName();
+			lastName = activeUser.getActiveUser().getLastName();
+		} catch (Exception ex) {
 			Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
 		}
@@ -258,8 +262,9 @@ public class PubUserWebView implements Serializable {
 
 	public String getEmail() {
 		try {
-			email = loggedUser.getLoggedUser().getEmail();
-		} catch (UserNotFoundException | UserGuideException ex) {
+			selectedUser = activeUser.getActiveUser();
+			email = selectedUser.getEmail();
+		} catch (Exception ex) {
 			Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
 		}
@@ -272,8 +277,10 @@ public class PubUserWebView implements Serializable {
 
 	public String getPassword() {
 		try {
-			password = loggedUser.getLoggedUser().getPassword();
-		} catch (UserNotFoundException | UserGuideException ex) {
+			//password = loggedUser.getLoggedUser().getPassword();
+			selectedUser = activeUser.getActiveUser();
+			password = selectedUser.getPassword();
+		} catch (Exception ex) {//} catch (UserNotFoundException | UserGuideException ex) {
 			Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
 		}
@@ -301,8 +308,10 @@ public class PubUserWebView implements Serializable {
 	
 	public String getUsername() {
 		try {
-			username = loggedUser.getLoggedUser().getUsername();
-		} catch (UserNotFoundException | UserGuideException ex) {
+			selectedUser = activeUser.getActiveUser();
+			username = selectedUser.getUsername();
+			//username = loggedUser.getLoggedUser().getUsername();
+		} catch (Exception ex) {
 			Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
 		}

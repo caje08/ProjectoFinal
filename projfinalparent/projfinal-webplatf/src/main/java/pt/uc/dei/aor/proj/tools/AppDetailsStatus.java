@@ -5,6 +5,7 @@ package pt.uc.dei.aor.proj.tools;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
@@ -54,9 +56,9 @@ public class AppDetailsStatus implements Serializable {
 	@EJB
 	private InterviewFeedbackFacade interviewFeedbackFacade;
 
-	private final String CVDESTINATION = "/CV/";
-	private final String COVERLETTERDESTINATION = "/CL/";
-	private final String LOGODESTINATION = "/Img/";
+	private static final String CVDESTINATION = "/CV/";
+	private static final String COVERLETTERDESTINATION = "/CL/";
+	private static final String LOGODESTINATION = "/Imgs/";
 	
 	public AppDetailsStatus() {
 	}
@@ -88,6 +90,12 @@ public class AppDetailsStatus implements Serializable {
 		 }
 
 	 }
+	 
+	    public String getPath(){
+	        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	        return request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
+	    }
+
 
 	 /**
 	  *
@@ -98,17 +106,23 @@ public class AppDetailsStatus implements Serializable {
 		 Logger.getLogger(AppDetailsStatus.class.getName()).log(Level.INFO, "Inside begin() with aId="+aId+" e b= "+b);
 		 //find applicant by id
 		 ApplicantEntity a = applicantFacade.find(aId);
+		 Properties props = System.getProperties();
 		 //find application by id
 		 ApplicationEntity app = applicationFacade.find(b);
 		 if (a != null && app != null && app.getApplicant().equals(a)) {
 			 applicant = a;
 			 application = app;
 			 //set cvPath
-			 this.cvPath = CVDESTINATION+ application.getCv();
+			 this.cvPath = getPath()+CVDESTINATION+ application.getCv();
+			// this.cvPath = CVDESTINATION+"/"+ application.getCv();
+			 //this.cvPath = props.getProperty("user.dir")+"\\"+CVDESTINATION+"\\"+ application.getCv();
+			 
 			// this.cvPath = "/CV/" + application.getCv();
 			 Logger.getLogger(AppDetailsStatus.class.getName()).log(Level.INFO, "\nInside begin() with this.cvPath= "+this.cvPath);
 			 //set Cover Letter Path
-			 this.coverLetterPath = COVERLETTERDESTINATION + application.getCoverLetter();
+			 this.coverLetterPath = getPath()+COVERLETTERDESTINATION + application.getCoverLetter();
+			 //this.coverLetterPath = COVERLETTERDESTINATION +"/"+ application.getCoverLetter();
+			 //this.coverLetterPath = props.getProperty("user.dir")+"\\"+COVERLETTERDESTINATION +"\\"+ application.getCoverLetter();
 			// this.coverLetterPath = "/CL/" + application.getCoverLetter();
 			 Logger.getLogger(AppDetailsStatus.class.getName()).log(Level.INFO, "\nInside begin() with this.coverLetterPath= "+this.coverLetterPath);
 		 }

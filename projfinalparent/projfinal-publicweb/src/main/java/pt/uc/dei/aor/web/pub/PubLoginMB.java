@@ -199,7 +199,7 @@ public class PubLoginMB implements Serializable {
 		if (userSession.getLoggedUser() != null) {
 			ExternalContext ec = FacesContext.getCurrentInstance()
 					.getExternalContext();
-			ec.redirect(ec.getRequestContextPath() + "/pages/indextest.xhtml");
+			ec.redirect(ec.getRequestContextPath() + "/pages/candidate/indexmainuser.xhtml");
 		}
 	}
 

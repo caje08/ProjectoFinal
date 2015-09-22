@@ -76,6 +76,27 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws UserGuideException (Not a instanceof "childs" of UserEntity)
 	 * @throws EJBException
 	 */
+	public UserEntity findUserByEmail() throws UserNotFoundException, UserGuideException, EJBException, NoResultException  {
+		UserEntity userEntity = (UserEntity) em.createNamedQuery("AdminEntity.findByEmail").setParameter("email", ctx.getCallerPrincipal().getName()).getSingleResult();
+		if (userEntity != null) {
+			if (userEntity instanceof AdminEntity || userEntity instanceof InterviewerEntity || userEntity instanceof ManagerEntity) {
+				return userEntity;
+			} else {
+				throw new UserGuideException();
+			}
+		} else {
+			throw new NoResultException();
+		}
+	}
+	
+	/**
+	 *
+	 * @return UserEntity if is an instance of ManagerEntity, AdminEntity and
+	 * InterviewerEntity, and if it is not null.
+	 * @throws UserNotFoundException
+	 * @throws UserGuideException (Not a instanceof "childs" of UserEntity)
+	 * @throws EJBException
+	 */
 	public UserEntity findUserByUsername() throws UserNotFoundException, UserGuideException, EJBException, NoResultException  {
 		UserEntity userEntity = (UserEntity) em.createNamedQuery("UserEntity.findByName").setParameter("username", ctx.getCallerPrincipal().getName()).getSingleResult();
 		if (userEntity != null) {

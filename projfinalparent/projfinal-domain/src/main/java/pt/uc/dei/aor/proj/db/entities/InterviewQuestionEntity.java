@@ -35,7 +35,7 @@ public class InterviewQuestionEntity implements Serializable {
 	@Basic
 	private String question;
 
-	@ManyToOne(targetEntity = InterviewEntity.class)
+	@ManyToOne
 	private InterviewEntity interviewGuide;
 
 	@Column(name = "answertype")

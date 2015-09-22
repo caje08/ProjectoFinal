@@ -62,10 +62,11 @@
 					<p:outputLabel value="Publishing channels:*" />
 					<p:selectOneMenu id="pub_Chann"
 						value="#{positionWebManagem.activePosition.activePosition.publishingChannels}">
-						<f:selectItem itemLabel="Critical SW web site" itemValue="CRITICALSWWEBSITE" />
+						<f:selectItem itemLabel="Critical SW web site"
+							itemValue="CRITICALSWWEBSITE" />
 						<f:selectItem itemLabel="LinkedIn" itemValue="LINKEDIN" />
 						<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
-						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />						
+						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
 					</p:selectOneMenu>
 					<!-- <p:outputLabel value="Other Publishing channels:*" />
 					<p:inputText id="publishingChannels" title="Publishing channels"
@@ -150,7 +151,9 @@
 					<h:commandButton value="Add Position"
 						style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
 						action="#{positionWebManagem.addPosition()}" />
-
+					<p:commandButton value=" Cancel " immediate="true"
+						style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+						action="#{userWebView.goBackToMain()}" />
 
 				</h:panelGrid>
 

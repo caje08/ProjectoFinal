@@ -4,40 +4,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <body>
-	<ui:composition template="./../../template/templateuser.xhtml">
+	<ui:composition template="./indexmainuser.xhtml">
 		<ui:define name="content">
 			<p:growl />
 
 			<h3>Values with * are mandatory</h3>
 			<h1>Edit User Profile</h1>
-			<!-- <h:form id="form1" enctype="multipart/form-data"
-				rendered="#{!pubUserWebView.testpw}">
-				<h:panelGrid id="p1" columns="2" cellpadding="5">
-
-					<p:outputLabel value="First Name*" />
-					<p:outputLabel value="#{pubUserWebView.firstName}" />
-
-					<p:outputLabel value="Last Name*" />
-					<p:outputLabel value="#{pubUserWebView.lastName}" />
-
-					<p:outputLabel value="Username*" />
-					<p:outputLabel value="#{pubUserWebView.username}" />
-
-					<p:outputLabel value="Email*" />
-					<p:outputLabel value="#{pubUserWebView.email}" />
-
-					<p:outputLabel value="Old Password*" />
-					<p:password id="oldpassword" required="true" label="Actual password" size="40"
-						requiredMessage="Please enter your old password and press 'Check Old Password'."
-						value="#{pubUserWebView.oldpassword}" maxlength="64">
-						<p:watermark for="oldpassword" value="Old Password " />
-					</p:password>
-
-					<h:commandButton value="Check Old Password"
-						style="margin-left:10px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
-						action="#{pubUserWebView.checkUserPw()}" />
-				</h:panelGrid>
-			</h:form> -->
+			
 			<h:form id="form2" enctype="multipart/form-data">
 				<h:panelGrid id="p2">
 					<p:outputLabel value="First Name*" />

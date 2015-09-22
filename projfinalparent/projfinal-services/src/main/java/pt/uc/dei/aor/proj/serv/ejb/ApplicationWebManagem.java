@@ -88,6 +88,8 @@ public class ApplicationWebManagem implements Serializable {
 	private InterviewerFacade interviewerFacade;
 	@EJB
 	private UserData userData;
+//	@Inject
+//	private ActiveApplication activeApplication;
 
 	/**
 	 *
@@ -111,6 +113,7 @@ public class ApplicationWebManagem implements Serializable {
 	 */
 	public String goTo(ApplicationEntity a) {
 		selectedApplication = a;
+	//	activeApplication.setApplication(a);
 		statefulApplication.setApplication(selectedApplication);
 		return "applicationDetails.xhtml?applicantid=" + selectedApplication.getApplicant().getUserId() + "&applicationid" + selectedApplication.getApplicationId();
 	}
@@ -473,6 +476,7 @@ public class ApplicationWebManagem implements Serializable {
 
 	public void setSelectedApplication(ApplicationEntity selectedApplication) {
 		if (selectedApplication != null) {
+		//	activeApplication.setApplication(selectedApplication);
 			statefulApplication.setApplication(selectedApplication);
 		}
 		this.selectedApplication = selectedApplication;

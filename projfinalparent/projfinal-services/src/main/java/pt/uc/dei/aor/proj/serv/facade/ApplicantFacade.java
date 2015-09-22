@@ -190,7 +190,7 @@ public class ApplicantFacade extends AbstractFacade<ApplicantEntity> {
 				//send email to new user
 				sendEmail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new user", "Your login is " + applicant.getUsername() + " and your password is " + password, applicant.getEmail());
 				JSFUtil.addSuccessMessage("Applicant account has been created and an email sent with details! Please, check your email!");
-				Logger.getLogger(ApplicantFacade.class.getName()).log(Level.INFO, "Inside ApplicantFacade.createApplicant() after sending email to new applicant="+applicant.getEmail()+")\n");
+				Logger.getLogger(ApplicantFacade.class.getName()).log(Level.INFO, "Inside ApplicantFacade.createApplicant() after sending email to new applicant="+applicant.getEmail()+","+encrypted+")\n");
 			} else {
 				JSFUtil.addErrorMessage("Email already exists. Please Login before submitting the application.");
 				throw new EmailAlreadyExistsException();

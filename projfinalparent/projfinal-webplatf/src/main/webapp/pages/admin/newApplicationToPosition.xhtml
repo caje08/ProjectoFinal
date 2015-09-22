@@ -107,11 +107,11 @@
                         </p:password>                        
 
                         <p:fileUpload update="cv1"  mode="advanced" auto="true"  id="cv"  previewWidth="40" required="true" fileUploadListener="#{manageApplicationWeb.uploadCV}" label="Upload CV*" styleClass="fileUploadClass"
-                                      allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800" requiredMessage="Please upload CV" />
+                                      allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000" requiredMessage="Please upload CV" />
                         <p:growl id="cv1" showDetail="true" autoUpdate="true"/>
 
-                        <p:fileUpload update="cl1" id="ml" auto="true"  required="true" fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}" label="Upload Cover Letter*"  requiredMessage="Please upload Cover Letter"
-                                      allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800" styleClass="fileUploadClass"/>
+                        <p:fileUpload update="@all" id="ml" auto="true"  required="true" fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}" label="Upload Cover Letter*"  requiredMessage="Please upload Cover Letter"
+                                      allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000" styleClass="fileUploadClass"/>
                         <p:growl id="cl1" showDetail="true" autoUpdate="true" />
 
                     </h:panelGrid>

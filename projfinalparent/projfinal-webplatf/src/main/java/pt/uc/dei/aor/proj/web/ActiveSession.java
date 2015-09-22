@@ -15,6 +15,7 @@ import javax.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.PositionEntity;
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.ejb.UserEJB;
@@ -35,6 +36,7 @@ public class ActiveSession implements Serializable {
 	private UserEntity temporaryUser;
 	private PositionEntity activePosition;
 	private PositionEntity temporaryPosition;
+	private ApplicationEntity activeApplication;
 
 	private String search;
 
@@ -109,6 +111,22 @@ public class ActiveSession implements Serializable {
 
 	public void setTemporaryPosition(PositionEntity temporaryPosition) {
 		this.temporaryPosition = temporaryPosition;
+	}
+	
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
+	public ApplicationEntity getActiveApplication() {
+		return activeApplication;
+	}
+
+	public void setActiveApplication(ApplicationEntity activeApplication) {
+		this.activeApplication = activeApplication;
 	}
 
 	// Logout
