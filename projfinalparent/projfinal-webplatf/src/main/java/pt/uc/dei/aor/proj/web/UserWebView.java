@@ -63,6 +63,8 @@ public class UserWebView implements Serializable {
 	private UIPanel panelListUsers;
 	@Inject
 	private ActiveSession activeUser;
+	@Inject
+	private UserCheck userCheck;
 
 	public UserWebView() {
 		this.testrender=false;
@@ -117,7 +119,18 @@ public class UserWebView implements Serializable {
 
 	public String goBackToMain(){
 		this.testpw=false;
-		return "/pages/admin/mainadmin.xhtml?faces-redirect=true";
+		String out="";
+		if(userCheck.isAdmin()){
+		   out= "/pages/admin/mainadmin.xhtml?faces-redirect=true";
+		}else if(userCheck.isManager()){
+			out= "/pages/manager/mainmanager.xhtml?faces-redirect=true";
+		}if(userCheck.isInterviewer()){
+			out= "/pages/interviewer/maininterviewer.xhtml?faces-redirect=true";
+		}else {
+			Logger.getLogger(UserWebView.class.getName()).log(Level.SEVERE, null, "User not identified correctly inside goBackToMain()");
+			JSFUtil.addErrorMessage("User not identified correctly in order to redirect to the correct page!!");
+		}
+		return out;
 	}
 	
 	public void refreshList(){
@@ -147,18 +160,19 @@ public class UserWebView implements Serializable {
 	}
 
 	public String editUser() {
+		String out = "/pages/index.xhtml?faces-redirect=true";
 		Logger.getLogger(UserWebView.class.getName()).log(Level.INFO, "0 - EditUser() --> Updating user profile for email="+email+","+newpassword+","+firstName+","+lastName+","+username);
 		try {
 			if (loggedUser.getLoggedUser() instanceof AdminEntity) {
 				Logger.getLogger(UserWebView.class.getName()).log(Level.INFO, "EditUser() --> Updating user profile for email="+email+","+newpassword+","+firstName+","+lastName+","+username);
 				userEntityFacade.editUser(loggedUser.getLoggedUser(), firstName, lastName, email, newpassword, username);
-				
+				out = "/pages/admin/mainadmin.xhtml?faces-redirect=true";
 			} else if (loggedUser.getLoggedUser() instanceof ManagerEntity) {
 				userEntityFacade.editUser(loggedUser.getLoggedUser(), firstName, lastName, email, newpassword, username);
-				
+				out = "/pages/manager/mainmanager.xhtml?faces-redirect=true";
 			} else if (loggedUser.getLoggedUser() instanceof InterviewerEntity){
 				userEntityFacade.editUser(loggedUser.getLoggedUser(), firstName, lastName, email, newpassword, username);
-			
+				out = "/pages/interviewer/maininterviewer.xhtml?faces-redirect=true";
 			} else{
 				JSFUtil.addErrorMessage("Logged_User is not recognized with a valid role = "+loggedUser.getLoggedUser().getEmail()+","+loggedUser.getLoggedUser().getRole());
 				Logger.getLogger(UserWebView.class.getName()).log(Level.SEVERE, "EditUser() --> Logged_User is not recognized with a valid role = "+loggedUser.getLoggedUser().getEmail()+","+loggedUser.getLoggedUser().getRole());
@@ -172,7 +186,7 @@ public class UserWebView implements Serializable {
 				     //System.out.println(e);
 				   }
 			
-			return "/pages/admin/mainadmin.xhtml?faces-redirect=true";
+			return out;
 		} catch (UserGuideException | UserNotFoundException | InvalidAuthException | EmailAlreadyExistsException ex) {
 			Logger.getLogger(UserWebView.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());

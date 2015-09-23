@@ -39,7 +39,8 @@ public class UserData implements Serializable {
 	 * @throws UserGuideException
 	 */
 	public UserEntity getLoggedUser() throws UserNotFoundException, UserGuideException, NoResultException {
-		loggedUser = userGuideFacade.findUserByUsername();
+		//loggedUser = userGuideFacade.findUserByUsername();
+		loggedUser = userGuideFacade.findUserByEmail();
 		Logger.getLogger(UserData.class.getName()).log(Level.INFO, "\nLogged User = "+loggedUser.getEmail());
 		return loggedUser;
 	}

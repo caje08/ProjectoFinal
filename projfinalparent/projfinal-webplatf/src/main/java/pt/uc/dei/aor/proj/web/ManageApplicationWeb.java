@@ -38,6 +38,7 @@ import pt.uc.dei.aor.proj.serv.exceptions.OpeningDateAfterAtualDate;
 import pt.uc.dei.aor.proj.serv.exceptions.PhoneInterviewEntityNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.exceptions.PositionNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.exceptions.PositionOfAnApplicantAlreadyIntroducedOnSPonException;
+import pt.uc.dei.aor.proj.serv.exceptions.PositionsNotFoundToThisUserException;
 import pt.uc.dei.aor.proj.serv.exceptions.PresentialInterviewEntityNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.facade.ApplicationFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewEntityFacade;
@@ -77,7 +78,7 @@ public class ManageApplicationWeb implements Serializable {
 	private String cvname;
 	private String clname;
 
-	// @Inject
+	@Inject
 	private UserData userData;
 	@EJB
 	private StatefulPosition statefulPosition;
@@ -650,7 +651,7 @@ public class ManageApplicationWeb implements Serializable {
 		this.activePosition = activePosition;
 	}
 
-	public List<PositionEntity> getLstPositionsofAManager() {
+	public List<PositionEntity> getLstPositionsofAManager() throws PositionsNotFoundToThisUserException {
 		try {
 			try {
 				lstPositionsofAManager = positionFacade

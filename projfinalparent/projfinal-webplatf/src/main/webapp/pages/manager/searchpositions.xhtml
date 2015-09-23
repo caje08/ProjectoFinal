@@ -4,27 +4,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <body>
-	<ui:composition template="./mainadmin.xhtml">
+	<ui:composition template="./mainmanager.xhtml">
+
 		<ui:define name="content">
-
-			<h:form>
-				<h:panelGrid columns="2">
-					<h3>Average Time until first Interview:</h3>
-					<h:outputLabel value="#{averageValues.averageTimeToInterview()}" />
-					<h3>Average Time to Hire:</h3>
-					<h:outputLabel value="#{averageValues.averageTimeToHire()}" />
-
-					<p:commandButton id="email" value="Send report by email"
-						oncomplete="PF('managers').show()" update=":managersTable">
-						<f:setPropertyActionListener value="#{manager}"
-							target="#{averageValues.selectedManager}" />
-					</p:commandButton>
-
-					<p:outputLabel id="themanager"
-						value="#{averageValues.manager.email}" />
-				</h:panelGrid>
-			</h:form>
-
 			<h:form id="searchpositions">
 
 				<!--list of all Positions-->
@@ -35,7 +17,7 @@
 					rowsPerPageTemplate="10,20,30" selectionMode="single"
 					rowKey="#{position.positionCode}"
 					selection="#{positionWebManagem.selectedPosition}"
-					value="#{positionWebManagem.lstPositions}" var="position">
+					value="#{positionWebManagem.lstPositionsofAManager}" var="position">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -95,16 +77,40 @@
                             #{position.technicalArea}
                         </p:column>
 
+					<p:column headerText="Insert new Application"
+						styleClass="centeredColumn">
+						<p:commandButton
+							rendered="#{positionWebManagem.canAssociatePositionToApplication(position)}"
+							action="#{positionWebManagem.goToApplicationForm(position)}"
+							icon="ui-icon-plus" title="Add">
+							<f:setPropertyActionListener value="#{position}"
+								target="#{positionWebManagem.selectedPosition}" />
+						</p:commandButton>
+					</p:column>
+
+
+					<p:column headerText="Edit" styleClass="centeredColumn">
+						<p:commandButton
+							rendered="#{positionWebManagem.canEditPosition(position)}"
+							action="#{positionWebManagem.showPanel(position)}" icon="ui-icon-pencil"
+							title="View" ajax="false">
+							<f:setPropertyActionListener value="#{position}"
+								target="#{positionWebManagem.selectedPosition}" />
+						</p:commandButton>
+					</p:column>
+
 					<p:rowExpansion>
+						<f:facet name="header">
+                                More Details about this position
+                            </f:facet>
 						<h:panelGrid columns="1">
-							<h3>Job Description</h3>
-                                #{position.jobDescription}"
+							<h:outputLabel value="Job Description:" />
+                                #{position.jobDescription}" 
                             </h:panelGrid>
-						<h:panelGrid columns="2" style="width:300px">
+						<p:panelGrid columns="2" style="width:300px">
 							<f:facet name="header">
                                     More Details about this position
                                 </f:facet>
-
 							<h:outputText value="Manager" />
 							<h:outputText value="#{position.manager.username}" />
 
@@ -120,35 +126,11 @@
 							<h:outputText value="Presential Interview Guide" />
 							<h:outputText value="#{position.presencialInterviewEntity.title}" />
 
-							<h:outputText value="Number of vacancies" />
-							<h:outputText value="#{position.vacancies}" />
-
-						</h:panelGrid>
+						</p:panelGrid>
 					</p:rowExpansion>
 
 
-					<p:column headerText="Insert new Application" width="70"
-						styleClass="centeredColumn">
-						<p:commandButton
-							rendered="#{manageApplicationWeb.canAssociatePositionToApplication(position)}"
-							action="#{manageApplicationWeb.goToApplicationForm(position)}"
-							icon="ui-icon-plus"
-							title="Add Application candidate to this position">
-							<f:setPropertyActionListener value="#{position}"
-								target="#{manageApplicationWeb.selectedPosition}" />
-						</p:commandButton>
-					</p:column>
 
-
-					<p:column headerText="Edit" width="40" styleClass="centeredColumn">
-						<p:commandButton
-							rendered="#{positionWebManagem.canEditPosition(position)}"
-							action="#{positionWebManagem.showPanel(position)}"
-							icon="ui-icon-pencil" title="View" ajax="false">
-							<f:setPropertyActionListener value="#{position}"
-								target="#{positionWebManagem.selectedPosition}" />
-						</p:commandButton>
-					</p:column>
 
 				</p:dataTable>
 
@@ -156,13 +138,11 @@
 
 			<!--Edition of specific Position-->
 
-			<h:form id="editposit">
-				<p:growl id="growl" showDetail="true" />
-				<h:panelGroup id="panel" binding="#{positionWebManagem.panelGroup}"
+			<h:form>
+				<h:panelGroup binding="#{positionWebManagem.panelGroup}"
 					rendered="false">
-					<div id="divedit" align="left">
-						<h1>Please, edit
-							#{positionWebManagem.activePosition.activePosition.title}</h1>
+					<div align="left">
+						<h1>Please, edit #{positionWebManagem.activePosition.activePosition.title}</h1>
 					</div>
 
 					<h:panelGrid columns="2" cellpadding="5">
@@ -179,20 +159,6 @@
 							required="true" requiredMessage="Job Description"
 							style="width:900px; height:80px;" />
 
-						<p:outputLabel value="Technical Area:*" />
-						<p:selectOneMenu id="Tech_area"
-							value="#{positionWebManagem.activePosition.activePosition.technicalArea}">
-							<f:selectItem itemLabel="SSPA" itemValue="SSPA" />
-							<f:selectItem itemLabel=".Net Development"
-								itemValue="DOTNETDEVELOPMENT" />
-							<f:selectItem itemLabel="Java Development"
-								itemValue="JAVADEVELOPMENT" />
-							<f:selectItem itemLabel="Safety Critical"
-								itemValue="SAFETYCRITICAL" />
-							<f:selectItem itemLabel="Project Management"
-								itemValue="PROJECTMANAGEMENT" />
-							<f:selectItem itemLabel="Integration" itemValue="INTEGRATION" />
-						</p:selectOneMenu>
 						<h:outputLabel value="Publishing channels" />
 						<h:inputText id="publishingChannels" title="Publishing channels"
 							value="#{positionWebManagem.activePosition.activePosition.publishingChannels}"
@@ -201,18 +167,9 @@
 						<p:outputLabel for="location" value="Location: " />
 						<p:selectOneMenu id="location"
 							value="#{positionWebManagem.activePosition.activePosition.location}">
-							<f:selectItem itemLabel="Lisbon" itemValue="LISBON" />
-							<f:selectItem itemLabel="Oporto" itemValue="OPORTO" />
+							<f:selectItem itemLabel="Lisboa" itemValue="LISBOA" />
+							<f:selectItem itemLabel="Porto" itemValue="PORTO" />
 							<f:selectItem itemLabel="Coimbra" itemValue="COIMBRA" />
-							<f:selectItem itemLabel="Client" itemValue="CLIENT" />
-							<f:selectItem itemLabel="Coimbra and Lisboa"
-								itemValue="COIMBRA_LISBON" />
-							<f:selectItem itemLabel="Coimbra and Oporto"
-								itemValue="COIMBRA_OPORTO" />
-							<f:selectItem itemLabel="Lisboa and Oporto"
-								itemValue="LISBOA_OPORTO" />
-							<f:selectItem itemLabel="Coimbra, Lisboa and Oporto"
-								itemValue="COIMBRA_LISBON_OPORTO" />
 						</p:selectOneMenu>
 
 						<p:outputLabel for="status" value="Status " />
@@ -233,8 +190,7 @@
 
 						<h:outputLabel for="vacancies" value="Number of vacancies: " />
 						<p:spinner id="vacancies"
-							value="#{positionWebManagem.activePosition.activePosition.vacancies}"
-							min="0" />
+							value="#{positionWebManagem.activePosition.activePosition.vacancies}" min="0" />
 						<!--Pop up of guides -->
 
 						<p:commandButton value="Choose a phone Guide Interview"
@@ -269,14 +225,10 @@
 							value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
 
 						<h:outputText></h:outputText>
-
+						<h:commandButton value="Save"
+							action="#{positionWebManagem.savePosition()}"
+							style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
 					</h:panelGrid>
-					<h:commandButton value="Save"
-						action="#{positionWebManagem.savePosition()}"
-						style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
-					<p:commandButton value=" Cancel " immediate="true"
-						style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
-						action="searchpositions.xhtml" />
 
 				</h:panelGroup>
 			</h:form>
@@ -306,7 +258,7 @@
 					</p:dataTable>
 					<h:commandButton value="Add Presential Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
-						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor}; Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
 
 				</p:dialog>
 			</h:form>
@@ -316,7 +268,7 @@
 			<h:form id="phoneguideTable">
 				<p:dialog header="Guides" widgetVar="phoneguide" modal="true"
 					height="500" width="500">
-					<p:dataTable id="theguide1" selectionMode="single"
+					<p:dataTable id="theguide" selectionMode="single"
 						rowKey="#{guide.interviewId}"
 						selection="#{positionWebManagem.selectedInterviewGuide}"
 						value="#{positionWebManagem.lstPhoneInterviewsInUse}" var="guide">
@@ -354,41 +306,10 @@
 					</p:dataTable>
 					<h:commandButton value="Add Manager for this position"
 						action="#{positionWebManagem.setTheSelectedManager()}"
-						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}">
+						style=" background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
 
-					</h:commandButton>
 				</p:dialog>
 
-			</h:form>
-
-			<h:form id="managersTable">
-				<p:dialog header="Managers" widgetVar="managers" modal="true"
-					height="500" width="500">
-					<p:dataTable id="the1manager" selectionMode="single"
-						rowKey="#{manager.userId}"
-						selection="#{averageValues.selectedManager}"
-						value="#{averageValues.lstManagers}" var="manager">
-
-						<p:column styleClass="centeredColumn" headerText="Manager"
-							filterBy="#{manager.firstName}" filterMatchMode="contains">
-                                #{manager.firstName}
-                            </p:column>
-
-						<p:column styleClass="centeredColumn" headerText=""
-							filterBy="#{manager.lastName}" filterMatchMode="contains">
-                                #{manager.lastName}
-                            </p:column>
-
-						<p:column styleClass="centeredColumn" headerText=""
-							filterBy="#{manager.email}" filterMatchMode="contains">
-                                #{manager.email}
-                            </p:column>
-
-					</p:dataTable>
-					<h:commandButton value="Send email to this Manager"
-						action="#{averageValues.toPdf()}"
-						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
-				</p:dialog>
 			</h:form>
 
 		</ui:define>

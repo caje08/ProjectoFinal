@@ -48,6 +48,7 @@ public class ActiveSession implements Serializable {
 	}
 
 	public void init(UserEntity user) {
+		logger.info("ActiveSession.init() - before startsession() with user.getEmail="+user.getEmail());
 		startSession();
 
 		this.activeUser = user;

@@ -67,6 +67,7 @@
 						<f:selectItem itemLabel="LinkedIn" itemValue="LINKEDIN" />
 						<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
 						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
+						<f:selectItem itemLabel="All defined" itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
 					</p:selectOneMenu>
 					<!-- <p:outputLabel value="Other Publishing channels:*" />
 					<p:inputText id="publishingChannels" title="Publishing channels"
@@ -76,17 +77,18 @@
 					<p:outputLabel for="location" value="Location: " />
 					<p:selectOneMenu id="location"
 						value="#{positionWebManagem.activePosition.activePosition.location}">
-						<f:selectItem itemLabel="Lisboa" itemValue="LISBOA" />
-						<f:selectItem itemLabel="Porto" itemValue="PORTO" />
+						<f:selectItem itemLabel="Lisbon" itemValue="LISBON" />
+						<f:selectItem itemLabel="Oporto" itemValue="OPORTO" />
 						<f:selectItem itemLabel="Coimbra" itemValue="COIMBRA" />
+						<f:selectItem itemLabel="Client" itemValue="CLIENT" />
 						<f:selectItem itemLabel="Coimbra and Lisboa"
-							itemValue="COIMBRA_LISBOA" />
-						<f:selectItem itemLabel="Coimbra and Porto"
-							itemValue="COIMBRA_PORTO" />
-						<f:selectItem itemLabel="Lisboa and Porto"
-							itemValue="LISBOA_PORTO" />
-						<f:selectItem itemLabel="Coimbra, Lisboa and Porto"
-							itemValue="COIMBRA_LISBOA_PORTO" />
+							itemValue="COIMBRA_LISBON" />
+						<f:selectItem itemLabel="Coimbra and Oporto"
+							itemValue="COIMBRA_OPORTO" />
+						<f:selectItem itemLabel="Lisboa and Oporto"
+							itemValue="LISBOA_OPORTO" />
+						<f:selectItem itemLabel="Coimbra, Lisboa and Oporto"
+							itemValue="COIMBRA_LISBON_OPORTO" />
 					</p:selectOneMenu>
 
 					<p:outputLabel for="status" value="Status: " />

@@ -77,6 +77,24 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws EJBException
 	 */
 	public UserEntity findUserByEmail() throws UserNotFoundException, UserGuideException, EJBException, NoResultException  {
+		
+		try{			  
+			   Query query = em.createNamedQuery("UserEntity.findByEmail", UserEntity.class);
+			   query.setParameter("email",ctx.getCallerPrincipal().getName());
+			   List results= query.getResultList();
+			   if (!results.isEmpty()){
+				   Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,"\n User Found with ctx.getCallerPrincipal().getName()="+ctx.getCallerPrincipal().getName());
+				   return (UserEntity) results.get(0);
+			   }else{
+				   Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,"\n User not Found with ctx.getCallerPrincipal().getName()="+ctx.getCallerPrincipal().getName());
+					throw new UserNotFoundException();
+			   }
+			} catch (Exception e) {
+				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,null,e);
+				throw new UserNotFoundException();				 
+			}
+		
+		/*Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,"Inside findUserByEmail() ctx.getCallerPrincipal().getName()="+ctx.getCallerPrincipal().getName());
 		UserEntity userEntity = (UserEntity) em.createNamedQuery("AdminEntity.findByEmail").setParameter("email", ctx.getCallerPrincipal().getName()).getSingleResult();
 		if (userEntity != null) {
 			if (userEntity instanceof AdminEntity || userEntity instanceof InterviewerEntity || userEntity instanceof ManagerEntity) {
@@ -86,7 +104,7 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 			}
 		} else {
 			throw new NoResultException();
-		}
+		}*/
 	}
 	
 	/**
@@ -98,6 +116,7 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws EJBException
 	 */
 	public UserEntity findUserByUsername() throws UserNotFoundException, UserGuideException, EJBException, NoResultException  {
+		
 		UserEntity userEntity = (UserEntity) em.createNamedQuery("UserEntity.findByName").setParameter("username", ctx.getCallerPrincipal().getName()).getSingleResult();
 		if (userEntity != null) {
 			if (userEntity instanceof AdminEntity || userEntity instanceof InterviewerEntity || userEntity instanceof ManagerEntity) {

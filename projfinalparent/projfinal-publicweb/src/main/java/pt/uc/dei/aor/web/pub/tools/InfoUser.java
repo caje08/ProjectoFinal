@@ -60,6 +60,8 @@ public class InfoUser implements Serializable {
 	private String emailLinkedin;
 	private String passwordLinkedin;
 	private String cvText;
+	private String cvUploadName;
+	private String clUploadName;
 	private String coverLetterText;
 
 	//    @Inject
@@ -100,6 +102,8 @@ public class InfoUser implements Serializable {
 	 */
 	public void uploadCV(FileUploadEvent event) {
 		uploadedFiles.upload(event, "cv");
+		this.cvUploadName=uploadedFiles.getCvUploadName();
+		Logger.getLogger(InfoUser.class.getName()).log(Level.INFO,"\nInside uploadCV(), created file "+this.cvUploadName);
 		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName() + " was uploaded.");
 		coverLetterText = event.getFile().getFileName();
 	}
@@ -112,6 +116,8 @@ public class InfoUser implements Serializable {
 	 */
 	public void uploadMotivationLetter(FileUploadEvent event) {
 		uploadedFiles.upload(event, "cl");
+		this.clUploadName=uploadedFiles.getClUploadName();
+		Logger.getLogger(InfoUser.class.getName()).log(Level.INFO,"\ninside uploadCV(), created file "+this.clUploadName);
 		JSFUtil.addSuccessMessage("Success!! " + event.getFile().getFileName() + " was uploaded.");
 		cvText = event.getFile().getFileName();
 		getCvText();
@@ -146,6 +152,8 @@ public class InfoUser implements Serializable {
 	 */
 	public void editApplication() {
 		try {
+			selectedApplication.setCoverLetter(clUploadName);
+			selectedApplication.setCv(cvUploadName);
 			applicationFacade.edit(selectedApplication);
 		} catch (EJBException e) {
 			Logger.getLogger(InfoUser.class.getName()).
@@ -474,4 +482,20 @@ public class InfoUser implements Serializable {
 		this.coverLetterText = coverLetterText;
 	}
 
+	public String getCvUploadName() {
+		return cvUploadName;
+	}
+
+	public void setCvUploadName(String cvUploadName) {
+		this.cvUploadName = cvUploadName;
+	}
+
+	public String getClUploadName() {
+		return clUploadName;
+	}
+
+	public void setClUploadName(String clUploadName) {
+		this.clUploadName = clUploadName;
+	}
+	
 }

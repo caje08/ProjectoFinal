@@ -1,0 +1,57 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+        <ui:composition template="./maininterviewer.xhtml"> 
+
+            <ui:define name="top">
+                <ui:include src="./maininterviewer.xhtml" />
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <p:growl id="messages" showDetail="true"/>
+                    <h:panelGroup binding="#{applicationWebManagem.panelInterviews}">
+
+                        <!--List of Interviews of Interviewer -->
+
+                        <p:dataTable var="item" value="#{applicationWebManagem.lstInterviewsOfInterviewer}" 
+                                     paginator="true" rows="10" paginatorPosition="top" editable="false"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{item.feedbackId}" selection="#{applicationWebManagem.selectedApplication}">
+                            <f:facet name="header">
+                                List of My Interviews Applications
+                            </f:facet>
+
+
+                            <p:column styleClass="centeredColumn" filterBy="#{item.application.applicant.username}" headerText="Username"  filterMatchMode="contains" style="width:20%">
+                                <a href="applicationDetails.xhtml?applicantid=#{item.application.applicant.userId}&amp;applicationid=#{item.application.applicationId}">#{item.application.applicant.username}</a>
+                            </p:column>
+
+
+                            <p:column styleClass="centeredColumn"  filterBy="#{item.interviewDate}" filterMatchMode="contains" headerText="Interview Date"  style="width:20%">
+                                <p:outputLabel value="#{item.interviewDate}" >
+                                    <f:convertDateTime pattern="dd/MM/yyy HH:mm"/>
+                                </p:outputLabel>
+                            </p:column>
+
+                            <p:column styleClass="centeredColumn"  filterBy="#{item.interviewEntity.type}" filterMatchMode="contains" headerText="Interview Type"  style="width:20%">
+                                <p:outputLabel value="#{item.interviewEntity.type}" />
+                            </p:column>
+
+                            <p:column styleClass="centeredColumn"  filterBy="#{item.interviewEntity.title}" filterMatchMode="contains" headerText="Interview Guide Name"  style="width:20%">
+                                <p:outputLabel value="#{item.interviewEntity.title}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:panelGroup>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

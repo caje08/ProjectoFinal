@@ -18,6 +18,7 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 
 import pt.uc.dei.aor.proj.db.entities.AdminEntity;
+import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.entities.Role;
@@ -118,7 +119,7 @@ public class PubUserWebView implements Serializable {
 
 	public String goBackToMain(){
 		this.testpw=false;
-		return "/pages/admin/mainadmin.xhtml?faces-redirect=true";
+		return "/pages/candidate/indexmainuser.xhtml?faces-redirect=true";
 	}
 	
 	public void refreshList(){
@@ -150,6 +151,7 @@ public class PubUserWebView implements Serializable {
 	public String editUser() {
 		Logger.getLogger(PubUserWebView.class.getName()).log(Level.INFO, "0 - EditUser() --> Updating user profile for email="+email+","+newpassword+","+firstName+","+lastName+","+username);
 		selectedUser = activeUser.getActiveUser();
+		this.email=selectedUser.getEmail();
 		try {
 			if (selectedUser instanceof AdminEntity) {
 				Logger.getLogger(PubUserWebView.class.getName()).log(Level.INFO, "EditUser() --> Updating user profile for email="+email+","+newpassword+","+firstName+","+lastName+","+username);
@@ -161,6 +163,8 @@ public class PubUserWebView implements Serializable {
 			} else if (selectedUser instanceof InterviewerEntity){
 				userEntityFacade.editUser(selectedUser, firstName, lastName, email, newpassword, username);
 			
+			} else if (selectedUser instanceof ApplicantEntity){
+				userEntityFacade.editUser(selectedUser, firstName, lastName, email, newpassword, username);			
 			} else{
 				JSFUtil.addErrorMessage("Logged_User is not recognized with a valid role = "+selectedUser.getEmail()+","+selectedUser.getRole());
 				Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, "EditUser() --> Logged_User is not recognized with a valid role = "+loggedUser.getLoggedUser().getEmail()+","+loggedUser.getLoggedUser().getRole());
@@ -174,7 +178,7 @@ public class PubUserWebView implements Serializable {
 				     //System.out.println(e);
 				   }
 			
-			return "/pages/admin/indexmainuser.xhtml?faces-redirect=true";
+			return "/pages/candidate/indexmainuser.xhtml?faces-redirect=true";
 		} catch (UserGuideException | UserNotFoundException | InvalidAuthException | EmailAlreadyExistsException ex) {
 			Logger.getLogger(PubUserWebView.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());

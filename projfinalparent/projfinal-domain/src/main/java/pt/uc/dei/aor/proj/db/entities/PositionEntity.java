@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 	@NamedQuery(name = "PositionEntity.findByVeracity", query = "SELECT p FROM PositionEntity p WHERE p.isPublic=true"),
 	@NamedQuery(name = "PositionEntity.findPhoneInterviewEntity", query = "SELECT p FROM PositionEntity p WHERE p.phoneInterviewEntity.interviewId = :interviewId"),
 	@NamedQuery(name = "PositionEntity.findByManager", query = "SELECT p FROM PositionEntity p WHERE p.manager = :manager"),
+	@NamedQuery(name = "PositionEntity.findByManagerEmail", query = "SELECT p FROM PositionEntity p WHERE p.manager.email = :email"),
 	@NamedQuery(name = "PositionEntity.findByManagerCanApply", query = "SELECT p FROM PositionEntity p WHERE p.manager = :manager AND p.isPublic=true AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate and p.vacancies>0 and p.status like 'OPEN'"),
 	@NamedQuery(name = "PositionEntity.findBeforeClosingDate", query = "SELECT p FROM PositionEntity p WHERE p.closingDate > :currentDate"),
 	//@NamedQuery(name = "PositionEntity.findPublicBeforeClosingDate", query = "SELECT p FROM PositionEntity p WHERE p.isPublic=true AND p.closingDate > :currentDate AND p.OpeningDate < :currentDate and p.vacancies>0 and p.status like 'Open'"),

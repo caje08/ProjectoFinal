@@ -13,7 +13,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <body>
-        <ui:composition template="./mainadmin.xhtml"> 
+        <ui:composition template="./mainmanager.xhtml"> 
             <ui:define name="content">
 
                 <h:form> 
@@ -25,13 +25,13 @@ and open the template in the editor.
                         <h:outputText value="Last Name:" />
                         <h:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
-                        <h:outputText value="Curriculum Vitae" />
-                        <p:button href="#{appDetailsStatus.cvPath}" style="color: #{cssRequestBB.cssInUse.labelCommandLink}"  target="_blank" value="cv">
-                        </p:button>
+                        <h:outputText value="CV" />
+                        <h:link outcome="#{appDetailsStatus.cvPath}" style="color: #{cssRequestBB.cssInUse.labelCommandLink}"  target="_blank" value="cv">
+                        </h:link>
 
-                        <h:outputText value="Cover Letter" /> 
-                       <p:button href="#{appDetailsStatus.coverLetterPath}" style="color: #{cssRequestBB.cssInUse.labelCommandLink}"  target="_blank" value="cl">
-                        </p:button>
+                        <h:outputText value="Cover Letter" />
+                        <h:link outcome="#{appDetailsStatus.coverLetterPath}" style="color: #{cssRequestBB.cssInUse.labelCommandLink}" target="_blank" value="cl">
+                        </h:link>
 
                         <h:outputText value="Email:" />
                         <h:outputText value="#{appDetailsStatus.applicant.email}" />
@@ -56,9 +56,6 @@ and open the template in the editor.
 
                         <h:outputText value="School" />
                         <h:outputText value="#{appDetailsStatus.applicant.school}" />
-                        
-                        <h:outputText value="Application associated to Position:" />
-                        <h:outputText value="#{appDetailsStatus.application.position.title}" />
 
                     </h:panelGrid>  
                 </h:form>

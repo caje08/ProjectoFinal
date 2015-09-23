@@ -72,18 +72,12 @@
 
 					<p:message for="confirmPassword" />
 
-				</h:panelGrid>
-
-
 				<p:selectOneMenu id="userType" value="#{adminRequestBean.userType}">
 					<f:selectItem itemLabel="Admin" itemValue="Admin" />
 					<f:selectItem itemLabel="Manager" itemValue="Manager" />
 					<f:selectItem itemLabel="Interviewer" itemValue="Interviewer" />
 				</p:selectOneMenu>
-
-				<h:outputText></h:outputText>
-				
-				<h:outputText></h:outputText>
+				</h:panelGrid>
 
 				<h:commandButton value="Add"
 					style="width:100px; height:45px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"

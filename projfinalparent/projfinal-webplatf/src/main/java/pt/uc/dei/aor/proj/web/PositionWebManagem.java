@@ -15,7 +15,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIPanel;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.NoResultException;
 
 import org.primefaces.event.FileUploadEvent;
 
@@ -36,6 +35,7 @@ import pt.uc.dei.aor.proj.serv.exceptions.ManagerNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.exceptions.NumberOfMobilePhoneDigitsException;
 import pt.uc.dei.aor.proj.serv.exceptions.OpeningDateAfterAtualDate;
 import pt.uc.dei.aor.proj.serv.exceptions.PhoneInterviewEntityNotIntroducedException;
+import pt.uc.dei.aor.proj.serv.exceptions.PositionsNotFoundToThisUserException;
 import pt.uc.dei.aor.proj.serv.exceptions.PresentialInterviewEntityNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.facade.ApplicationFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewEntityFacade;
@@ -73,7 +73,7 @@ public class PositionWebManagem implements Serializable {
 	private ApplicantEntity applicant;
 	private ApplicationEntity application;
 
-	// @Inject
+	@EJB
 	private UserData userData;
 	@EJB
 	private StatefulPosition statefulPosition;
@@ -89,6 +89,8 @@ public class PositionWebManagem implements Serializable {
 	private SendEmail mail;
 	@Inject
 	private ActiveSession activePosition;
+	@Inject
+	private UserCheck activeUser;
 
 	/**
 	 * Creates a new instance of PositionViewBean
@@ -367,7 +369,42 @@ public class PositionWebManagem implements Serializable {
 	 * @return true if it is possible to edit PositionEntity
 	 */
 	public boolean canEditPosition(PositionEntity position) {
-		return positionFacade.associateToApplication(position);
+		boolean test = false;
+		if(activeUser.isAdmin()) {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.INFO,
+					"Inside canEditPosition() and returning 'true' as Admin user ");
+			test= true;
+		}
+		else if(activeUser.isManager()){	
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.INFO,"Inside canEditPosition() and its a active user as a manager");
+			try {
+				 if(position.getManager().getEmail().equals(activeUser.getName())){
+
+				 Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.INFO,
+						"Inside canEditPosition() and returning 'true' as Manager of position ");
+				 test= true;
+				}else{
+					Logger.getLogger(PositionWebManagem.class.getName()).log(
+							Level.INFO,
+							"Inside canEditPosition() and returning 'false' as its a Manager user but not not managing the position");
+					test= false;					
+				}
+			} catch (UserNotFoundException e) {
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.SEVERE,null, e.getMessage());
+				test= false;
+			}
+		} else{			
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.INFO,
+					"Inside canEditPosition() and returning 'false' as its isn't either an Admin or Manager user.");
+			test= false;
+		}
+		return test;
+		//return positionFacade.associateToApplication(position);
 	}
 
 	/**
@@ -622,9 +659,11 @@ public class PositionWebManagem implements Serializable {
 		this.activePosition = activePosition;
 	}
 
-	public List<PositionEntity> getLstPositionsofAManager() {
+	public List<PositionEntity> getLstPositionsofAManager() throws PositionsNotFoundToThisUserException {
 		try {
 			try {
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.INFO, "Inside getLstPositionsofAManager() and before positionFacade.lstPositionsOfManager() with email="+activeUser.getName());
 				lstPositionsofAManager = positionFacade
 						.lstPositionsOfManager((ManagerEntity) userData
 								.getLoggedUser());
@@ -632,12 +671,12 @@ public class PositionWebManagem implements Serializable {
 					| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
 				// TODO Auto-generated catch block
 				Logger.getLogger(PositionWebManagem.class.getName()).log(
-						Level.SEVERE, null, e);
+						Level.SEVERE, null, e.getMessage());
 			}
-		} catch (NoResultException ex) {
+		} catch (Exception ex) {
 			// TODO Auto-generated catch block
 			Logger.getLogger(PositionWebManagem.class.getName()).log(
-					Level.SEVERE, null, ex);
+					Level.SEVERE, null, ex.getMessage());
 		}
 		return lstPositionsofAManager;
 	}

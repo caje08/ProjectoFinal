@@ -157,7 +157,7 @@ public class LoginMB implements Serializable {
 		if (!(tmp.equals(null))) {
 			userSession.setLoggedUser(tmp);
 			if (userSession.getLoggedUser() != null) {
-				logger.info("Logged_user= " + this.email);
+				logger.info(" Before session.init(tmp), Logged_user= " + this.email);
 				session.init(tmp);
 				// retmpect();
 				// doLogin(0);
@@ -204,9 +204,10 @@ public class LoginMB implements Serializable {
 
 	public void logged() throws IOException {
 		if (userSession.getLoggedUser() != null) {
-			ExternalContext ec = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			ec.redirect(ec.getRequestContextPath() + "/pages/index.xhtml");
+//			ExternalContext ec = FacesContext.getCurrentInstance()
+//					.getExternalContext();
+//			ec.redirect(ec.getRequestContextPath() + "/pages/index.xhtml");
+			logout();
 		}
 	}
 
@@ -269,7 +270,7 @@ public class LoginMB implements Serializable {
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			return "/login";
 		}
-		logger.info("\nWithin LoginMB.login(), it's going to redirect to webpage --> \n"
+		logger.info("\nWithin LoginMB.login(), it's going to redirect to webpage --> "
 				+ webout);
 		return webout;
 		// return "/projfinal-webplatf/login.xhtml";
