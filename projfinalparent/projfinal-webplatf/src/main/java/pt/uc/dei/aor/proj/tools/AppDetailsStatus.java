@@ -20,6 +20,7 @@ import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewFeedbackEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
+import pt.uc.dei.aor.proj.db.entities.PositionEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.serv.ejb.ApplicationWebManagem;
@@ -46,6 +47,7 @@ public class AppDetailsStatus implements Serializable {
 	private String imgPath;
 	private ApplicantEntity applicant;
 	private ApplicationEntity application;
+	private PositionEntity position;
 
 	@EJB
 	private UserData userData;
@@ -112,6 +114,7 @@ public class AppDetailsStatus implements Serializable {
 		 if (a != null && app != null && app.getApplicant().equals(a)) {
 			 applicant = a;
 			 application = app;
+			 this.position=application.getPosition();
 			 //set cvPath
 			 this.cvPath = getPath()+CVDESTINATION+ application.getCv();
 			// this.cvPath = CVDESTINATION+"/"+ application.getCv();
@@ -212,4 +215,13 @@ public class AppDetailsStatus implements Serializable {
 		 this.applicationFacade = applicationFacade;
 	 }
 
+	public PositionEntity getPosition() {
+		return position;
+	}
+
+	public void setPosition(PositionEntity position) {
+		this.position = position;
+	}
+
+	 
 }

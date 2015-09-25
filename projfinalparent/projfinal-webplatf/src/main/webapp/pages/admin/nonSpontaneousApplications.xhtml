@@ -1,231 +1,371 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <body>
-        <ui:composition template="./mainadmin.xhtml"> 
-            <ui:define name="content">
-                <h:form id="form">
-                    <p:growl id="messages" showDetail="true"/>
-                    <h:panelGroup binding="#{applicationWebManagem.panelInterviews}">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<body>
+	<ui:composition template="./mainadmin.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+				<p:growl id="messages" showDetail="true" />
+				<h:panelGroup binding="#{applicationWebManagem.panelInterviews}">
 
-                        <!--List of Non Spontaneous Applications -->
+					<!--List of Non Spontaneous Applications -->
 
-                        <p:dataTable var="item" value="#{applicationWebManagem.lstNonSpontaneousApplication}" 
-                                     paginator="true" rows="10" paginatorPosition="top" editable="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{item.applicationId}" selection="#{applicationWebManagem.selectedApplication}">
-                            <f:facet name="header">
+					<p:dataTable var="item"
+						value="#{applicationWebManagem.lstNonSpontaneousApplication}"
+						paginator="true" rows="10" paginatorPosition="top"
+						editable="false"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30" selectionMode="single"
+						rowKey="#{item.applicationId}"
+						selection="#{applicationWebManagem.selectedApplication}">
+						<f:facet name="header">
                                 List of Non Spontaneous Applications
                             </f:facet>
 
 
-                            <p:column styleClass="centeredColumn" filterBy="#{item.applicant.username}" headerText="Username"  filterMatchMode="contains" style="width:20%">
-                                <a href="applicationDetails.xhtml?applicantid=#{item.getApplicant().getUserId()}&amp;applicationid=#{item.applicationId}">#{item.applicant.username}</a>
-                            </p:column>
+						<p:column styleClass="centeredColumn"
+							filterBy="#{item.applicant.username}" headerText="Username"
+							filterMatchMode="contains" style="width:20%">
+							<a
+								href="applicationDetails.xhtml?applicantid=#{item.getApplicant().getUserId()}&amp;applicationid=#{item.applicationId}">#{item.applicant.username}</a>
+						</p:column>
 
 
-                            <p:column styleClass="centeredColumn"  filterBy="#{item.source}" filterMatchMode="contains" headerText="Source"  style="width:20%">
-                                <p:outputLabel value="#{item.source}" />
-                            </p:column>
+						<p:column styleClass="centeredColumn" filterBy="#{item.source}"
+							filterMatchMode="contains" headerText="Source" style="width:20%">
+							<p:outputLabel value="#{item.source}" />
+						</p:column>
 
-                            <p:column styleClass="centeredColumn"  filterBy="#{item.status}" filterMatchMode="contains" headerText="Status"  style="width:20%">
-                                <p:outputLabel value="#{item.status}" />
-                            </p:column>
-
-
-                            <p:column styleClass="centeredColumn"  filterBy="#{item.position.title}" filterMatchMode="contains" headerText="Position Name"  style="width:20%">
-                                <p:outputLabel value="#{item.position.title}" />
-                            </p:column>
-
-                            <p:column  styleClass="centeredColumn"  headerText="Do not go To First Interview?"  style="width:20%">
-                                <p:commandButton rendered="#{applicationWebManagem.alreadyInInterviewProcess(item)}" id="editapplication" icon="ui-icon-closethick" oncomplete="PF('status').show()" update=":statusUpdate" >
-                                    <f:setPropertyActionListener value="#{item}" target="#{applicationWebManagem.selectedApplication}" />
-                                </p:commandButton>
-                            </p:column>
-
-                            <p:column styleClass="centeredColumn" headerText="Process Interview"  style="width:20%">
-                                <p:commandButton rendered="#{!applicationWebManagem.isRejected(item)}" action="#{applicationWebManagem.showPanel(item)}" icon="ui-icon-plus" title="Add" ajax="false"  >
-                                    <f:setPropertyActionListener value="#{item}" target="#{applicationWebManagem.selectedApplication}"  />
-                                </p:commandButton>
-                            </p:column>
-
-                            <p:column styleClass="centeredColumn" headerText="Rejection Motive"  style="width:20%">
-                                <p:outputLabel  value="#{item.motive}" />
-                            </p:column>
+						<p:column styleClass="centeredColumn" filterBy="#{item.status}"
+							filterMatchMode="contains" headerText="Status" style="width:20%">
+							<p:outputLabel value="#{item.status}" />
+						</p:column>
 
 
+						<p:column styleClass="centeredColumn"
+							filterBy="#{item.position.title}" filterMatchMode="contains"
+							headerText="Position Name" style="width:20%">
+							<p:outputLabel value="#{item.position.title}" />
+						</p:column>
 
-                        </p:dataTable>
-                    </h:panelGroup>
-                </h:form>
+						<p:column styleClass="centeredColumn"
+							headerText="Do not go To First Interview?" style="width:20%">
+							<p:commandButton
+								rendered="#{applicationWebManagem.alreadyInInterviewProcess(item)}"
+								id="editapplication" icon="ui-icon-closethick"
+								oncomplete="PF('status').show()" update=":statusUpdate2">
+								<f:setPropertyActionListener value="#{item}"
+									target="#{applicationWebManagem.selectedApplication}" />
+							</p:commandButton>
+						</p:column>
 
-                <!--Show the Process of interviews of that application-->
+						<p:column styleClass="centeredColumn" headerText="Update Status"
+							style="width:20%">
+							<p:commandButton
+								rendered="#{manageApplicationWeb.canEditStatus(item)}"
+								id="updstatus" icon="ui-icon-plus"
+								oncomplete="PF('updstatus').show()" update=":statusUpdate">
+								<f:setPropertyActionListener value="#{item}"
+									target="#{applicationWebManagem.selectedApplication}" />
+							</p:commandButton>
+						</p:column>
 
-                <h:form id="form2" >
-                    <h:panelGroup id="pft" binding="#{applicationWebManagem.panelGroup}" rendered="false" styleClass="borderless">
+						<p:column styleClass="centeredColumn"
+							headerText="Process Interview" style="width:20%">
+							<p:commandButton
+								rendered="#{!applicationWebManagem.isRejected(item)}"
+								action="#{applicationWebManagem.showPanel(item)}"
+								icon="ui-icon-plus" title="Add" ajax="false">
+								<f:setPropertyActionListener value="#{item}"
+									target="#{applicationWebManagem.selectedApplication}" />
+							</p:commandButton>
+						</p:column>
 
-                        <h3>List of Interviews of #{applicationWebManagem.selectedApplication.applicant.username} </h3>
-                        <p:dataTable  id="questions" var="interview" value="#{applicationWebManagem.lstInterviews}" 
-                                      editable="false" styleClass="borderless"
-                                      selectionMode="single" rowKey="#{interview.feedbackId}" selection="#{applicationWebManagem.selectedInterview}" >
-
-                            <p:column  styleClass="centeredColumn" headerText="Interviewer" width="auto" >
-                                <p:outputLabel value="#{interview.interviewer.username}" />
-                            </p:column>
-
-                            <p:column styleClass="centeredColumn"  headerText="Interview date" width="auto"   >
-                                <h:outputText value="#{interview.interviewDate}" >
-                                      <f:convertDateTime type="DATE" pattern="dd/MM/yyyy HH:mm"/>
-                                </h:outputText>
-                            </p:column>
-
-                            <p:column  styleClass="centeredColumn" headerText="Guide Interview" width="auto" >
-                                <p:outputLabel value="#{interview.interviewEntity.title}" />
-                            </p:column>
-
-                            <p:column  styleClass="centeredColumn" headerText="Feedback from Interview" width="auto" > 
-
-                                <!--Without Feedback Given-->
-
-                                <p:commandButton rendered="#{!applicationWebManagem.feedbackGiven(interview) and !applicationWebManagem.possibleToSubmitFeedback(interview)}" id="selectInterview" icon="ui-icon-plus"  actionListener="#{applicationWebManagem.appointAnswers(interview)}" oncomplete="PF('feedback').show()" update=":addfeedbackGuide" >
-                                    <f:setPropertyActionListener value="#{interview}" target="#{applicationWebManagem.selectedInterview}" />
-                                </p:commandButton>
-
-                                <!--With Feedback Given-->
-
-                                <p:commandButton rendered="#{applicationWebManagem.feedbackGiven(interview)}"   id="selectInterview1" icon="ui-icon-search" actionListener="#{applicationWebManagem.appointAnswers(interview)}" oncomplete="PF('feedback1').show()" update=":seefeedbackGuide" >
-                                    <f:setPropertyActionListener value="#{interview}" target="#{applicationWebManagem.selectedInterview}" />
-                                </p:commandButton>
-
-                            </p:column>
-
-
-                        </p:dataTable>
-
-                        <!--Button to add a new Interview-->
-
-                        <p:commandButton rendered="#{applicationWebManagem.possibleToAdd}" id="selectInterview" value="Add a new interview" oncomplete="PF('interviewer').show()" update=":interviewTable" >
-                            <f:setPropertyActionListener value="#{interview}" target="#{applicationWebManagem.selectedInterview}" />
-                        </p:commandButton>
-
-
-                        <div align="center"> 
-                            <p:commandButton icon="ui-icon-arrowreturnthick-1-w" action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true"/>
-                        </div>
+						<p:column styleClass="centeredColumn"
+							headerText="Rejection Motive" style="width:20%">
+							<p:outputLabel value="#{item.motive}" />
+						</p:column>
 
 
 
-                    </h:panelGroup>
+					</p:dataTable>
+				</h:panelGroup>
+			</h:form>
 
-                </h:form>
+			<!--Show the Process of interviews of that application-->
 
-                <!--Pop up to edit status--> 
+			<h:form id="form2">
+				<h:panelGroup id="pft" binding="#{applicationWebManagem.panelGroup}"
+					rendered="false" styleClass="borderless">
 
-                <h:form id="statusUpdate" >
-                    <p:dialog header="Reject Application" widgetVar="status" modal="true" height="auto" width="auto"  >
-                        <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
-                            <h:outputLabel value="Do you confirm the rejection of this Application before the first Interview?"  />
-                            <h:commandButton action="#{applicationWebManagem.setRejectStatusBeforePhoneInterview()}" value="Yes" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
-                            <h:commandButton action="nonSpontaneousApplications.xhtml?faces-redirect=true" value="Cancel" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
-                        </h:panelGrid>
-                    </p:dialog>
-                </h:form>
+					<h3>List of Interviews of
+						#{applicationWebManagem.selectedApplication.applicant.username}</h3>
+					<p:dataTable id="questions" var="interview"
+						value="#{applicationWebManagem.lstInterviews}" editable="false"
+						styleClass="borderless" selectionMode="single"
+						rowKey="#{interview.feedbackId}"
+						selection="#{applicationWebManagem.selectedInterview}">
 
-                <!--Pop up to add feedback--> 
+						<p:column styleClass="centeredColumn" headerText="Interviewer"
+							width="auto">
+							<p:outputLabel value="#{interview.interviewer.username}" />
+						</p:column>
 
-                <h:form id="addfeedbackGuide" >
-                    <p:dialog header="Add Feedback" widgetVar="feedback" modal="true" height="auto" width="auto"  >
-                        <h:panelGrid columns="2">
-                            <c:forEach items="#{applicationWebManagem.lstAnswers}" var="answer">
-                                <h:outputLabel value="#{answer.question}"/>
-                                <c:choose>
-                                    <c:when test="#{answer.answerType == 'TEXT' }" >
-                                        <h:inputTextarea value="#{answer.answer}"/>
-                                    </c:when>
-                                    <c:when test="#{ answer.answerType == 'INTEGER' }" >
-                                        <p:spinner  value="#{answer.answer}"
-                                                    min="0" max="5" />
-                                    </c:when>
-                                    <c:when test="#{ answer.answerType == 'BOOLEAN' }" >
-                                        <h:selectOneMenu value="#{answer.answer}">
-                                            <f:selectItem  itemLabel="True" itemValue="TRUE" />
-                                            <f:selectItem  itemLabel="False" itemValue="FALSE" />
-                                        </h:selectOneMenu>
-                                    </c:when>
-                                </c:choose>
-                            </c:forEach>
-                            <h:outputLabel value="Outcome from this interview:"/>
-                            <h:selectOneMenu id="statusapp" value="#{applicationWebManagem.selectedInterview.outcome}">
-                                <f:selectItems id="selectionatatus" var="outcome" value="#{applicationWebManagem.lstOutcomes}" itemValue="#{outcome}" itemLabel="#{outcome}"/>
-                            </h:selectOneMenu>
-                        </h:panelGrid>                      
-                        <h:commandButton value="Add Feedback"  action="#{applicationWebManagem.addFeedbak()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
-                    </p:dialog>
-                </h:form>
+						<p:column styleClass="centeredColumn" headerText="Interview date"
+							width="auto">
+							<h:outputText value="#{interview.interviewDate}">
+								<f:convertDateTime type="DATE" pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
 
-                <!--Pop up to see feedback given--> 
+						<p:column styleClass="centeredColumn" headerText="Guide Interview"
+							width="auto">
+							<p:outputLabel value="#{interview.interviewEntity.title}" />
+						</p:column>
 
-                <h:form id="seefeedbackGuide" >
-                    <p:dialog header="See Feedback" widgetVar="feedback1" modal="true" height="auto" width="auto"  >
-                        <h:panelGrid columns="2">
-                            <c:forEach items="#{applicationWebManagem.lstAnswersWithFeedback}" var="answer">
-                                <h:outputLabel value="#{answer.question}"/>
-                                <c:choose>
-                                    <c:when test="#{answer.answerType == 'TEXT' }" >
-                                        <h:inputTextarea value="#{answer.answer}" disabled="true"/>
-                                    </c:when>
-                                    <c:when test="#{ answer.answerType == 'INTEGER' }" >
-                                        <p:spinner value="#{answer.answer}" disabled="true"
-                                                   min="0" max="5" />
-                                    </c:when>
-                                    <c:when test="#{ answer.answerType == 'BOOLEAN' }" >
-                                        <h:selectOneMenu value="#{answer.answer}" disabled="true">
-                                            <f:selectItem  itemLabel="True" itemValue="TRUE" />
-                                            <f:selectItem  itemLabel="False" itemValue="FALSE" />
-                                        </h:selectOneMenu>
-                                    </c:when>
-                                </c:choose>
-                            </c:forEach>
-                            <h:outputLabel value="Outcome of this interview"/>
-                            <h:outputLabel value="#{applicationWebManagem.selectedInterview.outcome}"/>
-                        </h:panelGrid>                      
-                    </p:dialog>
-                </h:form>
+						<!-- <p:column styleClass="centeredColumn"
+							headerText="Remove Interview" width="auto">
 
-                <!--Pop up to add a new Interview--> 
+							Remove selected Scheduled meeting if scheduled date is after actual date
 
-                <h:form id="interviewTable" >
-                    <p:dialog header="Add a new Interview" widgetVar="interviewer" modal="true" height="300" width="500"  >
-                        <p:dataTable id="theguide" selectionMode="single" rowKey="#{interviewer.userId}" selection="#{applicationWebManagem.selectedInterviewer}"
-                                     value="#{applicationWebManagem.lstInterviewers}" var="interviewer"  >
+							<p:commandButton
+								rendered="#{applicationWebManagem.canEditScheduledInterview()}"
+								id="selectInterview" icon="ui-icon-closethick"
+								actionListener="#{applicationWebManagem.removeScheduledInterview(interview)}"
+								update="form2">
+								<f:setPropertyActionListener value="#{interview}"
+									target="#{applicationWebManagem.selectedInterview}" />
+							</p:commandButton>
 
-                            <p:column styleClass="centeredColumn"  headerText="Username"  filterBy="#{interviewer.username}" filterMatchMode="contains">
+						</p:column> -->
+						
+						<p:column styleClass="centeredColumn"
+							headerText="Feedback from Interview" width="auto">
+
+							<!--Without Feedback Given-->
+
+							<p:commandButton
+								rendered="#{!applicationWebManagem.feedbackGiven(interview) and !applicationWebManagem.possibleToSubmitFeedback(interview)}"
+								id="selectInterview" icon="ui-icon-plus"
+								actionListener="#{applicationWebManagem.appointAnswers(interview)}"
+								oncomplete="PF('feedback').show()" update=":addfeedbackGuide">
+								<f:setPropertyActionListener value="#{interview}"
+									target="#{applicationWebManagem.selectedInterview}" />
+							</p:commandButton>
+
+							<!--With Feedback Given-->
+
+							<p:commandButton
+								rendered="#{applicationWebManagem.feedbackGiven(interview)}"
+								id="selectInterview1" icon="ui-icon-search"
+								actionListener="#{applicationWebManagem.appointAnswers(interview)}"
+								oncomplete="PF('feedback1').show()" update=":seefeedbackGuide">
+								<f:setPropertyActionListener value="#{interview}"
+									target="#{applicationWebManagem.selectedInterview}" />
+							</p:commandButton>
+
+						</p:column>
+
+
+					</p:dataTable>
+
+					<!--Button to add a new Interview-->
+
+					<!-- 					<p:commandButton rendered="#{applicationWebManagem.possibleToAdd}" -->
+					<p:commandButton 
+						id="selectInterview" value="Add a new interview"
+						oncomplete="PF('interviewer').show()" update=":interviewTable">
+						<f:setPropertyActionListener value="#{interview}"
+							target="#{applicationWebManagem.selectedInterview}" />
+					</p:commandButton>
+
+
+					<div align="center">
+						<p:commandButton icon="ui-icon-arrowreturnthick-1-w"
+							action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
+					</div>
+
+
+
+				</h:panelGroup>
+
+			</h:form>
+
+			<!--Pop up to Associate Reject status-->
+
+			<h:form id="statusUpdate2">
+				<p:dialog header="Reject Application" widgetVar="status"
+					modal="true" height="auto" width="auto">
+					<h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0"
+						cellspacing="2">
+						<h:outputLabel
+							value="Please, confirm the rejection of this Application:" />
+						<h:commandButton
+							action="#{applicationWebManagem.setRejectStatusBeforePhoneInterview()}"
+							value="Confirm"
+							style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+						<h:commandButton
+							action="nonSpontaneousApplications.xhtml?faces-redirect=true"
+							value="Cancel"
+							style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+
+			<!--Pop up to edit Application status-->
+
+			<h:form id="statusUpdate">
+				<p:dialog header="Update Application Status" widgetVar="updstatus"
+					modal="true" height="auto" width="auto">
+					<h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0"
+						cellspacing="2">
+						<h:outputLabel value="Select the New Application Status:" />
+						<p:selectOneMenu id="upd_statusmenu" required="true"
+							value="#{applicationWebManagem.newstatus}">
+							<f:selectItem itemLabel="Submitted" itemValue="SUBMITTED" />
+							<f:selectItem itemLabel="Interviewing" itemValue="INTERVIEWING" />
+							<f:selectItem itemLabel="Negotiation" itemValue="NEGOTIATION" />
+							<f:selectItem itemLabel="Rejected" itemValue="REJECTED" />
+							<f:selectItem itemLabel="Hired" itemValue="HIRED " />
+							<!-- 							<p:ajax render="statusUpdate:upd_motive" execute="@form" /> -->
+						</p:selectOneMenu>
+
+						<!-- 						<p:selectOneMenu id="upd_motive" required="true" -->
+						<!-- 							rendered="#{supportToApplication.newStatusRejected()}" -->
+						<!-- 							value="#{applicationWebManagem.motive}"> -->
+						<!-- 							<f:selectItem itemLabel="CV" itemValue="CV" /> -->
+						<!-- 							<f:selectItem itemLabel="Personality" itemValue="PERSONALITY" /> -->
+						<!-- 							<f:selectItem itemLabel="Negotiation" itemValue="NEGOTIATION" /> -->
+						<!-- 							<f:selectItem itemLabel="Negotiation" itemValue="OTHER" /> -->
+						<!-- 							<f:selectItem itemLabel="Negotiation" itemValue="NONE" /> -->
+						<!-- 						</p:selectOneMenu> -->
+						<h:commandButton
+							action="#{applicationWebManagem.setNewApplicationStatus()}"
+							value="Set Status"
+							style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+						<h:commandButton
+							action="nonSpontaneousApplications.xhtml?faces-redirect=true"
+							value="Cancel"
+							style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+
+			<!--Pop up to add feedback-->
+
+			<h:form id="addfeedbackGuide">
+				<p:dialog header="Add Feedback" widgetVar="feedback" modal="true"
+					height="auto" width="auto">
+					<h:panelGrid columns="2">
+						<c:forEach items="#{applicationWebManagem.lstAnswers}"
+							var="answer">
+							<h:outputLabel value="#{answer.question}" />
+							<c:choose>
+								<c:when test="#{answer.answerType == 'TEXT' }">
+									<h:inputTextarea value="#{answer.answer}" />
+								</c:when>
+								<c:when test="#{ answer.answerType == 'INTEGER' }">
+									<p:spinner value="#{answer.answer}" min="0" max="5" />
+								</c:when>
+								<c:when test="#{ answer.answerType == 'BOOLEAN' }">
+									<h:selectOneMenu value="#{answer.answer}">
+										<f:selectItem itemLabel="True" itemValue="TRUE" />
+										<f:selectItem itemLabel="False" itemValue="FALSE" />
+									</h:selectOneMenu>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<h:outputLabel value="Outcome from this interview:" />
+						<h:selectOneMenu id="statusapp"
+							value="#{applicationWebManagem.selectedInterview.outcome}">
+							<f:selectItems id="selectionatatus" var="outcome"
+								value="#{applicationWebManagem.lstOutcomes}"
+								itemValue="#{outcome}" itemLabel="#{outcome}" />
+						</h:selectOneMenu>
+					</h:panelGrid>
+					<h:commandButton value="Add Feedback"
+						action="#{applicationWebManagem.addFeedbak()}"
+						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+				</p:dialog>
+			</h:form>
+
+			<!--Pop up to see feedback given-->
+
+			<h:form id="seefeedbackGuide">
+				<p:dialog header="See Feedback" widgetVar="feedback1" modal="true"
+					height="auto" width="auto">
+					<h:panelGrid columns="2">
+						<c:forEach items="#{applicationWebManagem.lstAnswersWithFeedback}"
+							var="answer">
+							<h:outputLabel value="#{answer.question}" />
+							<c:choose>
+								<c:when test="#{answer.answerType == 'TEXT' }">
+									<h:inputTextarea value="#{answer.answer}" disabled="true" />
+								</c:when>
+								<c:when test="#{ answer.answerType == 'INTEGER' }">
+									<p:spinner value="#{answer.answer}" disabled="true" min="0"
+										max="5" />
+								</c:when>
+								<c:when test="#{ answer.answerType == 'BOOLEAN' }">
+									<h:selectOneMenu value="#{answer.answer}" disabled="true">
+										<f:selectItem itemLabel="True" itemValue="TRUE" />
+										<f:selectItem itemLabel="False" itemValue="FALSE" />
+									</h:selectOneMenu>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<h:outputLabel value="Outcome of this interview" />
+						<h:outputLabel
+							value="#{applicationWebManagem.selectedInterview.outcome}" />
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+
+			<!--Pop up to add a new Interview-->
+
+			<h:form id="interviewTable">
+				<p:dialog header="Add a new Interview" widgetVar="interviewer"
+					modal="true" height="300" width="500">
+					<p:dataTable id="theguide" selectionMode="single"
+						rowKey="#{interviewer.userId}"
+						selection="#{applicationWebManagem.selectedInterviewer}"
+						value="#{applicationWebManagem.lstInterviewers}" var="interviewer">
+
+						<p:column styleClass="centeredColumn" headerText="Username"
+							filterBy="#{interviewer.username}" filterMatchMode="contains">
                                 #{interviewer.username}
                             </p:column>
 
-                            <p:column styleClass="centeredColumn" headerText="First Name"  filterBy="#{interviewer.firstName}" filterMatchMode="contains">
+						<p:column styleClass="centeredColumn" headerText="First Name"
+							filterBy="#{interviewer.firstName}" filterMatchMode="contains">
                                 #{interviewer.firstName}
                             </p:column>
 
-                            <p:column styleClass="centeredColumn"  headerText="Last Name"  filterBy="#{interviewer.lastName}" filterMatchMode="contains">
+						<p:column styleClass="centeredColumn" headerText="Last Name"
+							filterBy="#{interviewer.lastName}" filterMatchMode="contains">
                                 #{interviewer.lastName}
                             </p:column>
 
-                        </p:dataTable>
-                        <h:outputText></h:outputText>
-                        <h:panelGrid columns="2">
-                            <h3>Interview Date:*</h3>
-                            <p:calendar id="datetime" value="#{applicationWebManagem.interviewDate}" pattern="MM/dd/yyyy HH:mm" required="true" requiredMessage="Must Introduce a Date for this interview" />
-                        </h:panelGrid>
-                        <h:commandButton value="Schedule interview" action="#{applicationWebManagem.createNewInterview()}" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"  />
+					</p:dataTable>
+					<h:outputText></h:outputText>
+					<h:panelGrid columns="2">
+						<h3>Interview Date:*</h3>
+						<p:calendar id="datetime"
+							value="#{applicationWebManagem.interviewDate}"
+							pattern="MM/dd/yyyy HH:mm" required="true"
+							requiredMessage="Must Introduce a Date for this interview" />
+					</h:panelGrid>
+					<h:commandButton value="Schedule interview"
+						action="#{applicationWebManagem.createNewInterview()}"
+						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
 
-                    </p:dialog>
-                </h:form>
-            </ui:define>
-        </ui:composition>
-    </body>
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
 </html>

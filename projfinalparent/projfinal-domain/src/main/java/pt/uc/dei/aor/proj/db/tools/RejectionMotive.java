@@ -7,7 +7,7 @@ package pt.uc.dei.aor.proj.db.tools;
  */
 public enum RejectionMotive {
 
-	CV,PERSONALITY,NEGOTIATION
+	CV,PERSONALITY,NEGOTIATION,OTHER,NONE
 
 
 }

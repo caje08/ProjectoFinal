@@ -400,7 +400,7 @@ public class PositionWebManagem implements Serializable {
 		} else{			
 			Logger.getLogger(PositionWebManagem.class.getName()).log(
 					Level.INFO,
-					"Inside canEditPosition() and returning 'false' as its isn't either an Admin or Manager user.");
+					"Inside canEditPosition() and returning 'false' as it isn't either an Admin or Manager user.");
 			test= false;
 		}
 		return test;

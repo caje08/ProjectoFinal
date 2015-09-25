@@ -60,7 +60,7 @@
 						required="true" requiredMessage="Please, enter a Job Description." />
 
 					<p:outputLabel value="Publishing channels:*" />
-					<p:selectOneMenu id="pub_Chann"
+					<p:selectOneMenu id="pub_Chann" required="true"
 						value="#{positionWebManagem.activePosition.activePosition.publishingChannels}">
 						<f:selectItem itemLabel="Critical SW web site"
 							itemValue="CRITICALSWWEBSITE" />
@@ -68,11 +68,12 @@
 						<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
 						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
 						<f:selectItem itemLabel="All defined" itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
+						<f:selectItem itemLabel="Other" itemValue="OTHER" />
 					</p:selectOneMenu>
-					<!-- <p:outputLabel value="Other Publishing channels:*" />
+					<p:outputLabel value="Other Publishing channels:" />
 					<p:inputText id="publishingChannels" title="Publishing channels"
 						value="#{positionWebManagem.activePosition.activePosition.publishingChannels}"
-						required="true"	requiredMessage="Please, enter a Publishing channels." /> -->
+						required="false"	requiredMessage="Please, enter the text for alternatives Publishing channels." />
 
 					<p:outputLabel for="location" value="Location: " />
 					<p:selectOneMenu id="location"

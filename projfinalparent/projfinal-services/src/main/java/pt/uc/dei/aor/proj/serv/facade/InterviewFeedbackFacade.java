@@ -117,9 +117,9 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 		//	applicationFacade.edit(application);
 
 			InterviewEntity tmpinterv = interviewFeedback.getInterviewEntity();
-			System.out.println("\n InterviewEntity = "+tmpinterv.getType());
-			System.out.println("\ninterviewFeedback.getInterviewer().getEmail()-->"+interviewFeedback.getInterviewer().getEmail());
-			System.out.println("\ninterviewFeedback.getApplication().getApplicant().getEmail()-->"+interviewFeedback.getApplication().getApplicant().getEmail());
+//			System.out.println("\n InterviewEntity = "+tmpinterv.getType());
+//			System.out.println("\ninterviewFeedback.getInterviewer().getEmail()-->"+interviewFeedback.getInterviewer().getEmail());
+//			System.out.println("\ninterviewFeedback.getApplication().getApplicant().getEmail()-->"+interviewFeedback.getApplication().getApplicant().getEmail());
 			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before sending email");
 			
 			//em.persist(interviewFeedback);

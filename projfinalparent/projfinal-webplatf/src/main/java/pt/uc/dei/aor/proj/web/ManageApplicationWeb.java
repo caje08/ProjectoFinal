@@ -19,12 +19,15 @@ import javax.persistence.NoResultException;
 
 import org.primefaces.event.FileUploadEvent;
 
+import pt.uc.dei.aor.proj.db.entities.AdminEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.entities.PositionEntity;
+import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
+import pt.uc.dei.aor.proj.serv.ejb.ApplicationWebManagem;
 import pt.uc.dei.aor.proj.serv.ejb.SendEmail;
 import pt.uc.dei.aor.proj.serv.exceptions.BeforeDateNotBeforeClosingDate;
 import pt.uc.dei.aor.proj.serv.exceptions.DoNotUploadCVFileException;
@@ -78,7 +81,7 @@ public class ManageApplicationWeb implements Serializable {
 	private String cvname;
 	private String clname;
 
-	@Inject
+	@EJB
 	private UserData userData;
 	@EJB
 	private StatefulPosition statefulPosition;
@@ -441,6 +444,95 @@ public class ManageApplicationWeb implements Serializable {
 
 	public void stopShowPanel() {
 		panelGroup.setRendered(false);
+	}
+	
+	/**
+	 *
+	 * @return  true if is an user that try to log in is an admin
+	 */
+	public boolean isAdmin() {
+		try {
+			return userData.getLoggedUser() instanceof AdminEntity;
+		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage(ex.getMessage());
+		}
+		return false;
+
+	}
+
+	/**
+	 *
+	 * @return  true if is an user that try to log in is a manager
+	 */
+	public boolean isManager() {
+		try {
+			return userData.getLoggedUser() instanceof ManagerEntity;
+		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage(ex.getMessage());
+		}
+		return false;
+	}
+	
+	/**
+	 *
+	 * @return  Manager's email if is an user that try to log in is a manager
+	 */
+	public String ManagerEmail() {
+		String out="";
+		try {
+			out=userData.getLoggedUser().getEmail();
+		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage(ex.getMessage());
+		}
+		return out;
+	}
+
+	/**
+	 *
+	 * @param position
+	 * @return true if it is possible to edit PositionEntity
+	 */
+	public boolean canEditStatus(ApplicationEntity application) {
+		boolean test = false;
+		if(isAdmin()) {
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.INFO,
+					"Inside canEditStatus() and returning 'true' as Admin user ");
+			test= true;
+		}
+		else if(isManager()){	
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.INFO,"Inside canEditStatus() and its a active user as a manager");
+			try {
+				 if(application.getPosition().getManager().getEmail().equals(ManagerEmail())){
+
+				 Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+						Level.INFO,
+						"Inside canEditStatus() and returning 'true' as Manager of position associated to this application ");
+				 test= true;
+				}else{
+					Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+							Level.INFO,
+							"Inside canEditStatus() and returning 'false' as its a Manager user but not not managing the position associated to the application");
+					test= false;					
+				}
+			}catch(Exception e){
+				Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+						Level.SEVERE,null,e.getMessage());
+				test= false;
+			}
+			
+		} else{			
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.INFO,
+					"Inside canEditStatus() and returning 'false' as it isn't either an Admin or Manager user.");
+			test= false;
+		}
+		return test;
+		//return positionFacade.associateToApplication(position);
 	}
 
 	// ///////////////////Getters && Setters////////////////////
