@@ -92,9 +92,9 @@ public class ApplicationWebManagem implements Serializable {
 	private InterviewerFacade interviewerFacade;
 	@EJB
 	private UserData userData;
-
-	// @Inject
-	// private UserCheck activeUser;
+//
+//	 @Inject
+//	 private UserCheck activeUser;
 
 	/**
 	 *

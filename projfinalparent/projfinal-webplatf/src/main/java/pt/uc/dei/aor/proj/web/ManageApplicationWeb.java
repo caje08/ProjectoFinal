@@ -23,6 +23,8 @@ import pt.uc.dei.aor.proj.db.entities.AdminEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewEntity;
+import pt.uc.dei.aor.proj.db.entities.InterviewFeedbackEntity;
+import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.entities.PositionEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
@@ -34,6 +36,7 @@ import pt.uc.dei.aor.proj.serv.exceptions.DoNotUploadCVFileException;
 import pt.uc.dei.aor.proj.serv.exceptions.DoNotUploadCoverLetterException;
 import pt.uc.dei.aor.proj.serv.exceptions.EmailAlreadyExistsException;
 import pt.uc.dei.aor.proj.serv.exceptions.EmailAndPasswordNotCorrespondingToLinkedinCredentialsException;
+import pt.uc.dei.aor.proj.serv.exceptions.InterviewsNotFoundToThisUserException;
 import pt.uc.dei.aor.proj.serv.exceptions.InvalidAuthException;
 import pt.uc.dei.aor.proj.serv.exceptions.ManagerNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.exceptions.NumberOfMobilePhoneDigitsException;
@@ -45,6 +48,7 @@ import pt.uc.dei.aor.proj.serv.exceptions.PositionsNotFoundToThisUserException;
 import pt.uc.dei.aor.proj.serv.exceptions.PresentialInterviewEntityNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.facade.ApplicationFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewEntityFacade;
+import pt.uc.dei.aor.proj.serv.facade.InterviewFeedbackFacade;
 import pt.uc.dei.aor.proj.serv.facade.ManagerFacade;
 import pt.uc.dei.aor.proj.serv.facade.PositionFacade;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
@@ -68,7 +72,8 @@ public class ManageApplicationWeb implements Serializable {
 	private List<InterviewEntity> lstPresentialInterviewsInUse;
 	private List<PositionEntity> lstPositionsBeforeAtualDate;
 	private List<PositionEntity> lstPositionsofAManager;
-
+	private List<InterviewFeedbackEntity> lstInterviewsOfInterviewer;
+	
 	private ApplicationEntity selectedApplication;
 	private PositionEntity position;
 	private UIPanel panelGroup;
@@ -88,6 +93,8 @@ public class ManageApplicationWeb implements Serializable {
 	@EJB
 	private InterviewEntityFacade interviewGuideFacade;
 	@EJB
+	private InterviewFeedbackFacade interviewFeedbackFacade;
+	@EJB
 	private ManagerFacade managerFacade;
 	@EJB
 	private ApplicationFacade applicationFacade;
@@ -97,7 +104,8 @@ public class ManageApplicationWeb implements Serializable {
 	private SendEmail mail;
 	@Inject
 	private ActiveSession activePosition;
-
+	@Inject
+	private UserCheck activeUser;
 	/**
 	 * Creates a new instance of PositionViewBean
 	 */
@@ -746,9 +754,60 @@ public class ManageApplicationWeb implements Serializable {
 	public List<PositionEntity> getLstPositionsofAManager() throws PositionsNotFoundToThisUserException {
 		try {
 			try {
-				
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.INFO, "Inside getLstPositionsofAManager() and before positionFacade.lstPositionsOfManager() with email="+activeUser.getName());
 				lstPositionsofAManager = positionFacade
 						.lstPositionsOfManager((ManagerEntity) userData
+								.getLoggedUser());
+			} catch (UserNotFoundException
+					| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
+				// TODO Auto-generated catch block
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.SEVERE, null, e.getMessage());
+			}
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex.getMessage());
+		}
+		return lstPositionsofAManager;
+	}
+
+	public void setLstPositionsofAManager(
+			List<PositionEntity> lstPositionsofAManager) {
+		this.lstPositionsofAManager = lstPositionsofAManager;
+	}
+	
+	public List<InterviewFeedbackEntity> getLstInterviewsOfInterviewer() throws InterviewsNotFoundToThisUserException {
+	  try {
+		try {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.INFO, "Inside getLstPositionsofAManager() and before positionFacade.lstPositionsOfManager() with email="+activeUser.getName());
+			lstInterviewsOfInterviewer = interviewFeedbackFacade
+					.lstInterviewsWithThatInterviewer((InterviewerEntity) userData
+							.getLoggedUser());
+		} catch (NoResultException
+				| pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException
+				| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
+			// TODO Auto-generated catch block
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.SEVERE, null, e);
+			JSFUtil.addErrorMessage(e.getMessage());
+		}
+	  } catch (Exception ex) {
+			// TODO Auto-generated catch block
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.SEVERE, null, ex.getMessage());
+		}
+		return lstInterviewsOfInterviewer;
+	}
+	
+	/*public List<PositionEntity> getLstPositionsofAManager() throws PositionsNotFoundToThisUserException {
+		try {
+			try {
+				
+				lstPositionsofAManager = positionFacade
+						.lstPositionsOfManager((UserEntity) userData
 								.getLoggedUser());
 //				lstPositionsofAManager = positionFacade
 //						.lstPositionsOfManager((ManagerEntity) userData
@@ -770,7 +829,7 @@ public class ManageApplicationWeb implements Serializable {
 	public void setLstPositionsofAManager(
 			List<PositionEntity> lstPositionsofAManager) {
 		this.lstPositionsofAManager = lstPositionsofAManager;
-	}
+	}*/
 
 	public String getCvname() {
 		return cvname;
@@ -787,5 +846,14 @@ public class ManageApplicationWeb implements Serializable {
 	public void setClname(String clname) {
 		this.clname = clname;
 	}
+
+	public UserCheck getActiveUser() {
+		return activeUser;
+	}
+
+	public void setActiveUser(UserCheck activeUser) {
+		this.activeUser = activeUser;
+	}
+	
 
 }

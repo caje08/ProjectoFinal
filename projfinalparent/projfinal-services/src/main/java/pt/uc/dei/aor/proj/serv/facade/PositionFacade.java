@@ -18,6 +18,7 @@ import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.entities.PositionEntity;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.serv.ejb.SendEmail;
 import pt.uc.dei.aor.proj.serv.exceptions.BeforeDateNotBeforeClosingDate;
 import pt.uc.dei.aor.proj.serv.exceptions.ManagerNotIntroducedException;
@@ -27,6 +28,7 @@ import pt.uc.dei.aor.proj.serv.exceptions.PositionNotIntroducedException;
 import pt.uc.dei.aor.proj.serv.exceptions.PositionOfAnApplicantAlreadyIntroducedOnSPonException;
 import pt.uc.dei.aor.proj.serv.exceptions.PositionsNotFoundToThisUserException;
 import pt.uc.dei.aor.proj.serv.exceptions.PresentialInterviewEntityNotIntroducedException;
+
 
 /**
  *
@@ -308,15 +310,15 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 
 	/**
 	 *
-	 * @param manager
+	 * @param userEntity
 	 * @return List of position of a manager
 	 */
-	public List<PositionEntity> lstPositionsOfManager(ManagerEntity manager) throws PositionsNotFoundToThisUserException{
+	public List<PositionEntity> lstPositionsOfManager(UserEntity userEntity) throws PositionsNotFoundToThisUserException{
 		List<PositionEntity> results;
-		Logger.getLogger(PositionFacade.class.getName()).log(Level.INFO,"Inside lstPositionsOfManager() where manager.getEmail="+manager.getEmail());
+		Logger.getLogger(PositionFacade.class.getName()).log(Level.INFO,"Inside lstPositionsOfManager() where manager.getEmail="+userEntity.getEmail());
 		try{
 		   Query query = em.createNamedQuery("PositionEntity.findByManager", PositionEntity.class);
-		   query.setParameter("manager", manager);
+		   query.setParameter("manager", userEntity);
 		   results = query.getResultList();
 		}catch (Exception e){
 			Logger.getLogger(PositionFacade.class.getName()).log(Level.SEVERE,"Inside lstPositionsOfManager() with errors in the named query results",e.getMessage());
