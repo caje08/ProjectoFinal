@@ -10,57 +10,151 @@
 
 		<ui:define name="content">
 			<h:form id="form">
-<!-- 				<p:growl id="messages" showDetail="true" /> -->
-<!-- 				<h:panelGroup binding="#{applicationWebManagem.panelInterviews}"> -->
-<!-- 					<h:panelGroup > -->
-						<!--List of Interviews of Interviewer -->
+				<!-- 				<p:growl id="messages" showDetail="true" /> -->
+				<!-- 				<h:panelGroup binding="#{applicationWebManagem.panelInterviews}"> -->
+				<!-- 					<h:panelGroup > -->
+				<!--List of Interviews of Interviewer -->
 
-						<p:dataTable var="item"
-							value="#{manageApplicationWeb.lstInterviewsOfInterviewer}"
-							paginator="true" rows="10" paginatorPosition="top"
-							editable="false"
-							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-							rowsPerPageTemplate="10,20,30" selectionMode="single"
-							rowKey="#{item.feedbackId}"
-							selection="#{manageApplicationWeb.selectedApplication}">
-							<f:facet name="header">
+				<p:dataTable var="item"
+					value="#{applicationWebManagem.lstInterviewsOfInterviewer}"
+					paginator="true" rows="10" paginatorPosition="top" editable="false"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30" selectionMode="single"
+					rowKey="#{item.feedbackId}"
+					selection="#{applicationWebManagem.selectedApplication}">
+					<f:facet name="header">
                                 List of My Interviews Applications
                             </f:facet>
 
 
-							<p:column styleClass="centeredColumn"
-								filterBy="#{item.application.applicant.username}"
-								headerText="Username" filterMatchMode="contains"
-								style="width:20%">
-								<a
-									href="applicationDetails.xhtml?applicantid=#{item.application.applicant.userId}&amp;applicationid=#{item.application.applicationId}">#{item.application.applicant.username}</a>
-							</p:column>
+					<p:column styleClass="centeredColumn"
+						filterBy="#{item.application.applicant.username}"
+						headerText="Username" filterMatchMode="contains" style="width:20%">
+						<a
+							href="applicationDetails.xhtml?applicantid=#{item.application.applicant.userId}&amp;applicationid=#{item.application.applicationId}">#{item.application.applicant.username}</a>
+					</p:column>
 
 
-							<p:column styleClass="centeredColumn"
-								filterBy="#{item.interviewDate}" filterMatchMode="contains"
-								headerText="Interview Date" style="width:20%">
-								<p:outputLabel value="#{item.interviewDate}">
-									<f:convertDateTime pattern="dd/MM/yyy HH:mm" />
-								</p:outputLabel>
-							</p:column>
+					<p:column styleClass="centeredColumn"
+						filterBy="#{item.interviewDate}" filterMatchMode="contains"
+						headerText="Interview Date" style="width:20%">
+						<p:outputLabel value="#{item.interviewDate}">
+							<f:convertDateTime pattern="dd/MM/yyy HH:mm" />
+						</p:outputLabel>
+					</p:column>
 
-							<p:column styleClass="centeredColumn"
-								filterBy="#{item.interviewEntity.type}"
-								filterMatchMode="contains" headerText="Interview Type"
-								style="width:20%">
-								<p:outputLabel value="#{item.interviewEntity.type}" />
-							</p:column>
+					<p:column styleClass="centeredColumn"
+						filterBy="#{item.interviewEntity.type}" filterMatchMode="contains"
+						headerText="Interview Type" style="width:20%">
+						<p:outputLabel value="#{item.interviewEntity.type}" />
+					</p:column>
 
-							<p:column styleClass="centeredColumn"
-								filterBy="#{item.interviewEntity.title}"
-								filterMatchMode="contains" headerText="Interview Guide Name"
-								style="width:20%">
-								<p:outputLabel value="#{item.interviewEntity.title}" />
-							</p:column>
+					<p:column styleClass="centeredColumn"
+						filterBy="#{item.interviewEntity.title}"
+						filterMatchMode="contains" headerText="Interview Guide Name"
+						style="width:20%">
+						<p:outputLabel value="#{item.interviewEntity.title}" />
+					</p:column>
 
-						</p:dataTable>
-<!-- 					</h:panelGroup> -->
+					<p:column styleClass="centeredColumn"
+						headerText="Feedback from Interview" width="auto">
+
+						<!--Without Feedback Given-->
+
+						<p:commandButton
+							rendered="#{!applicationWebManagem.feedbackGiven(item) and !applicationWebManagem.possibleToSubmitFeedback(item)}"
+							id="selectInterview" icon="ui-icon-plus"
+							actionListener="#{applicationWebManagem.appointAnswers(item)}"
+							oncomplete="PF('feedback').show()" update=":addfeedbackGuide">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{applicationWebManagem.selectedInterview}" />
+						</p:commandButton>
+
+						<!--With Feedback Given-->
+
+						<p:commandButton
+							rendered="#{applicationWebManagem.feedbackGiven(item)}"
+							id="selectInterview1" icon="ui-icon-search"
+							actionListener="#{applicationWebManagem.appointAnswers(item)}"
+							oncomplete="PF('feedback1').show()" update=":seefeedbackGuide">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{applicationWebManagem.selectedInterview}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+				<!-- 					</h:panelGroup> -->
+			</h:form>
+			
+			<!--Pop up to add feedback-->
+
+			<h:form id="addfeedbackGuide">
+				<p:dialog header="Add Feedback" widgetVar="feedback" modal="true"
+					height="auto" width="auto">
+					<h:panelGrid columns="2">
+						<c:forEach items="#{applicationWebManagem.lstAnswers}"
+							var="answer">
+							<h:outputLabel value="#{answer.question}" />
+							<c:choose>
+								<c:when test="#{answer.answerType == 'TEXT' }">
+									<h:inputTextarea value="#{answer.answer}" />
+								</c:when>
+								<c:when test="#{ answer.answerType == 'INTEGER' }">
+									<p:spinner value="#{answer.answer}" min="0" max="5" />
+								</c:when>
+								<c:when test="#{ answer.answerType == 'BOOLEAN' }">
+									<h:selectOneMenu value="#{answer.answer}">
+										<f:selectItem itemLabel="True" itemValue="TRUE" />
+										<f:selectItem itemLabel="False" itemValue="FALSE" />
+									</h:selectOneMenu>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<h:outputLabel value="Outcome from this interview:" />
+						<h:selectOneMenu id="statusapp"
+							value="#{applicationWebManagem.selectedInterview.outcome}">
+							<f:selectItems id="selectionatatus" var="outcome"
+								value="#{applicationWebManagem.lstOutcomes}"
+								itemValue="#{outcome}" itemLabel="#{outcome}" />
+						</h:selectOneMenu>
+					</h:panelGrid>
+					<h:commandButton value="Add Feedback"
+						action="#{applicationWebManagem.addFeedbak()}"
+						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+				</p:dialog>
+			</h:form>
+
+			<!--Pop up to see feedback given-->
+
+			<h:form id="seefeedbackGuide">
+				<p:dialog header="See Feedback" widgetVar="feedback1" modal="true"
+					height="auto" width="auto">
+					<h:panelGrid columns="2">
+						<c:forEach items="#{applicationWebManagem.lstAnswersWithFeedback}"
+							var="answer">
+							<h:outputLabel value="#{answer.question}" />
+							<c:choose>
+								<c:when test="#{answer.answerType == 'TEXT' }">
+									<h:inputTextarea value="#{answer.answer}" disabled="true" />
+								</c:when>
+								<c:when test="#{ answer.answerType == 'INTEGER' }">
+									<p:spinner value="#{answer.answer}" disabled="true" min="0"
+										max="5" />
+								</c:when>
+								<c:when test="#{ answer.answerType == 'BOOLEAN' }">
+									<h:selectOneMenu value="#{answer.answer}" disabled="true">
+										<f:selectItem itemLabel="True" itemValue="TRUE" />
+										<f:selectItem itemLabel="False" itemValue="FALSE" />
+									</h:selectOneMenu>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<h:outputLabel value="Outcome of this interview" />
+						<h:outputLabel
+							value="#{applicationWebManagem.selectedInterview.outcome}" />
+					</h:panelGrid>
+				</p:dialog>
 			</h:form>
 
 		</ui:define>

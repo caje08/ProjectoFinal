@@ -29,6 +29,7 @@ import pt.uc.dei.aor.proj.db.tools.RejectionMotive;
 import pt.uc.dei.aor.proj.db.tools.StatusApplication;
 import pt.uc.dei.aor.proj.serv.exceptions.FirstInterviewAfterAtualDateException;
 import pt.uc.dei.aor.proj.serv.exceptions.InterviewerSameDateException;
+import pt.uc.dei.aor.proj.serv.exceptions.InterviewsNotFoundToThisUserException;
 import pt.uc.dei.aor.proj.serv.exceptions.MustIntroduceInterviewerException;
 import pt.uc.dei.aor.proj.serv.exceptions.SecondInterviewAfterFirstInterviewException;
 import pt.uc.dei.aor.proj.serv.exceptions.SubmitFeedbackBeforeInterviewDateException;
@@ -41,6 +42,7 @@ import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.StatefulApplication;
 import pt.uc.dei.aor.proj.serv.tools.UploadedFiles;
 import pt.uc.dei.aor.proj.serv.tools.UserData;
+
 
 /**
  *
@@ -544,7 +546,8 @@ public class ApplicationWebManagem implements Serializable {
 	}
 
 	// ///////////////////Getters && Setters////////////////////
-	public List<InterviewFeedbackEntity> getLstInterviewsOfInterviewer() {
+	public List<InterviewFeedbackEntity> getLstInterviewsOfInterviewer() throws InterviewsNotFoundToThisUserException{
+	  try{	
 		try {
 			lstInterviewsOfInterviewer = interviewFeedbackFacade
 					.lstInterviewsWithThatInterviewer((InterviewerEntity) userData
@@ -556,6 +559,11 @@ public class ApplicationWebManagem implements Serializable {
 			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
 					Level.SEVERE, null, e);
 			JSFUtil.addErrorMessage(e.getMessage());
+		}
+	  } catch (Exception ex) {
+			// TODO Auto-generated catch block
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex.getMessage());
 		}
 		return lstInterviewsOfInterviewer;
 	}
