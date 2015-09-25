@@ -7,8 +7,21 @@ package pt.uc.dei.aor.proj.db.tools;
  */
 public enum RejectionMotive {
 
-	CV,PERSONALITY,NEGOTIATION,OTHER,NONE
+	CV ("CV"),
+	PERSONALITY ("CV Personality"),
+	NEGOTIATION("Negotiation"),
+	OTHER ("Other rejection motive"),
+	NONE ("");
+	
+	private String description;
 
+	private RejectionMotive (String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
 
 }
 

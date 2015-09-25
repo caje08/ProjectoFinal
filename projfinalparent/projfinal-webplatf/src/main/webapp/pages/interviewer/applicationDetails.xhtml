@@ -14,9 +14,9 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <body>
         <ui:composition template="./maininterviewer.xhtml"> 
-            <ui:define name="top">
-                <ui:include src="./othermaininterviewer.xhtml" />
-            </ui:define>
+<!--             <ui:define name="top"> -->
+<!--                 <ui:include src="./othermaininterviewer.xhtml" /> -->
+<!--             </ui:define> -->
 
             <ui:define name="content">
 
@@ -29,13 +29,13 @@ and open the template in the editor.
                         <h:outputText value="Last Name:" />
                         <h:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
-                        <h:outputText value="CV" />
-                        <h:link outcome="#{appDetailsStatus.cvPath}"  target="_blank" value="cv">
-                        </h:link>
+                        <h:outputText value="Curriculum Vitae" />
+                        <p:button href="#{appDetailsStatus.cvPath}" style="color: #{cssRequestBB.cssInUse.labelCommandLink}"  target="_blank" value="cv">
+                        </p:button>
 
-                        <h:outputText value="Cover Letter" />
-                        <h:link outcome="#{appDetailsStatus.coverLetterPath}" target="_blank" value="cl">
-                        </h:link>
+                        <h:outputText value="Cover Letter" /> 
+                       <p:button href="#{appDetailsStatus.coverLetterPath}" style="color: #{cssRequestBB.cssInUse.labelCommandLink}"  target="_blank" value="cl">
+                        </p:button>
 
                         <h:outputText value="Email:" />
                         <h:outputText value="#{appDetailsStatus.applicant.email}" />
@@ -60,6 +60,9 @@ and open the template in the editor.
 
                         <h:outputText value="School" />
                         <h:outputText value="#{appDetailsStatus.applicant.school}" />
+                        
+                         <h:outputText value="Application associated to Position:" />
+                        <h:outputText value="#{appDetailsStatus.position.title}" />
 
                     </h:panelGrid>  
 

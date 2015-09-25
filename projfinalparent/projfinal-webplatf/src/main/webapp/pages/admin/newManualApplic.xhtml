@@ -109,8 +109,8 @@
 					</p:password>
 
 					<p:outputLabel value="CV Filename:" />
-					<h:outputText value="#{manageApplicationWeb.cvname}" />
-					<p:fileUpload update="cv1" mode="advanced" auto="true" id="cv"
+					<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
+					<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
 						previewWidth="40" required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadCV}"
 						label="Upload CV*" styleClass="fileUploadClass"
@@ -119,8 +119,8 @@
 					<p:growl id="cv1" showDetail="true" />
 
 					<p:outputLabel value="Cover Letter Filename:" />
-					<h:outputText value="#{manageApplicationWeb.clname}" />
-					<p:fileUpload update="@all" id="ml" mode="advanced" auto="true"
+					<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+					<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
 						required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
 						label="Upload Cover Letter*"

@@ -387,7 +387,19 @@ public class ApplicationWebManagem implements Serializable {
 	 * motive will be CV
 	 */
 	public void setNewApplicationStatus() {
-		selectedApplication.setStatus(newstatus);
+		
+		if (this.newstatus.equals(StatusApplication.REJECTED)) {
+			selectedApplication.setStatus(StatusApplication.REJECTED);
+			selectedApplication.setMotive(RejectionMotive.CV);
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.INFO,
+					"In setNewApplicationStatus(), the newstatus=REJECTED");
+		} else{
+			if(selectedApplication.getStatus().equals(StatusApplication.REJECTED)){
+				selectedApplication.setMotive(RejectionMotive.NONE);
+			}
+		        selectedApplication.setStatus(newstatus);
+		}
 //		if (this.newstatus.equals(StatusApplication.HIRED)) {
 //			int nposic = selectedApplication.getPosition().getVacancies();
 //			if (nposic==1){
@@ -447,15 +459,22 @@ public class ApplicationWebManagem implements Serializable {
 	 * @return true if is possible to add more interviews
 	 */
 	public boolean isPossibleToAdd() {
-		if (interviewFeedbackFacade.numberOfInterviews(selectedApplication
-				.getApplicationId()) == 0) {
+		
+		if(!selectedApplication.getStatus().equals(StatusApplication.HIRED)){
 			return true;
 		} else {
-			return interviewFeedbackFacade
-					.numberOfInterviews(selectedApplication.getApplicationId()) < 2
-					&& interviewFeedbackFacade
-							.knowIfAPhoneInterviewFeedbackHasAcceptedFeedback(selectedApplication);
+			return false;
 		}
+		
+//		if (interviewFeedbackFacade.numberOfInterviews(selectedApplication
+//				.getApplicationId()) == 0) {
+//			return true;
+//		} else {
+//			return interviewFeedbackFacade
+//					.numberOfInterviews(selectedApplication.getApplicationId()) < 2
+//					&& interviewFeedbackFacade
+//							.knowIfAPhoneInterviewFeedbackHasAcceptedFeedback(selectedApplication);
+//		}
 
 	}
 

@@ -175,8 +175,7 @@
 
 					<!--Button to add a new Interview-->
 
-					<!-- 					<p:commandButton rendered="#{applicationWebManagem.possibleToAdd}" -->
-					<p:commandButton 
+					<p:commandButton rendered="#{applicationWebManagem.possibleToAdd}"
 						id="selectInterview" value="Add a new interview"
 						oncomplete="PF('interviewer').show()" update=":interviewTable">
 						<f:setPropertyActionListener value="#{interview}"
@@ -188,8 +187,6 @@
 						<p:commandButton icon="ui-icon-arrowreturnthick-1-w"
 							action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
 					</div>
-
-
 
 				</h:panelGroup>
 
@@ -230,7 +227,7 @@
 							<f:selectItem itemLabel="Interviewing" itemValue="INTERVIEWING" />
 							<f:selectItem itemLabel="Negotiation" itemValue="NEGOTIATION" />
 							<f:selectItem itemLabel="Rejected" itemValue="REJECTED" />
-							<f:selectItem itemLabel="Hired" itemValue="HIRED " />
+<!-- 							<f:selectItem itemLabel="Hired" itemValue="HIRED " /> -->
 							<!-- 							<p:ajax render="statusUpdate:upd_motive" execute="@form" /> -->
 						</p:selectOneMenu>
 

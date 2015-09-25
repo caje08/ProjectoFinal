@@ -746,9 +746,13 @@ public class ManageApplicationWeb implements Serializable {
 	public List<PositionEntity> getLstPositionsofAManager() throws PositionsNotFoundToThisUserException {
 		try {
 			try {
+				
 				lstPositionsofAManager = positionFacade
 						.lstPositionsOfManager((ManagerEntity) userData
 								.getLoggedUser());
+//				lstPositionsofAManager = positionFacade
+//						.lstPositionsOfManager((ManagerEntity) userData
+//								.getLoggedUser());
 			} catch (UserNotFoundException
 					| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
 				// TODO Auto-generated catch block
