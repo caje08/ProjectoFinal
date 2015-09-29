@@ -3,6 +3,7 @@
 package pt.uc.dei.aor.proj.web;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +28,8 @@ import pt.uc.dei.aor.proj.db.entities.InterviewFeedbackEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.entities.PositionEntity;
+import pt.uc.dei.aor.proj.db.entities.Role;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.serv.ejb.ApplicationWebManagem;
@@ -49,8 +52,10 @@ import pt.uc.dei.aor.proj.serv.exceptions.PresentialInterviewEntityNotIntroduced
 import pt.uc.dei.aor.proj.serv.facade.ApplicationFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewEntityFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewFeedbackFacade;
+import pt.uc.dei.aor.proj.serv.facade.InterviewerFacade;
 import pt.uc.dei.aor.proj.serv.facade.ManagerFacade;
 import pt.uc.dei.aor.proj.serv.facade.PositionFacade;
+import pt.uc.dei.aor.proj.serv.facade.UserEntityFacade;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.StatefulPosition;
 import pt.uc.dei.aor.proj.serv.tools.UploadedFiles;
@@ -73,6 +78,9 @@ public class ManageApplicationWeb implements Serializable {
 	private List<PositionEntity> lstPositionsBeforeAtualDate;
 	private List<PositionEntity> lstPositionsofAManager;
 	private List<InterviewFeedbackEntity> lstInterviewsOfInterviewer;
+	private List<UserEntity> listOfInterviewersForAdmin;
+	private List<UserEntity> listOfInterviewersForManager;
+	private List<UserEntity> listOfManagersForAdmin;
 	
 	private ApplicationEntity selectedApplication;
 	private PositionEntity position;
@@ -96,6 +104,10 @@ public class ManageApplicationWeb implements Serializable {
 	private InterviewFeedbackFacade interviewFeedbackFacade;
 	@EJB
 	private ManagerFacade managerFacade;
+	@EJB
+	private InterviewerFacade interviewerFacade;
+	@EJB
+	private UserEntityFacade userEntityFacade;
 	@EJB
 	private ApplicationFacade applicationFacade;
 	@EJB
@@ -802,6 +814,39 @@ public class ManageApplicationWeb implements Serializable {
 		return lstInterviewsOfInterviewer;
 	}
 	
+	public List<UserEntity> collectListOfInterviewers(){
+		List<UserEntity> listToUse=new ArrayList<>();
+		List<UserEntity> tmplistToUse=new ArrayList<>();
+		UserEntity manager = null;
+		
+		if(isAdmin()){
+			listToUse=userEntityFacade.lstUserEntitiesAvailable(Role.INTERVIEWER);
+//			tmplistToUse=userEntityFacade.lstUserEntitiesAvailable(Role.MANAGER);
+//			listToUse.addAll(tmplistToUse);
+//			tmplistToUse=userEntityFacade.lstUserEntitiesAvailable(Role.INTERVIEWER);
+//			listToUse.addAll(tmplistToUse);
+		} else if(isManager()){
+			try {
+				manager = userData.getLoggedUser();
+			} catch (NoResultException e) {
+				Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+						Level.SEVERE, null, "collectListOfInterviewers() - No result to get a manager from userData.getLoggedUser()"+e.getMessage());
+			} catch (UserNotFoundException e) {
+				Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+						Level.SEVERE, null, "collectListOfInterviewers() - No user has been found "+e.getMessage());
+			} catch (UserGuideException e) {
+				Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+						Level.SEVERE, null, "collectListOfInterviewers() - No UserEntity found "+e.getMessage());
+			}
+			listToUse = userEntityFacade.lstUserEntitiesAvailable(Role.INTERVIEWER);
+			listToUse.add(manager);
+		} else {
+			Logger.getLogger(ManageApplicationWeb.class.getName()).log(
+					Level.SEVERE, null, "collectListOfInterviewers() - User is an Interviewer and was supposed to not access to this function. Check it!");
+		} 
+		return listToUse;
+	}
+	
 	/*public List<PositionEntity> getLstPositionsofAManager() throws PositionsNotFoundToThisUserException {
 		try {
 			try {
@@ -853,6 +898,38 @@ public class ManageApplicationWeb implements Serializable {
 
 	public void setActiveUser(UserCheck activeUser) {
 		this.activeUser = activeUser;
+	}
+
+	public List<UserEntity> getListOfInterviewersForAdmin() {
+		
+		return listOfInterviewersForAdmin;
+	}
+
+	public void setListOfInterviewersForAdmin(
+			List<UserEntity> listOfInterviewersForAdmin) {
+		this.listOfInterviewersForAdmin = listOfInterviewersForAdmin;
+	}
+
+	public List<UserEntity> getListOfInterviewersForManager() {
+		return listOfInterviewersForManager;
+	}
+
+	public void setListOfInterviewersForManager(
+			List<UserEntity> listOfInterviewersForManager) {
+		this.listOfInterviewersForManager = listOfInterviewersForManager;
+	}
+
+	public List<UserEntity> getListOfManagersForAdmin() {
+		return listOfManagersForAdmin;
+	}
+
+	public void setListOfManagersForAdmin(List<UserEntity> listOfManagersForAdmin) {
+		this.listOfManagersForAdmin = listOfManagersForAdmin;
+	}
+
+	public void setLstInterviewsOfInterviewer(
+			List<InterviewFeedbackEntity> lstInterviewsOfInterviewer) {
+		this.lstInterviewsOfInterviewer = lstInterviewsOfInterviewer;
 	}
 	
 

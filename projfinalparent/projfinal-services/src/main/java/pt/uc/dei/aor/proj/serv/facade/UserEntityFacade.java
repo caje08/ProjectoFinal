@@ -159,7 +159,9 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws UserNotFoundException
 	 */
 	public List<UserEntity> lstUserEntitiesAvailable(Role role){
+		List<InterviewerEntity> tmpInterviewers=null;
 		List<UserEntity> userEntity = (List<UserEntity>) em.createNamedQuery("UserEntity.findLstUsersByRole").setParameter("cargo", role).getResultList();
+		//tmpInterviewers = (List<InterviewerEntity>)userEntity;
 		
 			return (List<UserEntity>) userEntity;
 		

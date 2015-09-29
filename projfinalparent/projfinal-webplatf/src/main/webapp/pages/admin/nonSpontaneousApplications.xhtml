@@ -333,7 +333,8 @@
 					<p:dataTable id="theguide" selectionMode="single"
 						rowKey="#{interviewer.userId}"
 						selection="#{applicationWebManagem.selectedInterviewer}"
-						value="#{applicationWebManagem.lstInterviewers}" var="interviewer">
+						value="#{manageApplicationWeb.collectListOfInterviewers()}" var="interviewer">
+<!-- 						value="#{applicationWebManagem.lstInterviewers}" var="interviewer"> -->
 
 						<p:column styleClass="centeredColumn" headerText="Username"
 							filterBy="#{interviewer.username}" filterMatchMode="contains">
