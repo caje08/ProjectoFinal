@@ -100,8 +100,8 @@ public class ApplicationEntity implements Serializable {
 	@ManyToOne(targetEntity = PositionEntity.class)
 	private PositionEntity position;
 	
-	@ManyToOne(targetEntity = InterviewerEntity.class)
-	private InterviewerEntity interviewer;
+	@ManyToOne(targetEntity = UserEntity.class)
+	private UserEntity interviewer;
 
 	@ManyToOne(targetEntity = ApplicantEntity.class)
 	private ApplicantEntity applicant;
@@ -200,11 +200,11 @@ public class ApplicationEntity implements Serializable {
 		this.motive = motive;
 	}
 
-	public InterviewerEntity getInterviewer() {
+	public UserEntity getInterviewer() {
 		return interviewer;
 	}
 
-	public void setInterviewer(InterviewerEntity interviewer) {
+	public void setInterviewer(UserEntity interviewer) {
 		this.interviewer = interviewer;
 	}
 

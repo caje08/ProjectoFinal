@@ -18,6 +18,7 @@ import javax.inject.Named;
 import javax.mail.MessagingException;
 import javax.persistence.NoResultException;
 
+import pt.uc.dei.aor.proj.db.entities.AdminEntity;
 import pt.uc.dei.aor.proj.db.entities.AnswerEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewEntity;
@@ -26,6 +27,8 @@ import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.entities.Role;
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
+import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
+import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.db.tools.Outcome;
 import pt.uc.dei.aor.proj.db.tools.RejectionMotive;
 import pt.uc.dei.aor.proj.db.tools.StatusApplication;
@@ -77,7 +80,8 @@ public class ApplicationWebManagem implements Serializable {
 	private String cvPath;
 	private String sourceLetterPath;
 	private InterviewFeedbackEntity selectedInterview;
-	private InterviewerEntity selectedInterviewer;
+	private UserEntity selectedInterviewer;//private InterviewerEntity selectedInterviewer;
+	
 	private Date interviewDate;
 	private UploadedFiles uploadedFiles;
 	
@@ -281,7 +285,9 @@ public class ApplicationWebManagem implements Serializable {
 	 */
 	public boolean possibleToSubmitFeedback(InterviewFeedbackEntity interviewFeedback) {
 		boolean status=false;
-		return interviewFeedback.getInterviewDate().after(new Date());
+		application=interviewFeedback.getApplication();
+		
+		return (interviewFeedback.getInterviewDate().after(new Date()) && isManagerOfApplicationOrAdmin(application));
 	}
 
 	/**
@@ -398,9 +404,57 @@ public class ApplicationWebManagem implements Serializable {
 	 * @return true if isAdmin or isManager of the application
 	 */
 	public boolean isManagerOfApplicationOrAdmin(ApplicationEntity application) {
-
-		return application.getStatus().equals(StatusApplication.SUBMITTED);
+		boolean out=false;	
+		
+		if(isAdmin()) {
+			out= true;
+		} else if (isManager()) {
+			try {
+				UserEntity tmpuser = userData.getLoggedUser();
+				if(tmpuser.getEmail().equals(application.getPosition().getManager().getEmail())){
+					out= true;
+				} else {
+					out= false;
+				}
+			} catch (NoResultException | UserNotFoundException | UserGuideException e) {
+				Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+						Level.SEVERE, null, "\nUnable to get userData.getLoggedUser() inside isManagerOfApplicationOrAdmin() : Error="+e.getMessage());
+				JSFUtil.addErrorMessage("Unable to get userData.getLoggedUser() inside isManagerOfApplicationOrAdmin()");
+			} 
+		}
+		return out;
+		//return application.getStatus().equals(StatusApplication.SUBMITTED);
 	}
+	
+	/**
+	 *
+	 * @return  true if is an user that try to log in is an admin
+	 */
+	public boolean isAdmin() {
+		try {
+			return userData.getLoggedUser() instanceof AdminEntity;
+		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage(ex.getMessage());
+		}
+		return false;
+
+	}
+
+	/**
+	 *
+	 * @return  true if is an user that try to log in is a manager
+	 */
+	public boolean isManager() {
+		try {
+			return userData.getLoggedUser() instanceof ManagerEntity;
+		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage(ex.getMessage());
+		}
+		return false;
+	}
+
 
 	/**
 	 *
@@ -606,7 +660,7 @@ public class ApplicationWebManagem implements Serializable {
 	  try{	
 		try {
 			lstInterviewsOfInterviewer = interviewFeedbackFacade
-					.lstInterviewsWithThatInterviewer((InterviewerEntity) userData
+					.lstInterviewsWithThatInterviewer((UserEntity) userData
 							.getLoggedUser());
 		} catch (NoResultException
 				| pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException
@@ -797,11 +851,11 @@ public class ApplicationWebManagem implements Serializable {
 		this.interviewerFacade = interviewerFacade;
 	}
 
-	public InterviewerEntity getSelectedInterviewer() {
+	public UserEntity getSelectedInterviewer() {
 		return selectedInterviewer;
 	}
 
-	public void setSelectedInterviewer(InterviewerEntity selectedInterviewer) {
+	public void setSelectedInterviewer(UserEntity selectedInterviewer) {
 		this.selectedInterviewer = selectedInterviewer;
 	}
 

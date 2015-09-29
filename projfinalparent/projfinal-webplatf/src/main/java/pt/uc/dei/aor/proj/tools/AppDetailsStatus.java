@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import pt.uc.dei.aor.proj.db.entities.ApplicantEntity;
 import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewFeedbackEntity;
-import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.PositionEntity;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.serv.ejb.ApplicationWebManagem;
@@ -134,7 +134,7 @@ public class AppDetailsStatus implements Serializable {
 	 /////////////////////Getters && Setters////////////////////
 	 public List<InterviewFeedbackEntity> getLstInterviewsOfInterviewerOfApplication() {
 		 try {
-			 lstInterviewsOfInterviewerOfApplication = interviewFeedbackFacade.lstInterviewsWithInterviewerOfAnApplication((InterviewerEntity) userData.getLoggedUser(), application);
+			 lstInterviewsOfInterviewerOfApplication = interviewFeedbackFacade.lstInterviewsWithInterviewerOfAnApplication((UserEntity) userData.getLoggedUser(), application);
 		 } catch (UserNotFoundException | UserGuideException ex) {
 			 Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
 			 JSFUtil.addErrorMessage(ex.getMessage());

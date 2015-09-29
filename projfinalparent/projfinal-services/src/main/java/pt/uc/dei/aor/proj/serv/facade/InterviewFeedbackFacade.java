@@ -22,6 +22,7 @@ import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewFeedbackEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.tools.InterviewType;
 import pt.uc.dei.aor.proj.db.tools.Outcome;
 import pt.uc.dei.aor.proj.db.tools.StatusApplication;
@@ -83,7 +84,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @throws EJBException
 	 * @throws SecondInterviewAfterFirstInterviewException
 	 */
-	public void createInterview(Date interviewDate, InterviewerEntity interviewer, InterviewEntity interviewGuide, ApplicationEntity application, String cvDestination) throws FirstInterviewAfterAtualDateException, InterviewerSameDateException, MessagingException, EJBException, SecondInterviewAfterFirstInterviewException, MustIntroduceInterviewerException {
+	public void createInterview(Date interviewDate, UserEntity interviewer, InterviewEntity interviewGuide, ApplicationEntity application, String cvDestination) throws FirstInterviewAfterAtualDateException, InterviewerSameDateException, MessagingException, EJBException, SecondInterviewAfterFirstInterviewException, MustIntroduceInterviewerException {
 		InterviewFeedbackEntity interviewFeedback = new InterviewFeedbackEntity();
 		//em.persist(interviewFeedback);
 		Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(Level.INFO, "Inside createInterview() before checking recruiter availability");
@@ -147,7 +148,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 
 	}
 	
-	public void updateInterview(InterviewFeedbackEntity interview,Date interviewDate, InterviewerEntity interviewer, InterviewEntity interviewGuide, ApplicationEntity application, String cvDestination) throws FirstInterviewAfterAtualDateException, InterviewerSameDateException, MessagingException, EJBException, SecondInterviewAfterFirstInterviewException,MustIntroduceInterviewerException {
+	public void updateInterview(InterviewFeedbackEntity interview,Date interviewDate, UserEntity interviewer, InterviewEntity interviewGuide, ApplicationEntity application, String cvDestination) throws FirstInterviewAfterAtualDateException, InterviewerSameDateException, MessagingException, EJBException, SecondInterviewAfterFirstInterviewException,MustIntroduceInterviewerException {
 		InterviewFeedbackEntity interviewFeedback = interview;
 		
 		Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(Level.INFO, "Inside updateInterview() before checking recruiter availability");
@@ -259,7 +260,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @param application
 	 * @return List of interviews of Logged in interviewer of an application
 	 */
-	public List<InterviewFeedbackEntity> lstInterviewsWithInterviewerOfAnApplication(InterviewerEntity interviewer, ApplicationEntity application) {
+	public List<InterviewFeedbackEntity> lstInterviewsWithInterviewerOfAnApplication(UserEntity interviewer, ApplicationEntity application) {
 		Query query = em.createNamedQuery("InterviewFeedbackEntity.findInterviewByInterviewer", InterviewFeedbackEntity.class);
 		query.setParameter("applicationId", application.getApplicationId());
 		query.setParameter("interviewer", interviewer);
@@ -370,7 +371,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @return true if interviewer do not have a interview at the same date as
 	 * interview date selected
 	 */
-	public boolean checkRecruiterAvailability(InterviewerEntity interviewer, Date date) {
+	public boolean checkRecruiterAvailability(UserEntity interviewer, Date date) {
 		Calendar c1 = Calendar.getInstance();
 		//set Calendar time to date
 		c1.setTimeInMillis(date.getTime());
@@ -401,7 +402,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @param interviewer
 	 * @return list of interviews with selected interviewer
 	 */
-	public List<InterviewFeedbackEntity> lstInterviewsWithThatInterviewer(InterviewerEntity interviewer) {
+	public List<InterviewFeedbackEntity> lstInterviewsWithThatInterviewer(UserEntity interviewer) {
 		Query query = em.createNamedQuery("InterviewFeedbackEntity.findByInterviewer", InterviewFeedbackEntity.class
 				);
 		query.setParameter(

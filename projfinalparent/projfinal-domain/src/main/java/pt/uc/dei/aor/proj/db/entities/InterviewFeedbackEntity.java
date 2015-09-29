@@ -45,8 +45,8 @@ import pt.uc.dei.aor.proj.db.tools.Outcome;
 
 public class InterviewFeedbackEntity implements Serializable {
 
-	@ManyToOne(targetEntity = InterviewerEntity.class)
-	private InterviewerEntity interviewer;
+	@ManyToOne(targetEntity = UserEntity.class)
+	private UserEntity interviewer;
 
 	@OneToMany(targetEntity = AnswerEntity.class)
 	private Collection<AnswerEntity> answer;
@@ -78,11 +78,11 @@ public class InterviewFeedbackEntity implements Serializable {
 	public InterviewFeedbackEntity() {
 	}
 
-	public InterviewerEntity getInterviewer() {
+	public UserEntity getInterviewer() {
 		return this.interviewer;
 	}
 
-	public void setInterviewer(InterviewerEntity interviewer) {
+	public void setInterviewer(UserEntity interviewer) {
 		this.interviewer = interviewer;
 	}
 
