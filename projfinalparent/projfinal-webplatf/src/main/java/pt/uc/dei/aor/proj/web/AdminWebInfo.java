@@ -121,7 +121,7 @@ public class AdminWebInfo implements Serializable {
 	public String createNewUser() {
 
 		try {
-			System.out.println("In AdminWebInfo.createNewuser() before creating newuser= "+user.getEmail());
+			//System.out.println("In AdminWebInfo.createNewuser() before creating newuser= "+user.getEmail());
 			try {
 				userEntityFacade.createNewUser(user, userType);
 			} catch (MessagingException e) {
@@ -129,16 +129,17 @@ public class AdminWebInfo implements Serializable {
 				JSFUtil.addErrorMessage(e.getMessage());
 				return null;
 			}
-			System.out.println("Em AdminWebInfo.createNewuser() --> Criou user "+user.getEmail()+" userType= "+userType);
+			Logger.getLogger(AdminWebInfo.class.getName()).log(Level.INFO,"In AdminWebInfo.createNewuser() after creating newuser= "+user.getEmail());
+			//System.out.println("Em AdminWebInfo.createNewuser() --> Criou user "+user.getEmail()+" userType= "+userType);
 		} catch (UsernameAlreadyExists | EmailAlreadyExistsException ex) {
-			Logger.getLogger(AdminWebInfo.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AdminWebInfo.class.getName()).log(Level.SEVERE, null, ex.getMessage());
 			JSFUtil.addErrorMessage(ex.getMessage());
 			return null;
 		} catch (InvalidAuthException | EJBException ex) {
-			Logger.getLogger(AdminWebInfo.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AdminWebInfo.class.getName()).log(Level.SEVERE, null, ex.getMessage());
 			JSFUtil.addErrorMessage("Error creating new user");
 		}
-		return "/pages/admin/succAddUser.xhtml?faces-redirect=true";
+		return "/pages/admin/searchusers.xhtml?faces-redirect=true";
 	}
 
 

@@ -37,6 +37,7 @@ public class ActiveSession implements Serializable {
 	private PositionEntity activePosition;
 	private PositionEntity temporaryPosition;
 	private ApplicationEntity activeApplication;
+	private String texttmp;
 
 	private String search;
 
@@ -128,6 +129,14 @@ public class ActiveSession implements Serializable {
 
 	public void setActiveApplication(ApplicationEntity activeApplication) {
 		this.activeApplication = activeApplication;
+	}
+	
+	public String getTexttmp() {
+		return texttmp;
+	}
+
+	public void setTexttmp(String texttmp) {
+		this.texttmp = texttmp;
 	}
 
 	// Logout

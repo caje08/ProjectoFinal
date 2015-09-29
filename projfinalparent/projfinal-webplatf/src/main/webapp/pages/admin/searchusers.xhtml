@@ -101,10 +101,10 @@
 								</h:panelGrid>
 
 								<h:commandButton value="Update User Profile"
-									style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+									style="width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 									action="#{userWebView.showPanel()}" />
 								<h:commandButton value="Cancel"
-									style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+									style="width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 									action="/pages/admin/searchusers.xhtml?faces-redirect=true" />
 							</p:dialog> -->
 							<!-- <p:commandButton type="button" value="edit"
@@ -175,12 +175,16 @@
 							<f:selectItems value="#{userWebView.getUserRoles()}" />
 						</p:selectCheckboxMenu> -->
 
-						<h:commandButton value="Update user profile"
-							action="#{userWebView.editUserProfile()}"
-							style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+						<p:commandButton value="Update user profile"
+							action="#{userWebView.editUserProfile()}" ajax="false"
+							style="width:160px; height:40px; 
+							background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 						<!-- 	<div align="left"> -->
-						<h:commandButton icon="ui-icon-arrowreturnthick-1-w"
-							value=" Cancel " immediate="true" action="#{userWebView.refreshList()}" />
+						<p:commandButton icon="ui-icon-arrowreturnthick-1-w"
+							value="Cancel Update" immediate="true"
+							action="#{userWebView.refreshList()}" ajax="false"
+							style="width:160px; height:40px; 
+							background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 						<!--    </div> -->
 
 					</h:panelGrid>

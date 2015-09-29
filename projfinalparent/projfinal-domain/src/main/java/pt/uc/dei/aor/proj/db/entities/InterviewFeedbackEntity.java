@@ -32,6 +32,8 @@ import pt.uc.dei.aor.proj.db.tools.Outcome;
 	@NamedQuery(name = "InterviewFeedbackEntity.findInterview", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.application.applicationId=:applicationId"),
 	@NamedQuery(name = "InterviewFeedbackEntity.findInterviewByInterviewer", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.application.applicationId=:applicationId and i.interviewer=:interviewer"),
 	@NamedQuery(name = "InterviewFeedbackEntity.findByOutcomeAcceptedPhoneOfAnApplication", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.outcome = pt.uc.dei.aor.proj.db.tools.Outcome.ACCEPTED AND i.interviewType = pt.uc.dei.aor.proj.db.tools.InterviewType.PHONE and i.application=:application"),
+	@NamedQuery(name = "InterviewFeedbackEntity.countAllInterviewsOfAnApplication", query = "SELECT count(i) FROM InterviewFeedbackEntity i WHERE i.application=:application"),
+	@NamedQuery(name = "InterviewFeedbackEntity.countAllAcceptedOutcomeOfAnApplication", query = "SELECT count(i) FROM InterviewFeedbackEntity i WHERE i.outcome = pt.uc.dei.aor.proj.db.tools.Outcome.ACCEPTED AND i.application=:application"),
 	@NamedQuery(name = "InterviewFeedbackEntity.findByOutcomeAcceptedPhone", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.outcome = pt.uc.dei.aor.proj.db.tools.Outcome.ACCEPTED AND i.interviewType = pt.uc.dei.aor.proj.db.tools.InterviewType.PHONE"),
 	@NamedQuery(name = "InterviewFeedbackEntity.findByInterviewer", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.interviewer = :interviewer"),
 	@NamedQuery(name = "InterviewFeedbackEntity.findByApplication", query = "SELECT i FROM InterviewFeedbackEntity i WHERE i.application=:application"),

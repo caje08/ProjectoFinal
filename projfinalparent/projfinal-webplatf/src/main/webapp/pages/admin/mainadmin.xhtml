@@ -13,7 +13,14 @@
 
 	<ui:define name="top">
 		<h:form>
+
 			<p:menubar>
+				<p:menuitem>
+					<h:link outcome="/pages/admin/mainadmin.xhtml?faces-redirect=true">
+						<h:graphicImage library="images"
+							name="#{stylesCssToWeb.cssInUse.logoPath}" />
+					</h:link>
+				</p:menuitem>
 				<p:menuitem icon="ui-icon-home"
 					action="/pages/admin/mainadmin.xhtml?faces-redirect=true" />
 				<p:submenu label="Welcome: #{activeSession.activeUser.username}">
@@ -81,18 +88,15 @@
 					style="padding-left:20px" />
 				<p:submenu label="Customize Styles" style="padding-left:20px">
 					<p:menuitem value="Add new Style Configuration"
-						action="/pages/admin/addcss.xhtml?faces-redirect=true"
+						action="/pages/admin/addcssstyle.xhtml?faces-redirect=true"
 						style="padding-left:20px" />
 					<p:menuitem value="All Css Styles"
-						action="/pages/admin/css.xhtml?faces-redirect=true"
+						action="/pages/admin/cssstyles.xhtml?faces-redirect=true"
 						style="padding-left:20px" />
 				</p:submenu>
 
 			</p:menubar>
-			<div align="right">
-				<h:graphicImage library="images"
-					name="#{cssRequestBB.cssInUse.logoPath}" />
-			</div>
+
 		</h:form>
 
 
@@ -219,22 +223,13 @@
 							<h:outputText></h:outputText>
 
 							<h:commandButton value="Add"
-								style="width:100px; height:45px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+								style="width:100px; height:45px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 								action="#{adminRequestBean.createNewUser()}" />
 
 						</h:form>
 					</p:tab>
 
 
-					<!-- 			
-			CANDIDATURAS	 -->
-
-					<p:tab title="Applications">
-						<h:panelGrid columns="2" cellpadding="10">
-							<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-							<h:outputText value="After a break of more than 15 years..." />
-						</h:panelGrid>
-					</p:tab>
 				</p:tabView>
 			</div>
 

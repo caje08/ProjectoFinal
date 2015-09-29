@@ -16,6 +16,7 @@ import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 
 import pt.uc.dei.aor.proj.db.entities.CSS;
+import pt.uc.dei.aor.proj.serv.exceptions.CSSInUseDoesNotExistsException;
 import pt.uc.dei.aor.proj.serv.exceptions.CSSNameAlreadyExistsException;
 import pt.uc.dei.aor.proj.serv.facade.CSSFacade;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
@@ -25,9 +26,9 @@ import pt.uc.dei.aor.proj.serv.tools.UploadedFiles;
  *
  * @author
  */
-@Named("stylesCss")
+@Named("stylesCssToWeb")
 @ViewScoped
-public class StylesCssBB implements Serializable {
+public class StylesCssToWeb implements Serializable {
 
 	private List<CSS> lstCSS;
 
@@ -37,12 +38,13 @@ public class StylesCssBB implements Serializable {
 
 	@EJB
 	private CSSFacade cSSFacade;
+	@EJB
 	private UploadedFiles uploadedFiles;
 
 	/**
 	 * Creates a new instance of CSSViewBB
 	 */
-	public StylesCssBB() {
+	public StylesCssToWeb() {
 	}
 
 	@PostConstruct
@@ -65,13 +67,13 @@ public class StylesCssBB implements Serializable {
 	public String createCSS() {
 		try {
 			cSSFacade.createCss(css);
-			return "css.xhtml?faces-redirect=true";
+			return "cssstyles.xhtml?faces-redirect=true";
 		} catch (EJBException ex) {
-			Logger.getLogger(StylesCssBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(StylesCssToWeb.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage("Error creating Css");
 			return null;
 		} catch (CSSNameAlreadyExistsException ex) {
-			Logger.getLogger(StylesCssBB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(StylesCssToWeb.class.getName()).log(Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 			return null;
 		}
@@ -82,15 +84,20 @@ public class StylesCssBB implements Serializable {
 	}
 
 	public void editInUseCss(){
-		cSSFacade.editInUseCss(selectedCSS);
+		try {
+			cSSFacade.editInUseCss(selectedCSS);
+		} catch (Exception e) {
+			Logger.getLogger(StylesCssToWeb.class.getName()).log(Level.SEVERE, null, "Exception Error in StylesCssToWeb.editInUseCss()"+e);
+			JSFUtil.addErrorMessage("Error editing Css");
+		}
 	}
 
 	public void editCss() {
 		try {
 			cSSFacade.edit(selectedCSS);
 		} catch (EJBException ex) {
-			Logger.getLogger(StylesCssBB.class.getName()).log(Level.SEVERE, null, ex);
-			JSFUtil.addErrorMessage("Error creating Css");
+			Logger.getLogger(StylesCssToWeb.class.getName()).log(Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage("Error editing Css");
 		}
 	}
 
@@ -98,8 +105,18 @@ public class StylesCssBB implements Serializable {
 		return cSSFacade.canEditCss(css);
 	}
 
-	public CSS getCssInUse() {
-		return cSSFacade.getCSSInUse();
+	@SuppressWarnings("unused")
+	public CSS getCssInUse(){
+		CSS out=null;
+		try {
+			out = cSSFacade.getCSSInUse();
+		} catch (CSSInUseDoesNotExistsException e) {
+			if(out!=null) {
+				JSFUtil.addErrorMessage("Error getting CssInUse");
+			}
+			Logger.getLogger(StylesCssToWeb.class.getName()).log(Level.SEVERE, null, "Error getting CssInUse"+e.getMessage());
+		}
+		return out;
 	}
 
 	public boolean inUse(CSS css) {

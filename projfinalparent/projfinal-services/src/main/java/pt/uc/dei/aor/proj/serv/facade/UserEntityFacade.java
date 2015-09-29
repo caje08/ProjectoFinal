@@ -158,6 +158,19 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @return ApplicantEntity find by inputed username
 	 * @throws UserNotFoundException
 	 */
+	public List<UserEntity> lstUserEntitiesAvailable(Role role){
+		List<UserEntity> userEntity = (List<UserEntity>) em.createNamedQuery("UserEntity.findLstUsersByRole").setParameter("cargo", role).getResultList();
+		
+			return (List<UserEntity>) userEntity;
+		
+	}
+	
+	/**
+	 *
+	 * @param username
+	 * @return ApplicantEntity find by inputed username
+	 * @throws UserNotFoundException
+	 */
 	public ApplicantEntity findApplicantByUsernameInput(String username) throws UserNotFoundException {
 		UserEntity userEntity = (UserEntity) em.createNamedQuery("UserEntity.findByName").setParameter("username", username).getSingleResult();
 		if (userEntity != null) {
@@ -208,6 +221,7 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 				//adminEntityFacade.createAdmin(adminentity);
 				mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new user", "Your login is " + user.getUsername() + " and your password is " + password, to);
 				//mail.sendMailTo("acertarrumo2015@gmail.com", "Chosen as new user", "Your login is " + user.getUsername() + " and your password is " + password);
+				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,"New Admin user.email="+adminentity.getEmail()+" has been created");
 				break;
 			case "Manager":
 //				ManagerEntity manager = new ManagerEntity();
@@ -224,9 +238,9 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 				em.persist(manager);
 				//adminEntityFacade.createManager(manager);
 				//mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new manager", "Your login is " + user.getUsername() + " and your password is " + password, to);
-
+				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,"New Manager user.email="+manager.getEmail()+" has been created");
 				break;
-			default:
+			case "Interviewer":				
 //				InterviewerEntity interviewer = new InterviewerEntity();
 //				interviewer.setFirstName(user.getFirstName());
 //				interviewer.setLastName(user.getLastName());
@@ -240,6 +254,10 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 				em.persist(interviewer);
 				//adminEntityFacade.createInterviewer(interviewer);
 				//mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new interviewer", "Your login is " + user.getUsername() + " and your password is " + password, to);
+				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,"New Interviewer user.email="+interviewer.getEmail()+" has been created");
+				break;
+			default:
+				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,"An error has occurred in createNewUser(). The user with email="+user.getEmail()+" has not been created!!");
 				break;
 			}
 		}

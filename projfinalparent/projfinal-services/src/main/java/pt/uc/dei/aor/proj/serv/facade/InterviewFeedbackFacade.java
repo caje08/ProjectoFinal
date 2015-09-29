@@ -108,14 +108,14 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 				}
 			}
 			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before interviewFeedback.setApplication(application)");
-			interviewFeedback.setApplication(application);
+		//	interviewFeedback.setApplication(application);
 		//	em.persist(interviewFeedback);
 			application.setInterviewer(interviewer);
 			application.getInterviewFeedbackEntitys().add(interviewFeedback);
 			application.setStatus(StatusApplication.INTERVIEWING);
 			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before applicationFacade.edit(application)");
 		//	applicationFacade.edit(application);
-
+			interviewFeedback.setApplication(application);
 			InterviewEntity tmpinterv = interviewFeedback.getInterviewEntity();
 //			System.out.println("\n InterviewEntity = "+tmpinterv.getType());
 //			System.out.println("\ninterviewFeedback.getInterviewer().getEmail()-->"+interviewFeedback.getInterviewer().getEmail());
@@ -134,6 +134,7 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 //					"New Interview has been made", "You have an interview at " + finalFormat + " and the user link is:\n" + link, attachFiles);
 			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before em.persist(interviewFeedback)");
 			em.persist(interviewFeedback);
+			applicationFacade.edit(application);
 			//em.merge(interviewFeedback);
 			
 		} else if (!checkRecruiterAvailability(interviewer, interviewDate)) {
@@ -144,6 +145,68 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 			throw new FirstInterviewAfterAtualDateException();
 		}
 
+	}
+	
+	public void updateInterview(InterviewFeedbackEntity interview,Date interviewDate, InterviewerEntity interviewer, InterviewEntity interviewGuide, ApplicationEntity application, String cvDestination) throws FirstInterviewAfterAtualDateException, InterviewerSameDateException, MessagingException, EJBException, SecondInterviewAfterFirstInterviewException,MustIntroduceInterviewerException {
+		InterviewFeedbackEntity interviewFeedback = interview;
+		
+		Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(Level.INFO, "Inside updateInterview() before checking recruiter availability");
+		
+		//see if intervew date is after the current date and selected interviewer is available
+		if (interviewDate.after(new Date()) && checkRecruiterAvailability(interviewer, interviewDate) && interviewer != null) {
+			//interviewFeedback.setInterviewer(interviewer);
+			application = interview.getApplication();
+			interviewFeedback.setInterviewDate(interviewDate);
+			
+			em.merge(interviewFeedback);
+			applicationFacade.edit(application);
+			//interviewFeedback.setInterviewEntity(interviewGuide);
+		/*
+			System.out.println("\n Inside InterviewFeedbackFacade.updateInterview() , if statement, after checking recruiter availability");
+			//if an interview feedback do not have a Interview Phone set it
+			if (knowIfInterviewHasPhoneInterviewEntity(InterviewType.PHONE, application)) {
+				interviewFeedback.setInterviewType(InterviewType.PHONE);
+			} else {
+				//else set presential
+				if (dateFirstFeedbackInterview(application).before(interviewDate)) {
+					interviewFeedback.setInterviewType(InterviewType.PRESENTIAL);
+				} else {
+					throw new SecondInterviewAfterFirstInterviewException();
+				}
+			}
+			System.out.println("\n Inside InterviewFeedbackFacade.updateInterview() before interviewFeedback.setApplication(application)");
+		
+			application.setInterviewer(interviewer);
+			application.getInterviewFeedbackEntitys().add(interviewFeedback);
+			application.setStatus(StatusApplication.INTERVIEWING);
+			System.out.println("\n Inside InterviewFeedbackFacade.updateInterview() before applicationFacade.edit(application)");
+		//	applicationFacade.edit(application);
+			interviewFeedback.setApplication(application);
+			//InterviewEntity tmpinterv = interviewFeedback.getInterviewEntity();
+
+			System.out.println("\n Inside InterviewFeedbackFacade.updateInterview() before sending email");
+		
+			String[] attachFiles = new String[1];
+			attachFiles[0] = cvDestination + application.getCv();
+
+			SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+			String finalFormat = format1.format(interviewDate);
+			String link = BundleUtils.getSettings("host") + "interviewer/applicationDetails.xhtml?applicantid=" + application.getApplicant().getUserId() + "&applicationid=" + application.getApplicationId();
+			//send email with attached files - IMPORTANTE ACTIVAR PRÓXIMA LINHA
+//			SendEmailAttachedFiles.sendEmailWithAttachments(interviewer.getEmail(),
+//					"New Interview has been made", "You have an interview at " + finalFormat + " and the user link is:\n" + link, attachFiles);
+			System.out.println("\n Inside InterviewFeedbackFacade.updateInterview() before em.persist(interviewFeedback)");
+			em.persist(interviewFeedback);
+			applicationFacade.edit(application);*/
+		
+			
+		} else if (!checkRecruiterAvailability(interviewer, interviewDate)) {
+			throw new InterviewerSameDateException();
+		} else if (interviewer == null) {
+			throw new MustIntroduceInterviewerException();
+		} else {
+			throw new FirstInterviewAfterAtualDateException();
+		}
 	}
 
 	/**
@@ -228,6 +291,28 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 				"application", application);
 		return !query.getResultList()
 				.isEmpty();
+	}
+	
+	/**
+	 *
+	 * @param application
+	 * @return true if Phone Interview Feedback is accepted
+	 */
+	public boolean knowIfAllInterviewsOfApplicationHaveAcceptedFeedback(ApplicationEntity application) {		
+		
+		Query query = em.createNamedQuery("InterviewFeedbackEntity.countAllInterviewsOfAnApplication");
+		query.setParameter("application", application);
+		int count1= ((Number) query.getSingleResult()).intValue();
+		Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(
+				Level.INFO,
+				"\nInside knowIfAllInterviewsOfApplicationHaveAcceptedFeedback() with count1="+ count1);
+		query = em.createNamedQuery("InterviewFeedbackEntity.countAllAcceptedOutcomeOfAnApplication");
+		query.setParameter("application", application);
+		int count2= ((Number) query.getSingleResult()).intValue();
+		Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(
+				Level.INFO,
+				"\nInside knowIfAllInterviewsOfApplicationHaveAcceptedFeedback() with count2="+ count2);
+		return (count1==count2);
 	}
 
 	/**

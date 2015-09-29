@@ -271,12 +271,12 @@
 						<h:outputText></h:outputText>
 
 					</h:panelGrid>
-					<h:commandButton value="Save"
-						action="#{positionWebManagem.savePosition()}"
-						style="width:160px; height:40px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+					<p:commandButton value="Save"
+						action="#{positionWebManagem.savePosition()}" ajax="false"
+						style="width:160px; height:40px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 					<p:commandButton value=" Cancel " immediate="true"
-						style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
-						action="searchpositions.xhtml" />
+						style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="searchpositions.xhtml?faces-redirect=true" />
 
 				</h:panelGroup>
 			</h:form>
@@ -306,7 +306,7 @@
 					</p:dataTable>
 					<h:commandButton value="Add Presential Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
-						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 
 				</p:dialog>
 			</h:form>
@@ -335,7 +335,7 @@
 					</p:dataTable>
 					<h:commandButton value="Add Phone Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}"
-						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
 			</h:form>
 
@@ -354,7 +354,7 @@
 					</p:dataTable>
 					<h:commandButton value="Add Manager for this position"
 						action="#{positionWebManagem.setTheSelectedManager()}"
-						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}">
+						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}">
 
 					</h:commandButton>
 				</p:dialog>
@@ -387,7 +387,7 @@
 					</p:dataTable>
 					<h:commandButton value="Send email to this Manager"
 						action="#{averageValues.toPdf()}"
-						style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" />
+						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
 			</h:form>
 

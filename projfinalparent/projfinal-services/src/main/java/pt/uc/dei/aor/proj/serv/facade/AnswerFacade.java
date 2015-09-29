@@ -98,13 +98,16 @@ public class AnswerFacade extends AbstractFacade<AnswerEntity> {
 
 			} else {
 				//if outcome from second interview is Accepted the applciation status will be negotiation
-				if (interviewFeedback.getOutcome().equals(Outcome.ACCEPTED)) {
-					application.setStatus(StatusApplication.NEGOTIATION);
-					//else, will be rejected and the motive will be personality
-				} else {
+				if (interviewFeedback.getOutcome().equals(Outcome.REJECTED)) { //if (interviewFeedback.getOutcome().equals(Outcome.ACCEPTED)) {
 					application.setStatus(StatusApplication.REJECTED);
 					application.setMotive(RejectionMotive.PERSONALITY);
-				}
+					//application.setStatus(StatusApplication.NEGOTIATION);
+					//else, will be rejected and the motive will be personality
+				} 
+//				else {
+//					application.setStatus(StatusApplication.REJECTED);
+//					application.setMotive(RejectionMotive.PERSONALITY);
+//				}
 
 			}
 			//persist entity answer

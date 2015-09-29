@@ -67,45 +67,45 @@ public class CSS implements Serializable {
     @Size(min = 1, max=10000)
     private String companyDescription;
 
-    @Column(name = "labelplatformtemplatecolor")
+    @Column(name = "labelinternaltemplatecolor")
     @Basic
-    private String labelPlatformTemplateColor;
+    private String labelInternalWebTemplateColor;
 
     @Column(name = "labelcommandLink")
     @Basic
     private String labelCommandLink;
 
-    @Column(name = "labelapplicanttemplatecolor")
+    @Column(name = "labeltemplatecandidatecolor")
     @Basic
-    private String labelApplicantTemplateColor;
+    private String labelTemplateCandidateColor;
 
-    @Column(name = "labelbuttoncolor")
+    @Column(name = "labelcolorbutton")
     @Basic
-    private String labelButtonColor;
+    private String labelColorButton;
 
-    @Column(name = "backgroundbuttonColor")
+    @Column(name = "backgroundcolorbutton")
     @Basic
-    private String backgroundButtonColor;
+    private String backgroundColorButton;
+    
+    @Column(name = "backgroundinternalwebtoptemplatecolor")
+    @Basic
+    private String backgroundInternalWebTopTemplateColor;
 
-    @Column(name = "backgroundapplicantcontenttemplateColor")
+    @Column(name = "backgroundinternalwebcontenttemplatecolor")
     @Basic
-    private String backgroundApplicantContentTemplateColor;
+    private String backgroundInternalWebContentTemplateColor;
 
-    @Column(name = "backgroundbottomapplicantcolor")
+    @Column(name = "backgroundcontentcandidatetemplateColor")
     @Basic
-    private String backgroundBottomApplicantColor;
+    private String backgroundContentCandidateTemplateColor;
 
-    @Column(name = "backgroundtopapplicantcolor")
+    @Column(name = "backgroundcandidatebottomcolor")
     @Basic
-    private String backgroundTopApplicantColor;
+    private String backgroundCandidateBottomColor;
 
-    @Column(name = "backgroundtopplatformtemplatecolor")
+    @Column(name = "backgroundcandidatetopcolor")
     @Basic
-    private String backgroundTopPlatformTemplateColor;
-
-    @Column(name = "backgroundplatformcontenttemplatecolor")
-    @Basic
-    private String backgroundPlatformContentTemplateColor;
+    private String backgroundCandidateTopColor;
 
     @Column(name = "inuse")
     @Basic
@@ -202,85 +202,12 @@ public class CSS implements Serializable {
         this.companyDescription = companyDescription;
     }
 
-    public String getLabelPlatformTemplateColor() {
-        return labelPlatformTemplateColor;
-    }
-
-    public void setLabelPlatformTemplateColor(String labelPlatformTemplateColor) {
-        this.labelPlatformTemplateColor = labelPlatformTemplateColor;
-    }
-
     public String getLabelCommandLink() {
         return labelCommandLink;
     }
 
     public void setLabelCommandLink(String labelCommandLink) {
         this.labelCommandLink = labelCommandLink;
-    }
-
-    public String getLabelApplicantTemplateColor() {
-        return labelApplicantTemplateColor;
-    }
-
-    public void setLabelApplicantTemplateColor(String labelApplicantTemplateColor) {
-        this.labelApplicantTemplateColor = labelApplicantTemplateColor;
-    }
-
-    public String getBackgroundButtonColor() {
-        return backgroundButtonColor;
-    }
-
-    public void setBackgroundButtonColor(String backgroundButtonColor) {
-        this.backgroundButtonColor = backgroundButtonColor;
-    }
-
-
-    public String getLabelButtonColor() {
-        return labelButtonColor;
-    }
-
-    public void setLabelButtonColor(String labelButtonColor) {
-        this.labelButtonColor = labelButtonColor;
-    }
-
-    public String getBackgroundApplicantContentTemplateColor() {
-        return backgroundApplicantContentTemplateColor;
-    }
-
-    public void setBackgroundApplicantContentTemplateColor(String backgroundApplicantContentTemplateColor) {
-        this.backgroundApplicantContentTemplateColor = backgroundApplicantContentTemplateColor;
-    }
-
-    public String getBackgroundBottomApplicantColor() {
-        return backgroundBottomApplicantColor;
-    }
-
-    public void setBackgroundBottomApplicantColor(String backgroundBottomApplicantColor) {
-        this.backgroundBottomApplicantColor = backgroundBottomApplicantColor;
-    }
-
-    public String getBackgroundTopApplicantColor() {
-        return backgroundTopApplicantColor;
-    }
-
-    public void setBackgroundTopApplicantColor(String backgroundTopApplicantColor) {
-        this.backgroundTopApplicantColor = backgroundTopApplicantColor;
-    }
-
-    public String getBackgroundTopPlatformTemplateColor() {
-        return backgroundTopPlatformTemplateColor;
-    }
-
-    public void setBackgroundTopPlatformTemplateColor(String backgroundTopPlatformTemplateColor) {
-        this.backgroundTopPlatformTemplateColor = backgroundTopPlatformTemplateColor;
-    }
-
-    public String getBackgroundPlatformContentTemplateColor() {
-        return backgroundPlatformContentTemplateColor;
-    }
-
-    public void setBackgroundPlatformContentTemplateColor(String backgroundPlatformContentTemplateColor) {
-        this.backgroundPlatformContentTemplateColor = backgroundPlatformContentTemplateColor;
     }
 
     public boolean isInUse() {
@@ -291,4 +218,81 @@ public class CSS implements Serializable {
         this.inUse = inUse;
     }
 
+	public String getLabelInternalWebTemplateColor() {
+		return labelInternalWebTemplateColor;
+	}
+
+	public void setLabelInternalWebTemplateColor(
+			String labelInternalWebTemplateColor) {
+		this.labelInternalWebTemplateColor = labelInternalWebTemplateColor;
+	}
+
+	public String getLabelTemplateCandidateColor() {
+		return labelTemplateCandidateColor;
+	}
+
+	public void setLabelTemplateCandidateColor(String labelTemplateCandidateColor) {
+		this.labelTemplateCandidateColor = labelTemplateCandidateColor;
+	}
+
+	public String getLabelColorButton() {
+		return labelColorButton;
+	}
+
+	public void setLabelColorButton(String labelColorButton) {
+		this.labelColorButton = labelColorButton;
+	}
+
+	public String getBackgroundColorButton() {
+		return backgroundColorButton;
+	}
+
+	public void setBackgroundColorButton(String backgroundColorButton) {
+		this.backgroundColorButton = backgroundColorButton;
+	}
+
+	public String getBackgroundInternalWebTopTemplateColor() {
+		return backgroundInternalWebTopTemplateColor;
+	}
+
+	public void setBackgroundInternalWebTopTemplateColor(
+			String backgroundInternalWebTopTemplateColor) {
+		this.backgroundInternalWebTopTemplateColor = backgroundInternalWebTopTemplateColor;
+	}
+
+	public String getBackgroundInternalWebContentTemplateColor() {
+		return backgroundInternalWebContentTemplateColor;
+	}
+
+	public void setBackgroundInternalWebContentTemplateColor(
+			String backgroundInternalWebContentTemplateColor) {
+		this.backgroundInternalWebContentTemplateColor = backgroundInternalWebContentTemplateColor;
+	}
+
+	public String getBackgroundContentCandidateTemplateColor() {
+		return backgroundContentCandidateTemplateColor;
+	}
+
+	public void setBackgroundContentCandidateTemplateColor(
+			String backgroundContentCandidateTemplateColor) {
+		this.backgroundContentCandidateTemplateColor = backgroundContentCandidateTemplateColor;
+	}
+
+	public String getBackgroundCandidateBottomColor() {
+		return backgroundCandidateBottomColor;
+	}
+
+	public void setBackgroundCandidateBottomColor(
+			String backgroundCandidateBottomColor) {
+		this.backgroundCandidateBottomColor = backgroundCandidateBottomColor;
+	}
+
+	public String getBackgroundCandidateTopColor() {
+		return backgroundCandidateTopColor;
+	}
+
+	public void setBackgroundCandidateTopColor(String backgroundCandidateTopColor) {
+		this.backgroundCandidateTopColor = backgroundCandidateTopColor;
+	}
+    
 }

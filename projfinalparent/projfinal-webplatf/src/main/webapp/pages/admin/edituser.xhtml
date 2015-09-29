@@ -34,16 +34,16 @@
 						<p:watermark for="oldpassword" value="Old Password " />
 					</p:password>
 
-					<h:commandButton value="Check Old Password"
-						style="margin-left:10px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
-						action="#{userWebView.checkUserPw()}" />
+					<p:commandButton value="Check Old Password"
+						style="margin-left:10px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{userWebView.checkUserPw()}" ajax="false"/>
 					<p:commandButton value=" Cancel " immediate="true"
-						style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+						style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
 				</h:panelGrid>
 			</h:form>
 			<h:form id="form2" rendered="#{userWebView.testpw}">
-				<h:panelGrid id="p2">
+				<h:panelGrid id="p2" columns="2" cellpadding="5">
 					<p:outputLabel value="First Name*" />
 					<p:inputText id="firstname" required="true" label="firstname"
 						size="40" requiredMessage="Please enter your First Name"
@@ -86,18 +86,18 @@
 					<p:message for="password" />
 					<p:message for="confirmPassword" />
 
-					<h:commandButton value="Update User Profile"
-						style="margin-left:10px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
-						action="#{userWebView.editUser()}" />
+					<p:commandButton value="Update User Profile"
+						style="margin-left:10px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{userWebView.editUser()}" ajax="false"/>
 					<p:commandButton value=" Cancel " immediate="true"
-						style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+						style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
 				</h:panelGrid>
 
 			</h:form>
 			<!-- <h:form id="cancelbtn">
 				<p:commandButton value=" Cancel "
-					style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+					style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundButtonColor};Color: ##{stylesCssToWeb.cssInUse.labelButtonColor}"
 					action="#{userWebView.goBackToMain()}" />
 			</h:form> -->
 		</ui:define>

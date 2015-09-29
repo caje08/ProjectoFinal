@@ -24,6 +24,8 @@ import pt.uc.dei.aor.proj.db.entities.InterviewEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewFeedbackEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewerEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
+import pt.uc.dei.aor.proj.db.entities.Role;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
 import pt.uc.dei.aor.proj.db.tools.Outcome;
 import pt.uc.dei.aor.proj.db.tools.RejectionMotive;
 import pt.uc.dei.aor.proj.db.tools.StatusApplication;
@@ -38,6 +40,7 @@ import pt.uc.dei.aor.proj.serv.facade.ApplicationFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewEntityFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewFeedbackFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewerFacade;
+import pt.uc.dei.aor.proj.serv.facade.UserEntityFacade;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.StatefulApplication;
 import pt.uc.dei.aor.proj.serv.tools.UploadedFiles;
@@ -58,6 +61,7 @@ public class ApplicationWebManagem implements Serializable {
 	private List<InterviewFeedbackEntity> lstInterviewsOfInterviewer;
 
 	private List<InterviewerEntity> lstInterviewers;
+	private List<UserEntity> lstAllInterviewers;
 	private List<AnswerEntity> lstAnswers;
 	private List<AnswerEntity> lstAnswersWithFeedback;
 	private RejectionMotive[] lstRejectionMotives;
@@ -80,6 +84,8 @@ public class ApplicationWebManagem implements Serializable {
 	private StatusApplication newstatus;
 	private RejectionMotive motive;
 
+	@EJB
+	private UserEntityFacade userEntityFacade;
 	@EJB
 	private AnswerFacade answerFacade;
 	@EJB
@@ -217,6 +223,38 @@ public class ApplicationWebManagem implements Serializable {
 			}
 		}
 	}
+	/**
+	 * Update all fields from a scheduled interview
+	 */
+	public void editInterview() {
+		try {
+			selectedInterviewer=selectedInterview.getInterviewer();
+			Logger.getLogger(ApplicationWebManagem.class.getName())
+					.log(Level.INFO,
+							"Inside editInterview() to update interview fields: interviewer="+selectedInterviewer.getUsername()+", InterviewDate="+selectedInterview.getInterviewDate());
+			interviewFeedbackFacade.updateInterview(selectedInterview, selectedInterview.getInterviewDate(),
+					selectedInterviewer, (statefulApplication
+							.getApplication().getPosition())
+							.getPresencialInterviewEntity(),
+					statefulApplication.getApplication(), uploadedFiles
+							.getCVDESTINATION());
+		} catch (FirstInterviewAfterAtualDateException
+				| InterviewerSameDateException
+				| SecondInterviewAfterFirstInterviewException ex) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage(ex.getMessage());
+		} catch (MessagingException | EJBException ex) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage("Error sending email");
+		} catch (MustIntroduceInterviewerException ex) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
+			JSFUtil.addErrorMessage(cvPath);
+		}
+		
+	}
 
 	/**
 	 *
@@ -241,8 +279,8 @@ public class ApplicationWebManagem implements Serializable {
 	 * @param interviewFeedback
 	 * @return true if interview date is after current date
 	 */
-	public boolean possibleToSubmitFeedback(
-			InterviewFeedbackEntity interviewFeedback) {
+	public boolean possibleToSubmitFeedback(InterviewFeedbackEntity interviewFeedback) {
+		boolean status=false;
 		return interviewFeedback.getInterviewDate().after(new Date());
 	}
 
@@ -458,13 +496,17 @@ public class ApplicationWebManagem implements Serializable {
 
 	/**
 	 *
-	 * @return true if is possible to add more interviews
+	 * @return true if last interviews have accepted feedback so is possible to add more interviews
 	 */
 	public boolean isPossibleToAdd() {
 		
 		if(!selectedApplication.getStatus().equals(StatusApplication.HIRED)){
-			return true;
-		} else {
+			if(interviewFeedbackFacade.knowIfAllInterviewsOfApplicationHaveAcceptedFeedback(selectedApplication)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {			
 			return false;
 		}
 		
@@ -525,7 +567,7 @@ public class ApplicationWebManagem implements Serializable {
 	/**
 	 * Submit feedback of a selected interview
 	 */
-	public void addFeedbak() {
+	public void addFeedback() {
 		try {
 			answerFacade.submitFeedbackEntity(selectedInterview, lstAnswers);
 		} catch (SubmitFeedbackBeforeInterviewDateException ex) {
@@ -537,6 +579,20 @@ public class ApplicationWebManagem implements Serializable {
 
 	/**
 	 * List of answers of an interview
+	 *
+	 * @param interview
+	 */
+	public List<UserEntity> appointInterviewers(InterviewFeedbackEntity interview) {
+		selectedInterview = interview;
+		List<UserEntity> lstusers = userEntityFacade.lstUserEntitiesAvailable(Role.INTERVIEWER);
+		for(int i=0;i<lstusers.size();i++){
+			System.out.println("Test --> User"+i+"="+lstusers.get(i).getEmail());
+		}
+		return lstusers;
+	}
+	
+	/**
+	 * List of interviewers of an interview
 	 *
 	 * @param interview
 	 */

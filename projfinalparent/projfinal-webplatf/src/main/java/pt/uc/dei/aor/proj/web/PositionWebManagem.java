@@ -121,6 +121,15 @@ public class PositionWebManagem implements Serializable {
 		position.setCompany("CRITICAL SW");
 		activePosition.setActivePosition(position);
 		position = activePosition.getActivePosition();
+		if(position.getPublishingChannels().equals("OTHER")){
+			String otherPubChan=activePosition.getTexttmp();
+			if(otherPubChan.isEmpty()){
+			  position.setPublishingChannels("OTHER");
+			}
+			else{
+				position.setPublishingChannels(otherPubChan);
+			}
+		}
 		selectedManager=position.getManager();
 		Logger.getLogger(PositionWebManagem.class.getName()).log(
 				Level.INFO,
@@ -194,7 +203,7 @@ public class PositionWebManagem implements Serializable {
 						+ selectedPosition.getTitle()
 						+ " was unable to be saved! Please, fix the issue and try again.");
 			}
-			return "searchpositions?faces-redirect=true";
+			return "searchpositions.xhtml?faces-redirect=true";
 		} catch (ManagerNotIntroducedException
 				| PhoneInterviewEntityNotIntroducedException
 				| PresentialInterviewEntityNotIntroducedException

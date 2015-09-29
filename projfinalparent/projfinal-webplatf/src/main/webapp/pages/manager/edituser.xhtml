@@ -34,10 +34,10 @@
 						<p:watermark for="oldpassword" value="Old Password " />
 					</p:password>
 					<h:commandButton value="Check Old Password"
-						style="margin-left:10px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+						style="margin-left:10px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.checkUserPw()}" />
 					<p:commandButton value=" Cancel " immediate="true"
-						style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+						style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
 				</h:panelGrid>
 
@@ -87,10 +87,10 @@
 					<p:message for="password" />
 					<p:message for="confirmPassword" />
 					<h:commandButton value="Update User Profile"
-						style="margin-left:10px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+						style="margin-left:10px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.editUser()}" />
 					<p:commandButton value=" Cancel " immediate="true"
-						style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+						style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
 				</h:panelGrid>
 
@@ -98,7 +98,7 @@
 			</h:form>
 			<!-- 			<h:form id="cancelbtn"> -->
 			<!-- 				<p:commandButton value=" Cancel " -->
-			<!-- 					style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}" -->
+			<!-- 					style="margin-left:10px; width:100px; height:50px; background-color: ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" -->
 			<!-- 					action="#{userWebView.goBackToMain()}" /> -->
 			<!-- 			</h:form> -->
 		</ui:define>

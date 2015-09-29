@@ -9,12 +9,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+import javax.ejb.Stateless;
+
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.event.FileUploadEvent;
 
 /**
  * @author Carlos + Catarina
  */
+@Stateless
 public class UploadedFiles {
 
 	/**
@@ -26,9 +29,12 @@ public class UploadedFiles {
 	private final String CV = "cv";
 	private final String COVERLETTER = "cl";
 	private final String LOGO = "logo";
-	private final String CVDESTINATION="./CV";// = BundleUtils.getSettings("cvpath");
-	private final String COVERLETTERDESTINATION="./CL";// =  BundleUtils.getSettings("clpath");
-	private final String LOGODESTINATION="./customLogos";// = BundleUtils.getSettings("imgpath");
+//	private final String CVDESTINATION="./CV";// = BundleUtils.getSettings("cvpath");
+//	private final String COVERLETTERDESTINATION="./CL";// =  BundleUtils.getSettings("clpath");
+//	private final String LOGODESTINATION="./customLogos";// = BundleUtils.getSettings("imgpath");
+	private static final String CVDESTINATION = "./CV";
+	private static final String COVERLETTERDESTINATION = "./CL";
+	private static final String LOGODESTINATION = "./Imgs";
 
 	private String cvUploadName;
 	private String clUploadName;
@@ -98,28 +104,35 @@ public class UploadedFiles {
 				}
 
 				cvUploadName = java.net.URLEncoder.encode(RandomName.getRandomName(10) + "." + FilenameUtils.getExtension(fileName), "utf-8");
-				//finalCvDestination = props.getProperty("user.dir")+"\\"+CVDESTINATION +"\\"+ cvUploadName;
+				//finalCvDestination = props.getProperty("user.dir")+"\\"+CVDESTINATION+"\\"+cvUploadName;
 				//finalCvDestination = CVDESTINATION +"\\"+ cvUploadName;
 				out = new FileOutputStream(new File(CVDESTINATION,cvUploadName));
-
+				//out = new FileOutputStream(new File(finalCvDestination,cvUploadName));
+				System.out.println("Uploaded file path="+CVDESTINATION);
 				break;
 			case COVERLETTER:
 				if (!slFile.exists()) {
 					slFile.mkdirs();
 				}
 				clUploadName = java.net.URLEncoder.encode(RandomName.getRandomName(10) + "." + FilenameUtils.getExtension(fileName), "utf-8");
+				//finalCoverLetterDestination = props.getProperty("user.dir")+"\\"+COVERLETTERDESTINATION+"\\"+clUploadName;
 				//finalCoverLetterDestination = props.getProperty("user.dir")+"\\"+COVERLETTERDESTINATION +"\\"+ clUploadName;
 				//out = new FileOutputStream(new File(finalCoverLetterDestination));
 				out = new FileOutputStream(new File(COVERLETTERDESTINATION,clUploadName));
+				System.out.println("Uploaded file path="+COVERLETTERDESTINATION);
+				//out = new FileOutputStream(new File(finalCoverLetterDestination,clUploadName));
 				break;
 			case LOGO:
 				if (!logoFile.exists()) {
 					logoFile.mkdirs();
 				}
 				logoUploadName = java.net.URLEncoder.encode(RandomName.getRandomName(10) + "." + FilenameUtils.getExtension(fileName), "utf-8");
+				//finalLogoDestination = props.getProperty("user.dir")+"\\"+LOGODESTINATION+"\\"+logoUploadName;
 				//finalLogoDestination = props.getProperty("user.dir")+"\\"+LOGODESTINATION +"\\"+ logoUploadName;
 				//out = new FileOutputStream(new File(finalLogoDestination));
 				out = new FileOutputStream(new File(LOGODESTINATION,logoUploadName));
+				
+				//out = new FileOutputStream(new File(finalLogoDestination,logoUploadName));
 				break;
 
 			}

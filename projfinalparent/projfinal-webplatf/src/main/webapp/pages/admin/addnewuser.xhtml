@@ -79,11 +79,11 @@
 				</p:selectOneMenu>
 				</h:panelGrid>
 
-				<h:commandButton value="Add"
-					style="width:100px; height:45px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
-					action="#{adminRequestBean.createNewUser()}" />
+				<p:commandButton value="Add"
+					style="width:100px; height:45px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					action="#{adminRequestBean.createNewUser()}" ajax="false"/>
 				<p:commandButton value=" Cancel " immediate="true"
-					style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+					style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{userWebView.goBackToMain()}" />
 
 			</h:form>

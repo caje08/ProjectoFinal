@@ -93,6 +93,7 @@ public class UserWebView implements Serializable {
 			Logger.getLogger(UserWebView.class.getName()).log(Level.INFO, "inside checkUserPw() to find useremail="+emailuser+","+this.oldpassword);
 			if(userEntityFacade.findUserByEmailPass(emailuser, this.oldpassword)){
 				out=true;
+				
 			}
 		} catch (NoResultException e) {
 			 Logger.getLogger(UserWebView.class.getName()).log(Level.SEVERE, null, e.getMessage());
@@ -114,7 +115,7 @@ public class UserWebView implements Serializable {
 				//e.printStackTrace();
 			} 			
 		}	
-		
+		Logger.getLogger(UserWebView.class.getName()).log(Level.INFO, "inside checkUserPw() and out=testpw="+this.testpw);
 	}
 
 	public String goBackToMain(){
@@ -216,7 +217,7 @@ public class UserWebView implements Serializable {
 		try {
 			if (loggedUser.getLoggedUser() instanceof AdminEntity) {
 				userEntityFacade.updateUserProfile(selectedUser, firstName, lastName,email, password, userroles);
-				return "/pages/admin/successeditedUser.xhtml?faces-redirect=true";
+				return "/pages/admin/searchusers.xhtml?faces-redirect=true";
 			}else{
 				Logger.getLogger(UserWebView.class.getName()).log(Level.SEVERE,"As "+loggedUser.getLoggedUser()+"You are not allowed to execute this profile change ");
 				JSFUtil.addErrorMessage("As "+loggedUser.getLoggedUser()+"You are not allowed to execute this profile change ");

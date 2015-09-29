@@ -65,8 +65,8 @@
                     <p:dialog  header="Make Offer" widgetVar="offer" modal="true" height="auto" width="auto">
                         <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
                             <h:outputLabel value="Please, confirm that you want to make this offer:"  />
-                            <h:commandButton action="#{offerWebManagem.createOffer()}" value="Confirm" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
-                            <h:commandButton action="negotiation?faces-redirect=true" value="Cancel" style="background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"/>
+                            <h:commandButton action="#{offerWebManagem.createOffer()}" value="Confirm" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
+                            <h:commandButton action="negotiation?faces-redirect=true" value="Cancel" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>

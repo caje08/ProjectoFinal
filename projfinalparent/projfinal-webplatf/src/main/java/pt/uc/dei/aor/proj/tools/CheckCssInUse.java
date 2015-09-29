@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import pt.uc.dei.aor.proj.db.entities.CSS;
+import pt.uc.dei.aor.proj.serv.exceptions.CSSInUseDoesNotExistsException;
 import pt.uc.dei.aor.proj.serv.facade.CSSFacade;
 
 /**
@@ -21,8 +22,9 @@ public class CheckCssInUse {
 
 	/**
 	 * @return CSS in Use
+	 * @throws CSSInUseDoesNotExistsException 
 	 */
-	public CSS getCssInUse(){
+	public CSS getCssInUse() throws CSSInUseDoesNotExistsException, Exception{
 		return cSSFacade.getCSSInUse();
 	}
 

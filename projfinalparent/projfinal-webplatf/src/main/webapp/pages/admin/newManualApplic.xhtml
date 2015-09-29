@@ -132,12 +132,12 @@
 
 				</h:panelGrid>
 
-				<h:commandButton value="Submit"
-					style="width:100px;height:60px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
-					action="#{manageApplicationWeb.createManualApplication()}" />
-				<h:commandButton value="Cancel" immediate="true"
-					style="width:100px;height:60px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
-					action="#{userWebView.goBackToMain()}" />
+				<p:commandButton value="Submit"
+					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					action="#{manageApplicationWeb.createManualApplication()}" ajax="false" />
+				<p:commandButton value="Cancel" immediate="true"
+					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					action="#{userWebView.goBackToMain()}" ajax="false"/>
 
 			</h:form>
 
