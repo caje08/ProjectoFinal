@@ -4,13 +4,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <body>
-	<ui:composition template="./mainadmin.xhtml">
+	<ui:composition template="./mainmanager.xhtml">
 		<ui:define name="content">
 			<h:form enctype="multipart/form-data">
 				<p:growl showDetail="true" />
 				<h3>Values with * are mandatory</h3>
-				<h1>Submit a New Application</h1>
-
+				<h1>Submit a New Application to position title:
+					#{statefulPosition.getPosition().getTitle()}</h1>
 				<h:panelGrid columns="2" cellpadding="4">
 					<p:outputLabel value="First Name*" />
 					<p:inputText id="firstname" required="true" label="firstname"
@@ -33,7 +33,6 @@
 						<p:watermark for="email" value="Email " />
 						<f:validateRegex
 							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-
 					</p:inputText>
 
 					<p:outputLabel value="Address*" />
@@ -53,7 +52,7 @@
 					<p:outputLabel value="Phone" />
 					<p:inputText id="phone" label="phone" size="40"
 						value="#{manageApplicationWeb.applicant.phone}">
-						<p:watermark for="phone" value="FixedPhone " />
+						<p:watermark for="phone" value="Phone " />
 					</p:inputText>
 
 					<p:outputLabel value="Mobile Phone*" />
@@ -86,27 +85,11 @@
 					</p:inputText>
 
 					<p:outputLabel value="Source*" />
-<!-- 					<p:inputText id="source" required="true" label="source" size="40" -->
-<!-- 						requiredMessage="Please enter your source." -->
-<!-- 						value="#{manageApplicationWeb.application.source}"> -->
-<!-- 						<p:watermark for="source" value="Source " /> -->
-<!-- 					</p:inputText> -->
-					
-					<p:selectOneMenu id="pub_Chann" required="true"
+					<p:inputText id="source" required="true" label="source" size="40"
+						requiredMessage="Please enter your source."
 						value="#{manageApplicationWeb.application.source}">
-						<f:selectItem itemLabel="Critical SW web site"
-							itemValue="CRITICALSWWEBSITE" />
-						<f:selectItem itemLabel="LinkedIn" itemValue="LINKEDIN" />
-						<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
-						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
-						<f:selectItem itemLabel="All defined" itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
-						<f:selectItem itemLabel="Other" itemValue="OTHER" />
-					</p:selectOneMenu>
-					<p:outputLabel value="Other source:" />
-					<p:inputText id="publishingChannels" title="Source channels"
-						value="#{manageApplicationWeb.activePosition.texttmp}"
-						required="false"	requiredMessage="Please, enter the text for alternatives source channels." />
-					
+						<p:watermark for="source" value="Source " />
+					</p:inputText>
 
 					<p:outputLabel value="Password*" />
 					<p:password id="password" required="true" label="password"
@@ -145,15 +128,14 @@
 						styleClass="fileUploadClass" />
 					<p:growl id="cl1" showDetail="true" />
 
-
 				</h:panelGrid>
 
 				<p:commandButton value="Submit"
 					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{manageApplicationWeb.createManualApplication()}" ajax="false" />
+					action="#{manageApplicationWeb.createApplication()}" ajax="false" />
 				<p:commandButton value="Cancel" immediate="true"
 					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{userWebView.goBackToMain()}" ajax="false"/>
+					action="#{userWebView.goBackToMain()}" ajax="false" />
 
 			</h:form>
 

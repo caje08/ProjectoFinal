@@ -250,12 +250,14 @@ public class InfoUser implements Serializable {
 
 	/**
 	 *
-	 * @return to page successaplied if exception is not occured and new
+	 * @return to page mainpage if exception is not occurring and new
 	 * Application is created
 	 */
 	public String createManualUserApplications() {
 		try {
-			applicationFacade.createManualUserApplications(application, uploadedFiles.getCvUploadName(), uploadedFiles.getClUploadName(), application.getSource(), loggedUser.getLoggedUser());
+			applicant = (ApplicantEntity) activeSession.getActiveUser();
+			Logger.getLogger(InfoUser.class.getName()).log(Level.INFO, "Inside createManualUserApplications() loggedUser.getEmail="+applicant.getEmail());
+			applicationFacade.createManualUserApplications(application, uploadedFiles.getCvUploadName(), uploadedFiles.getClUploadName(), application.getSource(), applicant);
 			return "/pages/candidate/indexmainuser.xhtml?faces-redirect=true";
 		} catch (DoNotUploadCVFileException | DoNotUploadCoverLetterException ex) {
 			// or CV and Cover Letter were not uploaded

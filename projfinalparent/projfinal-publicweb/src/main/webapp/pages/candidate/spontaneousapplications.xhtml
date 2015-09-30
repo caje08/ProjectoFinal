@@ -26,7 +26,7 @@
             </p:menubar>
         </h:form>
         <div align="right">
-            <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
+            <h:graphicImage library="images" name="#{stylesCssToWeb.cssInUse.logoPath}"/>
         </div>
     </ui:define> 
     <ui:define name="content">
@@ -46,17 +46,17 @@
                 <p:message for="source" />
 
                 <p:fileUpload update="cv1" id="cv" auto="true" fileUploadListener="#{infoUser.uploadCV}" label="Upload CV*" 
-                              allowTypes="/(\.|\/)(pdf|doc|txt)$/" sizeLimit="52428800" />
+                              allowTypes="/(\.|\/)(pdf|doc|txt)$/" sizeLimit="60000000" />
                 <p:growl id="cv1" showDetail="true" />
 
 
                 <p:fileUpload update="cl1" id="ml" auto="true" fileUploadListener="#{infoUser.uploadMotivationLetter}" label="Upload Cover Letter*" 
-                              allowTypes="/(\.|\/)(pdf|doc|txt)$/" sizeLimit="52428800" />
+                              allowTypes="/(\.|\/)(pdf|doc|txt)$/" sizeLimit="60000000" />
                 <p:growl id="cl1" showDetail="true" />
 
             </h:panelGrid>
 
-            <h:commandButton value="Submit" style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+            <h:commandButton value="Submit" style="width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
                              action="#{infoUser.createManualUserApplications()}"/>
         </h:form>
     </ui:define>

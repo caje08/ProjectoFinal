@@ -49,7 +49,6 @@ import pt.uc.dei.aor.proj.serv.tools.StatefulApplication;
 import pt.uc.dei.aor.proj.serv.tools.UploadedFiles;
 import pt.uc.dei.aor.proj.serv.tools.UserData;
 
-
 /**
  *
  * @author
@@ -80,11 +79,12 @@ public class ApplicationWebManagem implements Serializable {
 	private String cvPath;
 	private String sourceLetterPath;
 	private InterviewFeedbackEntity selectedInterview;
-	private UserEntity selectedInterviewer;//private InterviewerEntity selectedInterviewer;
-	
+	private UserEntity selectedInterviewer;// private InterviewerEntity
+											// selectedInterviewer;
+
 	private Date interviewDate;
 	private UploadedFiles uploadedFiles;
-	
+
 	private StatusApplication newstatus;
 	private RejectionMotive motive;
 
@@ -104,9 +104,10 @@ public class ApplicationWebManagem implements Serializable {
 	private InterviewerFacade interviewerFacade;
 	@EJB
 	private UserData userData;
-//
-//	 @Inject
-//	 private UserCheck activeUser;
+
+	//
+	// @Inject
+	// private UserCheck activeUser;
 
 	/**
 	 *
@@ -123,14 +124,14 @@ public class ApplicationWebManagem implements Serializable {
 		this.uploadedFiles = new UploadedFiles();
 	}
 
-	public boolean newStatusRejected(){
-		if(this.newstatus==null) {
+	public boolean newStatusRejected() {
+		if (this.newstatus == null) {
 			return false;
 		} else {
 			return this.newstatus.equals(StatusApplication.REJECTED);
-		}		
+		}
 	}
-	
+
 	/**
 	 *
 	 * @param a
@@ -160,12 +161,13 @@ public class ApplicationWebManagem implements Serializable {
 	}
 
 	/**
-	 * If interview date is after actual date than the scheduled interview can be removed
+	 * If interview date is after actual date than the scheduled interview can
+	 * be removed
 	 */
 	public void removeScheduledInterview(InterviewEntity interview) {
-	  
+
 	}
-	
+
 	/**
 	 * If number of interviews is 0, create a new Interview, with a phone
 	 * interview guide. Else, create new interview with a presential Interview
@@ -227,18 +229,22 @@ public class ApplicationWebManagem implements Serializable {
 			}
 		}
 	}
+
 	/**
 	 * Update all fields from a scheduled interview
 	 */
 	public void editInterview() {
 		try {
-			selectedInterviewer=selectedInterview.getInterviewer();
-			Logger.getLogger(ApplicationWebManagem.class.getName())
-					.log(Level.INFO,
-							"Inside editInterview() to update interview fields: interviewer="+selectedInterviewer.getUsername()+", InterviewDate="+selectedInterview.getInterviewDate());
-			interviewFeedbackFacade.updateInterview(selectedInterview, selectedInterview.getInterviewDate(),
-					selectedInterviewer, (statefulApplication
-							.getApplication().getPosition())
+			selectedInterviewer = selectedInterview.getInterviewer();
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.INFO,
+					"Inside editInterview() to update interview fields: interviewer="
+							+ selectedInterviewer.getUsername()
+							+ ", InterviewDate="
+							+ selectedInterview.getInterviewDate());
+			interviewFeedbackFacade.updateInterview(selectedInterview,
+					selectedInterview.getInterviewDate(), selectedInterviewer,
+					(statefulApplication.getApplication().getPosition())
 							.getPresencialInterviewEntity(),
 					statefulApplication.getApplication(), uploadedFiles
 							.getCVDESTINATION());
@@ -257,7 +263,7 @@ public class ApplicationWebManagem implements Serializable {
 					Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(cvPath);
 		}
-		
+
 	}
 
 	/**
@@ -268,7 +274,7 @@ public class ApplicationWebManagem implements Serializable {
 	public boolean adminCanSubmitFeedback() {
 		return selectedInterview.getInterviewDate().after(new Date());
 	}
-	
+
 	/**
 	 *
 	 * @return true if interview date of selectedInterview is after of current
@@ -283,10 +289,11 @@ public class ApplicationWebManagem implements Serializable {
 	 * @param interviewFeedback
 	 * @return true if interview date is after current date
 	 */
-	public boolean possibleToSubmitFeedback(InterviewFeedbackEntity interviewFeedback) {
-		boolean status=false;
-		application=interviewFeedback.getApplication();
-		
+	public boolean possibleToSubmitFeedback(
+			InterviewFeedbackEntity interviewFeedback) {
+		boolean status = false;
+		application = interviewFeedback.getApplication();
+
 		return (interviewFeedback.getInterviewDate().after(new Date()) && isManagerOfApplicationOrAdmin(application));
 	}
 
@@ -404,37 +411,43 @@ public class ApplicationWebManagem implements Serializable {
 	 * @return true if isAdmin or isManager of the application
 	 */
 	public boolean isManagerOfApplicationOrAdmin(ApplicationEntity application) {
-		boolean out=false;	
-		
-		if(isAdmin()) {
-			out= true;
+		boolean out = false;
+
+		if (isAdmin()) {
+			out = true;
 		} else if (isManager()) {
 			try {
 				UserEntity tmpuser = userData.getLoggedUser();
-				if(tmpuser.getEmail().equals(application.getPosition().getManager().getEmail())){
-					out= true;
+				if (tmpuser.getEmail().equals(
+						application.getPosition().getManager().getEmail())) {
+					out = true;
 				} else {
-					out= false;
+					out = false;
 				}
-			} catch (NoResultException | UserNotFoundException | UserGuideException e) {
-				Logger.getLogger(ApplicationWebManagem.class.getName()).log(
-						Level.SEVERE, null, "\nUnable to get userData.getLoggedUser() inside isManagerOfApplicationOrAdmin() : Error="+e.getMessage());
+			} catch (NoResultException | UserNotFoundException
+					| UserGuideException e) {
+				Logger.getLogger(ApplicationWebManagem.class.getName())
+						.log(Level.SEVERE,
+								null,
+								"\nUnable to get userData.getLoggedUser() inside isManagerOfApplicationOrAdmin() : Error="
+										+ e.getMessage());
 				JSFUtil.addErrorMessage("Unable to get userData.getLoggedUser() inside isManagerOfApplicationOrAdmin()");
-			} 
+			}
 		}
 		return out;
-		//return application.getStatus().equals(StatusApplication.SUBMITTED);
+		// return application.getStatus().equals(StatusApplication.SUBMITTED);
 	}
-	
+
 	/**
 	 *
-	 * @return  true if is an user that try to log in is an admin
+	 * @return true if is an user that try to log in is an admin
 	 */
 	public boolean isAdmin() {
 		try {
 			return userData.getLoggedUser() instanceof AdminEntity;
 		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
-			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 		return false;
@@ -443,18 +456,18 @@ public class ApplicationWebManagem implements Serializable {
 
 	/**
 	 *
-	 * @return  true if is an user that try to log in is a manager
+	 * @return true if is an user that try to log in is a manager
 	 */
 	public boolean isManager() {
 		try {
 			return userData.getLoggedUser() instanceof ManagerEntity;
 		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
-			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.SEVERE, null, ex);
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 		return false;
 	}
-
 
 	/**
 	 *
@@ -481,57 +494,59 @@ public class ApplicationWebManagem implements Serializable {
 	 * motive will be CV
 	 */
 	public void setNewApplicationStatus() {
-		
+
 		if (this.newstatus.equals(StatusApplication.REJECTED)) {
 			selectedApplication.setStatus(StatusApplication.REJECTED);
 			selectedApplication.setMotive(RejectionMotive.CV);
 			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
 					Level.INFO,
 					"In setNewApplicationStatus(), the newstatus=REJECTED");
-		} else{
-			if(selectedApplication.getStatus().equals(StatusApplication.REJECTED)){
+		} else {
+			if (selectedApplication.getStatus().equals(
+					StatusApplication.REJECTED)) {
 				selectedApplication.setMotive(RejectionMotive.NONE);
 			}
-		        selectedApplication.setStatus(newstatus);
+			selectedApplication.setStatus(newstatus);
 		}
-//		if (this.newstatus.equals(StatusApplication.HIRED)) {
-//			int nposic = selectedApplication.getPosition().getVacancies();
-//			if (nposic==1){
-//				PositionEntity activPos = selectedApplication.getPosition();
-//				activPos.setVacancies(0);
-//				activPos.setStatus("CLOSED");
-//				selectedApplication.setPosition(activPos);
-//				Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO,"In setNewApplicationStatus(), the position has been set to CLOSED ="+newstatus);
-//			}else if (nposic>1){
-//				PositionEntity activPos = selectedApplication.getPosition();
-//				activPos.setVacancies(nposic-1);				
-//				selectedApplication.setPosition(activPos);
-//			}
-//			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
-//					Level.INFO,
-//					"In setNewApplicationStatus(), the newstatus=REJECTED");
-//		}
+		// if (this.newstatus.equals(StatusApplication.HIRED)) {
+		// int nposic = selectedApplication.getPosition().getVacancies();
+		// if (nposic==1){
+		// PositionEntity activPos = selectedApplication.getPosition();
+		// activPos.setVacancies(0);
+		// activPos.setStatus("CLOSED");
+		// selectedApplication.setPosition(activPos);
+		// Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO,"In setNewApplicationStatus(), the position has been set to CLOSED ="+newstatus);
+		// }else if (nposic>1){
+		// PositionEntity activPos = selectedApplication.getPosition();
+		// activPos.setVacancies(nposic-1);
+		// selectedApplication.setPosition(activPos);
+		// }
+		// Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+		// Level.INFO,
+		// "In setNewApplicationStatus(), the newstatus=REJECTED");
+		// }
 		applicationFacade.edit(selectedApplication);
-		Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO,"In setNewApplicationStatus(), the newstatus="+newstatus);
-		
-//		if (!newstatus.equals(null)) {
-//			if (this.newstatus.equals(StatusApplication.REJECTED)) {
-//				selectedApplication.setStatus(StatusApplication.REJECTED);
-//				selectedApplication.setMotive(RejectionMotive.CV);
-//				Logger.getLogger(ApplicationWebManagem.class.getName()).log(
-//						Level.INFO,
-//						"In setNewApplicationStatus(), the newstatus=REJECTED");
-//			} else {
-//				selectedApplication.setStatus(newstatus);
-//				selectedApplication.setMotive(RejectionMotive.NONE);
-//				Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO,"In setNewApplicationStatus(), the newstatus="+newstatus);
-//			}
-//			applicationFacade.edit(selectedApplication);
-//		} else {
-//			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
-//					Level.SEVERE, null,
-//					"Inside setNewApplicationStatus() with 'newstatus'=null --> Application status not updated");
-//		}
+		Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO,
+				"In setNewApplicationStatus(), the newstatus=" + newstatus);
+
+		// if (!newstatus.equals(null)) {
+		// if (this.newstatus.equals(StatusApplication.REJECTED)) {
+		// selectedApplication.setStatus(StatusApplication.REJECTED);
+		// selectedApplication.setMotive(RejectionMotive.CV);
+		// Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+		// Level.INFO,
+		// "In setNewApplicationStatus(), the newstatus=REJECTED");
+		// } else {
+		// selectedApplication.setStatus(newstatus);
+		// selectedApplication.setMotive(RejectionMotive.NONE);
+		// Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.INFO,"In setNewApplicationStatus(), the newstatus="+newstatus);
+		// }
+		// applicationFacade.edit(selectedApplication);
+		// } else {
+		// Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+		// Level.SEVERE, null,
+		// "Inside setNewApplicationStatus() with 'newstatus'=null --> Application status not updated");
+		// }
 	}
 
 	/**
@@ -550,29 +565,35 @@ public class ApplicationWebManagem implements Serializable {
 
 	/**
 	 *
-	 * @return true if last interviews have accepted feedback so is possible to add more interviews
+	 * @return true if last interviews have accepted feedback so is possible to
+	 *         add more interviews
 	 */
 	public boolean isPossibleToAdd() {
-		
-		if(!selectedApplication.getStatus().equals(StatusApplication.HIRED)){
-			if(interviewFeedbackFacade.knowIfAllInterviewsOfApplicationHaveAcceptedFeedback(selectedApplication)) {
-				return true;
+		boolean out = false;
+		try {
+			if (!selectedApplication.getStatus()
+					.equals(StatusApplication.HIRED)) {
+				if (interviewFeedbackFacade
+						.knowIfAllInterviewsOfApplicationHaveAcceptedFeedback(selectedApplication)) {
+					return true;
+				} 
 			} else {
 				return false;
 			}
-		} else {			
-			return false;
+		} catch (Exception e) {
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+					Level.SEVERE, null, e.getMessage());
 		}
-		
-//		if (interviewFeedbackFacade.numberOfInterviews(selectedApplication
-//				.getApplicationId()) == 0) {
-//			return true;
-//		} else {
-//			return interviewFeedbackFacade
-//					.numberOfInterviews(selectedApplication.getApplicationId()) < 2
-//					&& interviewFeedbackFacade
-//							.knowIfAPhoneInterviewFeedbackHasAcceptedFeedback(selectedApplication);
-//		}
+		return out;
+		// if (interviewFeedbackFacade.numberOfInterviews(selectedApplication
+		// .getApplicationId()) == 0) {
+		// return true;
+		// } else {
+		// return interviewFeedbackFacade
+		// .numberOfInterviews(selectedApplication.getApplicationId()) < 2
+		// && interviewFeedbackFacade
+		// .knowIfAPhoneInterviewFeedbackHasAcceptedFeedback(selectedApplication);
+		// }
 
 	}
 
@@ -609,7 +630,7 @@ public class ApplicationWebManagem implements Serializable {
 					| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
 				// TODO Auto-generated catch block
 				Logger.getLogger(ApplicationWebManagem.class.getName()).log(
-						Level.SEVERE, null, e);
+						Level.SEVERE, null, e.getMessage());
 			}
 			return false;
 		} else {
@@ -636,15 +657,18 @@ public class ApplicationWebManagem implements Serializable {
 	 *
 	 * @param interview
 	 */
-	public List<UserEntity> appointInterviewers(InterviewFeedbackEntity interview) {
+	public List<UserEntity> appointInterviewers(
+			InterviewFeedbackEntity interview) {
 		selectedInterview = interview;
-		List<UserEntity> lstusers = userEntityFacade.lstUserEntitiesAvailable(Role.INTERVIEWER);
-		for(int i=0;i<lstusers.size();i++){
-			System.out.println("Test --> User"+i+"="+lstusers.get(i).getEmail());
+		List<UserEntity> lstusers = userEntityFacade
+				.lstUserEntitiesAvailable(Role.INTERVIEWER);
+		for (int i = 0; i < lstusers.size(); i++) {
+			System.out.println("Test --> User" + i + "="
+					+ lstusers.get(i).getEmail());
 		}
 		return lstusers;
 	}
-	
+
 	/**
 	 * List of interviewers of an interview
 	 *
@@ -656,21 +680,22 @@ public class ApplicationWebManagem implements Serializable {
 	}
 
 	// ///////////////////Getters && Setters////////////////////
-	public List<InterviewFeedbackEntity> getLstInterviewsOfInterviewer() throws InterviewsNotFoundToThisUserException{
-	  try{	
+	public List<InterviewFeedbackEntity> getLstInterviewsOfInterviewer()
+			throws InterviewsNotFoundToThisUserException {
 		try {
-			lstInterviewsOfInterviewer = interviewFeedbackFacade
-					.lstInterviewsWithThatInterviewer((UserEntity) userData
-							.getLoggedUser());
-		} catch (NoResultException
-				| pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException
-				| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
-			// TODO Auto-generated catch block
-			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
-					Level.SEVERE, null, e);
-			JSFUtil.addErrorMessage(e.getMessage());
-		}
-	  } catch (Exception ex) {
+			try {
+				lstInterviewsOfInterviewer = interviewFeedbackFacade
+						.lstInterviewsWithThatInterviewer((UserEntity) userData
+								.getLoggedUser());
+			} catch (NoResultException
+					| pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException
+					| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
+				// TODO Auto-generated catch block
+				Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+						Level.SEVERE, null, e);
+				JSFUtil.addErrorMessage(e.getMessage());
+			}
+		} catch (Exception ex) {
 			// TODO Auto-generated catch block
 			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
 					Level.SEVERE, null, ex.getMessage());
@@ -949,5 +974,5 @@ public class ApplicationWebManagem implements Serializable {
 	public void setMotive(RejectionMotive motive) {
 		this.motive = motive;
 	}
-	
+
 }

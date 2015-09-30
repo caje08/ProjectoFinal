@@ -271,7 +271,8 @@
 					<p:dataTable id="manager" selectionMode="single"
 						rowKey="#{manager.userId}"
 						selection="#{positionWebManagem.selectedManager}"
-						value="#{positionWebManagem.lstManagers}" var="manager">
+						value="#{positionWebManagem.collectListOfManagers()}" var="manager">
+<!-- 						value="#{positionWebManagem.lstManagers}" var="manager"> -->						
 						<p:column styleClass="centeredColumn" headerText="Username"
 							filterBy="#{manager.username}" filterMatchMode="contains">
                                 #{manager.username}

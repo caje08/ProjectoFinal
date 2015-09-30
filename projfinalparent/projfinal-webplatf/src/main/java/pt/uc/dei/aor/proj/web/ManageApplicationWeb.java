@@ -86,7 +86,7 @@ public class ManageApplicationWeb implements Serializable {
 	private PositionEntity position;
 	private UIPanel panelGroup;
 	private PositionEntity selectedPosition;
-	private ManagerEntity selectedManager;
+	private UserEntity selectedManager;
 	private InterviewEntity selectedInterviewGuide;
 	private UploadedFiles uploadedFiles;
 	private ApplicantEntity applicant;
@@ -320,6 +320,9 @@ public class ManageApplicationWeb implements Serializable {
 	 */
 	public String createManualApplication() {
 		try {
+			if(application.getSource().equals("OTHER") && !activePosition.getTexttmp().isEmpty()){
+				application.setSource(activePosition.getTexttmp());
+			}
 			applicationFacade.createSpontaneousApplicationOfNewApplicant(
 					applicant, application, uploadedFiles.getCvUploadName(),
 					uploadedFiles.getClUploadName());
@@ -474,7 +477,7 @@ public class ManageApplicationWeb implements Serializable {
 		try {
 			return userData.getLoggedUser() instanceof AdminEntity;
 		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
-			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex.getMessage());
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 		return false;
@@ -489,7 +492,7 @@ public class ManageApplicationWeb implements Serializable {
 		try {
 			return userData.getLoggedUser() instanceof ManagerEntity;
 		} catch (UserNotFoundException | UserGuideException | NoResultException ex) {
-			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(ApplicationWebManagem.class.getName()).log(Level.SEVERE, null, ex.getMessage());
 			JSFUtil.addErrorMessage(ex.getMessage());
 		}
 		return false;
@@ -613,7 +616,7 @@ public class ManageApplicationWeb implements Serializable {
 		this.selectedPosition = selectedPosition;
 	}
 
-	public ManagerEntity getSelectedManager() {
+	public UserEntity getSelectedManager() {
 		return selectedManager;
 	}
 
@@ -816,15 +819,12 @@ public class ManageApplicationWeb implements Serializable {
 	
 	public List<UserEntity> collectListOfInterviewers(){
 		List<UserEntity> listToUse=new ArrayList<>();
-		List<UserEntity> tmplistToUse=new ArrayList<>();
+		List<InterviewerEntity> tmplistToUse=new ArrayList<>();
 		UserEntity manager = null;
 		
 		if(isAdmin()){
 			listToUse=userEntityFacade.lstUserEntitiesAvailable(Role.INTERVIEWER);
-//			tmplistToUse=userEntityFacade.lstUserEntitiesAvailable(Role.MANAGER);
-//			listToUse.addAll(tmplistToUse);
-//			tmplistToUse=userEntityFacade.lstUserEntitiesAvailable(Role.INTERVIEWER);
-//			listToUse.addAll(tmplistToUse);
+
 		} else if(isManager()){
 			try {
 				manager = userData.getLoggedUser();
@@ -838,7 +838,8 @@ public class ManageApplicationWeb implements Serializable {
 				Logger.getLogger(ManageApplicationWeb.class.getName()).log(
 						Level.SEVERE, null, "collectListOfInterviewers() - No UserEntity found "+e.getMessage());
 			}
-			listToUse = userEntityFacade.lstUserEntitiesAvailable(Role.INTERVIEWER);
+			tmplistToUse = interviewerFacade.findAll();
+			listToUse.addAll(tmplistToUse);
 			listToUse.add(manager);
 		} else {
 			Logger.getLogger(ManageApplicationWeb.class.getName()).log(

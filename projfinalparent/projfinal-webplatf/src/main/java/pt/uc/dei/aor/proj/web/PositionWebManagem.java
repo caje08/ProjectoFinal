@@ -3,6 +3,7 @@
 package pt.uc.dei.aor.proj.web;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,6 +16,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIPanel;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 import org.primefaces.event.FileUploadEvent;
 
@@ -23,6 +25,9 @@ import pt.uc.dei.aor.proj.db.entities.ApplicationEntity;
 import pt.uc.dei.aor.proj.db.entities.InterviewEntity;
 import pt.uc.dei.aor.proj.db.entities.ManagerEntity;
 import pt.uc.dei.aor.proj.db.entities.PositionEntity;
+import pt.uc.dei.aor.proj.db.entities.Role;
+import pt.uc.dei.aor.proj.db.entities.UserEntity;
+import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
 import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 import pt.uc.dei.aor.proj.serv.ejb.SendEmail;
 import pt.uc.dei.aor.proj.serv.exceptions.BeforeDateNotBeforeClosingDate;
@@ -41,6 +46,7 @@ import pt.uc.dei.aor.proj.serv.facade.ApplicationFacade;
 import pt.uc.dei.aor.proj.serv.facade.InterviewEntityFacade;
 import pt.uc.dei.aor.proj.serv.facade.ManagerFacade;
 import pt.uc.dei.aor.proj.serv.facade.PositionFacade;
+import pt.uc.dei.aor.proj.serv.facade.UserEntityFacade;
 import pt.uc.dei.aor.proj.serv.tools.JSFUtil;
 import pt.uc.dei.aor.proj.serv.tools.StatefulPosition;
 import pt.uc.dei.aor.proj.serv.tools.UploadedFiles;
@@ -67,7 +73,7 @@ public class PositionWebManagem implements Serializable {
 	private PositionEntity position;
 	private UIPanel panelGroup;
 	private PositionEntity selectedPosition;
-	private ManagerEntity selectedManager;
+	private UserEntity selectedManager;
 	private InterviewEntity selectedInterviewGuide;
 	private UploadedFiles uploadedFiles;
 	private ApplicantEntity applicant;
@@ -81,6 +87,8 @@ public class PositionWebManagem implements Serializable {
 	private InterviewEntityFacade interviewGuideFacade;
 	@EJB
 	private ManagerFacade managerFacade;
+	@EJB
+	private UserEntityFacade userEntityFacade;
 	@EJB
 	private ApplicationFacade applicationFacade;
 	@EJB
@@ -213,6 +221,36 @@ public class PositionWebManagem implements Serializable {
 			JSFUtil.addErrorMessage(ex.getMessage());
 			return null;
 		}
+	}
+	
+	public List<UserEntity> collectListOfManagers(){
+		List<UserEntity> listToUse=new ArrayList<>();
+		
+		UserEntity manager = null;
+		
+		if(userData.isAdmin()){
+			listToUse=userEntityFacade.lstUserEntitiesAvailable(Role.MANAGER);
+
+		} else if(userData.isManager()){
+			try {
+				manager = userData.getLoggedUser();
+			} catch (NoResultException e) {
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.SEVERE, null, "collectListOfManagers() - No result to get a manager from userData.getLoggedUser()"+e.getMessage());
+			} catch (UserNotFoundException e) {
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.SEVERE, null, "collectListOfManagers() - No user has been found "+e.getMessage());
+			} catch (UserGuideException e) {
+				Logger.getLogger(PositionWebManagem.class.getName()).log(
+						Level.SEVERE, null, "collectListOfManagers() - No UserEntity found "+e.getMessage());
+			}
+			
+			listToUse.add(manager);
+		} else {
+			Logger.getLogger(PositionWebManagem.class.getName()).log(
+					Level.SEVERE, null, "collectListOfManagers() - User is an Interviewer and was supposed to not access to this function. Check it!");
+		} 
+		return listToUse;
 	}
 
 	/**
@@ -359,17 +397,19 @@ public class PositionWebManagem implements Serializable {
 				Level.INFO,
 				"Inside goToApplicationForm() and otherPosition.title is="
 						+ otherPosition.getTitle());
-		statefulPosition.setPosition(otherPosition);
-		position = statefulPosition.getPosition();
+		activePosition.setActivePosition(otherPosition);
+		// statefulPosition.setPosition(otherPosition);
+		// position = statefulPosition.getPosition();
+		position = activePosition.getActivePosition();
 		Logger.getLogger(PositionWebManagem.class.getName())
 				.log(Level.INFO,
 						"Inside goToApplicationForm() and after setting position where position().getTitle() is="
 								+ position.getTitle());
-		Logger.getLogger(PositionWebManagem.class.getName())
-				.log(Level.INFO,
-						"Inside goToApplicationForm() and after setting position where statefulPosition.getPosition().getTitle() is="
-								+ statefulPosition.getPosition().getTitle());
-		return "apply.xhtml?faces-redirect=true";
+//		Logger.getLogger(PositionWebManagem.class.getName())
+//				.log(Level.INFO,
+//						"Inside goToApplicationForm() and after setting position where statefulPosition.getPosition().getTitle() is="
+//								+ statefulPosition.getPosition().getTitle());
+		return "newApplicationToPosition.xhtml?faces-redirect=true";
 	}
 
 	/**
@@ -518,11 +558,11 @@ public class PositionWebManagem implements Serializable {
 		this.selectedPosition = selectedPosition;
 	}
 
-	public ManagerEntity getSelectedManager() {
+	public UserEntity getSelectedManager() {
 		return selectedManager;
 	}
 
-	public void setSelectedManager(ManagerEntity selectedManager) {
+	public void setSelectedManager(UserEntity selectedManager) {
 		this.selectedManager = selectedManager;
 	}
 
@@ -674,7 +714,7 @@ public class PositionWebManagem implements Serializable {
 				Logger.getLogger(PositionWebManagem.class.getName()).log(
 						Level.INFO, "Inside getLstPositionsofAManager() and before positionFacade.lstPositionsOfManager() with email="+activeUser.getName());
 				lstPositionsofAManager = positionFacade
-						.lstPositionsOfManager((ManagerEntity) userData
+						.lstPositionsOfManager((UserEntity) userData
 								.getLoggedUser());
 			} catch (UserNotFoundException
 					| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {

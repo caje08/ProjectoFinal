@@ -9,6 +9,8 @@ import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 
 import pt.uc.dei.aor.proj.db.entities.UserEntity;
+import pt.uc.dei.aor.proj.db.exceptions.UserGuideException;
+import pt.uc.dei.aor.proj.db.exceptions.UserNotFoundException;
 
 /**
  *
@@ -19,6 +21,9 @@ import pt.uc.dei.aor.proj.db.entities.UserEntity;
 public class PubUserSession {
     
     private UserEntity loggedUser;
+    
+//    @EJB
+//	private UserEntityFacade userEntityFacade;
 //    private Long loggedId;
 //    private String name;
 //    private String email;
@@ -31,6 +36,19 @@ public class PubUserSession {
     public PubUserSession() {
     }
 
+    /**
+	 *
+	 * @return UserEntity, that will be the logged User during the entire time that will be on session
+	 * @throws UserNotFoundException
+	 * @throws UserGuideException
+	 */
+//	public UserEntity getLoggedUser() throws UserNotFoundException, UserGuideException, NoResultException {
+//		//loggedUser = userGuideFacade.findUserByUsername();
+//		loggedUser = userEntityFacade.findUserByEmail();
+//		Logger.getLogger(UserData.class.getName()).log(Level.INFO, "\nLogged User = "+loggedUser.getEmail());
+//		return loggedUser;
+//	}
+    
     public UserEntity getLoggedUser() {
         return loggedUser;
     }

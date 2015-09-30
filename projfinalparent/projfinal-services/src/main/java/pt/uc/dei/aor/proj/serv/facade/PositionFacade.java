@@ -100,7 +100,7 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 
 	/**
 	 * Create a new PositionEntity
-	 * @param manager
+	 * @param selectedManager
 	 * @param position
 	 * @param onWeekOnms
 	 * @throws ManagerNotIntroducedException
@@ -109,18 +109,18 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 	 * @throws BeforeDateNotBeforeClosingDate
 	 * @throws OpeningDateAfterAtualDate
 	 */
-	public boolean createPosition(ManagerEntity manager, PositionEntity position, int onWeekOnms) throws ManagerNotIntroducedException, PhoneInterviewEntityNotIntroducedException, PresentialInterviewEntityNotIntroducedException, BeforeDateNotBeforeClosingDate, OpeningDateAfterAtualDate {
+	public boolean createPosition(UserEntity selectedManager, PositionEntity position, int onWeekOnms) throws ManagerNotIntroducedException, PhoneInterviewEntityNotIntroducedException, PresentialInterviewEntityNotIntroducedException, BeforeDateNotBeforeClosingDate, OpeningDateAfterAtualDate {
 		boolean out=false;
 		Logger.getLogger(PositionFacade.class.getName()).log(
 				Level.INFO,
 				"createPosition() --> Before 'if' Position = "
 						+ position.getTitle()
-						+ " and manager ="+manager.getEmail());
+						+ " and manager ="+selectedManager.getEmail());
 		if (position.getOpeningDate().after(new Date())) {
 			if (position.getClosingDate().after(position.getOpeningDate())) {
 				if (position.getManager() != null && position.getPhoneInterviewEntity() != null && position.getPresencialInterviewEntity() != null) {
 					
-					String to = manager.getEmail();
+					String to = selectedManager.getEmail();
 					long slagetTime = (long) (position.getClosingDate().getTime() - position.getOpeningDate().getTime());
 					//get number of weeks for a position
 					int sla = (int) (slagetTime / onWeekOnms);
@@ -128,7 +128,7 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 					Logger.getLogger(PositionFacade.class.getName()).log(
 							Level.INFO,	"acreatingPosition() --> after 'if' and before creating Position = "
 									+ position.getTitle()
-									+ " and manager ="+manager.getEmail());
+									+ " and manager ="+selectedManager.getEmail());
 					create(position);
 					//send email to new manager
 					mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as the manager of the position " + position.getTitle(), "PositionEntity " +position.getTitle()+" was created.", to);

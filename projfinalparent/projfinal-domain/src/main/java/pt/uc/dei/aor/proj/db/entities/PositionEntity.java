@@ -46,8 +46,8 @@ public class PositionEntity implements Serializable {
 	@Basic
 	private Date OpeningDate;
 
-	@ManyToOne(targetEntity = ManagerEntity.class)
-	private ManagerEntity manager;
+	@ManyToOne(targetEntity = UserEntity.class)
+	private UserEntity manager;
 
 	@ManyToOne(targetEntity = InterviewEntity.class)
 	private InterviewEntity phoneInterviewEntity;
@@ -120,11 +120,11 @@ public class PositionEntity implements Serializable {
 		this.OpeningDate = OpeningDate;
 	}
 
-	public ManagerEntity getManager() {
+	public UserEntity getManager() {
 		return this.manager;
 	}
 
-	public void setManager(ManagerEntity manager) {
+	public void setManager(UserEntity manager) {
 		this.manager = manager;
 	}
 

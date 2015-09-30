@@ -372,6 +372,7 @@ public class ApplicationFacade extends AbstractFacade<ApplicationEntity> {
 	public void createManualUserApplications(ApplicationEntity application, String cvUploadName, String clUploadName, String source, UserEntity loggedUser) throws DoNotUploadCoverLetterException, DoNotUploadCVFileException, EJBException {
 		if (cvUploadName != null && clUploadName != null) {
 			application.setApplicant((ApplicantEntity) loggedUser);
+			Logger.getLogger(ApplicationFacade.class.getName()).log(Level.INFO, "Inside createManualUserApplications() loggedUser.getEmail()="+loggedUser.getEmail());
 			application.setCv(cvUploadName);
 			application.setCoverLetter(clUploadName);
 			application.setStatus(StatusApplication.SUBMITTED);
