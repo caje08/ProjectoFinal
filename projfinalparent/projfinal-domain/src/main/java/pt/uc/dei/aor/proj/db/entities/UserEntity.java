@@ -45,6 +45,7 @@ import org.slf4j.LoggerFactory;
 	@NamedQuery(name = "UserEntity.findById", query = "SELECT u FROM UserEntity u WHERE u.userId = :userId"),
 	@NamedQuery(name = "UserEntity.findLstRolesByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
 	@NamedQuery(name = "UserEntity.findLstUsersByRole", query = "SELECT distinct u FROM UserEntity u join u.roles cargos WHERE cargos = :cargo"),
+	@NamedQuery(name = "UserEntity.findLstUsersExceptRole", query = "SELECT distinct u FROM UserEntity u join u.roles cargos WHERE cargos <> :cargo"),
 	@NamedQuery(name = "ApplicantEntity.findByEmail", query = "SELECT a FROM ApplicantEntity a WHERE a.email = :email")})
 
 

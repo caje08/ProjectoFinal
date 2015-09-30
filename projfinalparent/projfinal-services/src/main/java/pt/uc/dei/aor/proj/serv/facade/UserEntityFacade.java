@@ -48,8 +48,8 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	private ManagerFacade managerFacade;
 	@EJB
 	private InterviewerFacade interviewerFacade;
-//	@EJB
-//	private GmailSmtpSSL mail;
+	// @EJB
+	// private GmailSmtpSSL mail;
 	@EJB
 	private SendEmail mail;
 	@EJB
@@ -57,12 +57,10 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	@Resource
 	SessionContext ctx;
 
-
 	@Override
 	protected EntityManager getEntityManager() {
 		return em;
 	}
-
 
 	public UserEntityFacade() {
 		super(UserEntity.class);
@@ -71,85 +69,152 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	/**
 	 *
 	 * @return UserEntity if is an instance of ManagerEntity, AdminEntity and
-	 * InterviewerEntity, and if it is not null.
+	 *         InterviewerEntity, and if it is not null.
 	 * @throws UserNotFoundException
-	 * @throws UserGuideException (Not a instanceof "childs" of UserEntity)
+	 * @throws UserGuideException
+	 *             (Not a instanceof "childs" of UserEntity)
 	 * @throws EJBException
 	 */
-	public UserEntity findUserByEmail() throws UserNotFoundException, UserGuideException, EJBException, NoResultException  {
-		
-		try{			  
-			   Query query = em.createNamedQuery("UserEntity.findByEmail", UserEntity.class);
-			   query.setParameter("email",ctx.getCallerPrincipal().getName());
-			   List results= query.getResultList();
-			   if (!results.isEmpty()){
-				   Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,"\n User Found with ctx.getCallerPrincipal().getName()="+ctx.getCallerPrincipal().getName());
-				   return (UserEntity) results.get(0);
-			   }else{
-				   Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,"\n User not Found with ctx.getCallerPrincipal().getName()="+ctx.getCallerPrincipal().getName());
-					throw new UserNotFoundException();
-			   }
-			} catch (Exception e) {
-				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,null,e);
-				throw new UserNotFoundException();				 
-			}
-		
-		/*Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,"Inside findUserByEmail() ctx.getCallerPrincipal().getName()="+ctx.getCallerPrincipal().getName());
-		UserEntity userEntity = (UserEntity) em.createNamedQuery("AdminEntity.findByEmail").setParameter("email", ctx.getCallerPrincipal().getName()).getSingleResult();
-		if (userEntity != null) {
-			if (userEntity instanceof AdminEntity || userEntity instanceof InterviewerEntity || userEntity instanceof ManagerEntity) {
-				return userEntity;
-			} else {
-				throw new UserGuideException();
-			}
-		} else {
-			throw new NoResultException();
-		}*/
-	}
-	
-	/**
-	 *
-	 * @return UserEntity if is an instance of ManagerEntity, AdminEntity and
-	 * InterviewerEntity, and if it is not null.
-	 * @throws UserNotFoundException
-	 * @throws UserGuideException (Not a instanceof "childs" of UserEntity)
-	 * @throws EJBException
-	 */
-	public UserEntity findUserByUsername() throws UserNotFoundException, UserGuideException, EJBException, NoResultException  {
-		
-		UserEntity userEntity = (UserEntity) em.createNamedQuery("UserEntity.findByName").setParameter("username", ctx.getCallerPrincipal().getName()).getSingleResult();
-		if (userEntity != null) {
-			if (userEntity instanceof AdminEntity || userEntity instanceof InterviewerEntity || userEntity instanceof ManagerEntity) {
-				return userEntity;
-			} else {
-				throw new UserGuideException();
-			}
-		} else {
-			throw new NoResultException();
-		}
-	}
+	public UserEntity findUserByEmail() throws UserNotFoundException,
+			UserGuideException, EJBException, NoResultException {
 
-	/**
-	 *
-	 * @return UserEntity if is an instance of ManagerEntity, AdminEntity and
-	 * InterviewerEntity, and if it is not null.
-	 * @throws UserNotFoundException
-	 * @throws UserGuideException (Not a instanceof "childs" of UserEntity)
-	 * @throws EJBException
-	 */
-	public boolean findUserByEmailPass(String email, String pass) throws UserNotFoundException, EJBException, NoResultException  {
-		try{
-		   String pwencr=pw.encrypt(pass);
-		   Query query = em.createNamedQuery("UserEntity.findByEmailPass", UserEntity.class);
-		   query.setParameter("email",email);
-		   query.setParameter("password",pwencr);
-		   return !query.getResultList()
-				.isEmpty();
+		try {
+			Query query = em.createNamedQuery("UserEntity.findByEmail",
+					UserEntity.class);
+			query.setParameter("email", ctx.getCallerPrincipal().getName());
+			List results = query.getResultList();
+			if (!results.isEmpty()) {
+				Logger.getLogger(UserEntityFacade.class.getName()).log(
+						Level.SEVERE,
+						"\n User Found with ctx.getCallerPrincipal().getName()="
+								+ ctx.getCallerPrincipal().getName());
+				return (UserEntity) results.get(0);
+			} else {
+				Logger.getLogger(UserEntityFacade.class.getName()).log(
+						Level.SEVERE,
+						"\n User not Found with ctx.getCallerPrincipal().getName()="
+								+ ctx.getCallerPrincipal().getName());
+				throw new UserNotFoundException();
+			}
 		} catch (Exception e) {
-			Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,null,e);
-			throw new UserNotFoundException();				 
+			Logger.getLogger(UserEntityFacade.class.getName()).log(
+					Level.SEVERE, null, e);
+			throw new UserNotFoundException();
+		}
+
+		/*
+		 * Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,
+		 * "Inside findUserByEmail() ctx.getCallerPrincipal().getName()="
+		 * +ctx.getCallerPrincipal().getName()); UserEntity userEntity =
+		 * (UserEntity)
+		 * em.createNamedQuery("AdminEntity.findByEmail").setParameter("email",
+		 * ctx.getCallerPrincipal().getName()).getSingleResult(); if (userEntity
+		 * != null) { if (userEntity instanceof AdminEntity || userEntity
+		 * instanceof InterviewerEntity || userEntity instanceof ManagerEntity)
+		 * { return userEntity; } else { throw new UserGuideException(); } }
+		 * else { throw new NoResultException(); }
+		 */
+	}
+
+	/**
+	 *
+	 * @return UserEntity if is an instance of ManagerEntity, AdminEntity and
+	 *         InterviewerEntity, and if it is not null.
+	 * @throws UserNotFoundException
+	 * @throws UserGuideException
+	 *             (Not a instanceof "childs" of UserEntity)
+	 * @throws EJBException
+	 */
+	public UserEntity findUserByUsername() throws UserNotFoundException,
+			UserGuideException, EJBException, NoResultException {
+
+		UserEntity userEntity = (UserEntity) em
+				.createNamedQuery("UserEntity.findByName")
+				.setParameter("username", ctx.getCallerPrincipal().getName())
+				.getSingleResult();
+		if (userEntity != null) {
+			if (userEntity instanceof AdminEntity
+					|| userEntity instanceof InterviewerEntity
+					|| userEntity instanceof ManagerEntity) {
+				return userEntity;
+			} else {
+				throw new UserGuideException();
+			}
+		} else {
+			throw new NoResultException();
+		}
+	}
+
+	/**
+	 *
+	 * @return UserEntity if is an instance of ManagerEntity, AdminEntity and
+	 *         InterviewerEntity, and if it is not null.
+	 * @throws UserNotFoundException
+	 * @throws UserGuideException
+	 *             (Not a instanceof "childs" of UserEntity)
+	 * @throws EJBException
+	 */
+	public boolean findUserByEmailPass(String email, String pass)
+			throws UserNotFoundException, EJBException, NoResultException {
+		try {
+			String pwencr = pw.encrypt(pass);
+			Query query = em.createNamedQuery("UserEntity.findByEmailPass",
+					UserEntity.class);
+			query.setParameter("email", email);
+			query.setParameter("password", pwencr);
+			return !query.getResultList().isEmpty();
+		} catch (Exception e) {
+			Logger.getLogger(UserEntityFacade.class.getName()).log(
+					Level.SEVERE, null, e);
+			throw new UserNotFoundException();
+		}
+
+	}
+
+	/**
+	 *
+	 * @param role
+	 * @return UserEntity find by inputed role
+	 * @throws UserNotFoundException
+	 */
+	public List<UserEntity> lstUserEntitiesAvailable(Role role) {
+		List<InterviewerEntity> tmpInterviewers = null;
+		List<UserEntity> userEntity = (List<UserEntity>) em
+				.createNamedQuery("UserEntity.findLstUsersByRole")
+				.setParameter("cargo", role).getResultList();
+		// tmpInterviewers = (List<InterviewerEntity>)userEntity;
+
+		return (List<UserEntity>) userEntity;
+
+	}
+
+	/**
+	 *
+	 * @param role
+	 * @return UserEntity find by inputed role to not match
+	 * @throws UserNotFoundException
+	 */
+	public List<UserEntity> lstUserEntitiesExceptRole(Role role) {
+		List<InterviewerEntity> tmpInterviewers = null;
+		List<UserEntity> userEntity = null;
+		try {
+			userEntity = (List<UserEntity>) em
+					.createNamedQuery("UserEntity.findLstUsersExceptRole")
+					.setParameter("cargo", role).getResultList();
+			// tmpInterviewers = (List<InterviewerEntity>)userEntity;
+			Logger.getLogger(UserEntityFacade.class.getName()).log(
+					Level.INFO,
+					"Inside lstUserEntitiesExceptRole where !role=" + role
+							+ ", listsize=" + tmpInterviewers.size());
+		} catch (Exception e) {
+			Logger.getLogger(UserEntityFacade.class.getName()).log(
+					Level.INFO,
+					"Inside lstUserEntitiesExceptRole where exception"
+							+ e.getMessage());
 		}
 		
+		return userEntity;
+
 	}
 
 	/**
@@ -158,23 +223,11 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @return ApplicantEntity find by inputed username
 	 * @throws UserNotFoundException
 	 */
-	public List<UserEntity> lstUserEntitiesAvailable(Role role){
-		List<InterviewerEntity> tmpInterviewers=null;
-		List<UserEntity> userEntity = (List<UserEntity>) em.createNamedQuery("UserEntity.findLstUsersByRole").setParameter("cargo", role).getResultList();
-		//tmpInterviewers = (List<InterviewerEntity>)userEntity;
-		
-			return (List<UserEntity>) userEntity;
-		
-	}
-	
-	/**
-	 *
-	 * @param username
-	 * @return ApplicantEntity find by inputed username
-	 * @throws UserNotFoundException
-	 */
-	public ApplicantEntity findApplicantByUsernameInput(String username) throws UserNotFoundException {
-		UserEntity userEntity = (UserEntity) em.createNamedQuery("UserEntity.findByName").setParameter("username", username).getSingleResult();
+	public ApplicantEntity findApplicantByUsernameInput(String username)
+			throws UserNotFoundException {
+		UserEntity userEntity = (UserEntity) em
+				.createNamedQuery("UserEntity.findByName")
+				.setParameter("username", username).getSingleResult();
 		if (userEntity != null) {
 			return (ApplicantEntity) userEntity;
 		} else {
@@ -192,14 +245,17 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws EmailAlreadyExistsException
 	 * @throws UsernameAlreadyExists
 	 * @throws EJBException
-	 * @throws MessagingException 
+	 * @throws MessagingException
 	 */
-	public void createNewUser(UserEntity user, String userType) throws InvalidAuthException, EmailAlreadyExistsException, UsernameAlreadyExists, EJBException, MessagingException {
+	public void createNewUser(UserEntity user, String userType)
+			throws InvalidAuthException, EmailAlreadyExistsException,
+			UsernameAlreadyExists, EJBException, MessagingException {
 		String to = user.getEmail();
 		String password = user.getPassword();
-//		String passwordEncrypted = EncryptPassword.encrypt(user.getPassword());
+		// String passwordEncrypted =
+		// EncryptPassword.encrypt(user.getPassword());
 		String passwordEncrypted = pw.encrypt(user.getPassword());
-		
+
 		user.setPassword(passwordEncrypted);
 		if (knowIfUsernameAlreadyExists(user.getUsername())) {
 			throw new UsernameAlreadyExists();
@@ -208,58 +264,92 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 		} else {
 			switch (userType) {
 			case "Admin":
-//				AdminEntity adminentity = new AdminEntity();
-//				adminentity.setFirstName(user.getFirstName());
-//				adminentity.setLastName(user.getLastName());
-//				adminentity.setEmail(user.getEmail());
-//				adminentity.setUsername(user.getUsername());
-//				adminentity.setPassword(user.getPassword());
-				//new AdminEntity("Admin","admin", "jGl2qRg=", "admin@admin", "admin@admin");
-				AdminEntity adminentity = new AdminEntity(user.getFirstName(),user.getLastName(),user.getPassword(),user.getEmail(),user.getUsername());
+				// AdminEntity adminentity = new AdminEntity();
+				// adminentity.setFirstName(user.getFirstName());
+				// adminentity.setLastName(user.getLastName());
+				// adminentity.setEmail(user.getEmail());
+				// adminentity.setUsername(user.getUsername());
+				// adminentity.setPassword(user.getPassword());
+				// new AdminEntity("Admin","admin", "jGl2qRg=", "admin@admin",
+				// "admin@admin");
+				AdminEntity adminentity = new AdminEntity(user.getFirstName(),
+						user.getLastName(), user.getPassword(),
+						user.getEmail(), user.getUsername());
 				adminentity.setRole(Role.ADMIN);
-//				adminentity.setRole(Role.MANAGER);
-//				adminentity.setRole(Role.INTERVIEWER);
+				// adminentity.setRole(Role.MANAGER);
+				// adminentity.setRole(Role.INTERVIEWER);
 				em.persist(adminentity);
-				//adminEntityFacade.createAdmin(adminentity);
-				mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new user", "Your login is " + user.getUsername() + " and your password is " + password, to);
-				//mail.sendMailTo("acertarrumo2015@gmail.com", "Chosen as new user", "Your login is " + user.getUsername() + " and your password is " + password);
-				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,"New Admin user.email="+adminentity.getEmail()+" has been created");
+				// adminEntityFacade.createAdmin(adminentity);
+				mail.sendEMail("acertarrumo2015@gmail.com",
+						"Chosen as new user",
+						"Your login is " + user.getUsername()
+								+ " and your password is " + password, to);
+				// mail.sendMailTo("acertarrumo2015@gmail.com",
+				// "Chosen as new user", "Your login is " + user.getUsername() +
+				// " and your password is " + password);
+				Logger.getLogger(UserEntityFacade.class.getName()).log(
+						Level.INFO,
+						"New Admin user.email=" + adminentity.getEmail()
+								+ " has been created");
 				break;
 			case "Manager":
-//				ManagerEntity manager = new ManagerEntity();
-//				manager.setFirstName(user.getFirstName());
-//				manager.setLastName(user.getLastName());
-//				manager.setEmail(user.getEmail());
-//				manager.setUsername(user.getUsername());
-//				manager.setPassword(user.getPassword());
-//				UserEntity usertmp1= new ManagerEntity("Carlos", "Santos","pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "carlos@gmail.com",
-//						"carlos@gmail.com"); //pass 123
-				ManagerEntity manager = new ManagerEntity(user.getFirstName(),user.getLastName(),user.getPassword(),user.getEmail(),user.getUsername());
+				// ManagerEntity manager = new ManagerEntity();
+				// manager.setFirstName(user.getFirstName());
+				// manager.setLastName(user.getLastName());
+				// manager.setEmail(user.getEmail());
+				// manager.setUsername(user.getUsername());
+				// manager.setPassword(user.getPassword());
+				// UserEntity usertmp1= new ManagerEntity("Carlos",
+				// "Santos","pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+				// "carlos@gmail.com",
+				// "carlos@gmail.com"); //pass 123
+				ManagerEntity manager = new ManagerEntity(user.getFirstName(),
+						user.getLastName(), user.getPassword(),
+						user.getEmail(), user.getUsername());
 				manager.setRole(Role.MANAGER);
-				//manager.setRole(Role.INTERVIEWER);
+				// manager.setRole(Role.INTERVIEWER);
 				em.persist(manager);
-				//adminEntityFacade.createManager(manager);
-				//mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new manager", "Your login is " + user.getUsername() + " and your password is " + password, to);
-				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,"New Manager user.email="+manager.getEmail()+" has been created");
+				// adminEntityFacade.createManager(manager);
+				// mail.sendEMail("acertarrumo2015@gmail.com",
+				// "Chosen as new manager", "Your login is " +
+				// user.getUsername() + " and your password is " + password,
+				// to);
+				Logger.getLogger(UserEntityFacade.class.getName()).log(
+						Level.INFO,
+						"New Manager user.email=" + manager.getEmail()
+								+ " has been created");
 				break;
-			case "Interviewer":				
-//				InterviewerEntity interviewer = new InterviewerEntity();
-//				interviewer.setFirstName(user.getFirstName());
-//				interviewer.setLastName(user.getLastName());
-//				interviewer.setEmail(user.getEmail());
-//				interviewer.setUsername(user.getUsername());
-//				interviewer.setPassword(user.getPassword());
-//				UserEntity	usertmp2 = new InterviewerEntity("Catarina", "Lapo", "s6jg4fmrG/46NvIx9nb3i7MKUZ0rIebFMMDu6Ou0pdA=", "ciclapo@gmail.com",
-//						"ciclapo@gmail.com"); //pass 456
-				InterviewerEntity interviewer = new InterviewerEntity(user.getFirstName(),user.getLastName(),user.getPassword(),user.getEmail(),user.getUsername());
+			case "Interviewer":
+				// InterviewerEntity interviewer = new InterviewerEntity();
+				// interviewer.setFirstName(user.getFirstName());
+				// interviewer.setLastName(user.getLastName());
+				// interviewer.setEmail(user.getEmail());
+				// interviewer.setUsername(user.getUsername());
+				// interviewer.setPassword(user.getPassword());
+				// UserEntity usertmp2 = new InterviewerEntity("Catarina",
+				// "Lapo", "s6jg4fmrG/46NvIx9nb3i7MKUZ0rIebFMMDu6Ou0pdA=",
+				// "ciclapo@gmail.com",
+				// "ciclapo@gmail.com"); //pass 456
+				InterviewerEntity interviewer = new InterviewerEntity(
+						user.getFirstName(), user.getLastName(),
+						user.getPassword(), user.getEmail(), user.getUsername());
 				interviewer.setRole(Role.INTERVIEWER);
 				em.persist(interviewer);
-				//adminEntityFacade.createInterviewer(interviewer);
-				//mail.sendEMail("acertarrumo2015@gmail.com", "Chosen as new interviewer", "Your login is " + user.getUsername() + " and your password is " + password, to);
-				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO,"New Interviewer user.email="+interviewer.getEmail()+" has been created");
+				// adminEntityFacade.createInterviewer(interviewer);
+				// mail.sendEMail("acertarrumo2015@gmail.com",
+				// "Chosen as new interviewer", "Your login is " +
+				// user.getUsername() + " and your password is " + password,
+				// to);
+				Logger.getLogger(UserEntityFacade.class.getName()).log(
+						Level.INFO,
+						"New Interviewer user.email=" + interviewer.getEmail()
+								+ " has been created");
 				break;
 			default:
-				Logger.getLogger(UserEntityFacade.class.getName()).log(Level.SEVERE,"An error has occurred in createNewUser(). The user with email="+user.getEmail()+" has not been created!!");
+				Logger.getLogger(UserEntityFacade.class.getName()).log(
+						Level.SEVERE,
+						"An error has occurred in createNewUser(). The user with email="
+								+ user.getEmail() + " has not been created!!");
 				break;
 			}
 		}
@@ -276,26 +366,38 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws EmailAlreadyExistsException
 	 * @throws EJBException
 	 */
-	public void editUser(UserEntity user, String firstName, String lastName, String email, String password, String usernam) throws InvalidAuthException, EmailAlreadyExistsException, EJBException {
+	public void editUser(UserEntity user, String firstName, String lastName,
+			String email, String password, String usernam)
+			throws InvalidAuthException, EmailAlreadyExistsException,
+			EJBException {
 		if (mailAlreadyExists(user.getEmail())) {
-			Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO, "EditUser() --> Exists User email. Updating user profile for email="+email);
-			//user.setEmail(email);
+			Logger.getLogger(UserEntityFacade.class.getName()).log(
+					Level.INFO,
+					"EditUser() --> Exists User email. Updating user profile for email="
+							+ email);
+			// user.setEmail(email);
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
 			user.setUsername(usernam);
-			//user.setPassword(password);
-				 String passwordEncrypted = pw.encrypt(password);
-				 user.setPassword(passwordEncrypted);
-				 Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO, "EditUser() --> User password has been updated to "+password+" --> "+passwordEncrypted);
-//				
+			// user.setPassword(password);
+			String passwordEncrypted = pw.encrypt(password);
+			user.setPassword(passwordEncrypted);
+			Logger.getLogger(UserEntityFacade.class.getName()).log(
+					Level.INFO,
+					"EditUser() --> User password has been updated to "
+							+ password + " --> " + passwordEncrypted);
+			//
 			edit(user);
-			//ACTIVATE THE NEXT LINE TO START SENDING EMAILS TO THE USER
-			mail.sendEMail("acertarrumo2015@gmail.com", "Edit user", "Your login is " + user.getEmail() + " and your password is " + user.getPassword(),user.getEmail());
+			// ACTIVATE THE NEXT LINE TO START SENDING EMAILS TO THE USER
+			mail.sendEMail("acertarrumo2015@gmail.com", "Edit user",
+					"Your login is " + user.getEmail()
+							+ " and your password is " + user.getPassword(),
+					user.getEmail());
 		} else {
 			throw new EmailAlreadyExistsException();
 		}
 	}
-	
+
 	/**
 	 *
 	 * @param user
@@ -307,18 +409,28 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @throws EmailDoesNotExistsException
 	 * @throws EJBException
 	 */
-	public void updateUserProfile(UserEntity user, String firstName, String lastName, String email, String password, List<Role> roles) throws InvalidAuthException, EmailDoesNotExistsException, EJBException {
+	public void updateUserProfile(UserEntity user, String firstName,
+			String lastName, String email, String password, List<Role> roles)
+			throws InvalidAuthException, EmailDoesNotExistsException,
+			EJBException {
 		if (mailAlreadyExists(user.getEmail())) {
-			//user.setEmail(email);
+			// user.setEmail(email);
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
-			//String passwordEncrypted = EncryptPassword.encrypt(password);
+			// String passwordEncrypted = EncryptPassword.encrypt(password);
 			String passwordEncrypted = pw.encrypt(user.getPassword());
 			user.setPassword(passwordEncrypted);
-			//user.setRoles(roles);
+			// user.setRoles(roles);
 			edit(user);
-			mail.sendEMail("acertarrumo2015@gmail.com", "Edit user", "Your login is " + user.getUsername() + " and your password is " + password, user.getEmail());
-			Logger.getLogger(UserEntityFacade.class.getName()).log(Level.INFO, "updateUserProfile() --> User with email= "+email+" has been updated and an email has been sent to inform about the update!");
+			mail.sendEMail("acertarrumo2015@gmail.com", "Edit user",
+					"Your login is " + user.getUsername()
+							+ " and your password is " + password,
+					user.getEmail());
+			Logger.getLogger(UserEntityFacade.class.getName())
+					.log(Level.INFO,
+							"updateUserProfile() --> User with email= "
+									+ email
+									+ " has been updated and an email has been sent to inform about the update!");
 		} else {
 			throw new EmailDoesNotExistsException();
 		}
@@ -329,14 +441,11 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @param username
 	 * @return true if this username already exists in database
 	 */
-	public
-	boolean knowIfUsernameAlreadyExists(String username) {
-		Query query = em.createNamedQuery("UserEntity.findByName", UserEntity.class
-				);
-		query.setParameter(
-				"username", username);
-		return !query.getResultList()
-				.isEmpty();
+	public boolean knowIfUsernameAlreadyExists(String username) {
+		Query query = em.createNamedQuery("UserEntity.findByName",
+				UserEntity.class);
+		query.setParameter("username", username);
+		return !query.getResultList().isEmpty();
 	}
 
 	/**
@@ -344,17 +453,14 @@ public class UserEntityFacade extends AbstractFacade<UserEntity> {
 	 * @param email
 	 * @return true if this email already exists in database
 	 */
-	public
-	boolean mailAlreadyExists(String email) {
-		Query query = em.createNamedQuery("UserEntity.findByEmail", UserEntity.class
-				);
-		query.setParameter(
-				"email", email);
-		return !query.getResultList()
-				.isEmpty();
+	public boolean mailAlreadyExists(String email) {
+		Query query = em.createNamedQuery("UserEntity.findByEmail",
+				UserEntity.class);
+		query.setParameter("email", email);
+		return !query.getResultList().isEmpty();
 	}
 
-	/////////////////////Getters && Setters////////////////////
+	// ///////////////////Getters && Setters////////////////////
 	public EntityManager getEm() {
 		return em;
 	}

@@ -178,7 +178,10 @@ public class ApplicationWebManagem implements Serializable {
 				.getApplication().getApplicationId()) == 0) {
 			Logger.getLogger(ApplicationWebManagem.class.getName()).log(
 					Level.INFO,
-					"Inside createNewInterview() with numberOfInterviews=0");
+					"Inside createNewInterview() with numberOfInterviews=0, with interviewDate="
+							+ interviewDate + ", selectedInterviewer="
+							+ selectedInterviewer.getEmail() + ",statefulApplication.getApplication().getPosition()="+statefulApplication
+								.getApplication().getPosition().getTitle());
 			try {
 				interviewFeedbackFacade.createInterview(interviewDate,
 						selectedInterviewer, statefulApplication
@@ -576,7 +579,7 @@ public class ApplicationWebManagem implements Serializable {
 				if (interviewFeedbackFacade
 						.knowIfAllInterviewsOfApplicationHaveAcceptedFeedback(selectedApplication)) {
 					return true;
-				} 
+				}
 			} else {
 				return false;
 			}

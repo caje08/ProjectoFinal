@@ -58,7 +58,7 @@ public class InterviewEntity implements Serializable {
 	@Basic
 	private InterviewType type;
 
-	@OneToMany(targetEntity = InterviewQuestionEntity.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = InterviewQuestionEntity.class, cascade = CascadeType.ALL, mappedBy="interviewGuide")
 	private Collection<InterviewQuestionEntity> interviewQuestion;
 
 	public InterviewEntity() {

@@ -363,8 +363,17 @@ public class UserWebView implements Serializable {
 	public List<UserEntity> getLstUsers() {
 		List<UserEntity> listroles= new ArrayList<>();
 		listroles = userEntityFacade.findAll();
+		
 		return listroles;
 	}
+	
+	public List<UserEntity> getLstUsersExceptCandidate() {
+		List<UserEntity> listroles= new ArrayList<>();
+		listroles = userEntityFacade.lstUserEntitiesExceptRole(Role.CANDIDATE);
+		
+		return listroles;
+	}
+	
 
 	public void setLstUsers(List<UserEntity> lstUsers) {
 		this.lstUsers = lstUsers;

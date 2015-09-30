@@ -3,7 +3,6 @@
 package pt.uc.dei.aor.proj.serv.facade;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -404,14 +403,17 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 	 * @return list of interviews with selected interviewer
 	 */
 	public List<InterviewFeedbackEntity> lstInterviewsWithThatInterviewer(UserEntity interviewer) {
-		List<InterviewFeedbackEntity> results=new ArrayList<>();
+		List<InterviewFeedbackEntity> results;
 		Query query = em.createNamedQuery("InterviewFeedbackEntity.findByInterviewer", InterviewFeedbackEntity.class
 				);
 		query.setParameter(
 				"interviewer", interviewer);
 		results = query.getResultList();
 		if(results.isEmpty()) {
-			return null;
+			Logger.getLogger(InterviewFeedbackFacade.class.getName()).log(
+					Level.INFO,
+					"Inside lstInterviewsWithThatInterviewer() with empty list");
+			return results;
 		}
 		
 		return results;

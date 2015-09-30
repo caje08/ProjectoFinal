@@ -5,6 +5,8 @@ package pt.uc.dei.aor.proj.serv.facade;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -134,6 +136,8 @@ public class InterviewEntityFacade extends AbstractFacade<InterviewEntity> {
 		query.setParameter("True", true);
 		//All List of phone Interviews Guides in use
 		List<InterviewEntity> allInterviewEntitys = query.getResultList();
+		Logger.getLogger(InterviewEntityFacade.class.getName()).log(
+				Level.INFO,"Inside lstPhoneInterviewsInUseWithQuestions() with allinterviews.size="+allInterviewEntitys.size());
 		for (InterviewEntity allInterviewEntity : allInterviewEntitys) {
 			if (!allInterviewEntity.getInterviewQuestion().isEmpty()) {
 				phoneInterviewEntitys.add(allInterviewEntity);
