@@ -14,7 +14,9 @@
 			<p:growl />
 
 			<!-- Form of Guide List-->
-
+<div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Guides</h1>
+				</div>
 			<h:form id="form">
 				<p:growl id="messages" showDetail="true" />
 				<h:panelGroup binding="#{guideWebManagem.panelInterviewQuestions}">
@@ -69,7 +71,7 @@
 
 						<p:column styleClass="centeredColumn" headerText="Show Questions"
 							style="width:20%">
-							<p:commandButton action="#{guideWebManagem.showPanel(item)}"
+							<p:commandButton styleClass="myButton" action="#{guideWebManagem.showPanel(item)}"
 								icon="ui-icon-plus" title="View" ajax="false">
 								<f:setPropertyActionListener value="#{item}"
 									target="#{guideWebManagem.selectedInterviewEntity}" />
@@ -79,7 +81,7 @@
 
 						<p:column styleClass="centeredColumn" headerText="Remove"
 							style="width:20%">
-							<p:commandButton
+							<p:commandButton styleClass="myButton"
 								rendered="#{guideWebManagem.isPossibleToRemoveGuide(item)}"
 								id="confirmRemoveGuide" icon="ui-icon-minus"
 								onclick="PF('removeGuide').show();">
@@ -90,8 +92,8 @@
 
 					</p:dataTable>
 
-					<p:commandButton id="modalDialogButton" value="Add new Guide"
-						onclick="PF('guide').show();" />
+					<p:commandButton  styleClass="myButton" id="modalDialogButton" value="Add new Guide"
+						onclick="PF('guide').show();"  ajax="false"/>
 
 				</h:panelGroup>
 			</h:form>
@@ -114,8 +116,8 @@
 							<f:selectItem itemLabel="Presential Interview"
 								itemValue="PRESENTIAL" />
 						</p:selectOneMenu>
-						<h:commandButton action="#{guideWebManagem.createGuide()}"
-							value="Add new Guide"
+						<h:commandButton  styleClass="myButton"  action="#{guideWebManagem.createGuide()}"
+							value="Add new Guide" ajax="false"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 					</h:panelGrid>
 				</p:dialog>
@@ -164,7 +166,7 @@
 
 						<p:column styleClass="centeredColumn" headerText="Edit"
 							style="width:20%">
-							<p:commandButton
+							<p:commandButton styleClass="myButton" value="Edit" ajax="false"
 								rendered="#{guideWebManagem.isPossibleToRemoveGuide(guideWebManagem.selectedInterviewEntity)}"
 								icon="ui-icon-wrench " oncomplete="PF('editq').show()"
 								update=":editQuestion" process="@this">
@@ -174,20 +176,17 @@
 						</p:column>
 
 					</p:dataTable>
-					<p:commandButton rendered="#{guideWebManagem.couldAddQuestions()}"
+					<p:commandButton styleClass="myButton"  ajax="false" rendered="#{guideWebManagem.couldAddQuestions()}"
 						value="Add new Question" oncomplete="PF('question1').show();"
 						update=":createQuestion" />
 
-					<div align="left">
-						<p:commandButton icon="ui-icon-arrowreturnthick-1-w"
+					
+						<p:commandButton styleClass="myButton"  ajax="false"  icon="ui-icon-arrowreturnthick-1-w"
+						value="Return"
 							action="/pages/admin/guides.xhtml?faces-redirect=true" />
-					</div>
-
-
+				
 				</h:panelGroup>
-
-
-			</h:form>
+	</h:form>
 
 			<!--Pop up to introduce name of questions-->
 
@@ -207,7 +206,7 @@
 							<f:selectItem itemLabel="Yes or No" itemValue="BOOLEAN" />
 							<f:selectItem itemLabel="Free Answer" itemValue="TEXT" />
 						</p:selectOneMenu>
-						<h:commandButton
+						<h:commandButton styleClass="myButton"
 							action="#{guideWebManagem.createQuestionsForGuide()}"
 							value="Add New Question"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
@@ -233,7 +232,7 @@
 							<f:selectItem itemLabel="Yes or No" itemValue="BOOLEAN" />
 							<f:selectItem itemLabel="Free Answer" itemValue="TEXT" />
 						</p:selectOneMenu>
-						<h:commandButton action="#{guideWebManagem.editQuestion()}"
+						<h:commandButton  styleClass="myButton" action="#{guideWebManagem.editQuestion()}"
 							value="Edit"
 							style="background-color: ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 					</h:panelGrid>
@@ -250,10 +249,10 @@
 						<h:outputLabel
 							value="Are you sure you want to remove this Interview Guide?"
 							for="GuideName" />
-						<h:commandButton action="#{guideWebManagem.removeGuide()}"
+						<h:commandButton  styleClass="myButton" action="#{guideWebManagem.removeGuide()}"
 							value="Yes"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
-						<h:commandButton action="guides?faces-redirect=true"
+						<h:commandButton   styleClass="myButton" action="guides?faces-redirect=true"
 							value="Cancel"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 					</h:panelGrid>
@@ -269,10 +268,12 @@
 						cellspacing="2">
 						<h:outputLabel
 							value="Are you sure you want to change the use of this Interview Guide?" />
-						<h:commandButton action="#{guideWebManagem.editGuide()}"
+						<h:commandButton  styleClass="myButton"
+						action="#{guideWebManagem.editGuide()}"
 							value="Yes"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
-						<h:commandButton action="guides?faces-redirect=true"
+						<h:commandButton  styleClass="myButton" 
+						action="guides?faces-redirect=true"
 							value="Cancel"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 					</h:panelGrid>

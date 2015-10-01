@@ -3,7 +3,7 @@
     ]>
 
     <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                    template="./template/template.xhtml"
+                     template="./../../template/template.xhtml"
                     xmlns="http://www.w3.org/1999/xhtml"
                     xmlns:f="http://java.sun.com/jsf/core"
                     xmlns:h="http://java.sun.com/jsf/html"
@@ -15,9 +15,23 @@
 
         <ui:define name="top">
             <h:form>
-                <h:link outcome="/pages/candidate/indexmainuser" value="Login"  />&nbsp;&nbsp;
-                <h:link outcome="/pages/public/lstpositions" value="Career Oportunity" />&nbsp;&nbsp;
-                <h:link outcome="/publogin" value="Main Page" />
+             <h:graphicImage library="images" name="critical_logo.png"
+				style="display: inline;float: left; margin-right: 20px; margin-left: 7px;" /> 
+				
+				   <h:panelGrid columns="6" style="display: inline;">
+				   
+             <p:outputLabel value="Login for main page" style=" margin-right: 10px; margin-left: 150px;margin-top:20px;"/>
+              <p:commandButton style="margin-top:20px;" 
+               action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true" value="Login" /><!--  style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp; -->
+               
+                 <p:outputLabel value="List of oportunities" style=" margin-right: 10px; margin-left: 150px;margin-top:20px;"/>
+               <p:commandButton  style="margin-top:20px;"
+               action="/pages/public/lstpositions.xhtml?faces-redirect=true"  value="Career Oportunity"  />
+               
+                <p:outputLabel value="Back to main page" style=" margin-left: 150px;margin-right: 10px;margin-top:20px;"/>
+                <p:commandButton style="margin-top:20px;"
+                 action="/publogin.xhtml?faces-redirect=true"  value="Main Page" />
+            </h:panelGrid>
             </h:form>
             <div align="right">
                 <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>

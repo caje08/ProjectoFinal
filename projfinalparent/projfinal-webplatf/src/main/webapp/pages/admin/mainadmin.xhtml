@@ -14,12 +14,15 @@
 	<ui:define name="top">
 		<h:form>
 
+			<h:graphicImage library="images" name="critical_logo.png"
+				style="display: inline;float: left; margin-right: 10px; margin-left: 7px;" />
 			<p:menubar>
 				<p:menuitem>
 					<h:link outcome="/pages/admin/mainadmin.xhtml?faces-redirect=true">
 						<h:graphicImage library="images"
 							name="#{stylesCssToWeb.cssInUse.logoPath}" />
 					</h:link>
+
 				</p:menuitem>
 				<p:menuitem icon="ui-icon-home"
 					action="/pages/admin/mainadmin.xhtml?faces-redirect=true" />
@@ -114,123 +117,7 @@
 			<!--  menu horizontal -->
 			<div>
 				<h3>Welcome Admin</h3>
-				<p:tabView dynamic="true" cache="true">
-					<p:tab title="Positions">
-						<!--  menu vertical -->
-						<p:tabView orientation="left">
-							<p:tab title="ADMIN DASHBOARD">
 
-								<h3 class="center">Add new notification</h3>
-								<h1 class="center">Add a new graphic</h1>
-								<!--Position form -->
-
-								<h:form id="newposition">
-
-									<h:panelGrid columns="4" cellpadding="5" class="center">
-									</h:panelGrid>
-								</h:form>
-
-
-							</p:tab>
-
-							<p:tab title="Search all Positions">
-
-								<!-- 	  <h:form>
-                     </h:form> -->
-
-
-
-							</p:tab>
-						</p:tabView>
-						<!-- fim menu vertical -->
-					</p:tab>
-
-
-
-					<!-- ADICIONARNOVO UTLIZADOR	 -->
-
-
-					<p:tab title="Add New User">
-						<h3>Values with * are mandatory</h3>
-						<h1>Add a new User</h1>
-						<p></p>
-
-						<h:form>
-							<h:panelGrid columns="2">
-								<p:outputLabel value="First Name*" />
-								<p:inputText id="firstname" required="true" label="firstname"
-									size="40" requiredMessage="Please enter your First Name"
-									value="#{adminRequestBean.user.firstName}">
-								</p:inputText>
-								<p:watermark for="firstname" value="First Name" />
-								<p:message for="firstname" />
-
-
-								<p:outputLabel value="Last Name*" />
-								<p:inputText id="lastname" required="true" label="lastname"
-									size="40" requiredMessage="Please enter your last name."
-									value="#{adminRequestBean.user.lastName}">
-								</p:inputText>
-								<p:watermark for="lastname" value="Last Name" />
-								<p:message for="lastname" />
-
-								<p:outputLabel value="Email*" />
-								<p:inputText id="email" required="true" label="email" size="40"
-									requiredMessage="Please enter your email."
-									value="#{adminRequestBean.user.email}">
-									<f:validateRegex
-										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-								</p:inputText>
-								<p:watermark for="email" value="Email " />
-								<p:message for="email" />
-
-								<p:outputLabel value="Username*" />
-								<p:inputText id="username" required="true" label="username"
-									size="40" requiredMessage="Please enter your username."
-									value="#{adminRequestBean.user.username}">
-								</p:inputText>
-								<p:watermark for="username" value="Username " />
-								<p:message for="username" />
-
-								<p:outputLabel value="Password*" />
-								<p:password id="password" required="true" label="password"
-									size="40" requiredMessage="Please enter your password."
-									match="confirmPassword"
-									value="#{adminRequestBean.user.password}" maxlength="20">
-								</p:password>
-								<p:watermark for="password" value="Password" />
-								<p:message for="password" />
-
-								<p:outputLabel value="Confirm Password*" />
-								<p:password id="confirmPassword" required="true" size="40"
-									requiredMessage="Please confirm your password."
-									label="confirmPassword"
-									value="#{adminRequestBean.user.password}" maxlength="20">
-								</p:password>
-								<p:watermark for="confirmPassword" value="Type Password Again" />
-								<p:message for="confirmPassword" />
-
-							</h:panelGrid>
-
-
-							<p:selectOneMenu id="userType"
-								value="#{adminRequestBean.userType}">
-								<f:selectItem itemLabel="Admin" itemValue="Admin" />
-								<f:selectItem itemLabel="Manager" itemValue="Manager" />
-								<f:selectItem itemLabel="Interviewer" itemValue="Interviewer" />
-							</p:selectOneMenu>
-
-							<h:outputText></h:outputText>
-
-							<h:commandButton value="Add"
-								style="width:100px; height:45px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-								action="#{adminRequestBean.createNewUser()}" />
-
-						</h:form>
-					</p:tab>
-
-
-				</p:tabView>
 			</div>
 
 		</h:form>

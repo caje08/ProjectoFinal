@@ -8,11 +8,13 @@
 <h:head></h:head>
 <h:body>
 
-	<ui:composition>	
-			
+	<ui:composition>
+
+
 		<div id="user_logout">
-			<h:form>			    
-				<h:commandButton value="#{activeSession.activeUser.username}" disabled="true"/>
+			<h:form>
+				<h:commandButton value="#{activeSession.activeUser.username}"
+					disabled="true" />
 				<h:commandButton action="#{loginMB.logout()}" value="Logout" />
 			</h:form>
 		</div>

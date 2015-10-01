@@ -8,14 +8,12 @@
     <body>
         <ui:composition template="./mainmanager.xhtml"> 
               
-           <!--  <ui:define name="top">
-                <ui:include src="mainmanager.xhtml" />
-            </ui:define> -->
+          
             
             <ui:define name="content">
                 <h:form id="form">
+                    <h1 style="margin-bottom: 20px; font-size:25px;">Spontaneous Applications </h1>
                     <p:growl/>
-
                     <!--Spontaneous Applications form-->
 
                     <p:dataTable var="item" value="#{applicationWebManagem.lstSpontaneousApplication}" 
@@ -38,7 +36,7 @@
 
 
                         <p:column styleClass="centeredColumn"  headerText="Associate to Position"  style="width:20%">
-                            <p:commandButton  id="addPosition" icon="ui-icon-plus" oncomplete="PF('addPosition').show();" update=":applicationClone" >
+                            <p:commandButton   id="addPosition" icon="ui-icon-plus" oncomplete="PF('addPosition').show();" update=":applicationClone" >
                                 <f:setPropertyActionListener value="#{item}" target="#{manageApplicationWeb.selectedApplication}"  />
                             </p:commandButton>
                         </p:column>
@@ -76,7 +74,7 @@
                             </p:column>
 
                         </p:dataTable>
-                        <h:commandButton value="Associate" action="#{manageApplicationWeb.associateApplicationToPosition()}" style="width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+                        <h:commandButton  styleClass="myButton" value="Associate" action="#{manageApplicationWeb.associateApplicationToPosition()}" style="width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 
 
                     </p:dialog>

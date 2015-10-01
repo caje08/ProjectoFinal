@@ -13,9 +13,24 @@
 
         <ui:define name="top">
             <h:form>
-                <h:link outcome="/pages/candidate/indexmainuser" value="Login" style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp;
-                <h:link outcome="/pages/public/lstpositions" value="Career Oportunity" style="color: ##{cssRequestBB.cssInUse.labelCommandLink}" />&nbsp;&nbsp;
-                <h:link outcome="/publogin" value="Main Page" style="color: ##{cssRequestBB.cssInUse.labelCommandLink}" />
+            <h:graphicImage library="images" name="critical_logo.png"
+				style="display: inline;float: left; margin-right: 20px; margin-left: 7px;" /> 
+				
+				   <h:panelGrid columns="6" style="display: inline;">
+				   
+             <p:outputLabel value="Login for main page" style=" margin-right: 10px; margin-left: 150px;margin-top:20px;"/>
+              <p:commandButton style="margin-top:20px;" 
+               action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true" value="Login" /><!--  style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp; -->
+               
+                 <p:outputLabel value="List of oportunities" style=" margin-right: 10px; margin-left: 150px;margin-top:20px;"/>
+               <p:commandButton  style="margin-top:20px;"
+               action="/pages/public/lstpositions.xhtml?faces-redirect=true"  value="Career Oportunity"  />
+               
+                <p:outputLabel value="Back to main page" style=" margin-left: 150px;margin-right: 10px;margin-top:20px;"/>
+                <p:commandButton style="margin-top:20px;"
+                 action="/publogin.xhtml?faces-redirect=true"  value="Main Page" />
+            </h:panelGrid>
+            
             </h:form>
             <div align="right">
                 <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
@@ -37,9 +52,11 @@
             </h:form>
 
 
-            <h:form id="signInForm" enctype="multipart/form-data" rendered="#{infoUser.formRendered}" >
+            <h:form id="signInForm" enctype="multipart/form-data" rendered="#{infoUser.formRendered}" style="display: inline-table;">
                 <p:growl showDetail="true"/>
-                <h3> Values with * are mandatory </h3>
+               <h1 style="margin-bottom: 20px; font-size: xx-large;">Spontaneous
+			Applications</h1>
+		<h3>Values with * are mandatory</h3>
                 <h:outputText value= "Submit a New Application using Linkedin account" rendered="#{infoUser.isLinkedin}" style="color: #D20005" />
                 <h:outputText value= "Submit a New Application not using Linkedin account" rendered="#{!infoUser.isLinkedin}" style="color: #D20005" />
                 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
@@ -149,7 +166,7 @@
                                       allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800"  />
                         <p:growl id="cl1" showDetail="true" />
                         <p:message for="ml" />
-                        <h:commandButton value="Apply" style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+                        <h:commandButton styleClass="myButton" ajax="false" value="Apply" style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
                                          action="#{infoUser.createManualApplication()}"/>
 
                     </h:panelGrid>

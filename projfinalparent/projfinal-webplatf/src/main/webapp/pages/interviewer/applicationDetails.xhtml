@@ -19,48 +19,52 @@ and open the template in the editor.
             <ui:define name="content">
 
                 <h:form> 
-                    <h2 >Application details of #{appDetailsStatus.applicant.username}</h2>
-                    <h:panelGrid columns="2"  >
-                        <h:outputText value="First Name" />
-                        <h:outputText value="#{appDetailsStatus.applicant.firstName}" />
+                           <div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Application details of #{appDetailsStatus.applicant.username} </h1>
+				</div>
+                  
+                     <h:panelGrid columns="2" cellpading="3"  style="display:-webkit-inline-box;font-size:16px;"   >
+                
+                        <p:outputText value="First Name" />
+                        <p:outputText value="#{appDetailsStatus.applicant.firstName}" />
 
-                        <h:outputText value="Last Name:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.lastName}" />
+                        <p:outputText value="Last Name:" />
+                        <p:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
-                        <h:outputText value="Curriculum Vitae" />
+                        <p:outputText value="Curriculum Vitae" />
                         <p:button href="#{appDetailsStatus.cvPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cv">
                         </p:button>
 
-                        <h:outputText value="Cover Letter" /> 
+                        <p:outputText value="Cover Letter" /> 
                        <p:button href="#{appDetailsStatus.coverLetterPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cl">
                         </p:button>
 
-                        <h:outputText value="Email:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.email}" />
+                        <p:outputText value="Email:" />
+                        <p:outputText value="#{appDetailsStatus.applicant.email}" />
 
-                        <h:outputText value="Address:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.address}" />
+                        <p:outputText value="Address:" />
+                        <p:outputText value="#{appDetailsStatus.applicant.address}" />
 
-                        <h:outputText value="City:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.city}" />
+                        <p:outputText value="City:" />
+                        <p:outputText value="#{appDetailsStatus.applicant.city}" />
 
-                        <h:outputText value="Phone:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.phone}" />
+                        <p:outputText value="Phone:" />
+                        <p:outputText value="#{appDetailsStatus.applicant.phone}" />
 
-                        <h:outputText value="Mobile Phone:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.mobile}" />
+                        <p:outputText value="Mobile Phone:" />
+                        <p:outputText value="#{appDetailsStatus.applicant.mobile}" />
 
-                        <h:outputText value="Country:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.country}" />
+                        <p:outputText value="Country:" />
+                        <p:outputText value="#{appDetailsStatus.applicant.country}" />
 
-                        <h:outputText value="Degree:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.degree}" />
+                        <p:outputText value="Degree:" />
+                        <p:outputText value="#{appDetailsStatus.applicant.degree}" />
 
-                        <h:outputText value="School" />
-                        <h:outputText value="#{appDetailsStatus.applicant.school}" />
+                        <p:outputText value="School" />
+                        <p:outputText value="#{appDetailsStatus.applicant.school}" />
                         
-                         <h:outputText value="Application associated to Position:" />
-                        <h:outputText value="#{appDetailsStatus.position.title}" />
+                         <p:outputText value="Application associated to Position:" />
+                        <p:outputText value="#{appDetailsStatus.position.title}" />
 
                     </h:panelGrid>  
 
@@ -140,7 +144,7 @@ and open the template in the editor.
                                 <f:selectItems id="selectionatatus" var="outcome" value="#{applicationWebManagem.lstOutcomes}" itemValue="#{outcome}" itemLabel="#{outcome}"/>
                             </h:selectOneMenu>
                         </h:panelGrid>                      
-                        <h:commandButton  value="Add Feedback" action="#{applicationWebManagem.addFeedbak()}" style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+                        <h:commandButton  styleClass="myButton" value="Add Feedback" action="#{applicationWebManagem.addFeedbak()}" style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
                     </p:dialog>
                 </h:form>
 

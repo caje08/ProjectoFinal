@@ -13,13 +13,15 @@ and open the template in the editor.
     <body>
         <ui:composition template="./maininterviewer.xhtml"> 
 
+             <ui:define name="top">
+                <ui:include src="/topmenu/topinterviewer.xhtml" />
+            </ui:define>
             <ui:define name="content">
                 <p:growl showDetail="true" sticky="true"/>
                 <h:form> 
-                    <div id="display-success">
-                        User edited successfully
+                    <div>
+                       <h1 style="color:green;font-size:20px;margin-top:50px;">User edited successfully</h1>
                     </div>
-
                 </h:form>
             </ui:define>
         </ui:composition>

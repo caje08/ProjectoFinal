@@ -12,8 +12,13 @@
                 <ui:define name="content">
 
                     <h:form id="spontaneous">
-                        <h:panelGrid columns="3" cellpadding="5">
-
+                    
+                            	<div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Spontaneous applications report</h1>
+			
+				</div>
+                    
+                        <h:panelGrid columns="3" cellpadding="5" style="display: -webkit-inline-box;" >
                             <p:outputLabel for="openingDate" value="Opening date:" />
                             <p:calendar id="openingDate" required="true" value="#{reppApplicantsBB.begin}" requiredMessage="Please enter a Date" />
                             <h:outputText></h:outputText>
@@ -91,7 +96,7 @@
 
                         </p:panel>
 
-                        <p:commandButton id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
+                        <p:commandButton  styleClass="myButton"  ajax="false" id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
                             <f:setPropertyActionListener value="#{manager}" target="#{reppApplicantsBB.selectedmanager}" />
                         </p:commandButton>
 
@@ -117,7 +122,7 @@
                                 </p:column>
 
                             </p:dataTable>
-                            <h:commandButton value="Send email to this Manager" action="#{reppApplicantsBB.sendSpontaneousReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+                            <h:commandButton  styleClass="myButton"  value="Send email to this Manager" action="#{reppApplicantsBB.sendSpontaneousReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
                         </p:dialog>
                     </h:form>
                     

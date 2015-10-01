@@ -11,6 +11,8 @@
 
     <ui:define name="top">
         <h:form>
+        <h:graphicImage library="images" name="critical_logo.png"
+				style="display: inline;float: left; margin-right: 10px; margin-left: 7px;" /> 
             <p:menubar>
                 <p:menuitem icon="ui-icon-home" action="/pages/admin/mainmanager.xhtml?faces-redirect=true"/>
                 <p:submenu label="Welcome: #{activeSession.activeUser.username}" >
@@ -31,23 +33,7 @@
             <h:graphicImage library="images" name="#{stylesCssToWeb.cssInUse.logoPath}"/>
         </div>
     </ui:define>
-    <!--Main Content-->
-
-  <!--   <ui:define name="content">
-        <h:form>    
-            <p:galleria value="#{imagesView.images}"
-                        effect="slide" 
-                        panelHeight="566" panelWidth="566"
-                        var="image"
-                        >
-                <p:graphicImage value="../resources/images/#{image}" cache="false" 
-                                alt="Image Description for #{image}" title="#{image}"/>
-
-            </p:galleria>
-        </h:form> 
-
-    </ui:define> -->
-
+ 
 </ui:composition>
 
 

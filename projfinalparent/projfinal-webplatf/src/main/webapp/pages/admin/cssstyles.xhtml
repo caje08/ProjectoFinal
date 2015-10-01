@@ -8,14 +8,16 @@
             <ui:define name="content">
                 <h:form enctype="multipart/form-data">
                     <!--List of Css -->
-
+<div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">List of Css</h1>
+				</div>
                     <p:dataTable var="item" value="#{stylesCssToWeb.lstCSS}" 
                                  paginator="true" rows="10" paginatorPosition="top" editable="false" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="10,20,30" selectionMode="single" rowKey="#{item.ccsId}" selection="#{stylesCssToWeb.selectedCSS}" >
 
                         <f:facet name="header">
-                            List of Cascading Style Sheets (CSS)
+                            List of Css
                         </f:facet>
 
 
@@ -93,15 +95,15 @@
                         <h:panelGrid columns="4">
                             <p:outputLabel value="Company adress:"/>
                             <p:inputText value="#{stylesCssToWeb.selectedCSS.address}" required="true" requiredMessage="Please, you need to introduce an address"/>
-                            <h:outputLabel value="Company phone:"/>
+                            <p:outputLabel value="Company phone:"/>
                             <p:inputText value="#{stylesCssToWeb.selectedCSS.phone}" required="true" requiredMessage="Please, you need to introduce a phone"/>
-                            <h:outputLabel value="Company Fax:"/>
+                            <p:outputLabel value="Company Fax:"/>
                             <p:inputText value="#{stylesCssToWeb.selectedCSS.fax}" required="true" requiredMessage="Please, you need to introduce a fax"/>
-                            <h:outputLabel value="Company Email:"/>
+                            <p:outputLabel value="Company Email:"/>
                             <p:inputText value="#{stylesCssToWeb.selectedCSS.email}" required="true" requiredMessage="Please, you need to introduce an email"/>
-                            <h:outputLabel value="Latitude coordinates of company:"/>
+                            <p:outputLabel value="Latitude coordinates of company:"/>
                             <p:inputText value="#{stylesCssToWeb.selectedCSS.latitudeCoordinate}" required="true" requiredMessage="Please, you need to introduce west coordenadas"/>
-                            <h:outputLabel value="Longitude coordinates of company:"/>
+                            <p:outputLabel value="Longitude coordinates of company:"/>
                             <p:inputText value="#{stylesCssToWeb.selectedCSS.longitudeCoordinate}" required="true" requiredMessage="Please, you need to introduce east coordenadas"/>
                         </h:panelGrid>
                         <p:inputTextarea style="width: 900px; height:50px; " value="#{stylesCssToWeb.selectedCSS.companyDescription}" required="true" requiredMessage="Must introduce a company description"/>
@@ -128,7 +130,7 @@
                             <p:colorPicker  value="#{stylesCssToWeb.selectedCSS.backgroundColorButton}"/>
                         </h:panelGrid>
                         <div align="center">
-                            <h:commandButton value="Save" class="myButton" action="#{stylesCssToWeb.editCss()}"/>
+                            <h:commandButton value="Save"  styleClass="myButton"  action="#{stylesCssToWeb.editCss()}"/>
                         </div>
                     </p:dialog>
                 </h:form>
@@ -154,8 +156,8 @@
                     <p:dialog  header="Edit in Use" widgetVar="useguide" modal="true" height="auto" width="auto">
                         <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
                             <h:outputLabel value="Please, confirm this choice for CSS:"/>
-                            <h:commandButton action="#{stylesCssToWeb.editInUseCss()}" value="Confirm"/>
-                            <h:commandButton action="cssstyles.xhtml?faces-redirect=true" value="Cancel"/>
+                            <h:commandButton styleClass="myButton" action="#{stylesCssToWeb.editInUseCss()}" value="Confirm"/>
+                            <h:commandButton styleClass="myButton" action="cssstyles.xhtml?faces-redirect=true" value="Cancel"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>

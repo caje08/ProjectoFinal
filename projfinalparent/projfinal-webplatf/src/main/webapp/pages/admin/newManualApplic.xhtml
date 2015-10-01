@@ -8,10 +8,12 @@
 		<ui:define name="content">
 			<h:form enctype="multipart/form-data">
 				<p:growl showDetail="true" />
+				<h1 style="margin-bottom: 20px; font-size: xx-large;">Submit a
+					New Application</h1>
 				<h3>Values with * are mandatory</h3>
-				<h1>Submit a New Application</h1>
 
-				<h:panelGrid columns="2" cellpadding="4">
+				<h:panelGrid columns="2" cellpadding="3"
+					style="display: -webkit-inline-box;">
 					<p:outputLabel value="First Name*" />
 					<p:inputText id="firstname" required="true" label="firstname"
 						size="40" requiredMessage="Please enter your First Name"
@@ -86,12 +88,12 @@
 					</p:inputText>
 
 					<p:outputLabel value="Source*" />
-<!-- 					<p:inputText id="source" required="true" label="source" size="40" -->
-<!-- 						requiredMessage="Please enter your source." -->
-<!-- 						value="#{manageApplicationWeb.application.source}"> -->
-<!-- 						<p:watermark for="source" value="Source " /> -->
-<!-- 					</p:inputText> -->
-					
+					<!-- 					<p:inputText id="source" required="true" label="source" size="40" -->
+					<!-- 						requiredMessage="Please enter your source." -->
+					<!-- 						value="#{manageApplicationWeb.application.source}"> -->
+					<!-- 						<p:watermark for="source" value="Source " /> -->
+					<!-- 					</p:inputText> -->
+
 					<p:selectOneMenu id="pub_Chann" required="true"
 						value="#{manageApplicationWeb.application.source}">
 						<f:selectItem itemLabel="Critical SW web site"
@@ -99,14 +101,16 @@
 						<f:selectItem itemLabel="LinkedIn" itemValue="LINKEDIN" />
 						<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
 						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
-						<f:selectItem itemLabel="All defined" itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
+						<f:selectItem itemLabel="All defined"
+							itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
 						<f:selectItem itemLabel="Other" itemValue="OTHER" />
 					</p:selectOneMenu>
 					<p:outputLabel value="Other source:" />
 					<p:inputText id="publishingChannels" title="Source channels"
 						value="#{manageApplicationWeb.activePosition.texttmp}"
-						required="false"	requiredMessage="Please, enter the text for alternatives source channels." />
-					
+						required="false"
+						requiredMessage="Please, enter the text for alternatives source channels." />
+
 
 					<p:outputLabel value="Password*" />
 					<p:password id="password" required="true" label="password"
@@ -125,7 +129,7 @@
 					</p:password>
 
 					<p:outputLabel value="CV Filename:" />
-					<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
+					<p:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
 					<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
 						previewWidth="40" required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadCV}"
@@ -135,7 +139,7 @@
 					<p:growl id="cv1" showDetail="true" />
 
 					<p:outputLabel value="Cover Letter Filename:" />
-					<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+					<p:outputText id="clid" value="#{manageApplicationWeb.clname}" />
 					<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
 						required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
@@ -147,14 +151,16 @@
 
 
 				</h:panelGrid>
-
-				<p:commandButton value="Submit"
-					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{manageApplicationWeb.createManualApplication()}" ajax="false" />
-				<p:commandButton value="Cancel" immediate="true"
-					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{userWebView.goBackToMain()}" ajax="false"/>
-
+				<div style="text-align: center;">
+					<p:commandButton styleClass="myButton" ajax="false" value="Submit"
+						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{manageApplicationWeb.createManualApplication()}"
+						ajax="false" />
+					<p:commandButton styleClass="myButton" ajax="false" value="Cancel"
+						immediate="true"
+						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{userWebView.goBackToMain()}" ajax="false" />
+				</div>
 			</h:form>
 
 		</ui:define>

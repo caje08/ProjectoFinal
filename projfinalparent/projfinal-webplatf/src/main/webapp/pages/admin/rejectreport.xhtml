@@ -14,7 +14,14 @@
                     <!-- Form of Guide List-->
 
                     <h:form id="form">
-                        <p:chart type="pie" model="#{chartReps.pieModelRejected}" style="width:400px;height:300px" />
+                      	<div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Rejected
+						applicants</h1>
+
+				</div>
+
+				<p:chart type="pie" model="#{chartReps.pieModelRejected}"
+					style="width:400px;height:300px;display: -webkit-inline-box;" />
 
                         <p:dataTable id="tbl" var="rejectionMotive" value="#{chartReps.rejectionMotives}"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
@@ -67,8 +74,9 @@
                                 </p:column>
 
                             </p:dataTable>
-                            <h:commandButton value="Send email to this Manager" action="#{chartReps.sendRejectedReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
-                        </p:dialog>
+                            <h:commandButton  styleClass="myButton" value="Send email to this Manager" action="#{chartReps.sendRejectedReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+                     
+                       </p:dialog>
                     </h:form>
 
                 </ui:define>

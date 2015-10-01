@@ -8,10 +8,14 @@
 		<ui:define name="content">
 			<h:form enctype="multipart/form-data">
 				<p:growl showDetail="true" />
-				<h3>Values with * are mandatory</h3>
-				<h1>Submit a New Application to position title:
+
+				<h1 style="margin-bottom: 20px; font-size: 25px;">Submit a New
+					Application to position title:
 					#{statefulPosition.getPosition().getTitle()}</h1>
-				<h:panelGrid columns="2" cellpadding="4">
+				<h3>Values with * are mandatory</h3>
+
+				<h:panelGrid columns="2" cellpadding="3"
+					style="display: -webkit-inline-box;">
 					<p:outputLabel value="First Name*" />
 					<p:inputText id="firstname" required="true" label="firstname"
 						size="40" requiredMessage="Please enter your First Name"
@@ -130,11 +134,11 @@
 
 				</h:panelGrid>
 
-				<p:commandButton value="Submit"
-					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+				<p:commandButton  styleClass="myButton" value="Submit"
+					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{manageApplicationWeb.createApplication()}" ajax="false" />
-				<p:commandButton value="Cancel" immediate="true"
-					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+				<p:commandButton styleClass="myButton"  value="Cancel" immediate="true"
+					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{userWebView.goBackToMain()}" ajax="false" />
 
 			</h:form>

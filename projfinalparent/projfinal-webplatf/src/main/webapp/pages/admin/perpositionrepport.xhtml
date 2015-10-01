@@ -12,6 +12,10 @@
                 <ui:define name="content">
 
                     <h:form id="form">
+                        	<div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Applicants per position</h1>
+			
+				</div>
                         <p:chart type="bar" model="#{reppApplicantsBB.zoomModelPosition}" style="height:300px" widgetVar="chart"/>
                         <p:commandButton type="button" value="Reset" icon="ui-icon-cancel" onclick="PF('chart').resetZoom()"/>
                     </h:form>
@@ -19,7 +23,7 @@
                     <h:form id="position">
                         <h:panelGrid columns="3" cellpadding="5">
 
-                            <p:commandButton id="positionChooseButton" value="Choose a Position" oncomplete="PF('position').show()" update=":positionTable" >
+                            <p:commandButton   styleClass="myButton" ajax="false" id="positionChooseButton" value="Choose a Position" oncomplete="PF('position').show()" update=":positionTable" >
                                 <f:setPropertyActionListener value="#{position}" target="#{reppApplicantsBB.selectedPosition}" />
                             </p:commandButton>
 
@@ -44,7 +48,7 @@
 
 
                             </p:dataTable>
-                            <h:commandButton value="Choose Position" action="#{reppApplicantsBB.lstApplicantsByPosition()}"  />
+                            <h:commandButton  styleClass="myButton"  value="Choose Position" action="#{reppApplicantsBB.lstApplicantsByPosition()}"  />
                         </p:dialog>
                     </h:form>
 
@@ -97,7 +101,7 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:commandButton id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
+                        <p:commandButton  styleClass="myButton" ajax="false" id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
                             <f:setPropertyActionListener value="#{manager}" target="#{reppApplicantsBB.selectedmanager}" />
                         </p:commandButton>
 
@@ -123,7 +127,7 @@
                                 </p:column>
 
                             </p:dataTable>
-                            <h:commandButton value="Send email to this Manager" action="#{reppApplicantsBB.sendPositionsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+                            <h:commandButton   styleClass="myButton"  value="Send email to this Manager" action="#{reppApplicantsBB.sendPositionsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
                         </p:dialog>
                     </h:form>
 

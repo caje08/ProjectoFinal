@@ -13,9 +13,9 @@
 					<f:event listener="#{appDetailsStatus.init()}" type="preRenderView" />
 					<f:event listener="#{loginMB.logged()}" type="preRenderView" />
 
-					<table>
+					<table style="display: inline-table; font-size: 25px;">
 						<tr>
-							<td><h:graphicImage library="images" name="critSW_small.png" /></td>
+							<td style="margin-right:20px"> <h:graphicImage library="images" name="critSW_small.png" /></td>
 
 							<td><label>Email: </label></td>
 
@@ -28,9 +28,11 @@
 							<td><h:commandButton action="#{loginMB.login()}"
 									value="Submit" /></td>
 
-							<td><h:commandButton value="RunDB" action="registry" /></td>
+							<td><h:commandButton value="New User" action="registry" /></td>
 
-							<td><h:outputText style="color:red"
+						</tr>
+						<tr style="font-size: 15px; padding-top: 10px;">
+							<td colspan="6"><h:outputText style="color:red"
 									value="#{loginMB.errorMessage}" /></td>
 						</tr>
 					</table>
@@ -51,17 +53,25 @@
 			</div>
 		</ui:define>
 
-		<ui:define name="left" />
-		<ui:define name="right" />
-		<ui:define name="browser">			
-			<h2>Internal Web Page for HR Management</h2>
-		
-			<h3>Please, start login with your user credentials</h3>
-		
-			<h:graphicImage styleClass="displayed" library="images"
-				name="CRitic_sw3.png" />
+		<!-- <ui:define name="left" />
+		<ui:define name="right" /> -->
+
+
+		<ui:define name="browser">
+			<div>
+				<h2 style="text-align: center">Internal Web Page for HR
+					Management</h2>
+
+				<h3 style="text-align: center">Please, start login with your
+					user credentials</h3>
+
+				<h:graphicImage styleClass="displayed" library="images"
+					name="CRitic_sw3.png" />
+			</div>
 		</ui:define>
 		<ui:define name="bottom" />
+		
+		
 
 		<!-- 		 <h:body>
         <f:event listener="#{appDetailsStatus.init()}" type="preRenderView" />
@@ -79,6 +89,8 @@
             </form> 
         </div>
     </h:body> -->
+
+
 
 	</ui:composition>
 </h:body>
