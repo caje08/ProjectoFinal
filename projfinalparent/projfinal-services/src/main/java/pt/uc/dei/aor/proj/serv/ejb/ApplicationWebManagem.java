@@ -423,6 +423,8 @@ public class ApplicationWebManagem implements Serializable {
 				UserEntity tmpuser = userData.getLoggedUser();
 				if (tmpuser.getEmail().equals(
 						application.getPosition().getManager().getEmail())) {
+					Logger.getLogger(ApplicationWebManagem.class.getName())
+					.log(Level.INFO,"Out=True, Inside isManagerOfApplicationOrAdmin() manager this position="+tmpuser.getEmail());
 					out = true;
 				} else {
 					out = false;
@@ -459,7 +461,7 @@ public class ApplicationWebManagem implements Serializable {
 
 	/**
 	 *
-	 * @return true if is an user that try to log in is a manager
+	 * @return true if the user that tries to login is a manager
 	 */
 	public boolean isManager() {
 		try {
