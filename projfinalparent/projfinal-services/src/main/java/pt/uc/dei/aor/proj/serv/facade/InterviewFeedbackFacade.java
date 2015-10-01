@@ -131,8 +131,8 @@ public class InterviewFeedbackFacade extends AbstractFacade<InterviewFeedbackEnt
 			String finalFormat = format1.format(interviewDate);
 			String link = BundleUtils.getSettings("host") + "interviewer/applicationDetails.xhtml?applicantid=" + application.getApplicant().getUserId() + "&applicationid=" + application.getApplicationId();
 			//send email with atached files - IMPORTANTE ACTIVAR PRÓXIMA LINHA
-//			SendEmailAttachedFiles.sendEmailWithAttachments(interviewer.getEmail(),
-//					"New Interview has been made", "You have an interview at " + finalFormat + " and the user link is:\n" + link, attachFiles);
+			SendEmailAttachedFiles.sendEmailWithAttachments(interviewer.getEmail(),
+					"New Interview has been made", "You have an interview at " + finalFormat + " and the user link is:\n" + link, attachFiles);
 			System.out.println("\n Inside InterviewFeedbackFacade.createInterview() before em.persist(interviewFeedback)");
 			em.persist(interviewFeedback);
 			applicationFacade.edit(application);
