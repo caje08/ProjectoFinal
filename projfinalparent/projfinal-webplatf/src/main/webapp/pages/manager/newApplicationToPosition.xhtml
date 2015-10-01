@@ -133,14 +133,14 @@
 					<p:growl id="cl1" showDetail="true" />
 
 				</h:panelGrid>
-
+<div style="text-align:center">
 				<p:commandButton  styleClass="myButton" value="Submit"
 					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{manageApplicationWeb.createApplication()}" ajax="false" />
 				<p:commandButton styleClass="myButton"  value="Cancel" immediate="true"
 					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{userWebView.goBackToMain()}" ajax="false" />
-
+</div>
 			</h:form>
 
 		</ui:define>

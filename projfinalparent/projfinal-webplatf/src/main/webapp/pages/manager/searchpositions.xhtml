@@ -104,7 +104,7 @@
 
 					<p:rowExpansion>
 
-						<h:panelGrid columns="2">
+						<h:panelGrid columns="2" style="width:300px">
 
 							<h3>Job Description</h3>
 							 #{position.jobDescription}"
@@ -143,12 +143,14 @@
 			<h:form>
 				<h:panelGroup binding="#{positionWebManagem.panelGroup}"
 					rendered="false">
-					<div >
-						<h1>Please, edit
+
+
+					<div style="text-align: center; margin-top: 30px;">
+						<h1 style="font-size: 20px">Please, edit
 							#{positionWebManagem.activePosition.activePosition.title}</h1>
 					</div>
 
-					<h:panelGrid columns="2" cellpadding="5">
+					<h:panelGrid columns="2" cellpadding="5" style="display:-webkit-inline-box;margin-top:10px;">
 
 
 						<p:outputLabel value="Title" />
@@ -160,7 +162,7 @@
 						<p:inputTextarea title="Job Description"
 							value="#{positionWebManagem.activePosition.activePosition.jobDescription}"
 							required="true" requiredMessage="Job Description"
-							style="width:900px; height:80px;" />
+							style="width:300px; height:80px;" />
 
 						<p:outputLabel value="Publishing channels" />
 						<p:inputText id="publishingChannels" title="Publishing channels"
@@ -195,10 +197,13 @@
 						<p:spinner id="vacancies"
 							value="#{positionWebManagem.activePosition.activePosition.vacancies}"
 							min="0" />
+							
+							
+							
 						<!--Pop up of guides -->
 
-						<p:commandButton styleClass="myButton" ajax="false"
-						value="Choose a phone Guide Interview"
+						<p:commandButton styleClass="myButton" 
+							value="Choose a phone Guide Interview"
 							oncomplete="PF('phoneguide').show()" update=":phoneguideTable">
 							<f:setPropertyActionListener value="#{guide}"
 								target="#{positionWebManagem.selectedInterviewGuide}" />
@@ -208,7 +213,7 @@
 							value="#{positionWebManagem.activePosition.activePosition.phoneInterviewEntity.title}" />
 
 						<p:commandButton styleClass="myButton" ajax="false"
-						value="Choose a presential Guide Interview"
+							value="Choose a presential Guide Interview"
 							oncomplete="PF('presentialguide').show()"
 							update=":presentialguideTable">
 							<f:setPropertyActionListener value="#{guide}"
@@ -221,8 +226,8 @@
 
 						<!--Pop up of managers -->
 
-						<p:commandButton styleClass="myButton" ajax="false"
-						value="Choose a Manager for this position"
+						<p:commandButton styleClass="myButton" 
+							value="Choose a Manager for this position"
 							oncomplete="PF('manager').show()" update=":managerTable">
 							<f:setPropertyActionListener value="#{manager}"
 								target="#{positionWebManagem.selectedManager}" />
@@ -232,7 +237,7 @@
 							value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
 
 						<h:outputText></h:outputText>
-						<h:commandButton value="Save" styleClass="myButton" 
+						<h:commandButton value="Save" styleClass="myButton"
 							action="#{positionWebManagem.savePosition()}"
 							style="width:160px; height:40px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 					</h:panelGrid>
@@ -263,7 +268,8 @@
 
 
 					</p:dataTable>
-					<h:commandButton  styleClass="myButton"  value="Add Presential Guide for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Presential Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 
@@ -292,7 +298,8 @@
 
 
 					</p:dataTable>
-					<h:commandButton styleClass="myButton" value="Add Phone Guide for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Phone Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
@@ -311,8 +318,8 @@
 
 
 					</p:dataTable>
-					<h:commandButton styleClass="myButton" ajax="false"
-					value="Add Manager for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Manager for this position"
 						action="#{positionWebManagem.setTheSelectedManager()}"
 						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 

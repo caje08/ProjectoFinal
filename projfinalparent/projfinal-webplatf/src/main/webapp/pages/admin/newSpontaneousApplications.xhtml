@@ -39,7 +39,7 @@
 
 
                         <p:column styleClass="centeredColumn"  headerText="Associate to Position"  style="width:20%">
-                            <p:commandButton   styleClass="myButton" ajax="false" id="addPosition" icon="ui-icon-plus" oncomplete="PF('addPosition').show();" update=":applicationClone" >
+                            <p:commandButton    id="addPosition" icon="ui-icon-plus" oncomplete="PF('addPosition').show();" update=":applicationClone" >
                                 <f:setPropertyActionListener value="#{item}" target="#{manageApplicationWeb.selectedApplication}"  />
                             </p:commandButton>
                         </p:column>

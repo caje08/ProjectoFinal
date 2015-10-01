@@ -34,12 +34,18 @@
 						<p:watermark for="oldpassword" value="Old Password " />
 					</p:password>
 
-					<h:commandButton styleClass="myButton" value="Check Old Password"
-						style="margin-left:10px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					<p:commandButton styleClass="myButton" ajax="false" value="Check Old Password"
+						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.checkUserPw()}" />
+						
+						<p:commandButton  styleClass="myButton" ajax="false" value=" Cancel " immediate="true"
+						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{userWebView.goBackToMain()}" />
+						
 				</h:panelGrid>
 			</h:form>
-			<h:form id="form2" rendered="#{userWebView.testpw}">
+			
+			<h:form id="form2" rendered="#{userWebView.testpw}"  style="display: inline-table;">
 				 <h:panelGrid id="p2" columns="2" cellpadding="3">
 					<p:outputLabel value="First Name*" />
 					<p:inputText id="firstname" required="true" label="firstname"
@@ -83,17 +89,20 @@
 					<p:message for="password" />
 					<p:message for="confirmPassword" />
 
-					<h:commandButton  styleClass="myButton" value="Update User Profile"
+					<p:commandButton  styleClass="myButton" ajax="false" value="Update User Profile"
 						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.editUser()}" />
+						<p:commandButton  styleClass="myButton" ajax="false" value=" Cancel "
+					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					action="#{userWebView.goBackToMain()}" />
 				</h:panelGrid>
 
 			</h:form>
-			<h:form id="cancelbtn">
+			<!-- <h:form id="cancelbtn">
 				<p:commandButton  styleClass="myButton" ajax="false" value=" Cancel "
 					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{userWebView.goBackToMain()}" />
-			</h:form>
+			</h:form> -->
 		</ui:define>
 	</ui:composition>
 </body>

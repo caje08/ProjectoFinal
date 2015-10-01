@@ -93,7 +93,7 @@
 					</p:dataTable>
 
 					<p:commandButton  styleClass="myButton" id="modalDialogButton" value="Add new Guide"
-						onclick="PF('guide').show();"  ajax="false"/>
+						onclick="PF('guide').show();" />
 
 				</h:panelGroup>
 			</h:form>
@@ -128,8 +128,6 @@
 			<h:form id="form2">
 				<h:panelGroup id="pft" binding="#{guideWebManagem.panelGroup}"
 					rendered="false">
-
-
 					<p:dataTable id="questions" var="question"
 						value="#{guideWebManagem.lstInterviewQuestionEntity}"
 						draggableRows="true" paginator="true" rows="10"

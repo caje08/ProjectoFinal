@@ -16,51 +16,51 @@ and open the template in the editor.
         <ui:composition template="./mainmanager.xhtml"> 
             <ui:define name="content">
 
-                <h:form> 
+            
                     <h:form >
                  <h1 style="margin-bottom: 20px; font-size:25px;">Application details of #{appDetailsStatus.applicant.username} </h1>
             
                   
                     <h:panelGrid columns="2" cellpading="3"  style="display:-webkit-inline-box;font-size:16px;"   >
-                        <p:outputText float="left" value="First Name" />
-                        <p:outputText float="left" value="#{appDetailsStatus.applicant.firstName}" />
+                        <h:outputText  value="First Name" />
+                        <p:outputText  value="#{appDetailsStatus.applicant.firstName}" />
                         
-                        <p:outputText value="Last Name:" />
+                        <h:outputText value="Last Name:" />
                         <p:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
-                        <p:outputText value="Curriculum Vitae" />
+                        <h:outputText value="Curriculum Vitae" />
                         <p:button href="#{appDetailsStatus.cvPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cv">
                         </p:button>
 
-                        <p:outputText value="Cover Letter" /> 
+                        <h:outputText value="Cover Letter" /> 
                        <p:button href="#{appDetailsStatus.coverLetterPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cl">
                         </p:button>
 
-                        <p:outputText value="Email:" />
+                        <h:outputText value="Email:" />
                         <p:outputText value="#{appDetailsStatus.applicant.email}" />
 
-                        <p:outputText value="Address:" />
+                        <h:outputText value="Address:" />
                         <p:outputText value="#{appDetailsStatus.applicant.address}" />
 
-                        <p:outputText value="City:" />
+                        <h:outputText value="City:" />
                         <p:outputText value="#{appDetailsStatus.applicant.city}" />
 
-                        <p:outputText value="Phone:" />
+                        <h:outputText value="Phone:" />
                         <p:outputText value="#{appDetailsStatus.applicant.phone}" />
 
-                        <p:outputText value="Mobile Phone:" />
+                        <h:outputText value="Mobile Phone:" />
                         <p:outputText value="#{appDetailsStatus.applicant.mobile}" />
 
-                        <p:outputText value="Country:" />
+                        <h:outputText value="Country:" />
                         <p:outputText value="#{appDetailsStatus.applicant.country}" />
 
-                        <p:outputText value="Degree:" />
+                        <h:outputText value="Degree:" />
                         <p:outputText value="#{appDetailsStatus.applicant.degree}" />
 
-                        <p:outputText value="School" />
+                        <h:outputText value="School" />
                         <p:outputText value="#{appDetailsStatus.applicant.school}" />
                         
-                         <p:outputText value="Application associated to Position:" />
+                         <h:outputText value="Application associated to Position:" />
                         <p:outputText value="#{appDetailsStatus.position.title}" />
 
                     </h:panelGrid>  

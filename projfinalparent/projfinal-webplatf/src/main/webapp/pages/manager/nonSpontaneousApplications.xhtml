@@ -79,7 +79,7 @@
 							<p:commandButton styleClass="muButton" ajax="false"
 								rendered="#{!applicationWebManagem.isRejected(item)}"
 								action="#{applicationWebManagem.showPanel(item)}"
-								icon="ui-icon-plus" title="Add" ajax="false">
+								icon="ui-icon-plus" title="Add" >
 								<f:setPropertyActionListener value="#{item}"
 									target="#{applicationWebManagem.selectedApplication}" />
 							</p:commandButton>
@@ -149,7 +149,7 @@
 
 							<!--Without Feedback Given and can be edited because actual date is before scheduled date for more than 1 hour-->
 
-							<p:commandButton styleClass="muButton" ajax="false" 
+							<p:commandButton styleClass="myButton" 
 								rendered="#{!applicationWebManagem.feedbackGiven(interview) and applicationWebManagem.possibleToSubmitFeedback(interview)}"
 								id="select2Interview" icon="ui-icon-pencil"
 								actionListener="#{applicationWebManagem.appointInterviewers(interview)}"
@@ -160,7 +160,7 @@
 
 							<!--Without Feedback Given-->
 
-							<p:commandButton styleClass="muButton" ajax="false"
+							<p:commandButton styleClass="myButton"
 								rendered="#{!applicationWebManagem.feedbackGiven(interview) and !applicationWebManagem.possibleToSubmitFeedback(interview)}"
 								id="select0Interview" icon="ui-icon-plus"
 								actionListener="#{applicationWebManagem.appointAnswers(interview)}"
@@ -171,7 +171,7 @@
 
 							<!--With Feedback Given-->
 
-							<p:commandButton styleClass="muButton" ajax="false"
+							<p:commandButton styleClass="myButton"
 								rendered="#{applicationWebManagem.feedbackGiven(interview)}"
 								id="select1Interview" icon="ui-icon-search"
 								actionListener="#{applicationWebManagem.appointAnswers(interview)}"
@@ -187,7 +187,7 @@
 
 					<!--Button to add a new Interview-->
 
-					<p:commandButton styleClass="muButton" ajax="false" 
+					<p:commandButton styleClass="myButton"
 					rendered="#{applicationWebManagem.possibleToAdd}"
 						id="selectInterview" value="Add a new interview"
 						oncomplete="PF('interviewer').show()" update=":interviewTable">
@@ -197,7 +197,7 @@
 
 
 					<div align="center">
-						<p:commandButton   styleClass="muButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
+						<p:commandButton  styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
 							action="/pages/manager/nonSpontaneousApplications.xhtml?faces-redirect=true" />
 					</div>
 

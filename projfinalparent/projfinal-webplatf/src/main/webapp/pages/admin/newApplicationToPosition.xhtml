@@ -115,7 +115,7 @@
 					</p:password>
 
 					<p:outputLabel value="CV Filename:" />
-					<p:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
+					<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
 					<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
 						previewWidth="40" required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadCV}"
@@ -125,7 +125,7 @@
 					<p:growl id="cv1" showDetail="true" />
 
 					<p:outputLabel value="Cover Letter Filename:" />
-					<p:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+					<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
 					<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
 						required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
@@ -138,11 +138,11 @@
 				</h:panelGrid>
 
 				<p:commandButton  styleClass="myButton" ajax="false" value="Submit"
-					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{manageApplicationWeb.createApplication()}" ajax="false" />
+				style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					action="#{manageApplicationWeb.createApplication()}" />
 				<p:commandButton styleClass="myButton" ajax="false" value="Cancel" immediate="true"
 					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{userWebView.goBackToMain()}" ajax="false" />
+					action="#{userWebView.goBackToMain()}"  />
 			</h:form>
 		</ui:define>
 	</ui:composition>

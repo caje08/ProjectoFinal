@@ -52,57 +52,57 @@
 						<p:rowToggler />
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Title"
+					<p:column styleClass="centeredColumn" headerText="Title" width="120"
 						filterBy="#{position.title}" filterMatchMode="contains">
                             #{position.title}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Position Code"
+					<p:column styleClass="centeredColumn" headerText="Position Code" width="120"
 						filterBy="#{position.positionCode}" filterMatchMode="contains">
                             #{position.positionCode}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Opening date"
+					<p:column styleClass="centeredColumn" headerText="Opening date" width="120"
 						filterBy="#{position.openingDate}" filterMatchMode="contains">
 						<h:outputText value="#{position.openingDate}">
 							<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Closing date"
+					<p:column styleClass="centeredColumn" headerText="Closing date" width="120"
 						filterBy="#{position.closingDate}" filterMatchMode="contains">
 						<h:outputText value="#{position.closingDate}">
 							<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Status"
+					<p:column styleClass="centeredColumn" headerText="Status" width="120"
 						filterMatchMode="contains" filterBy="#{position.status}">
                             #{position.status}
                         </p:column>
 
 
-					<p:column styleClass="centeredColumn" headerText="Location"
+					<p:column styleClass="centeredColumn" headerText="Location" width="120"
 						filterMatchMode="contains" filterBy="#{position.location}">
                             #{position.location}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Company"
+					<p:column styleClass="centeredColumn" headerText="Company" width="120"
 						filterMatchMode="contains" filterBy="#{position.company}">
                             #{position.company}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Technical Area"
+					<p:column styleClass="centeredColumn" headerText="Technical Area" width="120"
 						filterMatchMode="contains" filterBy="#{position.technicalArea}">
                             #{position.technicalArea}
                         </p:column>
 
 					<p:rowExpansion>
-						<h:panelGrid columns="2">
+						<h:panelGrid  style="width:320px">
 							<h3>Job Description</h3>
                                 #{position.jobDescription}"
                             </h:panelGrid>
-						<h:panelGrid columns="2" style="width:300px">
+						<h:panelGrid columns="2" style="width:320px">
 							<f:facet name="header">
                                     More Details about this position
                                 </f:facet>
@@ -129,7 +129,7 @@
 					</p:rowExpansion>
 
 
-					<p:column headerText="Insert new Application" width="70"
+					<p:column headerText="Insert new Application" width="50"
 						styleClass="centeredColumn">
 						<p:commandButton styleClass="myButton" ajax="false"
 							rendered="#{manageApplicationWeb.canAssociatePositionToApplication(position)}"
@@ -220,7 +220,7 @@
 							requiredMessage="Please, enter the text for alternatives Publishing channels." />
 
 						<p:outputLabel for="location" value="Location: " />
-						<p:selectOneMenu  style=" float:left"id="location"
+						<p:selectOneMenu  style=" float:left" id="location"
 							value="#{positionWebManagem.activePosition.activePosition.location}">
 							<f:selectItem itemLabel="Lisbon" itemValue="LISBON" />
 							<f:selectItem itemLabel="Oporto" itemValue="OPORTO" />

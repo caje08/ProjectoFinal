@@ -60,11 +60,6 @@
 			</div>
 		</ui:define>
 
-		<!-- <ui:define name="left" />
-		<ui:define name="right" /> -->
-
-
-
 		<ui:define name="browser">
 
 			<h2 style="text-align: center;">Public Web Page</h2>
@@ -76,7 +71,7 @@
 
 					<p:tabView orientation="left">
 						<div
-							style="background: url(./resources/images/crit_fundo.png); height: 1000px; width: 1024px;">
+							style="background: url(./resources/images/imagem_fundo.png); height: 1000px; width: 1024px;">
 
 
 							<p:tab style="font-size: 30px;" title="About us">
@@ -114,24 +109,13 @@
 								</div>
 							</p:tab>
 
-
-
-
-							<p:tab style="font-size: 16px;" title="What we do">
-								<div>
-									
-									<h3 style="color: black; float: left; margin-left: 20px;">What
-										we do.</h3>
-								</div>
-							</p:tab>
-
-
 							<p:tab style="font-size: 16px;" title="Career Oportunities">
 								<div>
-								<h3 style="color: black; float: left; margin-left: 20px;">Career Oportunities</h3>
+									<h3 style="color: black; margin-left: 20px;">Career
+										Oportunities</h3>
 
-									<h:form enctype="multipart/form-data"      style="display: inline-table;">
-
+									<h:form enctype="multipart/form-data">
+										<!-- style="display: inline-table;" -->
 
 										<p:dataTable id="openpositions" paginator="true" rows="10"
 											paginatorPosition="top" editable="false"
@@ -208,11 +192,12 @@
 
 
 							<p:tab style="font-size: 16px;color:black;" title="Contacts">
-<h3 style="color: black; float: left; margin-left: 20px;">Contacts</h3>
-								<p:panelGrid style="display: inline-table;">
+								<h3 style="color: black; margin-left: 20px;">Contacts</h3>
+								<p:panelGrid>
+
 									<tr>
 										<td>
-											<h4 style="color: black;">
+											<h4 style="color: black; font-size: 16px">
 												HEADQUARTERS - COIMBRA, PORTUGAL <br></br>CRITICAL
 												SOFTWARE,SA
 											</h4>
@@ -223,6 +208,7 @@
 												GPS 40º 11' 52.29'' N 8º 30' 49.06'' W
 											</h5>
 										</td>
+										<td style="width: 20px"></td>
 										<td>
 											<h4 style="color: black;">
 												LISBON OFFICE, PORTUGAL<br></br> CRITICAL SOFTWARE,SA
@@ -246,7 +232,7 @@
 												+351 229 446 929<br></br> E info@criticalsoftware.com<br></br>
 												GPS 41º 15' 32.87'' N 8º 38' 28.46'' W<br></br>
 											</h5></td>
-
+										<td style="width: 20px"></td>
 										<td><h4 style="color: black;">
 												SOUTHAMPTON OFFICE, UK<br></br>CRITICAL SOFTWARE
 												TECHNOLOGIES LTD.
@@ -277,7 +263,7 @@
 
 											</h5>
 										</td>
-
+										<td style="width: 20px"></td>
 										<td>
 											<h4 style="color: black;">
 												HANAU OFFICE, GERMANY<br></br>CRITICAL SOFTWARE GMBH
@@ -299,7 +285,7 @@
 												T +1 408 317 9322<br></br> E info@critical-software.us<br></br>
 											</h5></td>
 
-
+										<td style="width: 20px"></td>
 										<td><h4 style="color: black;">
 												SÃO PAULO OFFICE, BRAZIL<br></br> CRITICAL SOFTWARE BRASIL <br></br>
 												DESENVOLVIMENTO DE SOFTWARE LTDA
@@ -322,7 +308,7 @@
 												Maputo, Moçambique<br></br> T +258 214 951 45<br></br> F
 												+258 214 951 46<br></br> E mocambique@criticalsoftware.com<br></br>
 											</h5></td>
-
+										<td style="width: 20px"></td>
 										<td><h4 style="color: black;">
 												LUANDA OFFICE, ANGOLA<br></br> CRITICAL SOFTWARE ANGOLA
 
@@ -333,7 +319,7 @@
 												933 862 353<br></br> E info@criticalsoftware.com<br></br>
 											</h5></td>
 									</tr>
-									</p:panelGrid>
+								</p:panelGrid>
 							</p:tab>
 						</div>
 					</p:tabView>

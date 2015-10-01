@@ -129,7 +129,7 @@
 					</p:password>
 
 					<p:outputLabel value="CV Filename:" />
-					<p:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
+                    <p:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
 					<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
 						previewWidth="40" required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadCV}"
@@ -152,11 +152,11 @@
 
 				</h:panelGrid>
 				<div style="text-align: center;">
-					<p:commandButton styleClass="myButton" ajax="false" value="Submit"
+					<p:commandButton styleClass="myButton" value="Submit"
 						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{manageApplicationWeb.createManualApplication()}"
 						ajax="false" />
-					<p:commandButton styleClass="myButton" ajax="false" value="Cancel"
+					<p:commandButton styleClass="myButton"  value="Cancel"
 						immediate="true"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" ajax="false" />

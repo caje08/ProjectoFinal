@@ -95,7 +95,7 @@
 <!-- 						<p:watermark for="source" value="Source " /> -->
 <!-- 					</p:inputText> -->
 					
-					<p:selectOneMenu id="pub_Chann" required="true"
+					<p:selectOneMenu float="left" id="pub_Chann" required="true"
 						value="#{manageApplicationWeb.application.source}">
 						<f:selectItem itemLabel="Critical SW web site"
 							itemValue="CRITICALSWWEBSITE" />
@@ -106,7 +106,7 @@
 						<f:selectItem itemLabel="Other" itemValue="OTHER" />
 					</p:selectOneMenu>
 					<p:outputLabel value="Other source:" />
-					<p:inputText id="publishingChannels" title="Source channels"
+					<p:inputText float="left"  id="publishingChannels" title="Source channels" size="40"
 						value="#{manageApplicationWeb.activePosition.texttmp}"
 						required="false"	requiredMessage="Please, enter the text for alternatives source channels." />
 					
@@ -150,14 +150,14 @@
 
 
 				</h:panelGrid>
-
+<div style="text-align:center">
 				<p:commandButton value="Submit"
-					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{manageApplicationWeb.createManualApplication()}" ajax="false" />
 				<p:commandButton value="Cancel" immediate="true"
-					style="width:100px;height:60px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{userWebView.goBackToMain()}" ajax="false"/>
-
+</div>
 			</h:form>
 
 		</ui:define>

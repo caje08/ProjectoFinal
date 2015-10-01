@@ -55,16 +55,28 @@
 				<p:watermark for="source" value="Source " />
 				<p:message for="source" />
 
-				<p:fileUpload update="cv1" id="cv" auto="true"
-					fileUploadListener="#{infoUser.uploadCV}" label="Upload CV*"
-					allowTypes="/(\.|\/)(pdf|doc|txt)$/" sizeLimit="52428800" />
+<p:outputLabel value="CV Filename:" />
+					<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
+	<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
+						previewWidth="40" required="true"
+						fileUploadListener="#{manageApplicationWeb.uploadCV}"
+						label="Upload CV*" styleClass="fileUploadClass"
+						allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
+						requiredMessage="Please upload CV" />
 				<p:growl id="cv1" showDetail="true" />
 
 
-				<p:fileUpload update="cl1" id="ml" auto="true"
-					fileUploadListener="#{infoUser.uploadMotivationLetter}"
-					label="Upload Cover Letter*" allowTypes="/(\.|\/)(pdf|doc|txt)$/"
-					sizeLimit="52428800" />
+				<p:outputLabel value="Cover Letter Filename:" />
+					<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+					<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
+						required="true"
+						fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
+						label="Upload Cover Letter*"
+						requiredMessage="Please upload Cover Letter"
+						allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
+						styleClass="fileUploadClass" />
+					
+					<!-- sizeLimit="52428800" /> -->
 				<p:growl id="cl1" showDetail="true" />
 
 			</h:panelGrid>

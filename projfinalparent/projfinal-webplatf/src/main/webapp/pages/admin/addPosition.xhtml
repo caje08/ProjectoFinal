@@ -18,29 +18,29 @@
 					cellpadding="1">
 
 					<p:outputLabel value="Title:*" />
-					<p:inputText id="title" required="true" label="title" size="40"
+					<p:inputText id="title" required="true" label="title" size="25"
 						requiredMessage="Please, enter a title"
 						value="#{positionWebManagem.activePosition.activePosition.title}" />
 
 					<p:outputLabel for="openingDate" value="Opening date:" />
-					<p:calendar id="openingDate"
+					<p:calendar style="float:left" id="openingDate"
 						value="#{positionWebManagem.activePosition.activePosition.openingDate}"
 						pattern="MM/dd/yyyy HH:mm"
 						requiredMessage="Please enter a Opening Date" required="true" />
 
 					<p:outputLabel for="closingDate" value="Closing date:" />
-					<p:calendar id="closingDate"
+					<p:calendar style="float:left" id="closingDate"
 						value="#{positionWebManagem.activePosition.activePosition.closingDate}"
 						pattern="MM/dd/yyyy HH:mm"
 						requiredMessage="Please, enter a Closing date" required="true" />
 
 					<p:outputLabel value="Company:*" />
-					<p:outputLabel value="Critical SW" />
+					<p:outputLabel style="float:left" value="Critical SW" />
 					<!-- <p:outputLabel value="#{positionWebManagem.activePosition.activePosition.company}" /> -->
 					<!--         <p:inputText id="company" title="company"  value="#{positionWebManagem.activePosition.activePosition.company}" required="true" requiredMessage="Please, enter a Company"/> -->
 
 					<p:outputLabel value="Technical Area:*" />
-					<p:selectOneMenu id="Tech_area"
+					<p:selectOneMenu style="float:left" id="Tech_area"
 						value="#{positionWebManagem.activePosition.activePosition.technicalArea}">
 						<f:selectItem itemLabel="SSPA" itemValue="SSPA" />
 						<f:selectItem itemLabel=".Net Development"
@@ -56,29 +56,33 @@
 					<!--  <p:inputText id="technicalArea" title="Technical Area"  value="#{positionWebManagem.activePosition.activePosition.technicalArea}" required="true" requiredMessage="Please, enter a Technical Area"/> -->
 
 					<p:outputLabel value="Job Description:*" />
-					<p:inputTextarea id="jobDescription" title="Job Description"
+					<p:inputTextarea style="float:left" id="jobDescription"
+						title="Job Description"
 						value="#{positionWebManagem.activePosition.activePosition.jobDescription}"
 						required="true" requiredMessage="Please, enter a Job Description." />
 
 					<p:outputLabel value="Publishing channels:*" />
-					<p:selectOneMenu style="float:left"  id="pub_Chann" required="true"
+					<p:selectOneMenu style="float:left" id="pub_Chann" required="true"
 						value="#{positionWebManagem.activePosition.activePosition.publishingChannels}">
 						<f:selectItem itemLabel="Critical SW web site"
 							itemValue="CRITICALSWWEBSITE" />
 						<f:selectItem itemLabel="LinkedIn" itemValue="LINKEDIN" />
 						<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
 						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
-						<f:selectItem itemLabel="All defined" itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
+						<f:selectItem itemLabel="All defined"
+							itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
 						<f:selectItem itemLabel="Other" itemValue="OTHER" />
 					</p:selectOneMenu>
-					
+
 					<p:outputLabel value="Other Publishing channels:" />
-					<p:inputText  style="float:left"  id="publishingChannels" title="Publishing channels"
+					<p:inputText style="float:left" id="publishingChannels"
+						title="Publishing channels"
 						value="#{positionWebManagem.activePosition.texttmp}"
-						required="false"	requiredMessage="Please, enter the text for alternatives Publishing channels." />
+						required="false"
+						requiredMessage="Please, enter the text for alternatives Publishing channels." />
 
 					<p:outputLabel for="location" value="Location: " />
-					<p:selectOneMenu style="float:left"  id="location"
+					<p:selectOneMenu style="float:left" id="location"
 						value="#{positionWebManagem.activePosition.activePosition.location}">
 						<f:selectItem itemLabel="Lisbon" itemValue="LISBON" />
 						<f:selectItem itemLabel="Oporto" itemValue="OPORTO" />
@@ -95,7 +99,7 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel for="status" value="Status: " />
-					<p:selectOneMenu  style="float:left"  id="status"
+					<p:selectOneMenu style="float:left" id="status"
 						value="#{positionWebManagem.activePosition.activePosition.status}">
 						<f:selectItem itemLabel="Open" itemValue="OPEN" />
 						<f:selectItem itemLabel="Close" itemValue="CLOSED" />
@@ -103,7 +107,7 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel for="public" value="Is public:" />
-					<h:selectOneRadio style="float:left"  id="public"
+					<h:selectOneRadio style="float:left" id="public"
 						value="#{positionWebManagem.activePosition.activePosition.isPublic}">
 						<f:selectItem itemLabel="Yes" itemValue="True" />
 						<f:selectItem itemLabel="No" itemValue="False" />
@@ -111,104 +115,75 @@
 
 
 					<p:outputLabel for="vacancies" value="Number of vacancies: " />
-					<p:spinner style="float:left"  id="vacancies"
+					<p:spinner style="float:left" id="vacancies"
 						value="#{positionWebManagem.activePosition.activePosition.vacancies}"
 						min="0" />
 
+
+
 					<!-- Button which shows pop up of guides -->
 
-					<h:panelGrid column="2" cellpadding="3">
-						
-							<p:commandButton styleClass="myButton" 
-					id="phoneguideToChooseButton"
-						value="Choose a phone Guide Interview*"
-						oncomplete="PF('phoneguide').show()" update=":phoneguideTable">
-						<f:setPropertyActionListener value="#{guide}"
-							target="#{positionWebManagem.selectedInterviewGuide}" />
-					</p:commandButton>
+					<h:panelGrid column="2" cellpadding="3"
+						style="display: -webkit-inline-box;">
+						<tr>
+							<td><p:commandButton styleClass="myButton"
+									id="phoneguideToChooseButton"
+									value="Choose a phone Guide Interview*"
+									oncomplete="PF('phoneguide').show()" update=":phoneguideTable">
+									<f:setPropertyActionListener value="#{guide}"
+										target="#{positionWebManagem.selectedInterviewGuide}" />
+								</p:commandButton></td>
+							<td><p:outputLabel id="thephoneguide"
+									value="#{positionWebManagem.position.phoneInterviewEntity.title}" />
+							</td>
+						</tr>
+						<tr>
+							<td><p:commandButton styleClass="myButton"
+									id="presentialguideToChooseButton"
+									value="Choose a presential Guide Interview*"
+									oncomplete="PF('presentialguide').show()"
+									update=":presentialguideTable">
+									<f:setPropertyActionListener value="#{guide}"
+										target="#{positionWebManagem.selectedInterviewGuide}" />
+								</p:commandButton></td>
+							<td><p:outputLabel id="thepresentialguide"
+									value="#{positionWebManagem.position.presencialInterviewEntity.title}" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<!-- Button which shows pop up of managers --> <p:commandButton
+									styleClass="myButton" id="managerToChooseButton"
+									value="Choose a Manager for this position*"
+									oncomplete="PF('manager').show()" update=":managerTable">
+									<f:setPropertyActionListener value="#{manager}"
+										target="#{positionWebManagem.selectedManager}" />
+								</p:commandButton>
+							</td>
+							<td><p:outputLabel id="manager"
+									value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
 
-					<p:outputLabel id="thephoneguide"
-						value="#{positionWebManagem.position.phoneInterviewEntity.title}" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<!--       Buttons  -->
+								 <p:commandButton styleClass="myButton"
+									value="Add Position"
+									style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+									action="#{positionWebManagem.addPosition()}" ajax="false" /> 
+								<p:commandButton
+									value=" Cancel " immediate="true"
+									style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+									action="#{userWebView.goBackToMain()}" />
+							</td>
+						</tr>
 
-					 <p:commandButton styleClass="myButton"
-					id="presentialguideToChooseButton"
-						value="Choose a presential Guide Interview*"
-						oncomplete="PF('presentialguide').show()"
-						update=":presentialguideTable">
-						<f:setPropertyActionListener value="#{guide}"
-							target="#{positionWebManagem.selectedInterviewGuide}" />
-					</p:commandButton>
-
-
-					<p:outputLabel id="thepresentialguide"
-						value="#{positionWebManagem.position.presencialInterviewEntity.title}" />
-
-					<!-- Button which shows pop up of managers -->
-
-					<p:commandButton styleClass="myButton" 
-					id="managerToChooseButton"
-						value="Choose a Manager for this position*"
-						oncomplete="PF('manager').show()" update=":managerTable">
-						<f:setPropertyActionListener value="#{manager}"
-							target="#{positionWebManagem.selectedManager}" />
-					</p:commandButton>
-
-					<p:outputLabel id="manager"
-						value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
-
-					<h:outputLabel></h:outputLabel>
-
-					<p:commandButton styleClass="myButton" 
-					value="Add Position"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-						action="#{positionWebManagem.addPosition()}" ajax="false"/>
-					<p:commandButton value=" Cancel " immediate="true"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-						action="#{userWebView.goBackToMain()}" />
-
+					</h:panelGrid>
 				</h:panelGrid>
-
 
 			</h:form>
 
-			<!-- <h:form id="select_guides">
-				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"
-					columnClasses="label, value">
-					<p:outputLabel for="basic" value="Choose a phone Guide Interview*" />
-					<p:selectOneListbox id="basic" value="#{positionWebManagem.selectedInterviewGuide}">
-						<f:selectItems value="#{positionWebManagem.lstPhoneInterviewsInUse}" var="guide"
-							itemLabel="#{guide.title}" itemValue="#{guide}" />
-					</p:selectOneListbox>
-
-					<p:outputLabel for="advanced" value="Advanced:" />
-					<p:selectOneListbox id="advanced" value="#{positionWebManagem.selectedInterviewGuide}"
-						var="t" filter="true"
-						filterMatchMode="contains">
-						<f:selectItems value="#{positionWebManagem.lstPhoneInterviewsInUse}" var="ph_guid"
-							itemLabel="#{ph_guid.title}" itemValue="#{ph_guid}" />
-
-						<p:column>
-							<h:outputText value="#{t.title}" />
-						</p:column>
-					</p:selectOneListbox>
-				</h:panelGrid>
-
-				<p:separator />
-
-				<p:commandButton value="Submit" update="display"
-					oncomplete="PF('dlg').show()" icon="ui-icon-check" />
-
-				<p:dialog header="Selected Values" modal="true" showEffect="fade"
-					widgetVar="dlg" resizable="false">
-					<p:panelGrid columns="2" id="display" columnClasses="label,output">
-						<h:outputText value="Basic:" />
-						<h:outputText value="#{guide}" />
-
-						<h:outputText value="Advanced:" />
-						<h:outputText value="#{selectOneView.theme}" />
-					</p:panelGrid>
-				</p:dialog>
-			</h:form> -->
 
 			<!-- Pop up of Presential Guides -->
 
@@ -233,7 +208,8 @@
 
 
 					</p:dataTable>
-					<h:commandButton  styleClass="myButton" value="Add Presential Guide for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Presential Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 
@@ -262,7 +238,8 @@
 
 
 					</p:dataTable>
-					<h:commandButton styleClass="myButton" value="Add Phone Guide for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Phone Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
@@ -279,23 +256,27 @@
 					<p:dataTable id="manager" selectionMode="single"
 						rowKey="#{manager.userId}"
 						selection="#{positionWebManagem.selectedManager}"
-						value="#{positionWebManagem.collectListOfManagers()}" var="manager">
-<!-- 						value="#{positionWebManagem.lstManagers}" var="manager"> -->						
+						value="#{positionWebManagem.collectListOfManagers()}"
+						var="manager">
+						<!-- 						value="#{positionWebManagem.lstManagers}" var="manager"> -->
 						<p:column styleClass="centeredColumn" headerText="Username"
 							filterBy="#{manager.username}" filterMatchMode="contains">
                                 #{manager.username}
                             </p:column>
-						<p:column styleClass="centeredColumn" headerText="First Name" width="150"
-							filterBy="#{manager.firstName}" filterMatchMode="contains">
+						<p:column styleClass="centeredColumn" headerText="First Name"
+							width="150" filterBy="#{manager.firstName}"
+							filterMatchMode="contains">
                                 #{manager.firstName}
                             </p:column>
-						<p:column styleClass="centeredColumn" headerText="Last Name" width="150"
-							filterBy="#{manager.lastName}" filterMatchMode="contains">
+						<p:column styleClass="centeredColumn" headerText="Last Name"
+							width="150" filterBy="#{manager.lastName}"
+							filterMatchMode="contains">
                                 #{manager.lastName}
                             </p:column>
 
 					</p:dataTable>
-					<h:commandButton  styleClass="myButton" value="Add Manager for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Manager for this position"
 						action="#{positionWebManagem.setTheSelectedManager()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
