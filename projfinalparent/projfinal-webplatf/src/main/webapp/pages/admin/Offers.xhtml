@@ -9,7 +9,10 @@
 
                 <!--List of Offers -->
                 <h:form>
-                    <h1> Offers List </h1>
+                          <div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">
+			 Offers List </h1>
+			 </div> 
                     <h:panelGroup binding="#{offerWebManagem.panelOffers}">
                         <p:dataTable var="item" value="#{offerWebManagem.lstOffer}" 
                                      paginator="true" rows="10" paginatorPosition="top" editable="false"
@@ -63,7 +66,7 @@
                             <f:selectItem itemLabel="" itemValue=""  />
                             <f:selectItems id="selectionoutcome" var="out" value="#{offerWebManagem.lstOfferOutcomes}" itemValue="#{out}" itemLabel="#{out}"/>
                         </h:selectOneMenu>
-                        <p:commandButton  value="Outcome Update"  oncomplete="PF('editoutcomeoffer').show();" update=":confirmEditOutcome"/>
+                        <p:commandButton  styleClass="myButton" ajax="false" value="Outcome Update"  oncomplete="PF('editoutcomeoffer').show();" update=":confirmEditOutcome"/>
                     </h:panelGroup>
                 </h:form>
 
@@ -73,8 +76,8 @@
                     <p:dialog header="Change Outcome"  widgetVar="editoutcomeoffer" modal="true" height="auto" width="auto">
                         <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
                             <h:outputLabel value="Please, confirm/cancel this feedback:"  />
-                            <h:commandButton action="#{offerWebManagem.editOfferOutcome()}" value="Confirm" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
-                            <h:commandButton action="lstOffers?faces-redirect=true" value="Cancel" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
+                            <h:commandButton  styleClass="myButton" action="#{offerWebManagem.editOfferOutcome()}" value="Confirm" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
+                            <h:commandButton styleClass="myButton" action="lstOffers?faces-redirect=true" value="Cancel" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>

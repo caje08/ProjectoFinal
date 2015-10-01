@@ -7,6 +7,9 @@
         <ui:composition template="./mainadmin.xhtml"> 
             <ui:define name="content">
                 <h:form enctype="multipart/form-data">
+                 <div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Negotiation</h1>
+				</div>
                     <h:panelGroup binding="#{offerWebManagem.panelOffers}">
 
                         <!--List of Applications in Negotiation -->
@@ -37,7 +40,7 @@
                             <!--If this application does not have any offer-->
 
                             <p:column  styleClass="centeredColumn"  headerText="Make an offer"  style="width:20%">
-                                <p:commandButton rendered="#{!offerWebManagem.alreadyInOfferProcess(item)}" action="#{offerWebManagem.showPanel(item)}"  id="editapplication" icon="ui-icon-plus" ajax="false" />
+                                <p:commandButton  styleClass="myButton" ajax="false" rendered="#{!offerWebManagem.alreadyInOfferProcess(item)}" action="#{offerWebManagem.showPanel(item)}"  id="editapplication" icon="ui-icon-plus" ajax="false" />
                             </p:column>
 
 
@@ -54,7 +57,7 @@
                         <h:panelGrid columns="1" >
                             <p:outputLabel value="Offer Description:" />
                             <p:inputTextarea value="#{offerWebManagem.offerDescription}" rows="6" cols="33"/>
-                            <p:commandButton value="Submit" oncomplete="PF('offer').show();" update=":confirmOffer" />
+                            <p:commandButton  styleClass="myButton" ajax="false" value="Submit" oncomplete="PF('offer').show();" update=":confirmOffer" />
                         </h:panelGrid>
                     </h:panelGroup>
                 </h:form>
@@ -65,8 +68,8 @@
                     <p:dialog  header="Make Offer" widgetVar="offer" modal="true" height="auto" width="auto">
                         <h:panelGrid columns="3" columnClasses="rightalign" cellpadding="0" cellspacing="2">
                             <h:outputLabel value="Please, confirm that you want to make this offer:"  />
-                            <h:commandButton action="#{offerWebManagem.createOffer()}" value="Confirm" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
-                            <h:commandButton action="negotiation?faces-redirect=true" value="Cancel" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
+                            <h:commandButton  styleClass="myButton" action="#{offerWebManagem.createOffer()}" value="Confirm" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
+                            <h:commandButton  styleClass="myButton" action="negotiation?faces-redirect=true" value="Cancel" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>

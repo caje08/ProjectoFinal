@@ -39,7 +39,7 @@ a:active {
 #global_container input[type=submit] {
 	color: #fff;
 	/*background-color: #106800;*/
-	background-color: #0000ff;
+	background-color: #d70000;
 }
 
 #global_container input:hover[type=submit] {
@@ -65,10 +65,14 @@ a:active {
 }
 
 #search {
-	float: left;
-	height: 100%;
-	line-height: 100%;
-	color: #fff;
+	
+	    height: 100%;
+    with: 100%;
+    line-height: 100%;
+    color: #fff;
+    text-align: center;
+    padding-top: 20px;
+
 }
 
 #bottom {
@@ -150,3 +154,9 @@ IMG.displayed {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+/* .imagem_fundo{
+	
+	background:url("../resources/images/imagem_fundo.png" );
+	background-color: red;
+} */

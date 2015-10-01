@@ -10,7 +10,10 @@
 			<h:form id="searchpositions">
 
 				<!--list of all Positions-->
-
+				<div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Search all
+						positions</h1>
+				</div>
 				<p:dataTable id="allpositions" widgetVar="positionTable"
 					paginator="true" rows="10" paginatorPosition="top" editable="false"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -92,25 +95,24 @@
 					<p:column headerText="Edit" styleClass="centeredColumn">
 						<p:commandButton
 							rendered="#{positionWebManagem.canEditPosition(position)}"
-							action="#{positionWebManagem.showPanel(position)}" icon="ui-icon-pencil"
-							title="View" ajax="false">
+							action="#{positionWebManagem.showPanel(position)}"
+							icon="ui-icon-pencil" title="View" ajax="false">
 							<f:setPropertyActionListener value="#{position}"
 								target="#{positionWebManagem.selectedPosition}" />
 						</p:commandButton>
 					</p:column>
 
 					<p:rowExpansion>
-						<f:facet name="header">
-                                More Details about this position
-                            </f:facet>
-						<h:panelGrid columns="1">
-							<h:outputLabel value="Job Description:" />
-                                #{position.jobDescription}" 
-                            </h:panelGrid>
+
+						<h:panelGrid columns="2" style="width:300px">
+
+							<h3>Job Description</h3>
+							 #{position.jobDescription}"
+							</h:panelGrid>
 						<p:panelGrid columns="2" style="width:300px">
 							<f:facet name="header">
-                                    More Details about this position
-                                </f:facet>
+                                More Details about this position
+                            </f:facet>
 							<h:outputText value="Manager" />
 							<h:outputText value="#{position.manager.username}" />
 
@@ -141,26 +143,29 @@
 			<h:form>
 				<h:panelGroup binding="#{positionWebManagem.panelGroup}"
 					rendered="false">
-					<div align="left">
-						<h1>Please, edit #{positionWebManagem.activePosition.activePosition.title}</h1>
+
+
+					<div style="text-align: center; margin-top: 30px;">
+						<h1 style="font-size: 20px">Please, edit
+							#{positionWebManagem.activePosition.activePosition.title}</h1>
 					</div>
 
-					<h:panelGrid columns="2" cellpadding="5">
+					<h:panelGrid columns="2" cellpadding="5" style="display:-webkit-inline-box;margin-top:10px;">
 
 
-						<h:outputLabel value="Title" />
-						<h:inputText required="true" label="title" size="40"
+						<p:outputLabel value="Title" />
+						<p:inputText required="true" label="title" size="40"
 							requiredMessage="Please enter a title"
 							value="#{positionWebManagem.activePosition.activePosition.title}" />
 
-						<h:outputLabel value="Job Description" />
-						<h:inputTextarea title="Job Description"
+						<p:outputLabel value="Job Description" />
+						<p:inputTextarea title="Job Description"
 							value="#{positionWebManagem.activePosition.activePosition.jobDescription}"
 							required="true" requiredMessage="Job Description"
-							style="width:900px; height:80px;" />
+							style="width:300px; height:80px;" />
 
-						<h:outputLabel value="Publishing channels" />
-						<h:inputText id="publishingChannels" title="Publishing channels"
+						<p:outputLabel value="Publishing channels" />
+						<p:inputText id="publishingChannels" title="Publishing channels"
 							value="#{positionWebManagem.activePosition.activePosition.publishingChannels}"
 							required="true" requiredMessage="Publishing channels." />
 
@@ -181,19 +186,24 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel for="public" value="Is public:" />
-						<h:selectOneRadio id="public"
+						<p:selectOneRadio id="public"
 							value="#{positionWebManagem.activePosition.activePosition.isPublic}">
 							<f:selectItem itemLabel="Yes" itemValue="True" />
 							<f:selectItem itemLabel="No" itemValue="False" />
-						</h:selectOneRadio>
+						</p:selectOneRadio>
 
 
-						<h:outputLabel for="vacancies" value="Number of vacancies: " />
+						<p:outputLabel for="vacancies" value="Number of vacancies: " />
 						<p:spinner id="vacancies"
-							value="#{positionWebManagem.activePosition.activePosition.vacancies}" min="0" />
+							value="#{positionWebManagem.activePosition.activePosition.vacancies}"
+							min="0" />
+							
+							
+							
 						<!--Pop up of guides -->
 
-						<p:commandButton value="Choose a phone Guide Interview"
+						<p:commandButton styleClass="myButton" 
+							value="Choose a phone Guide Interview"
 							oncomplete="PF('phoneguide').show()" update=":phoneguideTable">
 							<f:setPropertyActionListener value="#{guide}"
 								target="#{positionWebManagem.selectedInterviewGuide}" />
@@ -202,7 +212,8 @@
 						<p:outputLabel
 							value="#{positionWebManagem.activePosition.activePosition.phoneInterviewEntity.title}" />
 
-						<p:commandButton value="Choose a presential Guide Interview"
+						<p:commandButton styleClass="myButton" ajax="false"
+							value="Choose a presential Guide Interview"
 							oncomplete="PF('presentialguide').show()"
 							update=":presentialguideTable">
 							<f:setPropertyActionListener value="#{guide}"
@@ -215,7 +226,8 @@
 
 						<!--Pop up of managers -->
 
-						<p:commandButton value="Choose a Manager for this position"
+						<p:commandButton styleClass="myButton" 
+							value="Choose a Manager for this position"
 							oncomplete="PF('manager').show()" update=":managerTable">
 							<f:setPropertyActionListener value="#{manager}"
 								target="#{positionWebManagem.selectedManager}" />
@@ -225,7 +237,7 @@
 							value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
 
 						<h:outputText></h:outputText>
-						<h:commandButton value="Save"
+						<h:commandButton value="Save" styleClass="myButton"
 							action="#{positionWebManagem.savePosition()}"
 							style="width:160px; height:40px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 					</h:panelGrid>
@@ -256,7 +268,8 @@
 
 
 					</p:dataTable>
-					<h:commandButton value="Add Presential Guide for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Presential Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 
@@ -285,7 +298,8 @@
 
 
 					</p:dataTable>
-					<h:commandButton value="Add Phone Guide for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Phone Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
@@ -304,7 +318,8 @@
 
 
 					</p:dataTable>
-					<h:commandButton value="Add Manager for this position"
+					<h:commandButton styleClass="myButton"
+						value="Add Manager for this position"
 						action="#{positionWebManagem.setTheSelectedManager()}"
 						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 

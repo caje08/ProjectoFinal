@@ -16,14 +16,17 @@ and open the template in the editor.
         <ui:composition template="./mainmanager.xhtml"> 
             <ui:define name="content">
 
-                <h:form> 
-                    <h2 >Application details of #{appDetailsStatus.applicant.username}</h2>
-                    <h:panelGrid columns="2"  >
-                        <h:outputText value="First Name" />
-                        <h:outputText value="#{appDetailsStatus.applicant.firstName}" />
-
+            
+                    <h:form >
+                 <h1 style="margin-bottom: 20px; font-size:25px;">Application details of #{appDetailsStatus.applicant.username} </h1>
+            
+                  
+                    <h:panelGrid columns="2" cellpading="3"  style="display:-webkit-inline-box;font-size:16px;"   >
+                        <h:outputText  value="First Name" />
+                        <p:outputText  value="#{appDetailsStatus.applicant.firstName}" />
+                        
                         <h:outputText value="Last Name:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.lastName}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
                         <h:outputText value="Curriculum Vitae" />
                         <p:button href="#{appDetailsStatus.cvPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cv">
@@ -34,33 +37,37 @@ and open the template in the editor.
                         </p:button>
 
                         <h:outputText value="Email:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.email}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.email}" />
 
                         <h:outputText value="Address:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.address}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.address}" />
 
                         <h:outputText value="City:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.city}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.city}" />
 
                         <h:outputText value="Phone:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.phone}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.phone}" />
 
                         <h:outputText value="Mobile Phone:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.mobile}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.mobile}" />
 
                         <h:outputText value="Country:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.country}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.country}" />
 
                         <h:outputText value="Degree:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.degree}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.degree}" />
 
                         <h:outputText value="School" />
-                        <h:outputText value="#{appDetailsStatus.applicant.school}" />
+                        <p:outputText value="#{appDetailsStatus.applicant.school}" />
                         
                          <h:outputText value="Application associated to Position:" />
-                        <h:outputText value="#{appDetailsStatus.position.title}" />
+                        <p:outputText value="#{appDetailsStatus.position.title}" />
 
                     </h:panelGrid>  
+                    	<div align="center">
+						<p:commandButton  value="Return" styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
+							action="/pages/manager/nonSpontaneousAppications.xhtml?faces-redirect=true" />
+					</div> 
                 </h:form>
             </ui:define>
         </ui:composition>

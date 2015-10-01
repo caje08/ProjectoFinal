@@ -1,53 +1,385 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../../template/platformtemplate.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui">
+	template="./../../template/platformtemplate.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 
-    <!--Top Content-->
+	<!--Top Content-->
 
-    <ui:define name="top">
-        <h:form>
-            <p:menubar>
-                <p:menuitem icon="ui-icon-home" action="/pages/admin/mainmanager.xhtml?faces-redirect=true"/>
-                <p:submenu label="Welcome: #{activeSession.activeUser.username}" >
-                    <p:menuitem  value="Edit" action="/pages/manager/edituser.xhtml?faces-redirect=true"  />
-                    <p:menuitem  value="Logout" action="#{loginMB.logout()}"  />
-                </p:submenu>
-                <p:submenu label="Applications">
-                    <p:menuitem value="Non Spontaneous" action="/pages/manager/nonSpontaneousApplications.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Spontaneous " action="/pages/manager/newSpontaneousApplications.xhtml?faces-redirect=true"/>
-                    <p:menuitem value="Manual" action="/pages/manager/newManualApplic.xhtml?faces-redirect=true"/>
-                </p:submenu>
-                <p:menuitem value="My Positions" action="/pages/manager/searchpositions.xhtml?faces-redirect=true"/>
-                <p:menuitem value="Interviewer Menu"  rendered="#{userCheck.admin or userCheck.manager}" action="/pages/interviewer/maininterviewer.xhtml?faces-redirect=true"/>
-                <p:menuitem value="Return to Admin Menu"  rendered="#{userCheck.admin}" action="/pages/admin/mainadmin.xhtml?faces-redirect=true"/>
-            </p:menubar>
-        </h:form>
-        <div align="right">
-            <h:graphicImage library="images" name="#{stylesCssToWeb.cssInUse.logoPath}"/>
-        </div>
-    </ui:define>
-    <!--Main Content-->
+	<ui:define name="top">
+		<h:form>
 
-  <!--   <ui:define name="content">
-        <h:form>    
-            <p:galleria value="#{imagesView.images}"
-                        effect="slide" 
-                        panelHeight="566" panelWidth="566"
-                        var="image"
-                        >
-                <p:graphicImage value="../resources/images/#{image}" cache="false" 
-                                alt="Image Description for #{image}" title="#{image}"/>
+			<p:menubar>
+				<p:menuitem>
+					<h:link
+						outcome="/pages/manager/mainmanager.xhtml?faces-redirect=true">
+						<h:graphicImage library="images"
+							name="#{stylesCssToWeb.cssInUse.logoPath}" />
+					</h:link>
 
-            </p:galleria>
-        </h:form> 
+				</p:menuitem>
+				<p:menuitem icon="ui-icon-home"
+					action="/pages/admin/mainmanager.xhtml?faces-redirect=true" />
+				<p:submenu label="Welcome: #{activeSession.activeUser.username}">
+					<p:menuitem value="Edit Profile"
+						action="/pages/manager/edituser.xhtml?faces-redirect=true" />
+					<p:menuitem value="Logout" action="#{loginMB.logout()}" />
+				</p:submenu>
+				<p:submenu label="Applications">
+					<p:menuitem value="Non Spontaneous"
+						action="/pages/manager/nonSpontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Spontaneous "
+						action="/pages/manager/newSpontaneousApplications.xhtml?faces-redirect=true" />
+					<p:menuitem value="Manual"
+						action="/pages/manager/newManualApplic.xhtml?faces-redirect=true" />
+				</p:submenu>
+				<p:menuitem value="My Positions"
+					action="/pages/manager/searchpositions.xhtml?faces-redirect=true" />
+				<p:menuitem value="Interviewer Menu"
+					rendered="#{userCheck.admin or userCheck.manager}"
+					action="/pages/interviewer/maininterviewer.xhtml?faces-redirect=true" />
+				<p:menuitem value="Return to Admin Menu"
+					rendered="#{userCheck.admin}"
+					action="/pages/admin/mainadmin.xhtml?faces-redirect=true" />
+			</p:menubar>
+		</h:form>
 
-    </ui:define> -->
+	</ui:define>
 
+
+	<ui:define name="content">
+		<h:form id="searchpositions">
+
+			<!--list of all Positions of the manager user-->
+			<div>
+				<h1 style="margin-bottom: 20px; font-size: 25px;">Positions of #{activeSession.activeUser.username}
+					</h1>
+			</div>
+			<p:dataTable id="allpositions" widgetVar="positionTable"
+				paginator="true" rows="10" paginatorPosition="top" editable="false"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,30" selectionMode="single"
+				rowKey="#{position.positionCode}"
+				selection="#{positionWebManagem.selectedPosition}"
+				value="#{positionWebManagem.lstPositionsofAManager}" var="position">
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Search all fields:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('positionTable').filter()" style="width:150px"
+							placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column style="width:16px">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column styleClass="centeredColumn" headerText="Title"
+					filterBy="#{position.title}" filterMatchMode="contains">
+                            #{position.title}
+                        </p:column>
+
+				<p:column styleClass="centeredColumn" headerText="Position Code"
+					filterBy="#{position.positionCode}" filterMatchMode="contains">
+                            #{position.positionCode}
+                        </p:column>
+
+				<p:column styleClass="centeredColumn" headerText="Opening date"
+					filterBy="#{position.openingDate}" filterMatchMode="contains">
+					<h:outputText value="#{position.openingDate}">
+						<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column styleClass="centeredColumn" headerText="Closing date"
+					filterBy="#{position.closingDate}" filterMatchMode="contains">
+					<h:outputText value="#{position.closingDate}">
+						<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column styleClass="centeredColumn" headerText="Status"
+					filterMatchMode="contains" filterBy="#{position.status}">
+                            #{position.status}
+                        </p:column>
+
+
+				<p:column styleClass="centeredColumn" headerText="Location"
+					filterMatchMode="contains" filterBy="#{position.location}">
+                            #{position.location}
+                        </p:column>
+
+				<p:column styleClass="centeredColumn" headerText="Company"
+					filterMatchMode="contains" filterBy="#{position.company}">
+                            #{position.company}
+                        </p:column>
+
+				<p:column styleClass="centeredColumn" headerText="Technical Area"
+					filterMatchMode="contains" filterBy="#{position.technicalArea}">
+                            #{position.technicalArea}
+                        </p:column>
+
+				<p:column headerText="Insert new Application"
+					styleClass="centeredColumn">
+					<p:commandButton
+						rendered="#{positionWebManagem.canAssociatePositionToApplication(position)}"
+						action="#{positionWebManagem.goToApplicationForm(position)}"
+						icon="ui-icon-plus" title="Add">
+						<f:setPropertyActionListener value="#{position}"
+							target="#{positionWebManagem.selectedPosition}" />
+					</p:commandButton>
+				</p:column>
+
+
+				<p:column headerText="Edit" styleClass="centeredColumn">
+					<p:commandButton
+						rendered="#{positionWebManagem.canEditPosition(position)}"
+						action="#{positionWebManagem.showPanel(position)}"
+						icon="ui-icon-pencil" title="View" ajax="false">
+						<f:setPropertyActionListener value="#{position}"
+							target="#{positionWebManagem.selectedPosition}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:rowExpansion>
+
+					<h:panelGrid columns="2" style="width:300px">
+
+						<h3>Job Description</h3>
+							 #{position.jobDescription}"
+							</h:panelGrid>
+					<p:panelGrid columns="2" style="width:300px">
+						<f:facet name="header">
+                                More Details about this position
+                            </f:facet>
+						<h:outputText value="Manager" />
+						<h:outputText value="#{position.manager.username}" />
+
+						<h:outputText value="SLA (weeks)" />
+						<h:outputText value="#{position.sla}" />
+
+						<h:outputText value="Public" />
+						<h:outputText value="#{position.isPublic}" />
+
+						<h:outputText value="Phone Interview Guide" />
+						<h:outputText value="#{position.phoneInterviewEntity.title}" />
+
+						<h:outputText value="Presential Interview Guide" />
+						<h:outputText value="#{position.presencialInterviewEntity.title}" />
+
+					</p:panelGrid>
+				</p:rowExpansion>
+
+
+
+
+			</p:dataTable>
+
+		</h:form>
+
+		<!--Edition of specific Position-->
+
+		<h:form>
+			<h:panelGroup binding="#{positionWebManagem.panelGroup}"
+				rendered="false">
+
+
+				<div style="text-align: center; margin-top: 30px;">
+					<h1 style="font-size: 20px">Please, edit
+						#{positionWebManagem.activePosition.activePosition.title}</h1>
+				</div>
+
+				<h:panelGrid columns="2" cellpadding="5"
+					style="display:-webkit-inline-box;margin-top:10px;">
+
+
+					<p:outputLabel value="Title" />
+					<p:inputText style="float:left" required="true" label="title" size="20"
+						requiredMessage="Please enter a title"
+						value="#{positionWebManagem.activePosition.activePosition.title}" />
+
+					<p:outputLabel value="Job Description" />
+					<p:inputTextarea  title="Job Description"
+						value="#{positionWebManagem.activePosition.activePosition.jobDescription}"
+						required="true" requiredMessage="Job Description"
+						style="width:300px; height:80px;float:left" />
+
+					<p:outputLabel value="Publishing channels" />
+					<p:inputText style="float:left" id="publishingChannels" title="Publishing channels"
+						value="#{positionWebManagem.activePosition.activePosition.publishingChannels}"
+						required="true" requiredMessage="Publishing channels." />
+
+					<p:outputLabel for="location" value="Location: " />
+					<p:selectOneMenu style="float:left" id="location"
+						value="#{positionWebManagem.activePosition.activePosition.location}">
+						<f:selectItem itemLabel="Lisboa" itemValue="LISBOA" />
+						<f:selectItem itemLabel="Porto" itemValue="PORTO" />
+						<f:selectItem itemLabel="Coimbra" itemValue="COIMBRA" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="status" value="Status " />
+					<p:selectOneMenu style="float:left"  id="status"
+						value="#{positionWebManagem.activePosition.activePosition.status}">
+						<f:selectItem itemLabel="Open" itemValue="OPEN" />
+						<f:selectItem itemLabel="Close" itemValue="CLOSED" />
+						<f:selectItem itemLabel="On Hold" itemValue="ONHOLD" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="public" value="Is public:" />
+					<p:selectOneRadio style="float:left" id="public"
+						value="#{positionWebManagem.activePosition.activePosition.isPublic}">
+						<f:selectItem itemLabel="Yes" itemValue="True" />
+						<f:selectItem itemLabel="No" itemValue="False" />
+					</p:selectOneRadio>
+
+
+					<p:outputLabel for="vacancies" value="Number of vacancies: " />
+					<p:spinner style="float:left" id="vacancies"
+						value="#{positionWebManagem.activePosition.activePosition.vacancies}"
+						min="0" />
+						
+						
+						
+					<!--Pop up of guides -->
+
+					<p:commandButton styleClass="myButton"
+						value="Choose a phone Guide Interview"
+						oncomplete="PF('phoneguide').show()" update=":phoneguideTable">
+						<f:setPropertyActionListener value="#{guide}"
+							target="#{positionWebManagem.selectedInterviewGuide}" />
+					</p:commandButton>
+
+					<p:outputLabel style="float:left" 
+						value="#{positionWebManagem.activePosition.activePosition.phoneInterviewEntity.title}" />
+
+					<p:commandButton styleClass="myButton" 
+						value="Choose a presential Guide Interview"
+						oncomplete="PF('presentialguide').show()"
+						update=":presentialguideTable">
+						<f:setPropertyActionListener value="#{guide}"
+							target="#{positionWebManagem.selectedInterviewGuide}" />
+					</p:commandButton>
+
+
+					<p:outputLabel style="float:left"
+						value="#{positionWebManagem.activePosition.activePosition.presencialInterviewEntity.title}" />
+
+
+
+					<!--Pop up of managers -->
+
+					<p:commandButton styleClass="myButton" 
+						value="Choose a Manager for this position"
+						oncomplete="PF('manager').show()" update=":managerTable">
+						<f:setPropertyActionListener value="#{manager}"
+							target="#{positionWebManagem.selectedManager}" />
+					</p:commandButton>
+
+					<h:outputText style="float:left" 
+						value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
+
+				
+					<div style="text-align:center">
+					<h:commandButton value="Save" styleClass="myButton"
+						action="#{positionWebManagem.savePosition()}"
+						style="width:160px; height:40px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+				</div>
+				</h:panelGrid>
+
+			</h:panelGroup>
+		</h:form>
+
+		<!-- Pop up of Presential Guides -->
+
+		<h:form id="presentialguideTable">
+			<p:dialog header="Guides" widgetVar="presentialguide" modal="true"
+				height="500" width="500">
+				<p:dataTable id="theguide" selectionMode="single"
+					rowKey="#{guide.interviewId}"
+					selection="#{positionWebManagem.selectedInterviewGuide}"
+					value="#{positionWebManagem.lstPresentialInterviewsInUse}"
+					var="guide">
+
+					<p:column styleClass="centeredColumn" headerText="Title"
+						filterBy="#{guide.title}" filterMatchMode="contains">
+                                #{guide.title}
+                            </p:column>
+
+					<p:column styleClass="centeredColumn" headerText="Creation Date"
+						filterBy="#{guide.creationDate}" filterMatchMode="contains">
+                                #{guide.creationDate}
+                            </p:column>
+
+
+				</p:dataTable>
+				<h:commandButton styleClass="myButton"
+					value="Add Presential Guide for this position"
+					action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
+					style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+
+			</p:dialog>
+		</h:form>
+
+		<!-- Pop up of Phone Guides -->
+
+		<h:form id="phoneguideTable">
+			<p:dialog header="Guides" widgetVar="phoneguide" modal="true"
+				height="500" width="500">
+				<p:dataTable id="theguide" selectionMode="single"
+					rowKey="#{guide.interviewId}"
+					selection="#{positionWebManagem.selectedInterviewGuide}"
+					value="#{positionWebManagem.lstPhoneInterviewsInUse}" var="guide">
+
+					<p:column styleClass="centeredColumn" headerText="Title"
+						filterBy="#{guide.title}" filterMatchMode="contains">
+                                #{guide.title}
+                            </p:column>
+
+					<p:column styleClass="centeredColumn" headerText="Creation Date"
+						filterBy="#{guide.creationDate}" filterMatchMode="contains">
+                                #{guide.creationDate}
+                            </p:column>
+
+
+				</p:dataTable>
+				<h:commandButton styleClass="myButton"
+					value="Add Phone Guide for this position"
+					action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}"
+					style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+			</p:dialog>
+		</h:form>
+
+		<h:form id="managerTable">
+			<p:dialog header="Managers" widgetVar="manager" modal="true"
+				height="300" width="300">
+				<p:dataTable id="manager" selectionMode="single"
+					rowKey="#{manager.userId}"
+					selection="#{positionWebManagem.selectedManager}"
+					value="#{positionWebManagem.lstManagers}" var="manager">
+					<p:column headerText="Username" sortBy="#{manager.username}">
+                                #{manager.username}
+                            </p:column>
+
+
+				</p:dataTable>
+				<h:commandButton styleClass="myButton" 
+					value="Add Manager for this position"
+					action="#{positionWebManagem.setTheSelectedManager()}"
+					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+
+			</p:dialog>
+
+		</h:form>
+
+
+	</ui:define>
 </ui:composition>
 
 

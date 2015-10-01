@@ -3,11 +3,12 @@ label{
 }
 
 body {
-    background-color: #ffffff;
+ background-color: #747474;
     font-size: 12px;
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
     color: #000000;  
     margin: 10px;
+    width:1500px;
 }
 
 h1 {
@@ -31,4 +32,44 @@ a:link:hover, a:visited:hover  {
     color: #045491;
     font-weight : bold;
     text-decoration : underline;
+}
+
+.ui-widget-content {
+  /*   border: 1px solid #a8a8a8; */
+    /* background: #ffffff; */
+    color: #4f4f4f !important;
+}
+
+.ui-tabs {
+    position: relative!important;
+    /* padding: .2em; */
+    zoom: 1;
+    background-color: #212121;
+}
+
+.ui-tabs.ui-tabs-panel {
+    border-width: 0;
+    padding: 0px;
+    background: none;
+}
+
+.ui-tabs-left .ui-tabs-nav {
+    float: left;
+    width: 23%;
+    height: 00px;
+    width: 200px;
+        padding-top: 25px;
+    background-color: #212121;
+}
+ .ui-tabs-left .ui-tabs-nav { 
+        float: left;
+    width: 23%;
+    /* height: 300px; */
+    background-image: none;
+    padding-top: 20px;
+    background-color: red;
+    }
+    
+.ui-menubar {
+    width: 1300px;
 }

@@ -14,34 +14,33 @@
 	<ui:define name="top">
 	<f:event listener="#{viewImgs.init()}" type="preRenderView" />
 		<h:form>
-
 			<p:menubar>
 				<p:menuitem>
 					<h:link outcome="/pages/admin/mainadmin.xhtml?faces-redirect=true">
 						<h:graphicImage library="images"
 							name="#{stylesCssToWeb.cssInUse.logoPath}" />
 					</h:link>
+
 				</p:menuitem>
 				<p:menuitem icon="ui-icon-home"
 					action="/pages/admin/mainadmin.xhtml?faces-redirect=true" />
 				<p:submenu label="Welcome: #{activeSession.activeUser.username}">
 					<p:menuitem value="Logout" action="#{loginMB.logout()}" />
 					<p:menuitem value="Edit"
-						action="/pages/admin/edituser.xhtml?faces-redirect=true" />
+						action="/pages/admin/edituser.xhtml?faces-redirect=true" 
+						style="padding-left:20px" />
 				</p:submenu>
 
 				<p:submenu label="Other Profiles" style="padding-left:20px">
 					<p:menuitem value="Manager Menu"
-						action="/pages/manager/mainmanager.xhtml?faces-redirect=true"
-						style="padding-left:20px" />
+						action="/pages/manager/mainmanager.xhtml?faces-redirect=true" />
 					<p:menuitem value="Interviewer Menu"
 						action="/pages/interviewer/maininterviewer.xhtml?faces-redirect=true" />
 				</p:submenu>
 
 				<p:submenu label="Users" style="padding-left:20px">
 					<p:menuitem value="Add New User"
-						action="/pages/admin/addnewuser.xhtml?faces-redirect=true"
-						style="padding-left:20px" />
+						action="/pages/admin/addnewuser.xhtml?faces-redirect=true" />
 					<p:menuitem value="Searching Users"
 						action="/pages/admin/searchusers.xhtml?faces-redirect=true" />
 				</p:submenu>
@@ -89,11 +88,10 @@
 					style="padding-left:20px" />
 				<p:submenu label="Customize Styles" style="padding-left:20px">
 					<p:menuitem value="Add new Style Configuration"
-						action="/pages/admin/addcssstyle.xhtml?faces-redirect=true"
-						style="padding-left:20px" />
+						action="/pages/admin/addcssstyle.xhtml?faces-redirect=true" />
 					<p:menuitem value="All Css Styles"
-						action="/pages/admin/cssstyles.xhtml?faces-redirect=true"
-						style="padding-left:20px" />
+						action="/pages/admin/cssstyles.xhtml?faces-redirect=true"	/>
+					
 				</p:submenu>
 
 			</p:menubar>
@@ -115,6 +113,7 @@
 			 menu horizontal
 			<div>
 				<h3>Welcome Admin</h3>
+
 				<p:tabView dynamic="true" cache="true">
 					<p:tab title="Positions">
 						 menu vertical
@@ -230,8 +229,6 @@
 						</h:form>
 					</p:tab>
 
-
-				</p:tabView>
 			</div>
 
 		</h:form> -->

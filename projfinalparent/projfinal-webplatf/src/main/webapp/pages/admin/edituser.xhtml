@@ -8,11 +8,12 @@
 		<ui:define name="content">
 			<p:growl />
 
+		<h1 style="margin-bottom: 20px; font-size: xx-large;">Edit User
+				Profile: #{activeSession.activeUser.username}</h1>
 			<h3>Values with * are mandatory</h3>
-			<h1>Edit User Profile</h1>
 			<h:form id="form1" enctype="multipart/form-data"
-				rendered="#{!userWebView.testpw}">
-				<h:panelGrid id="p1" columns="2" cellpadding="5">
+				rendered="#{!userWebView.testpw}"    style="display: inline-table;" >
+				<h:panelGrid id="p1" columns="2" cellpadding="3">
 
 					<p:outputLabel value="First Name*" />
 					<p:outputLabel value="#{userWebView.firstName}" />
@@ -34,16 +35,18 @@
 						<p:watermark for="oldpassword" value="Old Password " />
 					</p:password>
 
-					<p:commandButton value="Check Old Password"
-						style="margin-left:10px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					<p:commandButton  styleClass="myButton" value="Check Old Password"
+						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.checkUserPw()}" ajax="false"/>
-					<p:commandButton value=" Cancel " immediate="true"
-						style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					<p:commandButton  styleClass="myButton" value=" Cancel " immediate="true"
+						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
 				</h:panelGrid>
 			</h:form>
-			<h:form id="form2" rendered="#{userWebView.testpw}">
-				<h:panelGrid id="p2" columns="2" cellpadding="5">
+			
+			
+		<h:form id="form2" rendered="#{userWebView.testpw}" style="display: inline-table;">
+				<h:panelGrid id="p2" columns="2" cellpadding="3">
 					<p:outputLabel value="First Name*" />
 					<p:inputText id="firstname" required="true" label="firstname"
 						size="40" requiredMessage="Please enter your First Name"
@@ -86,20 +89,16 @@
 					<p:message for="password" />
 					<p:message for="confirmPassword" />
 
-					<p:commandButton value="Update User Profile"
-						style="margin-left:10px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					<p:commandButton styleClass="myButton" value="Update User Profile"
+						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.editUser()}" ajax="false"/>
-					<p:commandButton value=" Cancel " immediate="true"
-						style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					<p:commandButton styleClass="myButton" value=" Cancel " immediate="true"
+						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
 				</h:panelGrid>
 
 			</h:form>
-			<!-- <h:form id="cancelbtn">
-				<p:commandButton value=" Cancel "
-					style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundButtonColor};Color: ##{stylesCssToWeb.cssInUse.labelButtonColor}"
-					action="#{userWebView.goBackToMain()}" />
-			</h:form> -->
+			
 		</ui:define>
 	</ui:composition>
 </body>

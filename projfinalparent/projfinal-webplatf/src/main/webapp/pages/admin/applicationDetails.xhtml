@@ -17,21 +17,24 @@ and open the template in the editor.
             <ui:define name="content">
 
                 <h:form> 
-                    <h2 >Application details of #{appDetailsStatus.applicant.username}</h2>
-                    <h:panelGrid columns="2"  >
-                        <h:outputText value="First Name" />
+                       <div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Application Details </h1>
+				</div>
+                  
+                     <h:panelGrid columns="2" cellpading="3"  style="display:-webkit-inline-box;font-size:16px;"   >
+                        <h:outputText float="left" value="First Name" />
                         <h:outputText value="#{appDetailsStatus.applicant.firstName}" />
 
                         <h:outputText value="Last Name:" />
                         <h:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
                         <h:outputText value="Curriculum Vitae" />
-                        <p:button href="#{appDetailsStatus.cvPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cv">
-                        </p:button>
+                        <h:button href="#{appDetailsStatus.cvPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cv">
+                        </h:button>
 
                         <h:outputText value="Cover Letter" /> 
-                       <p:button href="#{appDetailsStatus.coverLetterPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cl">
-                        </p:button>
+                       <h:button href="#{appDetailsStatus.coverLetterPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cl">
+                        </h:button>
 
                         <h:outputText value="Email:" />
                         <h:outputText value="#{appDetailsStatus.applicant.email}" />
@@ -61,6 +64,10 @@ and open the template in the editor.
                         <h:outputText value="#{appDetailsStatus.position.title}" />
 
                     </h:panelGrid>  
+                      	<div align="center">
+						<p:commandButton  value="Return" styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
+							action="/pages/admin/newSpontaneousApplications.xhtml?faces-redirect=true" />
+					</div>
                 </h:form>
             </ui:define>
         </ui:composition>

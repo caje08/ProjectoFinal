@@ -38,8 +38,9 @@
 	</ui:define>
 	<ui:define name="content">
 
-		<h3>Values with * are required</h3>
-		<h:form enctype="multipart/form-data">
+	<h1 style="margin-bottom: 20px; font-size: xx-large;">Submit application</h1>
+		<h3>Values with * are mandatory</h3>
+		<h:form enctype="multipart/form-data" style="display: inline-table;">
 
 			<h:panelGrid columns="1" cellpadding="1">
 				<p:outputLabel value="Source*" />
@@ -64,11 +65,11 @@
 
 			</h:panelGrid>
 
-			<h:commandButton value=" Submit "
-				style="height:50px; width:100px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+			<p:commandButton value=" Submit " styleClass="myButton" ajax="false"
+				style=" background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
 				action="#{infoUser.createUserApplications()}" />
-			<p:commandButton value=" Cancel " immediate="true"
-				style="margin-left:10px; width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+			<p:commandButton value=" Cancel " immediate="true" styleClass="myButton" ajax="false"
+				style=" background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
 				action="#{pubUserWebView.goBackToMain()}" />
 
 		</h:form>

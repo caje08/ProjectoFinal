@@ -19,7 +19,7 @@
 	overflow-y: scroll;
 }
 
-#content_left {
+/* #content_left {
 	color: #fff;
 	width: 100%;
 	margin: 60px 0px 40px 0px;
@@ -29,10 +29,11 @@
 	color: #fff;
 	width: 100%;
 	margin: 60px 0px 40px 0px;
-}
+} */
 
 #content_browser {
 	width: 100%;
 	margin: 60px 0px 40px 0px;
 	overflow-x: auto;
+	
 }

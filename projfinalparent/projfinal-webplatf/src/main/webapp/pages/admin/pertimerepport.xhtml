@@ -11,8 +11,11 @@
             <ui:composition template="./mainadmin.xhtml"> 
                 <ui:define name="content">
 
-                    <h:form id="date">
-                        <h:panelGrid columns="3" cellpadding="5">
+                  	<div>
+					<h1 style="margin-bottom: 20px; font-size: xx-large;">Applicants per time period</h1>
+			
+				</div>
+                        <h:panelGrid columns="3" cellpadding="5" style="display: -webkit-inline-box;" >
 
                             <p:outputLabel for="openingDate" value="Opening date:" />
                             <p:calendar id="openingDate" value="#{reppApplicantsBB.begin}" required="true" requiredMessage="Please enter the period initial Date" />
@@ -87,7 +90,7 @@
                             <p:chart rendered="#{!reppApplicantsBB.showTableTime(begin, end)}" type="line" model="#{reppApplicantsBB.dateModel}" style="height:400px;"/>
                         </p:panel>
 
-                        <p:commandButton id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
+                        <p:commandButton styleClass="myButton"  ajax="false" id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
                             <f:setPropertyActionListener value="#{manager}" target="#{reppApplicantsBB.selectedmanager}" />
                         </p:commandButton>
 
@@ -113,7 +116,7 @@
                                 </p:column>
 
                             </p:dataTable>
-                            <h:commandButton value="Send email to this Manager" action="#{reppApplicantsBB.sendApplicationsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+                            <h:commandButton styleClass="myButton"  value="Send email to this Manager" action="#{reppApplicantsBB.sendApplicationsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
                         </p:dialog>
                     </h:form>
                 </ui:define>

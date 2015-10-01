@@ -10,6 +10,7 @@
 
 		<ui:define name="content" >
 			<h:form id="form">
+			   <h1 style="margin-bottom: 20px; font-size: 25px;">Interviews of #{activeSession.activeUser.username}</h1>
 				<!-- 				<p:growl id="messages" showDetail="true" /> -->
 				<!-- 				<h:panelGroup binding="#{applicationWebManagem.panelInterviews}"> -->
 				<!-- 					<h:panelGroup > -->
@@ -72,7 +73,7 @@
 						
 						<!--Without Feedback Given-->
 
-						<p:commandButton
+						<p:commandButton styleClass="myButton" ajax="false"
 							rendered="#{!applicationWebManagem.feedbackGiven(item) and !applicationWebManagem.possibleToSubmitFeedback(item)}"
 							id="selectInterview" icon="ui-icon-plus"
 							actionListener="#{applicationWebManagem.appointAnswers(item)}"
@@ -83,7 +84,7 @@
 
 						<!--With Feedback Given-->
 
-						<p:commandButton
+						<p:commandButton styleClass="myButton" ajax="false"
 							rendered="#{applicationWebManagem.feedbackGiven(item)}"
 							id="selectInterview1" icon="ui-icon-search"
 							actionListener="#{applicationWebManagem.appointAnswers(item)}"
@@ -97,7 +98,8 @@
 				</p:dataTable>
 				<!--Button to add a new Interview-->
 
-					<p:commandButton rendered="#{applicationWebManagem.possibleToAdd}"
+					<p:commandButton  styleClass="myButton" ajax="false"
+					rendered="#{applicationWebManagem.possibleToAdd}"
 						id="selectInterview" value="Add a new interview"
 						oncomplete="PF('interviewer').show()" update=":interviewTable">
 						<f:setPropertyActionListener value="#{interview}"
@@ -138,7 +140,7 @@
 								itemValue="#{outcome}" itemLabel="#{outcome}" />
 						</h:selectOneMenu>
 					</h:panelGrid>
-					<h:commandButton value="Add Feedback"
+					<h:commandButton styleClass="myButton" value="Add Feedback"
 						action="#{applicationWebManagem.addFeedback()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
@@ -175,6 +177,7 @@
 					</h:panelGrid>
 				</p:dialog>
 			</h:form>
+
 
 <!--Pop up to edit a scheduled Interview-->
 
@@ -306,6 +309,7 @@
 				</p:dialog>
 			</h:form>
 			 -->
+
 		</ui:define>
 	</ui:composition>
 </body>

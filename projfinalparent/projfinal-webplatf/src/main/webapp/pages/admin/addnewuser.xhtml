@@ -7,12 +7,16 @@
 	<ui:composition template="./mainadmin.xhtml">
 		<ui:define name="content">
 			<p:growl />
-			<h3>Values with * are mandatory</h3>
-			<h1>Add a new User</h1>
-			<p></p>
+			<div>
+
+				<h1 style="margin-bottom: 20px; font-size:25px;">Add a new
+					User</h1>
+				<h3>Values with * are mandatory</h3>
+			</div>
 
 			<h:form>
-				<h:panelGrid columns="3">
+				<h:panelGrid columns="3" cellpadding="3"
+					style="display:-webkit-inline-box;">
 					<p:outputLabel value="First Name*" />
 					<p:inputText id="firstname" required="true" label="firstname"
 						size="40" requiredMessage="Please enter your First Name"
@@ -72,20 +76,21 @@
 
 					<p:message for="confirmPassword" />
 
-				<p:selectOneMenu id="userType" value="#{adminRequestBean.userType}">
-					<f:selectItem itemLabel="Admin" itemValue="Admin" />
-					<f:selectItem itemLabel="Manager" itemValue="Manager" />
-					<f:selectItem itemLabel="Interviewer" itemValue="Interviewer" />
-				</p:selectOneMenu>
+					<p:selectOneMenu id="userType" value="#{adminRequestBean.userType}">
+						<f:selectItem itemLabel="Admin" itemValue="Admin" />
+						<f:selectItem itemLabel="Manager" itemValue="Manager" />
+						<f:selectItem itemLabel="Interviewer" itemValue="Interviewer" />
+					</p:selectOneMenu>
 				</h:panelGrid>
-
-				<p:commandButton value="Add"
-					style="width:100px; height:45px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{adminRequestBean.createNewUser()}" ajax="false"/>
-				<p:commandButton value=" Cancel " immediate="true"
-					style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{userWebView.goBackToMain()}" />
-
+				<div style="text-align: center;">
+					<p:commandButton styleClass="myButton" value="Add" ajax="false"
+						style="width:100px; height:45px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{adminRequestBean.createNewUser()}" />
+					<p:commandButton styleClass="myButton" value=" Cancel "
+						immediate="true" ajax="false"
+						style="margin-left:10px; width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{userWebView.goBackToMain()}" />
+				</div>
 			</h:form>
 		</ui:define>
 	</ui:composition>

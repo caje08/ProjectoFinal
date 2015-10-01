@@ -13,7 +13,7 @@
 				<h:panelGroup binding="#{applicationWebManagem.panelInterviews}">
 
 					<!--List of Non Spontaneous Applications -->
-
+ <h1 style="margin-bottom: 20px; font-size:25px;">Non Spontaneous Applications </h1>
 					<p:dataTable var="item"
 						value="#{applicationWebManagem.lstNonSpontaneousApplication}"
 						paginator="true" rows="10" paginatorPosition="top"
@@ -54,7 +54,7 @@
 
 						<p:column styleClass="centeredColumn"
 							headerText="Do not go To First Interview?" style="width:20%">
-							<p:commandButton
+							<p:commandButton styleClass="muButton" ajax="false"
 								rendered="#{applicationWebManagem.alreadyInInterviewProcess(item)}"
 								id="editapplication" icon="ui-icon-closethick"
 								oncomplete="PF('status').show()" update=":statusUpdate2">
@@ -65,7 +65,7 @@
 
 						<p:column styleClass="centeredColumn" headerText="Update Status"
 							style="width:20%">
-							<p:commandButton
+							<p:commandButton  styleClass="muButton" ajax="false"
 								rendered="#{manageApplicationWeb.canEditStatus(item)}"
 								id="updstatus" icon="ui-icon-plus"
 								oncomplete="PF('updstatus').show()" update=":statusUpdate">
@@ -76,10 +76,10 @@
 
 						<p:column styleClass="centeredColumn"
 							headerText="Process Interview" style="width:20%">
-							<p:commandButton
+							<p:commandButton styleClass="muButton" ajax="false"
 								rendered="#{!applicationWebManagem.isRejected(item)}"
 								action="#{applicationWebManagem.showPanel(item)}"
-								icon="ui-icon-plus" title="Add" ajax="false">
+								icon="ui-icon-plus" title="Add" >
 								<f:setPropertyActionListener value="#{item}"
 									target="#{applicationWebManagem.selectedApplication}" />
 							</p:commandButton>
@@ -149,7 +149,7 @@
 
 							<!--Without Feedback Given and can be edited because actual date is before scheduled date for more than 1 hour-->
 
-							<p:commandButton
+							<p:commandButton styleClass="myButton" 
 								rendered="#{!applicationWebManagem.feedbackGiven(interview) and applicationWebManagem.possibleToSubmitFeedback(interview)}"
 								id="select2Interview" icon="ui-icon-pencil"
 								actionListener="#{applicationWebManagem.appointInterviewers(interview)}"
@@ -160,7 +160,7 @@
 
 							<!--Without Feedback Given-->
 
-							<p:commandButton
+							<p:commandButton styleClass="myButton"
 								rendered="#{!applicationWebManagem.feedbackGiven(interview) and !applicationWebManagem.possibleToSubmitFeedback(interview)}"
 								id="select0Interview" icon="ui-icon-plus"
 								actionListener="#{applicationWebManagem.appointAnswers(interview)}"
@@ -171,7 +171,7 @@
 
 							<!--With Feedback Given-->
 
-							<p:commandButton
+							<p:commandButton styleClass="myButton"
 								rendered="#{applicationWebManagem.feedbackGiven(interview)}"
 								id="select1Interview" icon="ui-icon-search"
 								actionListener="#{applicationWebManagem.appointAnswers(interview)}"
@@ -187,7 +187,8 @@
 
 					<!--Button to add a new Interview-->
 
-					<p:commandButton rendered="#{applicationWebManagem.possibleToAdd}"
+					<p:commandButton styleClass="myButton"
+					rendered="#{applicationWebManagem.possibleToAdd}"
 						id="selectInterview" value="Add a new interview"
 						oncomplete="PF('interviewer').show()" update=":interviewTable">
 						<f:setPropertyActionListener value="#{interview}"
@@ -196,7 +197,7 @@
 
 
 					<div align="center">
-						<p:commandButton icon="ui-icon-arrowreturnthick-1-w"
+						<p:commandButton  styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
 							action="/pages/manager/nonSpontaneousApplications.xhtml?faces-redirect=true" />
 					</div>
 
@@ -213,11 +214,11 @@
 						cellspacing="2">
 						<h:outputLabel
 							value="Please, confirm the rejection of this Application:" />
-						<h:commandButton
+						<h:commandButton styleClass="muButton" ajax="false" 
 							action="#{applicationWebManagem.setRejectStatusBeforePhoneInterview()}"
 							value="Confirm"
 							style="background-color: ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
-						<h:commandButton
+						<h:commandButton styleClass="muButton" ajax="false"
 							action="nonSpontaneousApplications.xhtml?faces-redirect=true"
 							value="Cancel"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
@@ -243,11 +244,11 @@
 							<!-- 							<p:ajax render="statusUpdate:upd_motive" execute="@form" /> -->
 						</p:selectOneMenu>
 
-						<h:commandButton
+						<h:commandButton styleClass="muButton" ajax="false"
 							action="#{applicationWebManagem.setNewApplicationStatus()}"
 							value="Set Status"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
-						<h:commandButton
+						<h:commandButton styleClass="muButton" ajax="false"
 							action="nonSpontaneousApplications.xhtml?faces-redirect=true"
 							value="Cancel"
 							style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
@@ -287,7 +288,7 @@
 								itemValue="#{outcome}" itemLabel="#{outcome}" />
 						</h:selectOneMenu>
 					</h:panelGrid>
-					<h:commandButton value="Add Feedback"
+					<h:commandButton  styleClass="muButton" value="Add Feedback"
 						action="#{applicationWebManagem.addFeedback()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
@@ -360,7 +361,7 @@
 							pattern="MM/dd/yyyy HH:mm" required="true"
 							requiredMessage="Must Introduce a Date for this interview" />
 					</h:panelGrid>
-					<h:commandButton value="Schedule interview"
+					<h:commandButton  styleClass="muButton"  value="Schedule interview"
 						action="#{applicationWebManagem.createNewInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 
@@ -372,28 +373,7 @@
 			<h:form id="editschedule">
 				<p:dialog header="Updating a Scheduled Interview"
 					widgetVar="editmeeting" modal="true" height="300" width="500">
-					<!-- <p:dataTable id="edittheguide" selectionMode="single"
-						rowKey="#{interviewer.userId}"
-						selection="#{applicationWebManagem.selectedInterviewer}"
-						value="#{applicationWebManagem.lstInterviewers}" var="interviewer">
-
-						<p:column styleClass="centeredColumn" headerText="Username"
-							filterBy="#{interviewer.username}" filterMatchMode="contains">
-                                #{interviewer.username}
-                            </p:column>
-
-						<p:column styleClass="centeredColumn" headerText="First Name"
-							filterBy="#{interviewer.firstName}" filterMatchMode="contains">
-                                #{interviewer.firstName}
-                            </p:column>
-
-						<p:column styleClass="centeredColumn" headerText="Last Name"
-							filterBy="#{interviewer.lastName}" filterMatchMode="contains">
-                                #{interviewer.lastName}
-                            </p:column>
-
-					</p:dataTable> -->
-
+					
 					<h:outputText></h:outputText>
 					<h:panelGrid columns="2">
 						<h3>Interviewer:*</h3>
@@ -404,7 +384,7 @@
 							pattern="MM/dd/yyyy HH:mm" required="true"
 							requiredMessage="Must Introduce a Date to this interview" />
 					</h:panelGrid>
-					<h:commandButton value="Schedule interview"
+					<h:commandButton styleClass="muButton"  value="Schedule interview"
 						action="#{applicationWebManagem.editInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 

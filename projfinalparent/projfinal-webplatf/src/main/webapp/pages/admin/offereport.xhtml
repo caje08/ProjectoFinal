@@ -16,7 +16,10 @@ and open the template in the editor.
 <h:body>
 	<ui:composition template="./mainadmin.xhtml">
 		<ui:define name="content">
+<div>
+				<h1 style="margin-bottom: 20px; font-size: 25px;">Offer Report</h1>
 
+			</div>
 			<p:panel>
 				<h:form id="hform" prependId="false">
 					<p:dataTable id="tbl" var="outcome"
@@ -53,7 +56,7 @@ and open the template in the editor.
 					<p:chart type="bar" model="#{chartReps.barModelOffer}" title="Offers Outcome"
 						style="width:500px;height:300px" widgetVar="chart1" />
 
-					<p:commandButton id="email" value="Send report by email"
+					<p:commandButton  styleClass="myButton" ajax="false" id="email" value="Send report by email"
 						oncomplete="PF('managers').show()" update=":managersTable">
 						<f:setPropertyActionListener value="#{manager}"
 							target="#{chartReps.selectedmanager}" />
@@ -86,7 +89,7 @@ and open the template in the editor.
                                 </p:column>
 
 					</p:dataTable>
-					<h:commandButton value="Send email to this Manager"
+					<h:commandButton styleClass="myButton"  value="Send email to this Manager"
 						action="#{chartReps.sendOffersReport()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>

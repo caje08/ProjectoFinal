@@ -10,8 +10,11 @@
                 <!--Form to add css-->
 
                 <h:form enctype="multipart/form-data">
-                    <h3 > Values with * are mandatory </h3>
-                    <h1> Add new Style Configuration </h1>
+                
+                <h1 style="margin-bottom: 20px; font-size:25px;" class="center">
+				Add new Style Configuration </h1>
+			<h3>Values with * are mandatory</h3>
+                   
                     <h:panelGrid columns="4">
                         <p:outputLabel value="Name for Css*:" />
                         <p:inputText value="#{stylesCssToWeb.css.name}" required="true" requiredMessage="Must introduce a name"/>
