@@ -6,9 +6,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <body>
-	<ui:composition template="./maininterviewer.xhtml">
+	<ui:composition template="./maininterviewer.xhtml" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundInternalWebContentTemplateColor}">
 
-		<ui:define name="content">
+		<ui:define name="content" >
 			<h:form id="form">
 				<!-- 				<p:growl id="messages" showDetail="true" /> -->
 				<!-- 				<h:panelGroup binding="#{applicationWebManagem.panelInterviews}"> -->
@@ -59,6 +59,17 @@
 					<p:column styleClass="centeredColumn"
 						headerText="Feedback from Interview" width="auto">
 
+						<!--Without Feedback Given and can be edited because actual date is before scheduled date for more than 1 hour-->
+
+							<p:commandButton
+								rendered="#{!applicationWebManagem.feedbackGiven(item) and applicationWebManagem.possibleToSubmitFeedback(item)}"
+								id="select2Interview" icon="ui-icon-pencil"
+								actionListener="#{applicationWebManagem.appointInterviewers(interview)}"
+								oncomplete="PF('editmeeting').show()" update=":editschedule">
+								<f:setPropertyActionListener value="#{interview}"
+									target="#{applicationWebManagem.selectedInterview}" />
+							</p:commandButton>
+						
 						<!--Without Feedback Given-->
 
 						<p:commandButton
@@ -162,6 +173,50 @@
 						<h:outputLabel
 							value="#{applicationWebManagem.selectedInterview.outcome}" />
 					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+
+<!--Pop up to edit a scheduled Interview-->
+
+			<h:form id="editschedule">
+				<p:dialog header="Updating a Scheduled Interview"
+					widgetVar="editmeeting" modal="true" height="300" width="500">
+					<!-- <p:dataTable id="edittheguide" selectionMode="single"
+						rowKey="#{interviewer.userId}"
+						selection="#{applicationWebManagem.selectedInterviewer}"
+						value="#{applicationWebManagem.lstInterviewers}" var="interviewer">
+
+						<p:column styleClass="centeredColumn" headerText="Username"
+							filterBy="#{interviewer.username}" filterMatchMode="contains">
+                                #{interviewer.username}
+                            </p:column>
+
+						<p:column styleClass="centeredColumn" headerText="First Name"
+							filterBy="#{interviewer.firstName}" filterMatchMode="contains">
+                                #{interviewer.firstName}
+                            </p:column>
+
+						<p:column styleClass="centeredColumn" headerText="Last Name"
+							filterBy="#{interviewer.lastName}" filterMatchMode="contains">
+                                #{interviewer.lastName}
+                            </p:column>
+
+					</p:dataTable> -->
+
+					<h:outputText></h:outputText>
+					<h:panelGrid columns="2">
+						<h3>Interviewer:*</h3>
+						<p:outputLabel value="#{applicationWebManagem.selectedInterview.interviewer.username}" />						
+						<h3>New Interview Date:*</h3>						
+						<p:calendar id="editdatetime"
+							value="#{applicationWebManagem.selectedInterview.interviewDate}"
+							pattern="MM/dd/yyyy HH:mm" required="true"
+							requiredMessage="Must Introduce a Date to this interview" />
+					</h:panelGrid>
+					<h:commandButton value="Schedule interview"
+						action="#{applicationWebManagem.editInterview()}"
+						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+
 				</p:dialog>
 			</h:form>
 

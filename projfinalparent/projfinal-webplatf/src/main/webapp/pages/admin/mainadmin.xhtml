@@ -12,6 +12,7 @@
 	<!--Top Content-->
 
 	<ui:define name="top">
+	<f:event listener="#{viewImgs.init()}" type="preRenderView" />
 		<h:form>
 
 			<p:menubar>
@@ -105,24 +106,24 @@
 	</ui:define>
 	<!--Main Content-->
 
-	<ui:define name="content">
+	<!-- <ui:define name="content">
 
 		<h:form id="form">
 
 			<p:growl id="msgs" showDetail="true" />
 
-			<!--  menu horizontal -->
+			 menu horizontal
 			<div>
 				<h3>Welcome Admin</h3>
 				<p:tabView dynamic="true" cache="true">
 					<p:tab title="Positions">
-						<!--  menu vertical -->
+						 menu vertical
 						<p:tabView orientation="left">
 							<p:tab title="ADMIN DASHBOARD">
 
 								<h3 class="center">Add new notification</h3>
 								<h1 class="center">Add a new graphic</h1>
-								<!--Position form -->
+								Position form
 
 								<h:form id="newposition">
 
@@ -135,19 +136,19 @@
 
 							<p:tab title="Search all Positions">
 
-								<!-- 	  <h:form>
-                     </h:form> -->
+									  <h:form>
+                     </h:form>
 
 
 
 							</p:tab>
 						</p:tabView>
-						<!-- fim menu vertical -->
+						fim menu vertical
 					</p:tab>
 
 
 
-					<!-- ADICIONARNOVO UTLIZADOR	 -->
+					ADICIONARNOVO UTLIZADOR	
 
 
 					<p:tab title="Add New User">
@@ -233,10 +234,19 @@
 				</p:tabView>
 			</div>
 
-		</h:form>
+		</h:form> -->
+		<ui:define name="content">
+			<h:form>
+				<p:galleria value="#{ViewImgs.images}" effect="slide"
+					effectSpeed="1000" panelWidth="500" panelHeight="313" 
+                            showCaption="false" var="image">
+					<p:graphicImage name="images/#{image}" cache="false"
+						alt="Image Description for #{image}" title="#{image}" />
 
+				</p:galleria>
+			</h:form>
 
-	</ui:define>
+		</ui:define>
 
 </ui:composition>
 
