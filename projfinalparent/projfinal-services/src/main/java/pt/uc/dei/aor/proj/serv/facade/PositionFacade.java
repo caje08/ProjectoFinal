@@ -327,9 +327,9 @@ public class PositionFacade extends AbstractFacade<PositionEntity> {
 		if(results.isEmpty()){
 			Logger.getLogger(PositionFacade.class.getName()).log(Level.INFO,"Inside lstPositionsOfManager() with empty results list");
 			throw new PositionsNotFoundToThisUserException();
-		} else {
-			return results;
 		}
+			return results;
+		
 		
 	}
 

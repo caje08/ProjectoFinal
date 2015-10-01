@@ -234,13 +234,14 @@ public class ManageApplicationWeb implements Serializable {
 	 */
 	public String associateApplicationToPosition() {
 		try {
+			//selectedPosition=position;
 			Logger.getLogger(ManageApplicationWeb.class.getName())
 					.log(Level.INFO,
 							"Inside associateApplicationToPosition() with selectedApplication.getApplicant().getEmail()="
 									+ selectedApplication.getApplicant()
 											.getEmail()
 									+ "selectedPosition.getTitle="
-									+ selectedPosition.getTitle());
+									);
 			positionFacade.associateApplicationToPosition(selectedApplication,
 					selectedPosition);
 			return "nonSpontaneousApplications?faces-redirect=true";
@@ -772,7 +773,7 @@ public class ManageApplicationWeb implements Serializable {
 				Logger.getLogger(PositionWebManagem.class.getName()).log(
 						Level.INFO, "Inside getLstPositionsofAManager() and before positionFacade.lstPositionsOfManager() with email="+activeUser.getName());
 				lstPositionsofAManager = positionFacade
-						.lstPositionsOfManager((ManagerEntity) userData
+						.lstPositionsOfManager((UserEntity) userData
 								.getLoggedUser());
 			} catch (UserNotFoundException
 					| pt.uc.dei.aor.proj.db.exceptions.UserGuideException e) {
