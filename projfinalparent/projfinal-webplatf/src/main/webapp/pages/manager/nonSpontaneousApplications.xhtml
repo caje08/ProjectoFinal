@@ -193,7 +193,7 @@
 						<h:commandButton styleClass="myButton" 
 							rendered="#{applicationWebManagem.possibleToAdd}"
 							id="selectInterview" value="Add a new interview"
-							onclick="PF('interviewer').show()" update=":interviewTable:theguide" >
+							oncomplete="PF('interviewer').show()" update=":interviewTable" >
 							<f:setPropertyActionListener value="#{interview}" 
 								target="#{applicationWebManagem.selectedInterview}" />
 						</h:commandButton>

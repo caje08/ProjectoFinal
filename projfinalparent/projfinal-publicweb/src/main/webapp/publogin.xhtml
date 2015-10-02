@@ -168,14 +168,14 @@
 
 											<p:column styleClass="centeredColumn"
 												headerText="Send Application as Candidate">
-												<p:commandButton id="selectButton1" icon="ui-icon-plus"
+												<p:commandButton id="selectButton1" icon="ui-icon-plus" value="Apply"
 													action="#{infoUser.goToApplicationForm(position)}"
 													ajax="false" />
 
 											</p:column>
 
 											<p:rowExpansion>
-												<h:panelGrid columns="1">
+												<h:panelGrid columns="1" style="width:300px">
 													<h3>Job Description</h3>
 													<p:inputTextarea value="#{position.jobDescription}" />
 												</h:panelGrid>
@@ -183,11 +183,16 @@
 
 										</p:dataTable>
 										<br />
-										  <p:outputLabel value="If you want to make an Spontaneous application cick here" style="margin:20px;color:black;font-size:20px;"/>
-										<p:commandButton style="background-color: rgba(255, 0, 0, 0.75); color: black;"
+										<div style="text-align:center">
+										  <p:outputLabel value="If you want to make an Spontaneous application cick here"
+										   style="margin:30px;color:black;font-size:25px;font-weight:900;padding-bottom"/>
+										<p:commandButton style="background-color: rgba(255, 0, 0, 0.75); color: black; margin-bottom: 100px;
+										 margin-top: 20px;
+    font-size: 25px;"
 											value="Spontaneous Application"
-											action="/pages/public/sendapplication.xhtml?faces-redirect=true"  />
+											action="/pages/public/spontaneousApply.xhtml?faces-redirect=true"  />
 										<!-- 	action="/pages/public/spontaneoousApply.xhtml" -->
+										</div>
 									</h:form>
 								</div>
 							</p:tab>

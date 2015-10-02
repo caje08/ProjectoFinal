@@ -50,7 +50,7 @@
                             </p:column> -->
 
 
-                            <p:column   styleClass="centeredColumn" headerText="Send To BlackList" style="width:20%">
+                            <p:column value="Blacklist"  styleClass="centeredColumn" headerText="Send To BlackList" style="width:20%">
                                 <p:commandButton rendered="#{applicantCheck.isRejected(item)}" action="#{applicantCheck.goToblacklist(item)}" icon="ui-icon-plus"   ajax="false"  >
                                     <f:setPropertyActionListener value="#{item}" target="#{applicantCheck.selectedApplicant}"/>
                                 </p:commandButton>
@@ -58,7 +58,7 @@
 
                             <p:rowExpansion>
                                 	<p:panelGrid columns="2" columnClasses="label,value"
-							style="width:300px">
+							style="width:400px">
 							<f:facet name="header">
                                         More Details about this Applicant
                                     </f:facet>

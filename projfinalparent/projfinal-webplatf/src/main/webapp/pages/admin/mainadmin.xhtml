@@ -26,8 +26,7 @@
 				<p:submenu label="Welcome: #{activeSession.activeUser.username}">
 					<p:menuitem value="Logout" action="#{loginMB.logout()}" />
 					<p:menuitem value="Edit"
-						action="/pages/admin/edituser.xhtml?faces-redirect=true" 
-						style="padding-left:20px" />
+						action="/pages/admin/edituser.xhtml?faces-redirect=true" />
 				</p:submenu>
 
 				<p:submenu label="Other Profiles" style="padding-left:20px">
@@ -89,8 +88,8 @@
 					<p:menuitem value="Add new Style Configuration"
 						action="/pages/admin/addcssstyle.xhtml?faces-redirect=true" />
 					<p:menuitem value="All Css Styles"
-						action="/pages/admin/cssstyles.xhtml?faces-redirect=true"	/>
-					
+						action="/pages/admin/cssstyles.xhtml?faces-redirect=true" />
+
 				</p:submenu>
 
 			</p:menubar>
@@ -105,17 +104,232 @@
 
 	<ui:define name="content">
 
-		<h:form id="form">
+		<div>
+			<h1 style="margin-bottom: 20px; font-size: 25px; color: black">Welcome
+				Admin #{activeSession.activeUser.username}</h1>
+		</div>
 
-			<p:growl id="msgs" showDetail="true" />
+		<p:tabView>
+			<p:tab title="Positions">
+				<p:panel>
+					<h:form id="form">
 
-			<!--  menu horizontal -->
-			<div>
-				<h3>Welcome Admin</h3>
+						<!-- <p:growl id="msgs" showDetail="true" /> -->
 
-			</div>
+						<h:form id="searchpositions">
 
-		</h:form>
+							<p:dataTable id="allpositions" widgetVar="positionTable"
+								paginator="true" rows="10" paginatorPosition="top"
+								editable="false"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="10,20,30" selectionMode="single"
+								rowKey="#{position.positionCode}"
+								selection="#{positionWebManagem.selectedPosition}"
+								value="#{positionWebManagem.lstPositions}" var="position">
+
+								<f:facet name="header">
+									<p:outputPanel style="display: -webkit-inline-box;">
+										<h:outputText value="Search all fields:" />
+										<p:inputText id="globalFilter"
+											onkeyup="PF('positionTable').filter()"
+											placeholder="Enter keyword" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column style="width:16px">
+									<p:rowToggler />
+								</p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Title"
+									size="100" filterBy="#{position.title}"
+									filterMatchMode="contains">
+                            #{position.title}
+                        </p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Position Code"
+									size="100" filterBy="#{position.positionCode}"
+									filterMatchMode="contains">
+                            #{position.positionCode}
+                        </p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Opening date"
+									size="100" filterBy="#{position.openingDate}"
+									filterMatchMode="contains">
+									<h:outputText value="#{position.openingDate}">
+										<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Closing date"
+									size="100" filterBy="#{position.closingDate}"
+									filterMatchMode="contains">
+									<h:outputText value="#{position.closingDate}">
+										<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Status"
+									size="100" filterMatchMode="contains"
+									filterBy="#{position.status}">
+                            #{position.status}
+                        </p:column>
+
+
+								<p:column styleClass="centeredColumn" headerText="Location"
+									size="100" filterMatchMode="contains"
+									filterBy="#{position.location}">
+                            #{position.location}
+                        </p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Company"
+									size="100" filterMatchMode="contains"
+									filterBy="#{position.company}">
+                            #{position.company}
+                        </p:column>
+
+								<p:column styleClass="centeredColumn"
+									headerText="Technical Area" size="100"
+									" filterMatchMode="contains"
+									filterBy="#{position.technicalArea}">
+                            #{position.technicalArea}
+                        </p:column>
+
+
+
+								<!-- <p:column headerText="Insert new Application" width="50"
+								styleClass="centeredColumn">
+								<p:commandButton styleClass="myButton" ajax="false"
+									rendered="#{manageApplicationWeb.canAssociatePositionToApplication(position)}"
+									action="#{manageApplicationWeb.goToApplicationForm(position)}"
+									icon="ui-icon-plus"
+									title="Add Application candidate to this position">
+									<f:setPropertyActionListener value="#{position}"
+										target="#{manageApplicationWeb.selectedPosition}" />
+								</p:commandButton>
+							</p:column>
+
+
+							<p:column headerText="Edit" width="30"
+								styleClass="centeredColumn">
+								<p:commandButton styleClass="myButton"
+									rendered="#{positionWebManagem.canEditPosition(position)}"
+									action="#{positionWebManagem.showPanel(position)}"
+									icon="ui-icon-pencil" title="View" ajax="false">
+									<f:setPropertyActionListener value="#{position}"
+										target="#{positionWebManagem.selectedPosition}" />
+								</p:commandButton>
+							</p:column> -->
+							</p:dataTable>
+						</h:form>
+					</h:form>
+					<p:link
+						outcome="/pages/admin/searchpositions.xhtml?faces-redirect=true"
+						value="Clik here to edit" />
+				</p:panel>
+			</p:tab>
+
+
+			<p:tab title="Non Spontaneous Applications">
+				<p:panel>
+					<h:form id="form2">
+						<!-- <p:growl id="messages" showDetail="true" /> -->
+						<h:panelGroup binding="#{applicationWebManagem.panelInterviews}">
+							<p:dataTable var="item"
+								value="#{applicationWebManagem.lstNonSpontaneousApplication}"
+								paginator="true" rows="10" paginatorPosition="top"
+								editable="false"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="10,20,30" selectionMode="single"
+								rowKey="#{item.applicationId}"
+								selection="#{applicationWebManagem.selectedApplication}">
+								<f:facet name="header">
+                                List of Non Spontaneous Applications
+                            </f:facet>
+								<p:column styleClass="centeredColumn"
+									filterBy="#{item.applicant.username}" headerText="Username"
+									filterMatchMode="contains" style="width:20%">
+									<a
+										href="applicationDetails.xhtml?applicantid=#{item.getApplicant().getUserId()}&amp;applicationid=#{item.applicationId}">#{item.applicant.username}</a>
+								</p:column>
+
+
+								<p:column styleClass="centeredColumn" filterBy="#{item.source}"
+									filterMatchMode="contains" headerText="Source"
+									style="width:20%">
+									<p:outputLabel value="#{item.source}" />
+								</p:column>
+
+								<p:column styleClass="centeredColumn" filterBy="#{item.status}"
+									filterMatchMode="contains" headerText="Status"
+									style="width:20%">
+									<p:outputLabel value="#{item.status}" />
+								</p:column>
+
+
+								<p:column styleClass="centeredColumn"
+									filterBy="#{item.position.title}" filterMatchMode="contains"
+									headerText="Position Name" style="width:20%">
+									<p:outputLabel value="#{item.position.title}" />
+								</p:column>
+
+								<!-- <p:column styleClass="centeredColumn"
+								headerText="Do not go To First Interview?" style="width:20%">
+								<p:commandButton styleClass="myButton"
+									rendered="#{applicationWebManagem.alreadyInInterviewProcess(item)}"
+									id="editapplication" icon="ui-icon-closethick"
+									oncomplete="PF('status').show()" >   update=":statusUpdate2"
+									<f:setPropertyActionListener value="#{item}"
+										target="#{applicationWebManagem.selectedApplication}" />
+								</p:commandButton>
+							</p:column> -->
+
+								<!-- <p:column styleClass="centeredColumn" headerText="Update Status"
+								style="width:20%">
+								<p:commandButton styleClass="myButton"
+									rendered="#{manageApplicationWeb.canEditStatus(item)}"
+									id="updstatus" icon="ui-icon-plus"
+									oncomplete="PF('updstatus').show()" >    update=":statusUpdate
+									<f:setPropertyActionListener value="#{item}"
+										target="#{applicationWebManagem.selectedApplication}" />
+								</p:commandButton>
+							</p:column>
+
+							<p:column styleClass="centeredColumn"
+								headerText="Process Interview" style="width:20%">
+								<p:commandButton styleClass="myButton"
+									rendered="#{!applicationWebManagem.isRejected(item)}"
+									action="#{applicationWebManagem.showPanel(item)}"
+									icon="ui-icon-plus" title="Add" ajax="false">
+									<f:setPropertyActionListener value="#{item}"
+										target="#{applicationWebManagem.selectedApplication}" />
+								</p:commandButton>
+							</p:column> -->
+
+								<p:column styleClass="centeredColumn"
+									headerText="Rejection Motive" style="width:20%">
+									<p:outputLabel value="#{item.motive}" />
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGroup>
+					</h:form>
+					<p:link
+						outcome="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true"
+						value="Clik here to edit" />
+				</p:panel>
+			</p:tab>
+
+			<p:tab title="Godfather Part III">
+				<p:panel>
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+						<h:outputText value="After a break of more than 15 years..." />
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+		</p:tabView>
+
 
 
 	</ui:define>

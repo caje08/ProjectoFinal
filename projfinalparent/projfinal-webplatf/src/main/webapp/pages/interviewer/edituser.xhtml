@@ -34,14 +34,13 @@
 						<p:watermark for="oldpassword" value="Old Password " />
 					</p:password>
 
-					<p:commandButton styleClass="myButton" ajax="false" value="Check Old Password"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-						action="#{userWebView.checkUserPw()}" />
-						
-						<p:commandButton  styleClass="myButton" ajax="false" value=" Cancel " immediate="true"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						<p:commandButton  styleClass="myButton" value="Check Old Password"
+				style="width:250px; height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{userWebView.checkUserPw()}" ajax="false"/>
+					<p:commandButton  styleClass="myButton" value=" Cancel " immediate="true"
+					style="width:100px; height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
-						
+			
 				</h:panelGrid>
 			</h:form>
 			

@@ -8,7 +8,7 @@
 		<ui:define name="content">
 			<p:growl />
 
-		<h1 style="margin-bottom: 20px; font-size: xx-large;">Edit User
+		<h1 style="margin-bottom: 20px; font-size: 25px;">Edit User
 				Profile: #{activeSession.activeUser.username}</h1>
 			<h3>Values with * are mandatory</h3>
 			<h:form id="form1" enctype="multipart/form-data"
@@ -36,11 +36,12 @@
 					</p:password>
 
 					<p:commandButton  styleClass="myButton" value="Check Old Password"
-						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+				style="width:250px; height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.checkUserPw()}" ajax="false"/>
 					<p:commandButton  styleClass="myButton" value=" Cancel " immediate="true"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+					style="width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
+			
 				</h:panelGrid>
 			</h:form>
 			

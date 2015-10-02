@@ -57,7 +57,7 @@
 
 						<p:column styleClass="centeredColumn"
 							headerText="Do not go To First Interview?" style="width:20%">
-							<p:commandButton styleClass="myButton" ajax="false"
+							<p:commandButton styleClass="myButton" 
 								rendered="#{applicationWebManagem.alreadyInInterviewProcess(item)}"
 								id="editapplication" icon="ui-icon-closethick"
 								oncomplete="PF('status').show()" update=":statusUpdate2">

@@ -21,7 +21,7 @@ and open the template in the editor.
 					<h1 style="margin-bottom: 20px; font-size: 25px;">Application Details </h1>
 				</div>
                   
-                     <h:panelGrid columns="2" cellpading="3"  style="display:-webkit-inline-box;font-size:16px;"   >
+                     <h:panelGrid columns="2" cellpading="3"  	style="display:-webkit-inline-box;font-size:16px;">
                         <h:outputText float="left" value="First Name" />
                         <h:outputText value="#{appDetailsStatus.applicant.firstName}" />
 
@@ -65,8 +65,9 @@ and open the template in the editor.
 
                     </h:panelGrid>  
                       	<div align="center">
-						<p:commandButton  value="Return" styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
-							action="/pages/admin/newSpontaneousApplications.xhtml?faces-redirect=true" />
+						<p:commandButton  value="Return" styleClass="myButton"  icon="ui-icon-arrowreturnthick-1-w"
+							action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" 
+							style="width:100px; height:50px;"/>
 					</div>
                 </h:form>
             </ui:define>

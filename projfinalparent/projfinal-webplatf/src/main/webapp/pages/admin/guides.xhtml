@@ -93,7 +93,8 @@
 					</p:dataTable>
 
 					<p:commandButton  styleClass="myButton" id="modalDialogButton" value="Add new Guide"
-						onclick="PF('guide').show();" />
+						onclick="PF('guide').show();" 
+						style="width:100px;height:50px;"/>
 
 				</h:panelGroup>
 			</h:form>
@@ -141,7 +142,7 @@
 							process="@this questions" update=":form2:questions" />
 
 						<f:facet name="header">
-                                    List of Quentions og Interview Guide's #{guideWebManagem.selectedInterviewEntity.title}
+                                    List of Questions og Interview Guide's #{guideWebManagem.selectedInterviewEntity.title}
                                 </f:facet>
 
 						<p:column styleClass="centeredColumn"
@@ -164,7 +165,7 @@
 
 						<p:column styleClass="centeredColumn" headerText="Edit"
 							style="width:20%">
-							<p:commandButton styleClass="myButton" value="Edit" ajax="false"
+							<p:commandButton styleClass="myButton" value="Edit" 
 								rendered="#{guideWebManagem.isPossibleToRemoveGuide(guideWebManagem.selectedInterviewEntity)}"
 								icon="ui-icon-wrench " oncomplete="PF('editq').show()"
 								update=":editQuestion" process="@this">

@@ -60,7 +60,9 @@
                         <h:panelGrid columns="1" >
                             <p:outputLabel value="Offer Description:" />
                             <p:inputTextarea value="#{offerWebManagem.offerDescription}" rows="6" cols="33"/>
-                            <p:commandButton  styleClass="myButton"value="Submit" oncomplete="PF('offer').show();" update=":confirmOffer" />
+                            <p:commandButton  styleClass="myButton" value="Submit"
+                            style="width:100px; height:50px;"
+                             oncomplete="PF('offer').show();" update=":confirmOffer" />
                         </h:panelGrid>
                     </h:panelGroup>
                 </h:form>

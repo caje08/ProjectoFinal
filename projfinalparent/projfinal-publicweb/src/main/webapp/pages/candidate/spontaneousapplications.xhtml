@@ -11,31 +11,39 @@
 
 
 	<ui:define name="top">
-		<h:form>
+
+		<h:graphicImage library="images" name="critical_logo.png"
+			style="display: inline;float: left; margin-right: 10px; margin-left: 7px;" />
+
+		<h:form style="margin-left: 90px;">
 			<p:menubar>
 				<p:menuitem icon="ui-icon-home"
-					action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true" />
+					action="/pages/candidate/mainuser.xhtml?faces-redirect=true" />
 				<p:submenu label="Welcome: #{pubActiveSession.activeUser.username}"
 					style="padding-left:20px">
 					<p:menuitem value="Logout" action="#{pubLoginMB.logout()}" />
 					<p:menuitem value="Edit"
 						action="/pages/candidate/editcandidate.xhtml?faces-redirect=true" />
 				</p:submenu>
+
 				<p:submenu label="Applications" style="padding-left:20px">
-					<p:menuitem value="Open Positions"
+					<p:menuitem value="List Open Positions"
 						action="/pages/candidate/openpositions.xhtml?faces-redirect=true" />
 					<p:menuitem value="New Spontaneous Application"
 						action="/pages/candidate/spontaneousapplications.xhtml?faces-redirect=true" />
-					<p:menuitem value="My applications"
+					<p:menuitem value="My Applications"
 						action="/pages/candidate/userapplications.xhtml?faces-redirect=true" />
 				</p:submenu>
 			</p:menubar>
 		</h:form>
+
+
 		<div align="right">
 			<h:graphicImage library="images"
 				name="#{cssRequestBB.cssInUse.logoPath}" />
 		</div>
-	</ui:define>
+	</ui:define> 
+	
 	<ui:define name="content">
 
 		<h1 style="margin-bottom: 20px; font-size: 25px; color: black">Spontaneous
@@ -46,15 +54,27 @@
 
 			<h:panelGrid columns="2" cellpadding="1">
 
-				<p:outputLabel
-					style="text-align: center;font-size: 25px; margin-bottom: 15px;"
-					value="Source*" />
-				<p:inputText id="source" required="true" label="source" size="30"
-					requiredMessage="Please enter your source."
-					value="#{infoUser.application.source}">
-				</p:inputText>
-				<p:watermark for="source" value="Source " />
-				<p:message for="source" />
+					
+					<p:outputLabel value="Source*"  style="font-size: 20px;"/>
+	
+					<p:selectOneMenu style="float:left" id="pub_Chann" required="true"
+						value="#{manageApplicationWeb.application.source}">
+						<f:selectItem itemLabel="Critical SW web site"
+							itemValue="CRITICALSWWEBSITE" />
+						<f:selectItem itemLabel="LinkedIn" itemValue="LINKEDIN" />
+						<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
+						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
+						<f:selectItem itemLabel="All defined"
+							itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
+						<f:selectItem itemLabel="Other" itemValue="OTHER" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Other source:"  style="font-size: 20px;"/>
+					<p:inputText  style="float:left" id="publishingChannels" title="Source channels"
+						value="#{manageApplicationWeb.activePosition.texttmp}" size="40"
+						required="false"
+						requiredMessage="Please, enter the text for alternatives source channels." />
+
 
 				<p:outputLabel value="CV Filename:" />
 				<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />

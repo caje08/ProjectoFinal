@@ -7,69 +7,77 @@ and open the template in the editor.
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <body>
-        <ui:composition template="./mainmanager.xhtml"> 
-            <ui:define name="content">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<body>
+	<ui:composition template="./mainmanager.xhtml">
+		<ui:define name="content">
 
-            
-                    <h:form >
-                 <h1 style="margin-bottom: 20px; font-size:25px;">Application details of #{appDetailsStatus.applicant.username} </h1>
-            
-                  
-                    <h:panelGrid columns="2" cellpading="3"  style="display:-webkit-inline-box;font-size:22px;"   >
-                        <h:outputText  value="First Name" />
-                        <h:outputText  value="#{appDetailsStatus.applicant.firstName}" />
-                        
-                        <h:outputText value="Last Name:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
-                        <h:outputText value="Curriculum Vitae" />
-                        <p:button href="#{appDetailsStatus.cvPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cv">
-                        </p:button>
+			<h:form>
+				<h1 style="margin-bottom: 20px; font-size: 25px;">Application
+					details of #{appDetailsStatus.applicant.username}</h1>
 
-                        <h:outputText value="Cover Letter" /> 
-                       <p:button href="#{appDetailsStatus.coverLetterPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cl">
-                        </p:button>
 
-                        <h:outputText value="Email:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.email}" />
+				<h:panelGrid columns="2" cellpading="3"
+					style="display:-webkit-inline-box;font-size:16px;">
+					<h:outputText value="First Name" />
+					<h:outputText value="#{appDetailsStatus.applicant.firstName}" />
 
-                        <h:outputText value="Address:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.address}" />
+					<h:outputText value="Last Name:" />
+					<h:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
-                        <h:outputText value="City:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.city}" />
+					<h:outputText value="Curriculum Vitae" />
+					<p:button href="#{appDetailsStatus.cvPath}"
+						style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"
+						target="_blank" value="cv">
+					</p:button>
 
-                        <h:outputText value="Phone:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.phone}" />
+					<h:outputText value="Cover Letter" />
+					<p:button href="#{appDetailsStatus.coverLetterPath}"
+						style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"
+						target="_blank" value="cl">
+					</p:button>
 
-                        <h:outputText value="Mobile Phone:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.mobile}" />
+					<h:outputText value="Email:" />
+					<h:outputText value="#{appDetailsStatus.applicant.email}" />
 
-                        <h:outputText value="Country:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.country}" />
+					<h:outputText value="Address:" />
+					<h:outputText value="#{appDetailsStatus.applicant.address}" />
 
-                        <h:outputText value="Degree:" />
-                        <h:outputText value="#{appDetailsStatus.applicant.degree}" />
+					<h:outputText value="City:" />
+					<h:outputText value="#{appDetailsStatus.applicant.city}" />
 
-                        <h:outputText value="School" />
-                        <h:outputText value="#{appDetailsStatus.applicant.school}" />
-                        
-                         <h:outputText value="Application associated to Position:" />
-                        <h:outputText value="#{appDetailsStatus.position.title}" />
+					<h:outputText value="Phone:" />
+					<h:outputText value="#{appDetailsStatus.applicant.phone}" />
 
-                    </h:panelGrid>  
-                    	<div align="center">
-						<p:commandButton  value="Return" styleClass="myButton"  icon="ui-icon-arrowreturnthick-1-w"
-							action="/pages/manager/nonSpontaneousAppications.xhtml?faces-redirect=true" />
-					</div> 
-                </h:form>
-            </ui:define>
-        </ui:composition>
-    </body>
+					<h:outputText value="Mobile Phone:" />
+					<h:outputText value="#{appDetailsStatus.applicant.mobile}" />
+
+					<h:outputText value="Country:" />
+					<h:outputText value="#{appDetailsStatus.applicant.country}" />
+
+					<h:outputText value="Degree:" />
+					<h:outputText value="#{appDetailsStatus.applicant.degree}" />
+
+					<h:outputText value="School" />
+					<h:outputText value="#{appDetailsStatus.applicant.school}" />
+
+					<h:outputText value="Application associated to Position:" />
+					<h:outputText value="#{appDetailsStatus.position.title}" />
+
+				</h:panelGrid>
+				<div align="center">
+					<p:commandButton value="Return" styleClass="myButton"
+						icon="ui-icon-arrowreturnthick-1-w" ajax="false"
+						action="/pages/manager/nonSpontaneousAppications.xhtml?faces-redirect=true"
+						style="width:100px; height:50px;" />
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
 </html>

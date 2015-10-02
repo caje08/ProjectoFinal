@@ -152,72 +152,14 @@
 
 					<!--    Buttons  -->
 					<p:commandButton styleClass="myButton" value="Add Position"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						style=" width:100px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{positionWebManagem.addPosition()}" ajax="false" />
 					<p:commandButton value=" Cancel " immediate="true"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						style=" width:100px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
 
 
-					<!-- Button which shows pop up of guides -->
-					<!-- 
-					<h:panelGrid column="2" cellpadding="3"
-						style="display: -webkit-inline-box;">
-						<tr>
-							<td><p:commandButton styleClass="myButton"
-									id="phoneguideToChooseButton"
-									value="Choose a phone Guide Interview*"
-									oncomplete="PF('phoneguide').show()" update=":phoneguideTable">
-									<f:setPropertyActionListener value="#{guide}"
-										target="#{positionWebManagem.selectedInterviewGuide}" />
-								</p:commandButton></td>
-							<td><p:outputLabel id="thephoneguide"
-									value="#{positionWebManagem.position.phoneInterviewEntity.title}" />
-							</td>
-						</tr>
-						<tr>
-							<td><p:commandButton styleClass="myButton"
-									id="presentialguideToChooseButton"
-									value="Choose a presential Guide Interview*"
-									oncomplete="PF('presentialguide').show()"
-									update=":presentialguideTable">
-									<f:setPropertyActionListener value="#{guide}"
-										target="#{positionWebManagem.selectedInterviewGuide}" />
-								</p:commandButton></td>
-							<td><p:outputLabel id="thepresentialguide"
-									value="#{positionWebManagem.position.presencialInterviewEntity.title}" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								Button which shows pop up of managers <p:commandButton
-									styleClass="myButton" id="managerToChooseButton"
-									value="Choose a Manager for this position*"
-									oncomplete="PF('manager').show()" update=":managerTable">
-									<f:setPropertyActionListener value="#{manager}"
-										target="#{positionWebManagem.selectedManager}" />
-								</p:commandButton>
-							</td>
-							<td><p:outputLabel id="manager"
-									value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
-
-							</td>
-						</tr>
-						<tr>
-							<td>
-								      Buttons 
-								 <p:commandButton styleClass="myButton"
-									value="Add Position"
-									style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-									action="#{positionWebManagem.addPosition()}" ajax="false" /> 
-								<p:commandButton
-									value=" Cancel " immediate="true"
-									style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-									action="#{userWebView.goBackToMain()}" />
-							</td>
-						</tr>
-
-					</h:panelGrid> -->
+				
 				</h:panelGrid>
 
 			</h:form>
@@ -249,7 +191,7 @@
 					<h:commandButton styleClass="myButton"
 						value="Add Presential Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
-						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+						style="width:250px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 
 				</p:dialog>
 			</h:form>
@@ -279,7 +221,7 @@
 					<h:commandButton styleClass="myButton"
 						value="Add Phone Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}"
-						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+						style="width:250px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
 			</h:form>
 
@@ -298,6 +240,7 @@
 						var="manager">
 						<!-- 						value="#{positionWebManagem.lstManagers}" var="manager"> -->
 						<p:column styleClass="centeredColumn" headerText="Username"
+						width="200"
 							filterBy="#{manager.username}" filterMatchMode="contains">
                                 #{manager.username}
                             </p:column>
@@ -316,7 +259,7 @@
 					<h:commandButton styleClass="myButton"
 						value="Add Manager for this position"
 						action="#{positionWebManagem.setTheSelectedManager()}"
-						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+						style="width:250px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
 			</h:form>
 

@@ -11,7 +11,32 @@
 
 	<!--Top Content-->
 
-	<ui:define name="top">
+<ui:define name="top">
+        
+         <h:graphicImage library="images" name="critical_logo.png"
+				style="display: inline;float: left; margin-right: 20px; margin-left: 7px;" /> 
+
+		<h:form id="menu"     style="margin-left: 90px;">
+			<p:menubar>
+				<p:menuitem value="Login"
+					 action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true" style="margin-right:20px"/>
+					 
+					 <p:menuitem value=" Main page"
+						action="/publogin.xhtml?faces-redirect=true" style="margin-right:20px"/>
+						
+					<!-- <p:menuitem  value="List of oportunities"
+						action="/pages/candidate/openpositions.xhtml?faces-redirect=true" style="margin-right:20px"/> -->
+						
+					<p:menuitem value="Career Oportunity"
+						action="/pages/public/lstpositions.xhtml?faces-redirect=true"  style="margin-right:20px"/>
+						
+					<p:menuitem value="New User"
+						action="/pages/public/spontaneousApply.xhtml?faces-redirect=true" style="margin-right:20px"/>
+			</p:menubar>
+		</h:form>
+		
+		
+	<!-- 
 		<h:form>
 			<h:graphicImage library="images" name="critical_logo.png"
 				style="display: inline;float: left; margin-right: 20px; margin-left: 7px;" />
@@ -23,7 +48,7 @@
 				<p:commandButton style="margin-top:20px;"
 					action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true"
 					value="Login" />
-				<!--  style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp; -->
+				 style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp;
 
 				<p:outputLabel value="List of oportunities"
 					style=" margin-right: 10px; margin-left: 150px;margin-top:20px;" />
@@ -40,8 +65,11 @@
 		</h:form>
 		<div align="right">
 			<h:graphicImage library="images"
-				name="#{cssRequestBB.cssInUse.logoPath}" />
-		</div>
+				name="#{cssRequestBB.cssInUse.logoPath}" /> -->
+		<!-- </div> -->
+		
+		
+		
 	</ui:define>
 
 
@@ -61,7 +89,6 @@
 			</h:panelGrid>
 		</h:form> -->
 
-		<!-- rendered="#{infoUser.formRendered}" -->
 		<h:form id="signInForm" enctype="multipart/form-data"
 			style="display: inline-table; font-weight:bold;">
 			<p:growl showDetail="true" />
@@ -69,14 +96,14 @@
 				Applications</h1>
 			<h3>Values with * are mandatory</h3>
 
-			<h:outputText value="Submit a New Application using Linkedin account"
+		<!-- 	<h:outputText value="Submit a New Application using Linkedin account"
 				rendered="#{infoUser.isLinkedin}" style="color: black" />
 			<h:outputText
 				value="Submit a New Application not using Linkedin account"
 				rendered="#{!infoUser.isLinkedin}"
-				style="color: black;font-size: 16px;" />
+				style="color: black;font-size: 16px;" /> -->
 
-			<h:panelGrid columns="2"
+			<h:panelGrid columns="4"
 				style="margin-bottom:10px;font-weight: 700; font-size: 16px;"
 				cellpadding="5">
 
@@ -86,6 +113,7 @@
 					value="#{infoUser.applicant.firstName}">
 				</p:inputText>
 				<p:watermark for="firstname" value="First Name" />
+				<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Last Name*" />
 				<p:inputText id="lastname" required="true" label="lastname"
@@ -93,6 +121,7 @@
 					value="#{infoUser.applicant.lastName}">
 				</p:inputText>
 				<p:watermark for="lastname" value="Last Name" />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Email*" />
 				<p:inputText id="email" required="true" label="email" size="40"
@@ -102,100 +131,111 @@
 						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 				</p:inputText>
 				<p:watermark for="email" value="Email " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Address*" />
-				<p:inputText id="address" required="true" label="address" size="60"
+				<p:inputText id="address" required="true" label="address" size="40"
 					requiredMessage="Please enter your Address."
 					value="#{infoUser.applicant.address}">
 				</p:inputText>
 				<p:watermark for="address" value="Address " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="City*" />
-				<p:inputText id="city" required="true" label="city" size="60"
+				<p:inputText id="city" required="true" label="city" size="40"
 					requiredMessage="Please enter your city."
 					value="#{infoUser.applicant.city}">
 				</p:inputText>
 				<p:watermark for="city" value="City " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Phone" />
-				<p:inputText id="phone" label="phone" size="60"
+				<p:inputText id="phone" label="phone" size="40"
 					value="#{infoUser.applicant.phone}">
 				</p:inputText>
 				<p:watermark for="phone" value="Phone " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Mobile Phone*" />
 				<p:inputText id="mobilphone" required="true" label="mobilphone"
-					size="60"
+					size="40"
 					requiredMessage="Please enter your mobil phone with 9 digits or more"
 					value="#{infoUser.applicant.mobile}">
 				</p:inputText>
 				<p:watermark for="mobilphone" value="Mobile Phone " />
+					<h:outputText ></h:outputText>
 
 
 				<p:outputLabel value="Country*" />
-				<p:inputText id="country" required="true" label="country" size="60"
+				<p:inputText id="country" required="true" label="country" size="40"
 					requiredMessage="Please enter your country."
 					value="#{infoUser.applicant.country}">
 				</p:inputText>
 				<p:watermark for="country" value="Country " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Degree*" />
-				<p:inputText id="degree" required="true" label="degree" size="60"
+				<p:inputText id="degree" required="true" label="degree" size="40"
 					requiredMessage="Please enter your degree."
 					value="#{infoUser.applicant.degree}">
 				</p:inputText>
 				<p:watermark for="degree" value="Degree " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="School*" />
-				<p:inputText id="school" required="true" label="school" size="60"
+				<p:inputText id="school" required="true" label="school" size="40"
 					requiredMessage="Please enter your school."
 					value="#{infoUser.applicant.school}">
 				</p:inputText>
 				<p:watermark for="school" value="School " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Source*" />
-				<p:inputText id="source" required="true" label="source" size="60"
+				<p:inputText id="source" required="true" label="source" size="40"
 					requiredMessage="Please enter your source."
 					value="#{infoUser.application.source}">
 				</p:inputText>
 				<p:watermark for="source" value="Source " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Password*" />
-				<p:password id="password" required="true" label="password" size="60"
+				<p:password id="password" required="true" label="password" size="40"
 					requiredMessage="Please enter your password."
 					match="confirmPassword" value="#{infoUser.applicant.password}"
 					maxlength="20">
 				</p:password>
 				<p:watermark for="password" value="Password* " />
+					<h:outputText ></h:outputText>
 
 				<p:outputLabel value="Confirm Password*" />
-				<p:password id="confirmPassword" required="true" size="60"
+				<p:password id="confirmPassword" required="true" size="40"
 					requiredMessage="Please confirm your password."
 					label="confirmPassword" value="#{infoUser.applicant.password}"
 					maxlength="20">
 				</p:password>
 				<p:watermark for="confirmPassword" value="Type Password Again*" />
+					<h:outputText ></h:outputText>
 
 
 				<p:outputLabel value="CV Filename:" />
-				<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
+				<p:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
 				<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
 					previewWidth="40" required="true"
 					fileUploadListener="#{manageApplicationWeb.uploadCV}"
 					label="Upload CV*" styleClass="fileUploadClass"
-					allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
+					allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800"
 					requiredMessage="Please upload CV" />
 				<p:growl id="cv1" showDetail="true" />
 
 
 				<p:outputLabel value="Cover Letter Filename:" />
-				<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+				<p:outputText id="clid" value="#{manageApplicationWeb.clname}" />
 				<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
 					required="true"
 					fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
 					label="Upload Cover Letter*"
 					requiredMessage="Please upload Cover Letter"
-					allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
+					allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800"
 					styleClass="fileUploadClass" />
 
 				<!-- sizeLimit="52428800" /> -->

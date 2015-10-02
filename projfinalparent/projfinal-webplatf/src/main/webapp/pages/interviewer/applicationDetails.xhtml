@@ -70,143 +70,14 @@ and open the template in the editor.
 				</h:panelGrid>
 
 				<div align="center">
-					<p:commandButton value="Return" styleClass="myButton" ajax="false"
+					<p:commandButton value="Return" styleClass="myButton"
 						icon="ui-icon-arrowreturnthick-1-w"
-						action="/pages/interviewer/myInterviews.xhtml?faces-redirect=true" />
+						action="/pages/interviewer/myInterviews.xhtml?faces-redirect=true" 
+							style="width:100px; height:50px;" />
 				</div>
 
 </h:form>
-				<!--   Show the Process of interviews of that application -->
-<!-- 
-				<p:dataTable id="questions" var="interview"
-					value="#{appDetailsStatus.lstInterviewsOfInterviewerOfApplication}"
-					editable="false" styleClass="borderless" selectionMode="single"
-					rowKey="#{interview.feedbackId}"
-					selection="#{applicationWebManagem.selectedInterview}">
 
-					<f:facet name="header">
-                            List of Interviews
-                        </f:facet>
-
-					<p:column styleClass="centeredColumn" headerText="Interviewer"
-						style="width:20%">
-						<p:outputLabel value="#{interview.interviewer.username}" />
-					</p:column>
-
-					<p:column styleClass="centeredColumn" headerText="Interview date"
-						style="width:20%">
-						<h:outputText value="#{interview.interviewDate}">
-							<f:convertDateTime type="DATE" pattern="dd/MM/yyyy HH:mm" />
-						</h:outputText>
-					</p:column>
-
-					<p:column styleClass="centeredColumn" headerText="Guide Interview"
-						style="width:20%">
-						<p:outputLabel value="#{interview.interviewEntity.title}" />
-					</p:column>
-
-					<p:column styleClass="centeredColumn"
-						headerText="Feedback from Interview" style="width:20%">
-
-						    Without Feedback Given
-
-						<p:commandButton
-							rendered="#{!applicationWebManagem.feedbackGiven(interview) and !applicationWebManagem.possibleToSubmitFeedback(interview)}"
-							id="selectInterview" icon="ui-icon-plus"
-							actionListener="#{applicationWebManagem.appointAnswers(interview)}"
-							oncomplete="PF('feedback1').show()" update=":addfeedbackGuide">
-							<f:setPropertyActionListener value="#{interview}"
-								target="#{applicationWebManagem.selectedInterview}" />
-						</p:commandButton>
-
-						      With Feedback Given
-
-						<p:commandButton
-							rendered="#{applicationWebManagem.feedbackGiven(interview)}"
-							id="selectInterview1" icon="ui-icon-search"
-							actionListener="#{applicationWebManagem.appointAnswers(interview)}"
-							oncomplete="PF('feedback').show()" update=":seefeedbackGuide">
-							<f:setPropertyActionListener value="#{interview}"
-								target="#{applicationWebManagem.selectedInterview}" />
-						</p:commandButton>
-
-					</p:column>
-
-
-				</p:dataTable>
-
-			</h:form>
-
-
-			   Pop up to add feedback 
-
-			<h:form id="addfeedbackGuide">
-				<p:dialog header="Add Feedback" widgetVar="feedback1" modal="true"
-					height="auto" width="auto">
-					<h:panelGrid columns="2">
-						<c:forEach items="#{applicationWebManagem.lstAnswers}"
-							var="answer">
-							<h:outputLabel value="#{answer.question}" />
-							<c:choose>
-								<c:when test="#{answer.answerType == 'TEXT' }">
-									<h:inputTextarea value="#{answer.answer}" />
-								</c:when>
-								<c:when test="#{ answer.answerType == 'INTEGER' }">
-									<p:spinner value="#{answer.answer}" min="0" max="5" />
-								</c:when>
-								<c:when test="#{ answer.answerType == 'BOOLEAN' }">
-									<h:selectOneMenu value="#{answer.answer}">
-										<f:selectItem itemLabel="True" itemValue="TRUE" />
-										<f:selectItem itemLabel="False" itemValue="FALSE" />
-									</h:selectOneMenu>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-						<h:outputLabel value="Outcome from this interview:" />
-						<h:selectOneMenu id="statusapp"
-							value="#{applicationWebManagem.selectedInterview.outcome}">
-							<f:selectItems id="selectionatatus" var="outcome"
-								value="#{applicationWebManagem.lstOutcomes}"
-								itemValue="#{outcome}" itemLabel="#{outcome}" />
-						</h:selectOneMenu>
-					</h:panelGrid>
-					<h:commandButton styleClass="myButton" value="Add Feedback"
-						action="#{applicationWebManagem.addFeedbak()}"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
-				</p:dialog>
-			</h:form>
-
-			   Pop up to see feedback given 
-
-			<h:form id="seefeedbackGuide">
-				<p:dialog header="See Feedback" widgetVar="feedback" modal="true"
-					height="auto" width="auto">
-					<h:panelGrid columns="2">
-						<c:forEach items="#{applicationWebManagem.lstAnswersWithFeedback}"
-							var="answer">
-							<h:outputLabel value="#{answer.question}" />
-							<c:choose>
-								<c:when test="#{answer.answerType == 'TEXT' }">
-									<h:inputTextarea value="#{answer.answer}" disabled="true" />
-								</c:when>
-								<c:when test="#{ answer.answerType == 'INTEGER' }">
-									<p:spinner value="#{answer.answer}" disabled="true" min="0"
-										max="5" />
-								</c:when>
-								<c:when test="#{ answer.answerType == 'BOOLEAN' }">
-									<h:selectOneMenu value="#{answer.answer}" disabled="true">
-										<f:selectItem itemLabel="True" itemValue="TRUE" />
-										<f:selectItem itemLabel="False" itemValue="FALSE" />
-									</h:selectOneMenu>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-						<h:outputLabel value="Outcome of this interview" />
-						<h:outputLabel
-							value="#{applicationWebManagem.selectedInterview.outcome}" />
-					</h:panelGrid>
-				</p:dialog>
-			</h:form> -->
 
 
 		</ui:define>

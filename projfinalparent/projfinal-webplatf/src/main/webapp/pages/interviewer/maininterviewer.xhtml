@@ -58,20 +58,17 @@
 	</ui:define>
 
 
-	<!-- <ui:define name="content">
-		<ui:insert src="myInterviews.xhtml" />
-	</ui:define>
- -->
-
 	<ui:define name="content">
+	
+	<div >
+	<h1 style="margin-bottom: 20px; font-size: 25px;color:black" > Welcome  #{activeSession.activeUser.username}</h1>
+	</div>
+	
+	
 		<h:form id="form">
-			<h1 style="margin-bottom: 20px; font-size: 25px;">Interviews of
+			<h1 style="margin-bottom: 20px; font-size: 20px;">Interviews of
 				#{activeSession.activeUser.username}</h1>
-			<!-- 	<p:growl id="messages" showDetail="true" />
-							<h:panelGroup binding="#{applicationWebManagem.panelInterviews}">
-								<h:panelGroup >
-			List of Interviews of Interviewer
- -->
+				
 			<p:dataTable var="item"
 				value="#{applicationWebManagem.lstInterviewsOfInterviewer}"
 				paginator="true" rows="10" paginatorPosition="top" editable="false"

@@ -17,7 +17,7 @@
 
 					<p:commandButton styleClass="myButton" id="email"
 						value="Send report by email" oncomplete="PF('managers').show()"
-						update=":managersTable" ajax="false">
+						update=":managersTable" ajax="false" style="width:250px;height:50px">
 						<f:setPropertyActionListener value="#{manager}"
 							target="#{averageValues.selectedManager}" />
 					</p:commandButton>
@@ -43,7 +43,7 @@
 						<p:outputPanel style="display: -webkit-inline-box;">
 							<h:outputText value="Search all fields:" />
 							<p:inputText id="globalFilter"
-								onkeyup="PF('positionTable').filter()" style="width:150px"
+								onkeyup="PF('positionTable').filter()"
 								placeholder="Enter keyword" />
 						</p:outputPanel>
 					</f:facet>
@@ -52,47 +52,47 @@
 						<p:rowToggler />
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Title" width="120"
+					<p:column styleClass="centeredColumn" headerText="Title" size="120"
 						filterBy="#{position.title}" filterMatchMode="contains">
                             #{position.title}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Position Code" width="120"
+					<p:column styleClass="centeredColumn" headerText="Position Code"  size="120"
 						filterBy="#{position.positionCode}" filterMatchMode="contains">
                             #{position.positionCode}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Opening date" width="120"
+					<p:column styleClass="centeredColumn" headerText="Opening date"  size="120"
 						filterBy="#{position.openingDate}" filterMatchMode="contains">
 						<h:outputText value="#{position.openingDate}">
 							<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Closing date" width="120"
+					<p:column styleClass="centeredColumn" headerText="Closing date" size="120"
 						filterBy="#{position.closingDate}" filterMatchMode="contains">
 						<h:outputText value="#{position.closingDate}">
 							<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Status" width="120"
+					<p:column styleClass="centeredColumn" headerText="Status"  size="120"
 						filterMatchMode="contains" filterBy="#{position.status}">
                             #{position.status}
                         </p:column>
 
 
-					<p:column styleClass="centeredColumn" headerText="Location" width="120"
+					<p:column styleClass="centeredColumn" headerText="Location"  size="120"
 						filterMatchMode="contains" filterBy="#{position.location}">
                             #{position.location}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Company" width="120"
+					<p:column styleClass="centeredColumn" headerText="Company"  size="120"
 						filterMatchMode="contains" filterBy="#{position.company}">
                             #{position.company}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Technical Area" width="120"
+					<p:column styleClass="centeredColumn" headerText="Technical Area"  size="120"
 						filterMatchMode="contains" filterBy="#{position.technicalArea}">
                             #{position.technicalArea}
                         </p:column>
@@ -197,10 +197,7 @@
 								itemValue="PROJECTMANAGEMENT" />
 							<f:selectItem itemLabel="Integration" itemValue="INTEGRATION" />
 						</p:selectOneMenu>
-						<!-- <h:outputLabel value="Publishing channels" />
-						<h:inputText id="publishingChannels" title="Publishing channels"
-							value="#{positionWebManagem.activePosition.activePosition.publishingChannels}"
-							required="true" requiredMessage="Publishing channels." /> -->
+						
 						<p:outputLabel value="Publishing channels:*" />
 						<p:selectOneMenu  style=" float:left" id="pub_Chann" required="true"
 							value="#{positionWebManagem.activePosition.activePosition.publishingChannels}">
@@ -213,6 +210,7 @@
 								itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
 							<f:selectItem itemLabel="Other" itemValue="OTHER" />
 						</p:selectOneMenu>
+						
 						<p:outputLabel value="Other Publishing channels:" />
 						<p:inputText id="publishingChannels" title="Publishing channels"
 							value="#{positionWebManagem.activePosition.texttmp}"

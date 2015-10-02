@@ -9,7 +9,7 @@
 			<p:growl />
 			<div>
 
-				<h1 style="margin-bottom: 20px; font-size:25px;">Add a new
+				<h1 style="margin-bottom: 20px; font-size: 25px;">Add a new
 					User</h1>
 				<h3>Values with * are mandatory</h3>
 			</div>
@@ -73,18 +73,19 @@
 						maxlength="20">
 						<p:watermark for="confirmPassword" value="Type Password Again" />
 					</p:password>
-
 					<p:message for="confirmPassword" />
 
+					<p:outputLabel value="User as*" />
 					<p:selectOneMenu id="userType" value="#{adminRequestBean.userType}">
 						<f:selectItem itemLabel="Admin" itemValue="Admin" />
 						<f:selectItem itemLabel="Manager" itemValue="Manager" />
 						<f:selectItem itemLabel="Interviewer" itemValue="Interviewer" />
 					</p:selectOneMenu>
 				</h:panelGrid>
+				
 				<div style="text-align: center;">
 					<p:commandButton styleClass="myButton" value="Add" ajax="false"
-						style="width:100px; height:45px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						style="width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{adminRequestBean.createNewUser()}" />
 					<p:commandButton styleClass="myButton" value=" Cancel "
 						immediate="true" ajax="false"

@@ -8,7 +8,7 @@
 		<ui:define name="content">
 			<h:form enctype="multipart/form-data">
 				<p:growl showDetail="true" />
-				<h1 style="margin-bottom: 20px; font-size: xx-large;">Submit a
+				<h1 style="margin-bottom: 20px; font-size: 25px;">Add a
 					New Application</h1>
 				<h3>Values with * are mandatory</h3>
 
@@ -87,14 +87,11 @@
 						<p:watermark for="school" value="School " />
 					</p:inputText>
 
-					<p:outputLabel value="Source*" />
-					<!-- 					<p:inputText id="source" required="true" label="source" size="40" -->
-					<!-- 						requiredMessage="Please enter your source." -->
-					<!-- 						value="#{manageApplicationWeb.application.source}"> -->
-					<!-- 						<p:watermark for="source" value="Source " /> -->
-					<!-- 					</p:inputText> -->
 
-					<p:selectOneMenu id="pub_Chann" required="true"
+
+
+					<p:outputLabel value="Source*" />
+					<p:selectOneMenu style="float:left" id="pub_Chann" required="true"
 						value="#{manageApplicationWeb.application.source}">
 						<f:selectItem itemLabel="Critical SW web site"
 							itemValue="CRITICALSWWEBSITE" />
@@ -106,10 +103,13 @@
 						<f:selectItem itemLabel="Other" itemValue="OTHER" />
 					</p:selectOneMenu>
 					<p:outputLabel value="Other source:" />
-					<p:inputText id="publishingChannels" title="Source channels"
-						value="#{manageApplicationWeb.activePosition.texttmp}"
+					<p:inputText  style="float:left" id="publishingChannels" title="Source channels"
+						value="#{manageApplicationWeb.activePosition.texttmp}" size="40"
 						required="false"
 						requiredMessage="Please, enter the text for alternatives source channels." />
+
+
+
 
 
 					<p:outputLabel value="Password*" />
@@ -129,7 +129,7 @@
 					</p:password>
 
 					<p:outputLabel value="CV Filename:" />
-                    <p:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
+                    <h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
 					<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
 						previewWidth="40" required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadCV}"
@@ -139,7 +139,7 @@
 					<p:growl id="cv1" showDetail="true" />
 
 					<p:outputLabel value="Cover Letter Filename:" />
-					<p:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+					<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
 					<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
 						required="true"
 						fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
@@ -153,12 +153,12 @@
 				</h:panelGrid>
 				<div style="text-align: center;">
 					<p:commandButton styleClass="myButton" value="Submit"
-						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						style="width:100px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{manageApplicationWeb.createManualApplication()}"
 						ajax="false" />
 					<p:commandButton styleClass="myButton"  value="Cancel"
 						immediate="true"
-						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						style="width:100px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" ajax="false" />
 				</div>
 			</h:form>

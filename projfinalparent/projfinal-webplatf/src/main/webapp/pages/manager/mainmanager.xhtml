@@ -53,11 +53,16 @@
 
 
 	<ui:define name="content">
+	
+	<div >
+	<h1 style="margin-bottom: 20px; font-size: 25px;color:black" > Welcome  #{activeSession.activeUser.username}</h1>
+	</div>
 		<h:form id="searchpositions">
 
 			<!--list of all Positions of the manager user-->
+			
 			<div>
-				<h1 style="margin-bottom: 20px; font-size: 25px;">Positions of #{activeSession.activeUser.username}
+				<h1 style="margin-bottom: 20px; font-size: 20px;">Positions of #{activeSession.activeUser.username}
 					</h1>
 			</div>
 			<p:dataTable id="allpositions" widgetVar="positionTable"

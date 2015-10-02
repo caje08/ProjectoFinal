@@ -37,7 +37,7 @@
                             </p:column>
 
                             <p:column  styleClass="centeredColumn"  headerText="Edit Outcome"  style="width:20%">
-                                <p:commandButton rendered="#{offerWebManagem.ifisOutcomeWaiting(item)}"  action="#{offerWebManagem.showOfferPanel(item)}"  id="editapplication" icon="ui-icon-plus" ajax="false" />
+                                <p:commandButton  value="Edit" rendered="#{offerWebManagem.ifisOutcomeWaiting(item)}"  action="#{offerWebManagem.showOfferPanel(item)}"  id="editapplication" icon="ui-icon-plus" ajax="false" />
                             </p:column>
 
                             <p:column styleClass="centeredColumn" headerText="Offer date"  filterBy="#{item.offerDate}" filterMatchMode="contains" >
@@ -62,7 +62,7 @@
                     <p:growl showDetail="true"/>
                     <h:panelGroup id="pft" binding="#{offerWebManagem.panelGroup}" rendered="false" >
                         <h3> Please, select the user outcome to the offer proposal: </h3>
-                        <h:selectOneMenu id="locationone" value="#{offerWebManagem.offer.offerOutcome}">
+                        <h:selectOneMenu size="30" id="locationone" value="#{offerWebManagem.offer.offerOutcome}">
                             <f:selectItem itemLabel="" itemValue=""  />
                             <f:selectItems id="selectionoutcome" var="out" value="#{offerWebManagem.lstOfferOutcomes}" itemValue="#{out}" itemLabel="#{out}"/>
                         </h:selectOneMenu>
