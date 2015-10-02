@@ -106,7 +106,7 @@
 
 		<div>
 			<h1 style="margin-bottom: 20px; font-size: 25px; color: black">Welcome
-				Admin #{activeSession.activeUser.username}</h1>
+				 #{activeSession.activeUser.username}</h1>
 		</div>
 
 		<p:tabView>
@@ -188,8 +188,8 @@
                         </p:column>
 
 								<p:column styleClass="centeredColumn"
-									headerText="Technical Area" size="100"
-									" filterMatchMode="contains"
+									headerText="Technical Area" size="200"
+									 filterMatchMode="contains"
 									filterBy="#{position.technicalArea}">
                             #{position.technicalArea}
                         </p:column>
@@ -320,14 +320,14 @@
 				</p:panel>
 			</p:tab>
 
-			<p:tab title="Godfather Part III">
+			<!-- <p:tab title="Godfather Part III">
 				<p:panel>
 					<h:panelGrid columns="2" cellpadding="10">
 						<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
 						<h:outputText value="After a break of more than 15 years..." />
 					</h:panelGrid>
 				</p:panel>
-			</p:tab>
+			</p:tab> -->
 		</p:tabView>
 
 

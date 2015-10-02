@@ -56,7 +56,7 @@
 
 							<p:column styleClass="centeredColumn"
 								headerText="Do not go To First Interview?" style="width:20%">
-								<p:commandButton styleClass="myButton" ajax="false"
+								<p:commandButton styleClass="myButton" 
 									rendered="#{applicationWebManagem.alreadyInInterviewProcess(item)}"
 									id="editapplication" icon="ui-icon-closethick"
 									oncomplete="PF('status').show()" update=":statusUpdate2">
@@ -67,7 +67,7 @@
 
 							<p:column styleClass="centeredColumn" headerText="Update Status"
 								style="width:20%">
-								<p:commandButton styleClass="myButton" ajax="false"
+								<p:commandButton styleClass="myButton" 
 									rendered="#{manageApplicationWeb.canEditStatus(item)}"
 									id="updstatus" icon="ui-icon-plus"
 									oncomplete="PF('updstatus').show()" update=":statusUpdate">
@@ -78,7 +78,7 @@
 
 							<p:column styleClass="centeredColumn"
 								headerText="Process Interview" style="width:20%">
-								<p:commandButton styleClass="myButton" ajax="false"
+								<p:commandButton styleClass="myButton"
 									rendered="#{!applicationWebManagem.isRejected(item)}"
 									action="#{applicationWebManagem.showPanel(item)}"
 									icon="ui-icon-plus" title="Add">

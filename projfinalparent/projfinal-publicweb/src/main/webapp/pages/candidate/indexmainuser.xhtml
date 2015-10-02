@@ -19,13 +19,15 @@
 		<h:form style="margin-left: 90px;">
 			<p:menubar>
 				<p:menuitem icon="ui-icon-home"
-					action="/pages/candidate/mainuser.xhtml?faces-redirect=true" />
-				<p:submenu label="Welcome: #{pubActiveSession.activeUser.username}"
-					style="padding-left:20px">
-					<p:menuitem value="Logout" action="#{pubLoginMB.logout()}" />
-					<p:menuitem value="Edit"
-						action="/pages/candidate/editcandidate.xhtml?faces-redirect=true" />
-				</p:submenu>
+					action="/pages/candidate/mainuser.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:menuitem label="Welcome: #{pubActiveSession.activeUser.username}"
+					style="padding-left:20px" />
+				<p:menuitem value="Edit"
+					action="/pages/candidate/editcandidate.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:menuitem value="Logout" action="#{pubLoginMB.logout()}"
+					style="padding-left:20px" />
 
 				<p:submenu label="Applications" style="padding-left:20px">
 					<p:menuitem value="List Open Positions"
@@ -119,10 +121,11 @@
 
 								<p:column styleClass="centeredColumn"
 									headerText="Send Application as Candidate">
-									<p:commandButton id="selectButton1" icon="ui-icon-plus" value="Apply"
-										action= "/pages/candidate/submituserapplication.xhtml?faces-redirect=true"
+									<p:commandButton id="selectButton1" icon="ui-icon-plus"
+										value="Apply"
+										action="/pages/candidate/submituserapplication.xhtml?faces-redirect=true"
 										ajax="false" />
-<!-- action="#{infoUser.goToApplicationForm(position)}" -->
+									<!-- action="#{infoUser.goToApplicationForm(position)}" -->
 								</p:column>
 
 								<p:rowExpansion>
@@ -142,8 +145,8 @@
 									style="background-color: rgba(255, 0, 0, 0.75); color: black; margin-bottom: 100px;
 										 margin-top: 20px; font-size: 25px;"
 									value="Spontaneous Application"
-										action= "/pages/candidate/spontaneousapplications.xhtml?faces-redirect=true" />	
-									<!-- action="/pages/public/spontaneousApply.xhtml?faces-redirect=true" -->
+									action="/pages/candidate/spontaneousapplications.xhtml?faces-redirect=true" />
+								<!-- action="/pages/public/spontaneousApply.xhtml?faces-redirect=true" -->
 							</div>
 						</h:form>
 					</div>

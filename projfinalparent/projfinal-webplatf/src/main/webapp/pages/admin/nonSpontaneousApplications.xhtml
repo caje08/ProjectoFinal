@@ -59,7 +59,7 @@
 							headerText="Do not go To First Interview?" style="width:20%">
 							<p:commandButton styleClass="myButton" 
 								rendered="#{applicationWebManagem.alreadyInInterviewProcess(item)}"
-								id="editapplication" icon="ui-icon-closethick"
+								id="editapplication" icon="ui-icon-closethick" value="Reject"
 								oncomplete="PF('status').show()" update=":statusUpdate2">
 								<f:setPropertyActionListener value="#{item}"
 									target="#{applicationWebManagem.selectedApplication}" />
@@ -68,7 +68,7 @@
 
 						<p:column styleClass="centeredColumn" headerText="Update Status"
 							style="width:20%">
-							<p:commandButton styleClass="myButton" 
+							<p:commandButton styleClass="myButton"  value="Update"
 								rendered="#{manageApplicationWeb.canEditStatus(item)}"
 								id="updstatus" icon="ui-icon-plus"
 								oncomplete="PF('updstatus').show()" update=":statusUpdate">
@@ -79,10 +79,10 @@
 
 						<p:column styleClass="centeredColumn"
 							headerText="Process Interview" style="width:20%">
-							<p:commandButton styleClass="myButton" 
+							<p:commandButton styleClass="myButton" value="Add Interview"
 								rendered="#{!applicationWebManagem.isRejected(item)}"
 								action="#{applicationWebManagem.showPanel(item)}"
-								icon="ui-icon-plus" title="Add" ajax="false">
+								icon="ui-icon-plus" title="Add"  ajax="false">
 								<f:setPropertyActionListener value="#{item}"
 									target="#{applicationWebManagem.selectedApplication}" />
 							</p:commandButton>
@@ -151,9 +151,9 @@
 
 							<!--Without Feedback Given and can be edited because actual date is before scheduled date for more than 1 hour-->
 
-							<p:commandButton styleClass="myButton" ajax="false"
+							<p:commandButton styleClass="myButton" 
 								rendered="#{!applicationWebManagem.feedbackGiven(interview) and applicationWebManagem.possibleToSubmitFeedback(interview)}"
-								id="select2Interview" icon="ui-icon-pencil"
+								id="select2Interview" icon="ui-icon-pencil" 
 								actionListener="#{applicationWebManagem.appointInterviewers(interview)}"
 								oncomplete="PF('editmeeting').show()" update=":editschedule">
 								<f:setPropertyActionListener value="#{interview}"
@@ -164,7 +164,7 @@
 
 							<p:commandButton
 								rendered="#{!applicationWebManagem.feedbackGiven(interview) and !applicationWebManagem.possibleToSubmitFeedback(interview)}"
-								id="select0Interview" icon="ui-icon-plus"
+								id="select0Interview" icon="ui-icon-plus" value="Give Feedback"
 								actionListener="#{applicationWebManagem.appointAnswers(interview)}"
 								oncomplete="PF('feedback').show()" update=":addfeedbackGuide">
 								<f:setPropertyActionListener value="#{interview}"
@@ -173,9 +173,9 @@
 
 							<!--With Feedback Given-->
 
-							<p:commandButton styleClass="myButton" ajax="false"
+							<p:commandButton styleClass="myButton" 
 								rendered="#{applicationWebManagem.feedbackGiven(interview)}"
-								id="select1Interview" icon="ui-icon-search"
+								id="select1Interview" icon="ui-icon-search" value="See Feedback"
 								actionListener="#{applicationWebManagem.appointAnswers(interview)}"
 								oncomplete="PF('feedback1').show()" update=":seefeedbackGuide">
 								<f:setPropertyActionListener value="#{interview}"
@@ -200,7 +200,7 @@
 <!-- onclick="PF('interviewer').show()" update=":interviewTable:theguide"> -->
 
 					<div align="center">
-						<p:commandButton value="Return"  styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
+						<p:commandButton value="Return"  styleClass="myButton" icon="ui-icon-arrowreturnthick-1-w"
 							action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
 					</div>
 
