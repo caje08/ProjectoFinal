@@ -49,6 +49,264 @@
 
 	<ui:define name="content">
 
+		<!-- 
+	</ui:define>
+
+	<ui:define name="browser"> -->
+
+
+		<p:tabView orientation="left">
+			<div>
+				<!-- 	style="background: url(./resources/images/imagem_fundo.png); height: 1000px; width: 1024px;">
+ -->
+
+
+
+				<p:tab style="font-size: 16px;" title="Career Oportunities">
+					<div>
+						<h3 style="color: black; margin-left: 20px; font-size: 26px;">Career
+							Oportunities</h3>
+
+						<h:form enctype="multipart/form-data">
+							<!-- style="display: inline-table;" -->
+
+							<p:dataTable id="openpositions" paginator="true" rows="10"
+								paginatorPosition="top" editable="false"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="10,20,30" selectionMode="single"
+								rowKey="#{position.positionCode}"
+								selection="#{infoUser.selectedPosition}"
+								value="#{infoUser.lstOpenPositions}" styleClass="mystyle"
+								rowStyleClass="order-table-odd-row,order-table-even-row"
+								var="position">
+
+								<f:facet name="header">
+                        List of Opening Positions
+                    </f:facet>
+								<p:column style="width:16px">
+									<p:rowToggler />
+								</p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Opening date"
+									filterBy="#{position.openingDate}" filterMatchMode="contains">
+									<h:outputText value="#{position.openingDate}">
+										<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+
+
+								<p:column styleClass="centeredColumn"
+									headerText="Name of Position" filterBy="#{position.title}"
+									filterMatchMode="contains">
+                        #{position.title}
+                    </p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Location"
+									filterBy="#{position.location}" filterMatchMode="contains">
+                        #{position.location}
+                    </p:column>
+
+								<p:column styleClass="centeredColumn" headerText="# of openings"
+									filterBy="#{position.vacancies}" filterMatchMode="contains">
+                        #{position.vacancies}
+                    </p:column>
+
+								<p:column styleClass="centeredColumn" headerText="Company"
+									filterBy="#{position.company}" filterMatchMode="contains">
+                        #{position.company}
+                    </p:column>
+
+
+								<p:column styleClass="centeredColumn"
+									headerText="Send Application as Candidate">
+									<p:commandButton id="selectButton1" icon="ui-icon-plus"
+										action="#{infoUser.goToApplicationForm(position)}"
+										ajax="false" />
+
+								</p:column>
+
+								<p:rowExpansion>
+									<h:panelGrid columns="1">
+										<h3>Job Description</h3>
+										<p:inputTextarea value="#{position.jobDescription}" />
+									</h:panelGrid>
+								</p:rowExpansion>
+
+							</p:dataTable>
+							<br />
+							<p:commandButton style="background-color: rgba(255, 0, 0, 0.75); color: black;"
+								value="Spontaneous Application"
+								action="/pages/public/spontaneousApply.xhtml?faces-redirect=true" ajax="false" />
+						</h:form>
+					</div>
+				</p:tab>
+
+				<p:tab style="font-size: 30px;" title="About us">
+					<div>
+						<h3
+							style="color: black; float: left; margin-left: 20px; font-size: 26px;">About
+							us</h3>
+						<h5
+							style="color: black; float: left; margin-left: 20px; font-size: 18px">
+							<p>Established in 1998, CRITICAL Software provides systems,
+								software and data engineering services for safety, mission and
+								business-critical applications. We help to ensure our clients
+								meet the most demanding quality standards for software safety,
+								performance and reliability. Our data engineering products and
+								services also provide clients with the information they need to
+								manage their important assets, helping them to achieve better
+								business performance.</p>
+							<p>CRITICAL Software supported clients in several markets,
+								including high-profile companies such as AgustaWestland, EADS,
+								ESA, NASA, Thales Alenia Space, the Chinese and Japanese space
+								agencies, Vodafone, Deutsche Telekom, PT, Portucel-Soporcel,
+								Infineon, EDP, Enersis, CGD, BCI, BFA, Unimed, AES, BPI, SIBS,
+								mCel, UNITEL and the Bank of New York.</p>
+							<p>We renewed our CMMI Level 5 certification in Portugal and
+								extended this to our subsidiary in Brazil, followed by the
+								renewal of the EN ISO 9001:2008 TickIT and the EN 9100 Revision
+								C Quality Certifications.</p>
+							<p>We were listed by Business Week as one of the Top 500
+								Fast-Growing companies in Europe.</p>
+							<p>We opened a subsidiary in Germany and launched other
+								spin-offs: CRITICAL Management Consulting, Watchful Software and
+								verticalla.</p>
+						</h5>
+
+					</div>
+				</p:tab>
+
+				<p:tab style="font-size: 16px;color:black;" title="Contacts">
+					<h3 style="color: black; margin-left: 20px; font-size: 26px;">Contacts</h3>
+					<p:panelGrid>
+
+						<tr>
+							<td>
+								<h4 style="color: black; font-size: 20px;">
+									HEADQUARTERS - COIMBRA, PORTUGAL <br></br>CRITICAL SOFTWARE,SA
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									Parque Industrial de Taveiro, lote 49<br></br> 3045-504
+									Coimbra, Portugal<br></br> T +351 239 989100<br></br> F +351
+									239 989 119<br></br> E info@criticalsoftware.com <br></br> GPS
+									40º 11' 52.29'' N 8º 30' 49.06'' W
+								</h5>
+							</td>
+							<td style="width: 20px"></td>
+							<td>
+								<h4 style="color: black; font-size: 20px;">
+									LISBON OFFICE, PORTUGAL<br></br> CRITICAL SOFTWARE,SA
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									Campus do Lumiar,Edifício M8<br></br> Estrada do Paço do Lumiar
+									<br></br>1649-038 Lisboa, Portugal<br></br> T +351 217 145 430
+									<br></br>F +351 217 145 432<br></br> E
+									info@criticalsoftware.com GPS 38° 46' 18.5" N 9° 10' 34.5" W
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td><h4 style="color: black; font-size: 20px;">
+									PORTO OFFICE, PORTUGAL<br></br>CRITICAL SOFTWARE, SA
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									Rua Engº Frederico Ulrich, nº 2650<br></br> 4470-605 Moreira da
+									Maia, Portugal <br></br> T +351 229 446 927<br></br> F +351 229
+									446 929<br></br> E info@criticalsoftware.com<br></br> GPS 41º
+									15' 32.87'' N 8º 38' 28.46'' W<br></br>
+								</h5></td>
+							<td style="width: 20px;"></td>
+							<td><h4 style="color: black; font-size: 20px;">
+									SOUTHAMPTON OFFICE, UK<br></br>CRITICAL SOFTWARE TECHNOLOGIES
+									LTD.
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									4 Benham Road<br></br> Southampton Science Park<br></br>
+									Chilworth, Southampton - SO16 7QJ <br></br> United Kingdom<br></br>
+									T +44 (0) 238 011 13 39 (outside UK)<br></br> F +44 (0) 870 762
+									24 87 (outside UK)<br></br> T 084 568 551 60 (inside UK)<br></br>
+									F 084 568 551 61 (inside UK)<br></br> E
+									info@criticalsoftware.co.uk<br></br> GPS 50º 57' 42.50'' N 1º
+									25' 50.30 '' W<br></br>
+								</h5></td>
+
+						</tr>
+
+						<tr>
+
+							<td>
+								<h4 style="color: black; font-size: 20px;">
+									YEOVIL OFFICE, UK<br></br>CRITICAL SOFTWARE TECHNOLOGIES LTD
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									Yeovil Innovation Centre<br></br> Barracks Close, Copse Road <br></br>
+									Yeovil, Somerset BA 22 8RN<br></br> T +44 (0) 193 538 59 11<br></br>
+									F +44 (0) 870 762 24 87<br></br> E info@criticalsoftware.co.uk<br></br>
+
+								</h5>
+							</td>
+							<td style="width: 20px"></td>
+							<td>
+								<h4 style="color: black; font-size: 20px;">
+									HANAU OFFICE, GERMANY<br></br>CRITICAL SOFTWARE GMBH
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									Hospitalstr. 2<br></br> D-63450 Hanau <br></br> Germany<br></br>
+									T +49 618 170 790 13<br></br> E info@criticalsoftware.de<br></br>
+								</h5>
+							</td>
+						</tr>
+
+
+						<tr>
+							<td><h4 style="color: black; font-size: 20px;">
+									CALIFORNIA OFFICE, USA<br></br>CRITICAL SOFTWARE INC.
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									1370 Willow Road<br></br> Menlo Park, CA 94025 <br></br> USA<br></br>
+									T +1 408 317 9322<br></br> E info@critical-software.us<br></br>
+								</h5></td>
+
+							<td style="width: 20px"></td>
+							<td><h4 style="color: black; font-size: 20px;">
+									SÃO PAULO OFFICE, BRAZIL<br></br> CRITICAL SOFTWARE BRASIL <br></br>
+									DESENVOLVIMENTO DE SOFTWARE LTDA
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									Parque Tecnológico UNIVAP<br></br> Avenida Shishima Hifumi 2911
+									- Urbanova<br></br> São José dos Campos - São Paulo<br></br> SP
+									- CEP 12244-000, Brasil<br></br> T +55 123 949 25 12<br></br> E
+									contato@criticalsoftware.com.br<br></br>
+								</h5></td>
+						</tr>
+
+						<tr>
+							<td><h4 style="color: black; font-size: 20px;">
+									MAPUTO OFFICE, MOZAMBIQUE<br></br> CRITICAL SOFTWARE <br></br>
+									MOÇAMBIQUE, LIMITADA
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									Rua Pereira Marinho, 179<br></br> Bairro de Sommerschield<br></br>
+									Maputo, Moçambique<br></br> T +258 214 951 45<br></br> F +258
+									214 951 46<br></br> E mocambique@criticalsoftware.com<br></br>
+								</h5></td>
+							<td style="width: 20px"></td>
+							<td><h4 style="color: black; font-size: 20px;">
+									LUANDA OFFICE, ANGOLA<br></br> CRITICAL SOFTWARE ANGOLA
+
+								</h4>
+								<h5 style="color: black; font-size: 18px;">
+									Condomínio da ENSA, <br></br> Vivenda 19, Talatona<br></br>
+									Luanda, Angola<br></br> T +244 222 711 426<br></br> M +244 933
+									862 353<br></br> E info@criticalsoftware.com<br></br>
+								</h5></td>
+						</tr>
+					</p:panelGrid>
+				</p:tab>
+			</div>
+		</p:tabView>
+
 
 	</ui:define>
 	<ui:define name="bottom">
@@ -74,270 +332,6 @@
 				</h:outputLink>
 			</h:panelGrid>
 		</h:form>
-
-		<ui:define name="browser">
-
-			<!-- <h2 style="text-align: center;">Public Web Page</h2>
-
-			<h3 style="text-align: center; padding-top: 20px;">Please, start
-				login with your user credentials</h3>
-			<div style="background-color: #212121; width: 1455px;">
-				<h:form> -->
-
-			<p:tabView orientation="left">
-				<div>
-					<!-- 	style="background: url(./resources/images/imagem_fundo.png); height: 1000px; width: 1024px;">
- -->
-
-
-
-					<p:tab style="font-size: 16px;" title="Career Oportunities">
-						<div>
-							<h3 style="color: black; margin-left: 20px;">Career
-								Oportunities</h3>
-
-							<h:form enctype="multipart/form-data">
-								<!-- style="display: inline-table;" -->
-
-								<p:dataTable id="openpositions" paginator="true" rows="10"
-									paginatorPosition="top" editable="false"
-									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									rowsPerPageTemplate="10,20,30" selectionMode="single"
-									rowKey="#{position.positionCode}"
-									selection="#{infoUser.selectedPosition}"
-									value="#{infoUser.lstOpenPositions}" styleClass="mystyle"
-									rowStyleClass="order-table-odd-row,order-table-even-row"
-									var="position">
-
-									<f:facet name="header">
-                        List of Opening Positions
-                    </f:facet>
-									<p:column style="width:16px">
-										<p:rowToggler />
-									</p:column>
-
-									<p:column styleClass="centeredColumn" headerText="Opening date"
-										filterBy="#{position.openingDate}" filterMatchMode="contains">
-										<h:outputText value="#{position.openingDate}">
-											<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
-										</h:outputText>
-									</p:column>
-
-
-									<p:column styleClass="centeredColumn"
-										headerText="Name of Position" filterBy="#{position.title}"
-										filterMatchMode="contains">
-                        #{position.title}
-                    </p:column>
-
-									<p:column styleClass="centeredColumn" headerText="Location"
-										filterBy="#{position.location}" filterMatchMode="contains">
-                        #{position.location}
-                    </p:column>
-
-									<p:column styleClass="centeredColumn"
-										headerText="# of openings" filterBy="#{position.vacancies}"
-										filterMatchMode="contains">
-                        #{position.vacancies}
-                    </p:column>
-
-									<p:column styleClass="centeredColumn" headerText="Company"
-										filterBy="#{position.company}" filterMatchMode="contains">
-                        #{position.company}
-                    </p:column>
-
-
-									<p:column styleClass="centeredColumn"
-										headerText="Send Application as Candidate">
-										<p:commandButton id="selectButton1" icon="ui-icon-plus"
-											action="#{infoUser.goToApplicationForm(position)}"
-											ajax="false" />
-
-									</p:column>
-
-									<p:rowExpansion>
-										<h:panelGrid columns="1">
-											<h3>Job Description</h3>
-											<p:inputTextarea value="#{position.jobDescription}" />
-										</h:panelGrid>
-									</p:rowExpansion>
-
-								</p:dataTable>
-								<br />
-								<p:commandButton id="selectButton3"
-									value="Spontaneous Application"
-									action="/pages/public/spontaneousApply.xhtml" ajax="false" />
-							</h:form>
-						</div>
-					</p:tab>
-
-					<p:tab style="font-size: 30px;" title="About us">
-						<div>
-							<h3 style="color: black; float: left; margin-left: 20px;">About
-								us</h3>
-							<h5
-								style="color: black; float: left; margin-left: 20px; font-size: 18px">
-								<p>Established in 1998, CRITICAL Software provides systems,
-									software and data engineering services for safety, mission and
-									business-critical applications. We help to ensure our clients
-									meet the most demanding quality standards for software safety,
-									performance and reliability. Our data engineering products and
-									services also provide clients with the information they need to
-									manage their important assets, helping them to achieve better
-									business performance.</p>
-								<p>CRITICAL Software supported clients in several markets,
-									including high-profile companies such as AgustaWestland, EADS,
-									ESA, NASA, Thales Alenia Space, the Chinese and Japanese space
-									agencies, Vodafone, Deutsche Telekom, PT, Portucel-Soporcel,
-									Infineon, EDP, Enersis, CGD, BCI, BFA, Unimed, AES, BPI, SIBS,
-									mCel, UNITEL and the Bank of New York.</p>
-								<p>We renewed our CMMI Level 5 certification in Portugal and
-									extended this to our subsidiary in Brazil, followed by the
-									renewal of the EN ISO 9001:2008 TickIT and the EN 9100 Revision
-									C Quality Certifications.</p>
-								<p>We were listed by Business Week as one of the Top 500
-									Fast-Growing companies in Europe.</p>
-								<p>We opened a subsidiary in Germany and launched other
-									spin-offs: CRITICAL Management Consulting, Watchful Software
-									and verticalla.</p>
-							</h5>
-
-						</div>
-					</p:tab>
-
-					<p:tab style="font-size: 16px;color:black;" title="Contacts">
-						<h3 style="color: black; margin-left: 20px;">Contacts</h3>
-						<p:panelGrid>
-
-							<tr>
-								<td>
-									<h4 style="color: black; font-size: 16px">
-										HEADQUARTERS - COIMBRA, PORTUGAL <br></br>CRITICAL SOFTWARE,SA
-									</h4>
-									<h5 style="color: black;">
-										Parque Industrial de Taveiro, lote 49<br></br> 3045-504
-										Coimbra, Portugal<br></br> T +351 239 989100<br></br> F +351
-										239 989 119<br></br> E info@criticalsoftware.com <br></br> GPS
-										40º 11' 52.29'' N 8º 30' 49.06'' W
-									</h5>
-								</td>
-								<td style="width: 20px"></td>
-								<td>
-									<h4 style="color: black;">
-										LISBON OFFICE, PORTUGAL<br></br> CRITICAL SOFTWARE,SA
-									</h4>
-									<h5 style="color: black;">
-										Campus do Lumiar,Edifício M8<br></br> Estrada do Paço do
-										Lumiar <br></br>1649-038 Lisboa, Portugal<br></br> T +351 217
-										145 430 <br></br>F +351 217 145 432<br></br> E
-										info@criticalsoftware.com GPS 38° 46' 18.5" N 9° 10' 34.5" W
-									</h5>
-								</td>
-							</tr>
-
-							<tr>
-								<td><h4 style="color: black;">
-										PORTO OFFICE, PORTUGAL<br></br>CRITICAL SOFTWARE, SA
-									</h4>
-									<h5 style="color: black;">
-										Rua Engº Frederico Ulrich, nº 2650<br></br> 4470-605 Moreira
-										da Maia, Portugal <br></br> T +351 229 446 927<br></br> F +351
-										229 446 929<br></br> E info@criticalsoftware.com<br></br> GPS
-										41º 15' 32.87'' N 8º 38' 28.46'' W<br></br>
-									</h5></td>
-								<td style="width: 20px"></td>
-								<td><h4 style="color: black;">
-										SOUTHAMPTON OFFICE, UK<br></br>CRITICAL SOFTWARE TECHNOLOGIES
-										LTD.
-									</h4>
-									<h5 style="color: black;">
-										4 Benham Road<br></br> Southampton Science Park<br></br>
-										Chilworth, Southampton - SO16 7QJ <br></br> United Kingdom<br></br>
-										T +44 (0) 238 011 13 39 (outside UK)<br></br> F +44 (0) 870
-										762 24 87 (outside UK)<br></br> T 084 568 551 60 (inside UK)<br></br>
-										F 084 568 551 61 (inside UK)<br></br> E
-										info@criticalsoftware.co.uk<br></br> GPS 50º 57' 42.50'' N 1º
-										25' 50.30 '' W<br></br>
-									</h5></td>
-
-							</tr>
-
-							<tr>
-
-								<td>
-									<h4 style="color: black;">
-										YEOVIL OFFICE, UK<br></br>CRITICAL SOFTWARE TECHNOLOGIES LTD
-									</h4>
-									<h5 style="color: black;">
-										Yeovil Innovation Centre<br></br> Barracks Close, Copse Road <br></br>
-										Yeovil, Somerset BA 22 8RN<br></br> T +44 (0) 193 538 59 11<br></br>
-										F +44 (0) 870 762 24 87<br></br> E info@criticalsoftware.co.uk<br></br>
-
-									</h5>
-								</td>
-								<td style="width: 20px"></td>
-								<td>
-									<h4 style="color: black;">
-										HANAU OFFICE, GERMANY<br></br>CRITICAL SOFTWARE GMBH
-									</h4>
-									<h5 style="color: black;">
-										Hospitalstr. 2<br></br> D-63450 Hanau <br></br> Germany<br></br>
-										T +49 618 170 790 13<br></br> E info@criticalsoftware.de<br></br>
-									</h5>
-								</td>
-							</tr>
-
-
-							<tr>
-								<td><h4 style="color: black;">
-										CALIFORNIA OFFICE, USA<br></br>CRITICAL SOFTWARE INC.
-									</h4>
-									<h5 style="color: black;">
-										1370 Willow Road<br></br> Menlo Park, CA 94025 <br></br> USA<br></br>
-										T +1 408 317 9322<br></br> E info@critical-software.us<br></br>
-									</h5></td>
-
-								<td style="width: 20px"></td>
-								<td><h4 style="color: black;">
-										SÃO PAULO OFFICE, BRAZIL<br></br> CRITICAL SOFTWARE BRASIL <br></br>
-										DESENVOLVIMENTO DE SOFTWARE LTDA
-									</h4>
-									<h5 style="color: black;">
-										Parque Tecnológico UNIVAP<br></br> Avenida Shishima Hifumi
-										2911 - Urbanova<br></br> São José dos Campos - São Paulo<br></br>
-										SP - CEP 12244-000, Brasil<br></br> T +55 123 949 25 12<br></br>
-										E contato@criticalsoftware.com.br<br></br>
-									</h5></td>
-							</tr>
-
-							<tr>
-								<td><h4 style="color: black;">
-										MAPUTO OFFICE, MOZAMBIQUE<br></br> CRITICAL SOFTWARE <br></br>
-										MOÇAMBIQUE, LIMITADA
-									</h4>
-									<h5 style="color: black;">
-										Rua Pereira Marinho, 179<br></br> Bairro de Sommerschield<br></br>
-										Maputo, Moçambique<br></br> T +258 214 951 45<br></br> F +258
-										214 951 46<br></br> E mocambique@criticalsoftware.com<br></br>
-									</h5></td>
-								<td style="width: 20px"></td>
-								<td><h4 style="color: black;">
-										LUANDA OFFICE, ANGOLA<br></br> CRITICAL SOFTWARE ANGOLA
-
-									</h4>
-									<h5 style="color: black;">
-										Condomínio da ENSA, <br></br> Vivenda 19, Talatona<br></br>
-										Luanda, Angola<br></br> T +244 222 711 426<br></br> M +244 933
-										862 353<br></br> E info@criticalsoftware.com<br></br>
-									</h5></td>
-							</tr>
-						</p:panelGrid>
-					</p:tab>
-				</div>
-			</p:tabView>
-			</h:form>
-
-		</ui:define>
 
 
 

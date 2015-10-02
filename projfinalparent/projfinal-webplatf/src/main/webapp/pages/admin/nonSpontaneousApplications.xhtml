@@ -10,7 +10,7 @@
 		<ui:define name="content">
 			<h:form id="form">
 			<div>
-					<h1 style="margin-bottom: 20px; font-size:25pxe;">Non Spontaneous Applications</h1>
+					<h1 style="margin-bottom: 20px; font-size:25px;">Non Spontaneous Applications</h1>
 				</div>
 				<p:growl id="messages" showDetail="true" />
 				<h:panelGroup binding="#{applicationWebManagem.panelInterviews}">
@@ -68,7 +68,7 @@
 
 						<p:column styleClass="centeredColumn" headerText="Update Status"
 							style="width:20%">
-							<p:commandButton styleClass="myButton" ajax="false"
+							<p:commandButton styleClass="myButton" 
 								rendered="#{manageApplicationWeb.canEditStatus(item)}"
 								id="updstatus" icon="ui-icon-plus"
 								oncomplete="PF('updstatus').show()" update=":statusUpdate">
@@ -93,9 +93,8 @@
 							<p:outputLabel value="#{item.motive}" />
 						</p:column>
 
-
-
 					</p:dataTable>
+					
 				</h:panelGroup>
 			</h:form>
 
@@ -185,22 +184,23 @@
 
 						</p:column>
 
-
 					</p:dataTable>
 
 					<!--Button to add a new Interview-->
 
-					<p:commandButton styleClass="myButton" ajax="false"
-rendered="#{applicationWebManagem.possibleToAdd}"
+					<p:commandButton styleClass="myButton"
+                   rendered="#{applicationWebManagem.possibleToAdd}"
 						id="selectInterview" value="Add a new interview"
 						oncomplete="PF('interviewer').show()" update=":interviewTable">
+						
 						<f:setPropertyActionListener value="#{interview}"
 							target="#{applicationWebManagem.selectedInterview}" />
 					</p:commandButton>
-
+<!-- oncomplete="PF('interviewer').show()" update=":interviewTable"> -->
+<!-- onclick="PF('interviewer').show()" update=":interviewTable:theguide"> -->
 
 					<div align="center">
-						<p:commandButton  styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
+						<p:commandButton value="Return"  styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
 							action="/pages/admin/nonSpontaneousApplications.xhtml?faces-redirect=true" />
 					</div>
 
@@ -333,7 +333,7 @@ rendered="#{applicationWebManagem.possibleToAdd}"
 
 			<h:form id="interviewTable">
 				<p:dialog header="Add a new Interview" widgetVar="interviewer"
-					modal="true" height="300" width="500">
+					modal="true" height="500" width="500">
 					<p:dataTable id="theguide" selectionMode="single"
 						rowKey="#{interviewer.userId}"
 						selection="#{applicationWebManagem.selectedInterviewer}"
@@ -356,6 +356,7 @@ rendered="#{applicationWebManagem.possibleToAdd}"
                             </p:column>
 
 					</p:dataTable>
+					
 					<h:outputText></h:outputText>
 					<h:panelGrid columns="2">
 						<h3>Interview Date:*</h3>
@@ -364,7 +365,7 @@ rendered="#{applicationWebManagem.possibleToAdd}"
 							pattern="MM/dd/yyyy HH:mm" required="true"
 							requiredMessage="Must Introduce a Date for this interview" />
 					</h:panelGrid>
-					<h:commandButton  styleClass="myButton"value="Schedule interview"
+					<h:commandButton  styleClass="myButton" value="Schedule interview"
 						action="#{applicationWebManagem.createNewInterview()}"
 						style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 

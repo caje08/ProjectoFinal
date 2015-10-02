@@ -141,7 +141,7 @@
 							process="@this questions" update=":form2:questions" />
 
 						<f:facet name="header">
-                                    List of Interview Guide's Questions of #{guideWebManagem.selectedInterviewEntity.title}
+                                    List of Quentions og Interview Guide's #{guideWebManagem.selectedInterviewEntity.title}
                                 </f:facet>
 
 						<p:column styleClass="centeredColumn"
@@ -174,7 +174,8 @@
 						</p:column>
 
 					</p:dataTable>
-					<p:commandButton styleClass="myButton"  ajax="false" rendered="#{guideWebManagem.couldAddQuestions()}"
+					
+					<p:commandButton styleClass="myButton"   rendered="#{guideWebManagem.couldAddQuestions()}"
 						value="Add new Question" oncomplete="PF('question1').show();"
 						update=":createQuestion" />
 

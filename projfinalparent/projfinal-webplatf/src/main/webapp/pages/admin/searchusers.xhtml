@@ -33,28 +33,28 @@
 							</p:outputPanel>
 						</f:facet>
 
-						<p:column styleClass="centeredColumn" headerText="First Name"
+						<p:column styleClass="centeredColumn" headerText="First Name" width="300"
 							filterBy="#{userapp.firstName}" filterMatchMode="contains">
 							<p:outputLabel value="#{userapp.firstName}" />
 						</p:column>
 
-						<p:column styleClass="centeredColumn" headerText="Last Name"
+						<p:column styleClass="centeredColumn" headerText="Last Name" width="300"
 							filterBy="#{userapp.lastName}" filterMatchMode="contains">
 							<p:outputLabel value="#{userapp.lastName}" />
 						</p:column>
 
-						<p:column styleClass="centeredColumn" headerText="Email"
+						<p:column styleClass="centeredColumn" headerText="Email" width="300"
 							filterBy="#{userapp.email}" filterMatchMode="contains">
 							<p:outputLabel value="#{userapp.email}" />
 						</p:column>
 
-						<p:column styleClass="centeredColumn" headerText="Roles"
+						<p:column styleClass="centeredColumn" headerText="Roles" width="300"
 							filterBy="#{userapp.role}" filterMatchMode="contains">
 							<p:outputLabel value="#{userapp.roles}" />
 						</p:column>
 
 
-						<p:column headerText="Edit" width="40" styleClass="centeredColumn">
+						<p:column headerText="Edit" width="40" styleClass="centeredColumn" > 
 							
 							<p:commandButton  styleClass="myButton" action="#{userWebView.showPanel(userapp)}"
 								icon="ui-icon-plus" title="View" ajax="false">

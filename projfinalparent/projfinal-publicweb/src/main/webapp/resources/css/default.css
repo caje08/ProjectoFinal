@@ -61,14 +61,16 @@ a:link:hover, a:visited:hover  {
         padding-top: 25px;
     background-color: #212121;
 }
- .ui-tabs-left .ui-tabs-nav { 
+.ui-tabs-left .ui-tabs-nav {
         float: left;
-    width: 23%;
-    /* height: 300px; */
-    background-image: none;
-    padding-top: 20px;
-    background-color: red;
+        width: 23%;
+        /* height: 300px; */
+        background-image: none;
+        padding-top: 20px;
+        /* background-color: red; */
+            padding-top: 0px;
     }
+    
     
 .ui-menubar {
     width: 1300px;

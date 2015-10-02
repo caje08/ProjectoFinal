@@ -21,12 +21,12 @@ and open the template in the editor.
                  <h1 style="margin-bottom: 20px; font-size:25px;">Application details of #{appDetailsStatus.applicant.username} </h1>
             
                   
-                    <h:panelGrid columns="2" cellpading="3"  style="display:-webkit-inline-box;font-size:16px;"   >
+                    <h:panelGrid columns="2" cellpading="3"  style="display:-webkit-inline-box;font-size:22px;"   >
                         <h:outputText  value="First Name" />
-                        <p:outputText  value="#{appDetailsStatus.applicant.firstName}" />
+                        <h:outputText  value="#{appDetailsStatus.applicant.firstName}" />
                         
                         <h:outputText value="Last Name:" />
-                        <p:outputText value="#{appDetailsStatus.applicant.lastName}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.lastName}" />
 
                         <h:outputText value="Curriculum Vitae" />
                         <p:button href="#{appDetailsStatus.cvPath}" style="color: #{stylesCssToWeb.cssInUse.labelCommandLink}"  target="_blank" value="cv">
@@ -37,35 +37,35 @@ and open the template in the editor.
                         </p:button>
 
                         <h:outputText value="Email:" />
-                        <p:outputText value="#{appDetailsStatus.applicant.email}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.email}" />
 
                         <h:outputText value="Address:" />
-                        <p:outputText value="#{appDetailsStatus.applicant.address}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.address}" />
 
                         <h:outputText value="City:" />
-                        <p:outputText value="#{appDetailsStatus.applicant.city}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.city}" />
 
                         <h:outputText value="Phone:" />
-                        <p:outputText value="#{appDetailsStatus.applicant.phone}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.phone}" />
 
                         <h:outputText value="Mobile Phone:" />
-                        <p:outputText value="#{appDetailsStatus.applicant.mobile}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.mobile}" />
 
                         <h:outputText value="Country:" />
-                        <p:outputText value="#{appDetailsStatus.applicant.country}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.country}" />
 
                         <h:outputText value="Degree:" />
-                        <p:outputText value="#{appDetailsStatus.applicant.degree}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.degree}" />
 
                         <h:outputText value="School" />
-                        <p:outputText value="#{appDetailsStatus.applicant.school}" />
+                        <h:outputText value="#{appDetailsStatus.applicant.school}" />
                         
                          <h:outputText value="Application associated to Position:" />
-                        <p:outputText value="#{appDetailsStatus.position.title}" />
+                        <h:outputText value="#{appDetailsStatus.position.title}" />
 
                     </h:panelGrid>  
                     	<div align="center">
-						<p:commandButton  value="Return" styleClass="myButton" ajax="false" icon="ui-icon-arrowreturnthick-1-w"
+						<p:commandButton  value="Return" styleClass="myButton"  icon="ui-icon-arrowreturnthick-1-w"
 							action="/pages/manager/nonSpontaneousAppications.xhtml?faces-redirect=true" />
 					</div> 
                 </h:form>

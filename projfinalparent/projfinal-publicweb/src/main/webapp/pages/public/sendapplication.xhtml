@@ -12,7 +12,27 @@
         <!--Top Content-->
 
         <ui:define name="top">
-            <h:form>
+        
+         <h:graphicImage library="images" name="critical_logo.png"
+				style="display: inline;float: left; margin-right: 20px; margin-left: 7px;" /> 
+
+		<h:form id="menu">
+			<p:menubar>
+				<p:menuitem value="Login"
+					 action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true" style="margin-right:20px"/>
+					 <p:menuitem value=" Main page"
+						action="/publogin.xhtml?faces-redirect=true" style="margin-right:20px"/>
+					<!-- <p:menuitem  value="List of oportunities"
+						action="/pages/candidate/openpositions.xhtml?faces-redirect=true" style="margin-right:20px"/> -->
+					<p:menuitem value="New Spontaneous Application"
+						action="/pages/public/lstpositions.xhtml?faces-redirect=true"  style="margin-right:20px"/>
+					<p:menuitem value="New User"
+						action="/pages/public/spontaneousApply.xhtml?faces-redirect=true" style="margin-right:20px"/>
+			</p:menubar>
+		</h:form>
+        
+        
+        <!--     <h:form>
             <h:graphicImage library="images" name="critical_logo.png"
 				style="display: inline;float: left; margin-right: 20px; margin-left: 7px;" /> 
 				
@@ -20,7 +40,7 @@
 				   
              <p:outputLabel value="Login for main page" style=" margin-right: 10px; margin-left: 150px;margin-top:20px;"/>
               <p:commandButton style="margin-top:20px;" 
-               action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true" value="Login" /><!--  style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp; -->
+               action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true" value="Login" /> style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp;
                
                  <p:outputLabel value="List of oportunities" style=" margin-right: 10px; margin-left: 150px;margin-top:20px;"/>
                <p:commandButton  style="margin-top:20px;"
@@ -30,7 +50,8 @@
                 <p:commandButton style="margin-top:20px;"
                  action="/publogin.xhtml?faces-redirect=true"  value="Main Page" />
             </h:panelGrid>
-            </h:form>
+            </h:form> -->
+            
             <div align="right">
                 <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
             </div>
@@ -40,40 +61,43 @@
         <!--Main Content-->
 
         <ui:define name="content">
-            <h:form>
+          <!--   <h:form  style="margin-top: 20px;">
+
                 <h:commandLink value="Click here to login if you are a returning applicant" action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true"/>
             </h:form>
-            <h:form>
-                <h:panelGrid columns="2">
-                  <!--   <p:commandButton value="Use your Linkedin account" update=":linkedinform" oncomplete="PF('linkedin').show();"  /> -->
+            <h:form style="margin-top: 20px;">
+                <h:panelGrid columns="2"     >
+                    <p:commandButton value="Use your Linkedin account" update=":linkedinform" oncomplete="PF('linkedin').show();"  />
                     <p:commandButton value="Not using a Linkedin account" action="#{infoUser.setFormRendered(true)}" ajax="false" />
                 </h:panelGrid>
-            </h:form>
+            </h:form> -->
 
-            <h:form id="signInForm" enctype="multipart/form-data" rendered="#{infoUser.formRendered}">
+
+						rendered="#{infoUser.formRendered}"
+            <h:form id="signInForm" enctype="multipart/form-data" >
                 <p:growl showDetail="true"/>
-                <h3> Values with * are mandatory </h3>
-                <h:outputText value= "Submit a New Application using Linkedin account" rendered="#{infoUser.isLinkedin}" style="color: #D20005" />
-                <h:outputText value= "Submit a New Application not using Linkedin account" rendered="#{!infoUser.isLinkedin}" style="color: #D20005" />
+                <h3 style="font-size:16px"> Values with * are mandatory </h3>
+                <h:outputText value= "Submit a New Application using Linkedin account" rendered="#{infoUser.isLinkedin}" style="margin-top: 20px;" />
+                <h:outputText value= "Submit a New Application not using Linkedin account" rendered="#{!infoUser.isLinkedin}" style="margin-top: 20px;" />
                 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                     <h:panelGrid columns="1" cellpadding="1"  >
                         <p:outputLabel value="First Name*"/>
                         <p:inputText id="firstname" required="true" label="firstname"
-                                     size="40" requiredMessage="Please enter your First Name"
+                                     size="80" requiredMessage="Please enter your First Name"
                                      value="#{infoUser.applicant.firstName}">
                         </p:inputText>
                         <p:watermark for="firstname" value="First Name" />
 
                         <p:outputLabel value="Last Name*"/>
                         <p:inputText id="lastname" required="true" label="lastname"
-                                     size="40" requiredMessage="Please enter your last name."
+                                     size="80" requiredMessage="Please enter your last name."
                                      value="#{infoUser.applicant.lastName}">
                         </p:inputText>
                         <p:watermark for="lastname" value="Last Name" />
 
                         <p:outputLabel value="Email*"/>
                         <p:inputText id="email" required="true" label="email"
-                                     size="40" requiredMessage="Please enter your email."
+                                     size="80" requiredMessage="Please enter your email."
                                      value="#{infoUser.applicant.email}">
                             <f:validateRegex
                                 pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>

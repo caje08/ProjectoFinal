@@ -37,16 +37,17 @@
 		</div>
 	</ui:define>
 	<ui:define name="content">
-	
-		<h1 style="margin-bottom: 20px; font-size: xx-large;">Spontaneous
+
+		<h1 style="margin-bottom: 20px; font-size: 25px; color: black">Spontaneous
 			Applications</h1>
 		<h3>Values with * are mandatory</h3>
 		<p></p>
 		<h:form enctype="multipart/form-data" style="display: inline-table;">
 
-			<h:panelGrid columns="1" cellpadding="1">
+			<h:panelGrid columns="2" cellpadding="1">
 
-				<p:outputLabel style="text-align: center;font-size: 25px; margin-bottom: 15px;"
+				<p:outputLabel
+					style="text-align: center;font-size: 25px; margin-bottom: 15px;"
 					value="Source*" />
 				<p:inputText id="source" required="true" label="source" size="30"
 					requiredMessage="Please enter your source."
@@ -55,6 +56,30 @@
 				<p:watermark for="source" value="Source " />
 				<p:message for="source" />
 
+				<p:outputLabel value="CV Filename:" />
+				<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
+				<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
+					previewWidth="40" required="true"
+					fileUploadListener="#{manageApplicationWeb.uploadCV}"
+					label="Upload CV*" styleClass="fileUploadClass"
+					allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800"
+					requiredMessage="Please upload CV" />
+				<p:growl id="cv1" showDetail="true" />
+
+				<p:outputLabel value="Cover Letter Filename:" />
+				<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+				<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
+					required="true"
+					fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
+					label="Upload Cover Letter*"
+					requiredMessage="Please upload Cover Letter"
+					allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800"
+					styleClass="fileUploadClass" />
+				<p:growl id="cl1" showDetail="true" />
+
+
+
+				<!-- 
 <p:outputLabel value="CV Filename:" />
 					<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
 	<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
@@ -74,9 +99,9 @@
 						label="Upload Cover Letter*"
 						requiredMessage="Please upload Cover Letter"
 						allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
-						styleClass="fileUploadClass" />
-					
-					<!-- sizeLimit="52428800" /> -->
+						styleClass="fileUploadClass" /> -->
+
+				<!-- sizeLimit="52428800" /> -->
 				<p:growl id="cl1" showDetail="true" />
 
 			</h:panelGrid>

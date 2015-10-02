@@ -10,7 +10,7 @@
                  <div>
 					<h1 style="margin-bottom: 20px; font-size: 25px;">Negotiation</h1>
 				</div>
-                    <h:panelGroup binding="#{offerWebManagem.panelOffers}">
+                    <h:panelGroup binding="#{offerWebManagem.panelOffers}" style="display: -webkit-inline-box;">
 
                         <!--List of Applications in Negotiation -->
 
@@ -40,7 +40,10 @@
                             <!--If this application does not have any offer-->
 
                             <p:column  styleClass="centeredColumn"  headerText="Make an offer"  style="width:20%">
-                                <p:commandButton  styleClass="myButton" ajax="false" rendered="#{!offerWebManagem.alreadyInOfferProcess(item)}" action="#{offerWebManagem.showPanel(item)}"  id="editapplication" icon="ui-icon-plus" ajax="false" />
+                                <p:commandButton  styleClass="myButton" ajax="false"
+                                 rendered="#{!offerWebManagem.alreadyInOfferProcess(item)}"
+                                  action="#{offerWebManagem.showPanel(item)}"
+                                 id="editapplication" icon="ui-icon-plus"  />
                             </p:column>
 
 
@@ -57,7 +60,7 @@
                         <h:panelGrid columns="1" >
                             <p:outputLabel value="Offer Description:" />
                             <p:inputTextarea value="#{offerWebManagem.offerDescription}" rows="6" cols="33"/>
-                            <p:commandButton  styleClass="myButton" ajax="false" value="Submit" oncomplete="PF('offer').show();" update=":confirmOffer" />
+                            <p:commandButton  styleClass="myButton"value="Submit" oncomplete="PF('offer').show();" update=":confirmOffer" />
                         </h:panelGrid>
                     </h:panelGroup>
                 </h:form>

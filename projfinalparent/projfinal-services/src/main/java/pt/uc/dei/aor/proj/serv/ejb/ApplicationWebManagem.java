@@ -294,10 +294,17 @@ public class ApplicationWebManagem implements Serializable {
 	 */
 	public boolean possibleToSubmitFeedback(
 			InterviewFeedbackEntity interviewFeedback) {
-		boolean status = false;
+		boolean stat_date = false;
+		boolean stat_user = false;
+		boolean stat_feedb=false;
 		application = interviewFeedback.getApplication();
-
-		return (interviewFeedback.getInterviewDate().after(new Date()) && isManagerOfApplicationOrAdmin(application));
+		stat_date=interviewFeedback.getInterviewDate().after(new Date());
+		stat_user=isManagerOfApplicationOrAdmin(application);
+		stat_feedb=feedbackGiven(interviewFeedback);
+		//canEditScheduledInterview();
+		Logger.getLogger(ApplicationWebManagem.class.getName()).log(
+				Level.INFO, "Inside possibleToSubmitFeedback() status="+stat_date+" and status1="+stat_user+" and stat_feedb"+stat_feedb);
+		return (stat_date && stat_user);
 	}
 
 	/**
@@ -438,7 +445,12 @@ public class ApplicationWebManagem implements Serializable {
 										+ e.getMessage());
 				JSFUtil.addErrorMessage("Unable to get userData.getLoggedUser() inside isManagerOfApplicationOrAdmin()");
 			}
+		} else {//Is an Interviewer and he can edit the interview schedule
+			out=true;
+			Logger.getLogger(ApplicationWebManagem.class.getName())
+			.log(Level.INFO,"Inside isManagerOfApplicationOrAdmin() is an Interviewer and out="+out);
 		}
+		
 		return out;
 		// return application.getStatus().equals(StatusApplication.SUBMITTED);
 	}

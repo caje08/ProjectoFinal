@@ -162,15 +162,15 @@
 						<p:inputTextarea title="Job Description"
 							value="#{positionWebManagem.activePosition.activePosition.jobDescription}"
 							required="true" requiredMessage="Job Description"
-							style="width:300px; height:80px;" />
+							style="width:300px; height:80px;float:left" />
 
 						<p:outputLabel value="Publishing channels" />
-						<p:inputText id="publishingChannels" title="Publishing channels"
+						<p:inputText  style="float:left" id="publishingChannels" title="Publishing channels"
 							value="#{positionWebManagem.activePosition.activePosition.publishingChannels}"
 							required="true" requiredMessage="Publishing channels." />
 
 						<p:outputLabel for="location" value="Location: " />
-						<p:selectOneMenu id="location"
+						<p:selectOneMenu style="float:left" id="location"
 							value="#{positionWebManagem.activePosition.activePosition.location}">
 							<f:selectItem itemLabel="Lisboa" itemValue="LISBOA" />
 							<f:selectItem itemLabel="Porto" itemValue="PORTO" />
@@ -178,7 +178,7 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel for="status" value="Status " />
-						<p:selectOneMenu id="status"
+						<p:selectOneMenu style="float:left" id="status"
 							value="#{positionWebManagem.activePosition.activePosition.status}">
 							<f:selectItem itemLabel="Open" itemValue="OPEN" />
 							<f:selectItem itemLabel="Close" itemValue="CLOSED" />
@@ -186,7 +186,7 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel for="public" value="Is public:" />
-						<p:selectOneRadio id="public"
+						<p:selectOneRadio style="float:left" id="public"
 							value="#{positionWebManagem.activePosition.activePosition.isPublic}">
 							<f:selectItem itemLabel="Yes" itemValue="True" />
 							<f:selectItem itemLabel="No" itemValue="False" />
@@ -194,7 +194,7 @@
 
 
 						<p:outputLabel for="vacancies" value="Number of vacancies: " />
-						<p:spinner id="vacancies"
+						<p:spinner style="float:left" id="vacancies"
 							value="#{positionWebManagem.activePosition.activePosition.vacancies}"
 							min="0" />
 							
@@ -209,10 +209,10 @@
 								target="#{positionWebManagem.selectedInterviewGuide}" />
 						</p:commandButton>
 
-						<p:outputLabel
+						<p:outputLabel style="float:left"
 							value="#{positionWebManagem.activePosition.activePosition.phoneInterviewEntity.title}" />
 
-						<p:commandButton styleClass="myButton" ajax="false"
+						<p:commandButton styleClass="myButton"
 							value="Choose a presential Guide Interview"
 							oncomplete="PF('presentialguide').show()"
 							update=":presentialguideTable">
@@ -221,7 +221,7 @@
 						</p:commandButton>
 
 
-						<p:outputLabel
+						<p:outputLabel style="float:left" 
 							value="#{positionWebManagem.activePosition.activePosition.presencialInterviewEntity.title}" />
 
 						<!--Pop up of managers -->
@@ -233,13 +233,19 @@
 								target="#{positionWebManagem.selectedManager}" />
 						</p:commandButton>
 
-						<h:outputText
+						<h:outputText style="float:left" 
 							value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
 
 						<h:outputText></h:outputText>
-						<h:commandButton value="Save" styleClass="myButton"
+						<h:commandButton  value="Save" styleClass="myButton"
 							action="#{positionWebManagem.savePosition()}"
-							style="width:160px; height:40px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+							style="width:160px; float:left; height:40px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+					
+					<h:commandButton styleClass="myButton" 
+					 value=" Cancel " immediate="true"
+						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="searchpositions.xhtml?faces-redirect=true" />
+					
 					</h:panelGrid>
 
 				</h:panelGroup>

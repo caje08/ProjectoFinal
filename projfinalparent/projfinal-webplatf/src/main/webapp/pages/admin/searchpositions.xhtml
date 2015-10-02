@@ -181,7 +181,7 @@
 						<p:inputTextarea title="Job Description"
 							value="#{positionWebManagem.activePosition.activePosition.jobDescription}"
 							required="true" requiredMessage="Job Description"
-							style="width:900px; height:80px;" />
+							style="width:300px; height:80px;float:left" />
 
 						<p:outputLabel value="Technical Area:*" />
 						<p:selectOneMenu  style=" float:left" id="Tech_area"
@@ -256,18 +256,21 @@
 						<p:spinner style=" float:left"  id="vacancies"
 							value="#{positionWebManagem.activePosition.activePosition.vacancies}"
 							min="0" />
+							
+							
 						<!--Pop up of guides -->
 
-						<p:commandButton value="Choose a phone Guide Interview"
+						<p:commandButton styleClass="myButton"  value="Choose a phone Guide Interview"
 							oncomplete="PF('phoneguide').show()" update=":phoneguideTable">
 							<f:setPropertyActionListener value="#{guide}"
 								target="#{positionWebManagem.selectedInterviewGuide}" />
 						</p:commandButton>
 
-						<p:outputLabel
+						<p:outputLabel  style="float:left"
 							value="#{positionWebManagem.activePosition.activePosition.phoneInterviewEntity.title}" />
 
-						<p:commandButton value="Choose a presential Guide Interview"
+						<p:commandButton  styleClass="myButton" 
+						value="Choose a presential Guide Interview"
 							oncomplete="PF('presentialguide').show()"
 							update=":presentialguideTable">
 							<f:setPropertyActionListener value="#{guide}"
@@ -275,32 +278,32 @@
 						</p:commandButton>
 
 
-						<p:outputLabel
+						<p:outputLabel  style="float:left" 
 							value="#{positionWebManagem.activePosition.activePosition.presencialInterviewEntity.title}" />
 
 						<!--Pop up of managers -->
 
-						<p:commandButton  styleClass="myButton" ajax="false"
+						<p:commandButton  styleClass="myButton" 
 						 value="Choose a Manager for this position"
 							oncomplete="PF('manager').show()" update=":managerTable">
 							<f:setPropertyActionListener value="#{manager}"
 								target="#{positionWebManagem.selectedManager}" />
 						</p:commandButton>
 
-						<h:outputText
+						<h:outputText  style="float:left" 
 							value="#{positionWebManagem.activePosition.activePosition.manager.username}" />
 
-						<h:outputText></h:outputText>
-
-					</h:panelGrid>
-					<p:commandButton value="Save" styleClass="myButton" 
+						<p:commandButton value="Save" styleClass="myButton" 
 						action="#{positionWebManagem.savePosition()}" ajax="false"
 						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
-					<p:commandButton styleClass="myButton" ajax="false"
+					<p:commandButton styleClass="myButton" 
 					 value=" Cancel " immediate="true"
 						style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="searchpositions.xhtml?faces-redirect=true" />
 
+
+					</h:panelGrid>
+					
 				</h:panelGroup>
 			</h:form>
 
