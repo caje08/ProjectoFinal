@@ -26,8 +26,7 @@
 				<p:menuitem value="Edit"
 					action="/pages/candidate/editcandidate.xhtml?faces-redirect=true"
 					style="padding-left:20px" />
-				<p:menuitem value="Logout" action="#{pubLoginMB.logout()}"
-					style="padding-left:20px" />
+			
 
 				<p:submenu label="Applications" style="padding-left:20px">
 					<p:menuitem value="List Open Positions"
@@ -37,6 +36,8 @@
 					<p:menuitem value="My Applications"
 						action="/pages/candidate/userapplications.xhtml?faces-redirect=true" />
 				</p:submenu>
+					<p:menuitem value="Logout" action="#{pubLoginMB.logout()}"
+					style="padding-left:20px" />
 			</p:menubar>
 		</h:form>
 

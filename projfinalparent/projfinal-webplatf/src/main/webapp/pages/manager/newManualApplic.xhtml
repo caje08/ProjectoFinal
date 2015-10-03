@@ -95,7 +95,7 @@
 <!-- 						<p:watermark for="source" value="Source " /> -->
 <!-- 					</p:inputText> -->
 					
-					<p:selectOneMenu float="left" id="pub_Chann" required="true"
+					<p:selectOneMenu style="float:left" id="pub_Chann" required="true"
 						value="#{manageApplicationWeb.application.source}">
 						<f:selectItem itemLabel="Critical SW web site"
 							itemValue="CRITICALSWWEBSITE" />
@@ -150,14 +150,16 @@
 
 
 				</h:panelGrid>
-<div style="text-align:center">
-				<p:commandButton value="Submit"
-					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{manageApplicationWeb.createManualApplication()}" ajax="false" />
-				<p:commandButton value="Cancel" immediate="true"
-					style=" background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
-					action="#{userWebView.goBackToMain()}" ajax="false"/>
-</div>
+		<div style="text-align: center;">
+					<p:commandButton styleClass="myButton" value="Submit"
+						style="width:100px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{manageApplicationWeb.createManualApplication()}"
+						ajax="false" />
+					<p:commandButton styleClass="myButton"  value="Cancel"
+						immediate="true"
+						style="width:100px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						action="#{userWebView.goBackToMain()}" ajax="false" />
+				</div>
 			</h:form>
 
 		</ui:define>

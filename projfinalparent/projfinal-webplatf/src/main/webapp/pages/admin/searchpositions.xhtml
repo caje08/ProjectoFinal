@@ -17,7 +17,7 @@
 
 					<p:commandButton styleClass="myButton" id="email"
 						value="Send report by email" oncomplete="PF('managers').show()"
-						update=":managersTable" ajax="false" style="width:250px;height:50px">
+						update=":managersTable"  style="width:250px;height:50px"> <!--  ajax="false" -->
 						<f:setPropertyActionListener value="#{manager}"
 							target="#{averageValues.selectedManager}" />
 					</p:commandButton>
@@ -52,47 +52,47 @@
 						<p:rowToggler />
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Title" size="120"
+					<p:column styleClass="centeredColumn" headerText="Title" size="90"
 						filterBy="#{position.title}" filterMatchMode="contains">
                             #{position.title}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Position Code"  size="120"
+					<p:column styleClass="centeredColumn" headerText="Position Code" size="90"
 						filterBy="#{position.positionCode}" filterMatchMode="contains">
                             #{position.positionCode}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Opening date"  size="120"
+					<p:column styleClass="centeredColumn" headerText="Opening date"  size="90"
 						filterBy="#{position.openingDate}" filterMatchMode="contains">
 						<h:outputText value="#{position.openingDate}">
 							<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Closing date" size="120"
+					<p:column styleClass="centeredColumn" headerText="Closing date" size="90"
 						filterBy="#{position.closingDate}" filterMatchMode="contains">
 						<h:outputText value="#{position.closingDate}">
 							<f:convertDateTime type="DATE" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Status"  size="120"
+					<p:column styleClass="centeredColumn" headerText="Status"  size="90"
 						filterMatchMode="contains" filterBy="#{position.status}">
                             #{position.status}
                         </p:column>
 
 
-					<p:column styleClass="centeredColumn" headerText="Location"  size="120"
+					<p:column styleClass="centeredColumn" headerText="Location"  size="90"
 						filterMatchMode="contains" filterBy="#{position.location}">
                             #{position.location}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Company"  size="120"
+					<p:column styleClass="centeredColumn" headerText="Company"  size="90"
 						filterMatchMode="contains" filterBy="#{position.company}">
                             #{position.company}
                         </p:column>
 
-					<p:column styleClass="centeredColumn" headerText="Technical Area"  size="120"
+					<p:column styleClass="centeredColumn" headerText="Technical Area" size="90"
 						filterMatchMode="contains" filterBy="#{position.technicalArea}">
                             #{position.technicalArea}
                         </p:column>
@@ -129,9 +129,9 @@
 					</p:rowExpansion>
 
 
-					<p:column headerText="Insert new Application" width="50"
+					<p:column headerText="Insert new Application" size="60"
 						styleClass="centeredColumn">
-						<p:commandButton styleClass="myButton" ajax="false"
+						<p:commandButton styleClass="myButton" ajax="false" 
 							rendered="#{manageApplicationWeb.canAssociatePositionToApplication(position)}"
 							action="#{manageApplicationWeb.goToApplicationForm(position)}"
 							icon="ui-icon-plus"
@@ -142,7 +142,7 @@
 					</p:column>
 
 
-		<p:column headerText="Edit" width="30" styleClass="centeredColumn">
+		<p:column headerText="Edit" styleClass="centeredColumn" size="40">
 						<p:commandButton styleClass="myButton" 
 							rendered="#{positionWebManagem.canEditPosition(position)}"
 							action="#{positionWebManagem.showPanel(position)}"

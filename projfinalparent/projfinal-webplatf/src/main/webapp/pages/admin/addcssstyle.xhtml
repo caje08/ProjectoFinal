@@ -1,93 +1,117 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <body>
-        <ui:composition template="./mainadmin.xhtml"> 
-            <ui:define name="content">
-                <p:growl showDetail="true"/>
-                <!--Form to add css-->
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<body>
+	<ui:composition template="./mainadmin.xhtml">
+		<ui:define name="content">
+			<p:growl showDetail="true" />
+			<!--Form to add css-->
 
-                <h:form enctype="multipart/form-data">
-                
-                <h1 style="margin-bottom: 20px; font-size:25px;" class="center">
-				Add new Style Configuration </h1>
-			<h3>Values with * are mandatory</h3>
-                   
-                    <h:panelGrid columns="2" cellpadding="3">
-                        <p:outputLabel value="Name for Css*:" />
-                        <p:inputText value="#{stylesCssToWeb.css.name}" required="true" requiredMessage="Must introduce a name" size="60"/>
-                        <p:outputLabel value="Company adress*:"/>
-                        <p:inputText value="#{stylesCssToWeb.css.address}" required="true" requiredMessage="Must introduce an address"  size="60"/>
-                        <h:outputLabel value="Company phone*:"/>
-                        <p:inputText value="#{stylesCssToWeb.css.phone}" required="true" requiredMessage="Must introduce a phone"  size="60"/>
-                        <h:outputLabel value="Company Fax*:"/>
-                        <p:inputText value="#{stylesCssToWeb.css.fax}" required="true" requiredMessage="Must introduce a fax"  size="60"/>
-                        <h:outputLabel value="Company Email*:"/>
-                        <p:inputText value="#{stylesCssToWeb.css.email}" required="true" requiredMessage="Must introduce an email"  size="60"/>
-                        <h:outputLabel value="Latitude coordinate of company*:"/>
-                        <p:inputText value="#{stylesCssToWeb.css.latitudeCoordinate}" required="true" requiredMessage="Must introduce west coordenadas"  size="60"/>
-                        <h:outputLabel value="Longitude coordinate of company*:"/>
-                        <p:inputText value="#{stylesCssToWeb.css.longitudeCoordinate}" required="true" requiredMessage="Must introduce east coordenadas"  size="60"/>
-                   
-                    <p:spacer />
-                  
-                        <p:outputLabel value="Company Description*:" />
-                        <p:inputTextarea style="width: 900px; height:50px; " value="#{stylesCssToWeb.css.companyDescription}" required="true" requiredMessage="Must introduce a company description"/>
-                 
-                    <p:spacer />
-                    </h:panelGrid>
-                    <h:panelGrid columns="2">                     
-                            <p:outputLabel value="Label color for a button"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.labelColorButton}"/>
-                            
-                            <p:outputLabel value="Label color of command links"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.labelCommandLink}"/>
-                            
-                            <p:outputLabel value="Label color of template for Candidate"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.labelTemplateCandidateColor}"/>
-                            
-                            <p:outputLabel value="Label color for Internal Web page template"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.labelInternalWebTemplateColor}"/>
-                            
-							<p:outputLabel value="Background color for Internal Web Page main content template"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.backgroundInternalWebContentTemplateColor}"/>
-                            
-                            <p:outputLabel value="Background color of Internal Web Page top template"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.backgroundInternalWebTopTemplateColor}" />
-                            
-                            <p:outputLabel value="Background color for Candidate content template"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.backgroundContentCandidateTemplateColor}"/>
-                            
-                            <p:outputLabel value="Background color for bottom template in Candidate"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.backgroundCandidateBottomColor}"/>
-                            
-                            <p:outputLabel value="Background color of top template for Candidate "/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.backgroundCandidateTopColor}"/>
-                            
-                            <p:outputLabel value="Background color for buttons"/>
-                            <p:colorPicker  value="#{stylesCssToWeb.css.backgroundColorButton}"/>
-                        </h:panelGrid>
-                    <p:spacer />
+			<h:form enctype="multipart/form-data">
 
-                    <h:panelGrid columns="2">
-                        <p:outputLabel for="basic" value="Choose Logo:" />
-                        <p:selectOneMenu id="basic" value="#{stylesCssToWeb.css.logoPath}">
-                            <f:selectItem itemLabel="Small Logo" itemValue="critSW_small.png" />
-                            <f:selectItem itemLabel="Medium logo" itemValue="critSW.png" />
-                            <f:selectItem itemLabel="Large Logo" itemValue="critSW2_large.png" />
-                        </p:selectOneMenu>
-                    </h:panelGrid>  
-                    <p:spacer />
+				<h1 style="margin-bottom: 20px; font-size: 25px;" class="center">
+					Add new Style Configuration</h1>
+				<h3>Values with * are mandatory</h3>
 
-                    <div align="center">
-                        <h:commandButton styleClass="myButton" value="Create CSS" action="#{stylesCssToWeb.createCSS()}" style="width:100px; height:45px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"/>
-                    </div>
+				<h:panelGrid columns="2" cellpadding="3">
+					<p:outputLabel value="Name for Css*:" />
+					<p:inputText value="#{stylesCssToWeb.css.name}" required="true"
+						requiredMessage="Must introduce a name" size="60" />
+					<p:outputLabel value="Company adress*:" />
+					<p:inputText value="#{stylesCssToWeb.css.address}" required="true"
+						requiredMessage="Must introduce an address" size="60" />
+					<h:outputLabel value="Company phone*:" />
+					<p:inputText value="#{stylesCssToWeb.css.phone}" required="true"
+						requiredMessage="Must introduce a phone" size="60" />
+					<h:outputLabel value="Company Fax*:" />
+					<p:inputText value="#{stylesCssToWeb.css.fax}" required="true"
+						requiredMessage="Must introduce a fax" size="60" />
+					<h:outputLabel value="Company Email*:" />
+					<p:inputText value="#{stylesCssToWeb.css.email}" required="true"
+						requiredMessage="Must introduce an email" size="60" />
+					<h:outputLabel value="Latitude coordinate of company*:" />
+					<p:inputText value="#{stylesCssToWeb.css.latitudeCoordinate}"
+						required="true" requiredMessage="Must introduce west coordenadas"
+						size="60" />
+					<h:outputLabel value="Longitude coordinate of company*:" />
+					<p:inputText value="#{stylesCssToWeb.css.longitudeCoordinate}"
+						required="true" requiredMessage="Must introduce east coordenadas"
+						size="60" />
 
-                </h:form>
 
-            </ui:define>
-        </ui:composition>
-    </body>
+
+					<p:outputLabel value="Company Description*:" />
+					<p:inputTextarea style="width: 900px; height:50px; "
+						value="#{stylesCssToWeb.css.companyDescription}" required="true"
+						requiredMessage="Must introduce a company description" />
+
+			<!-- 	</h:panelGrid>
+				<h:panelGrid columns="2"> -->
+					<p:outputLabel value="Label color for a button" />
+					<p:colorPicker value="#{stylesCssToWeb.css.labelColorButton}" />
+
+					<p:outputLabel value="Label color of command links" />
+					<p:colorPicker value="#{stylesCssToWeb.css.labelCommandLink}" />
+
+					<p:outputLabel value="Label color of template for Candidate" />
+					<p:colorPicker
+						value="#{stylesCssToWeb.css.labelTemplateCandidateColor}" />
+
+					<p:outputLabel value="Label color for Internal Web page template" />
+					<p:colorPicker
+						value="#{stylesCssToWeb.css.labelInternalWebTemplateColor}" />
+
+					<p:outputLabel
+						value="Background color for Internal Web Page main content template" />
+					<p:colorPicker
+						value="#{stylesCssToWeb.css.backgroundInternalWebContentTemplateColor}" />
+
+					<p:outputLabel
+						value="Background color of Internal Web Page top template" />
+					<p:colorPicker
+						value="#{stylesCssToWeb.css.backgroundInternalWebTopTemplateColor}" />
+
+					<p:outputLabel
+						value="Background color for Candidate content template" />
+					<p:colorPicker
+						value="#{stylesCssToWeb.css.backgroundContentCandidateTemplateColor}" />
+
+					<p:outputLabel
+						value="Background color for bottom template in Candidate" />
+					<p:colorPicker
+						value="#{stylesCssToWeb.css.backgroundCandidateBottomColor}" />
+
+					<p:outputLabel
+						value="Background color of top template for Candidate " />
+					<p:colorPicker
+						value="#{stylesCssToWeb.css.backgroundCandidateTopColor}" />
+
+					<p:outputLabel value="Background color for buttons" />
+					<p:colorPicker value="#{stylesCssToWeb.css.backgroundColorButton}" />
+				</h:panelGrid>
+				<p:spacer />
+
+				<h:panelGrid columns="2">
+					<p:outputLabel for="basic" value="Choose Logo:" />
+					<p:selectOneMenu id="basic" value="#{stylesCssToWeb.css.logoPath}">
+						<f:selectItem itemLabel="Small Logo" itemValue="critSW_small.png" />
+						<f:selectItem itemLabel="Medium logo" itemValue="critSW.png" />
+						<f:selectItem itemLabel="Large Logo" itemValue="critSW2_large.png" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<p:spacer />
+
+				<div align="center">
+					<h:commandButton styleClass="myButton" value="Create CSS"
+						action="#{stylesCssToWeb.createCSS()}"
+						style="width:250px; height:45px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+				</div>
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</body>
 </html>

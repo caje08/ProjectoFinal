@@ -26,32 +26,24 @@
                             </p:column>
 
 
-                            <p:column  styleClass="centeredColumn" filterBy="#{item.firstName}" headerText="First Name"  filterMatchMode="contains" style="width:20%">
+                            <p:column  styleClass="centeredColumn" filterBy="#{item.firstName}" headerText="First Name"  filterMatchMode="contains" size="200">
                                 <p:outputLabel value="#{item.firstName}" />
                             </p:column>
 
-                            <p:column styleClass="centeredColumn" filterBy="#{item.lastName}" filterMatchMode="contains" headerText="Last name"  style="width:20%">
+                            <p:column styleClass="centeredColumn" filterBy="#{item.lastName}" filterMatchMode="contains" headerText="Last name" size="200">
                                 <p:outputLabel value="#{item.lastName}" />
                             </p:column>
 
-                            <p:column styleClass="centeredColumn" filterBy="#{item.username}" headerText="Username"  filterMatchMode="contains" style="width:20%">
+                            <p:column styleClass="centeredColumn" filterBy="#{item.username}" headerText="Username"  filterMatchMode="contains" size="200">
                                 <p:outputLabel value="#{item.username}" />
                             </p:column>
 
-                            <p:column styleClass="centeredColumn" filterBy="#{item.status}" filterMatchMode="contains" headerText="Status"  style="width:20%">
+                            <p:column styleClass="centeredColumn" filterBy="#{item.status}" filterMatchMode="contains" headerText="Status"  size="200">
                                 <p:outputLabel value="#{item.status}" />
                             </p:column>
 
-                           <!--  <p:column styleClass="centeredColumn"  filterMatchMode="contains" headerText="See Linkedin" style="width:20%">
-                                <h:commandLink rendered="#{linkedinRequestBB.hasLinkedin(item)}" action="#{linkedinRequestBB.showPanel()}"  >
-                                    <h:graphicImage library="images" name="linkedin.png" />
-                                    <f:setPropertyActionListener value="#{item}" target="#{linkedinRequestBB.selectedApplicant}"/>
-                                </h:commandLink>
-                            </p:column> -->
-
-
-                            <p:column value="Blacklist"  styleClass="centeredColumn" headerText="Send To BlackList" style="width:20%">
-                                <p:commandButton rendered="#{applicantCheck.isRejected(item)}" action="#{applicantCheck.goToblacklist(item)}" icon="ui-icon-plus"   ajax="false"  >
+                            <p:column value="Blacklist"  styleClass="centeredColumn" headerText="Send To BlackList" size="200">
+                                <p:commandButton  value="Blacklist" rendered="#{applicantCheck.isRejected(item)}" action="#{applicantCheck.goToblacklist(item)}" icon="ui-icon-plus"   ajax="false"  >
                                     <f:setPropertyActionListener value="#{item}" target="#{applicantCheck.selectedApplicant}"/>
                                 </p:commandButton>
                             </p:column>

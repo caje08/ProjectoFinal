@@ -152,10 +152,10 @@
 
 					<!--    Buttons  -->
 					<p:commandButton styleClass="myButton" value="Add Position"
-						style=" width:100px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						style=" width:200px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{positionWebManagem.addPosition()}" ajax="false" />
 					<p:commandButton value=" Cancel " immediate="true"
-						style=" width:100px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
+						style=" width:150px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 						action="#{userWebView.goBackToMain()}" />
 
 
@@ -169,7 +169,7 @@
 
 			<h:form id="presentialguideTable">
 				<p:dialog header="Guides" widgetVar="presentialguide" modal="true"
-					height="500" width="500">
+					height="500" width="600">
 					<p:dataTable id="theguide" selectionMode="single"
 						rowKey="#{guide.interviewId}"
 						selection="#{positionWebManagem.selectedInterviewGuide}"
@@ -191,7 +191,7 @@
 					<h:commandButton styleClass="myButton"
 						value="Add Presential Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPresentialGuideInterview()}"
-						style="width:250px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+						style="width:350px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 
 				</p:dialog>
 			</h:form>
@@ -200,7 +200,7 @@
 
 			<h:form id="phoneguideTable">
 				<p:dialog header="Guides" widgetVar="phoneguide" modal="true"
-					height="500" width="500">
+					height="500" width="600">
 					<p:dataTable id="theguide" selectionMode="single"
 						rowKey="#{guide.interviewId}"
 						selection="#{positionWebManagem.selectedInterviewGuide}"
@@ -221,7 +221,7 @@
 					<h:commandButton styleClass="myButton"
 						value="Add Phone Guide for this position"
 						action="#{positionWebManagem.setTheSelectedPhoneGuideInterview()}"
-						style="width:250px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+						style="width:350px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
 			</h:form>
 
@@ -229,7 +229,7 @@
 
 			<h:form id="managerTable">
 				<p:dialog header="Managers" widgetVar="manager" modal="true"
-					height="500" width="500">
+					height="500" width="600">
 					<f:facet name="header">
                             List of Managers
                         </f:facet>
@@ -259,7 +259,7 @@
 					<h:commandButton styleClass="myButton"
 						value="Add Manager for this position"
 						action="#{positionWebManagem.setTheSelectedManager()}"
-						style="width:250px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+						style="width:350px;height:50px;background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
 				</p:dialog>
 			</h:form>
 

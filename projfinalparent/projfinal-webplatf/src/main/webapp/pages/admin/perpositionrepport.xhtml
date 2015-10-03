@@ -48,7 +48,8 @@
 
 
                             </p:dataTable>
-                            <h:commandButton  styleClass="myButton"  value="Choose Position" action="#{reppApplicantsBB.lstApplicantsByPosition()}"  />
+                           <!--  <h:commandButton  styleClass="myButton"  value="Choose Position" action="#{reppApplicantsBB.lstApplicantsByPosition()}"  /> -->
+                       <p:commandButton  styleClass="myButton"  value="Choose Position" action="#{reppApplicantsBB.lstApplicantsByPosition()}" />
                         </p:dialog>
                     </h:form>
 
@@ -100,8 +101,8 @@
                                 <h:outputText value="#{applicant.school}" />
                             </p:column>
                         </p:dataTable>
-
-                        <p:commandButton  styleClass="myButton" ajax="false" id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
+																<!-- ajax="false"  -->
+                        <p:commandButton  styleClass="myButton" id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
                             <f:setPropertyActionListener value="#{manager}" target="#{reppApplicantsBB.selectedmanager}" />
                         </p:commandButton>
 
@@ -127,7 +128,13 @@
                                 </p:column>
 
                             </p:dataTable>
-                            <h:commandButton   styleClass="myButton"  value="Send email to this Manager" action="#{reppApplicantsBB.sendPositionsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+                            
+                            
+                            
+                            
+                             sem ajax
+                            <p:commandButton   styleClass="myButton"  value="Send email to this Manager" action="#{reppApplicantsBB.sendPositionsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+                         <!--    <h:commandButton   styleClass="myButton"  value="Send email to this Manager" action="#{reppApplicantsBB.sendPositionsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" /> -->
                         </p:dialog>
                     </h:form>
 

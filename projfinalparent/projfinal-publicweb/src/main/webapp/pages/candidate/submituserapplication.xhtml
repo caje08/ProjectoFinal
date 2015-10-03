@@ -12,19 +12,20 @@
 
 	<ui:define name="top">
 
-		<h:graphicImage library="images" name="critical_logo.png"
+	<h:graphicImage library="images" name="critical_logo.png"
 			style="display: inline;float: left; margin-right: 10px; margin-left: 7px;" />
 
 		<h:form style="margin-left: 90px;">
 			<p:menubar>
 				<p:menuitem icon="ui-icon-home"
-					action="/pages/candidate/mainuser.xhtml?faces-redirect=true" />
-				<p:submenu label="Welcome: #{pubActiveSession.activeUser.username}"
-					style="padding-left:20px">
-					<p:menuitem value="Logout" action="#{pubLoginMB.logout()}" />
-					<p:menuitem value="Edit"
-						action="/pages/candidate/editcandidate.xhtml?faces-redirect=true" />
-				</p:submenu>
+					action="/pages/candidate/mainuser.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+				<p:menuitem label="Welcome: #{pubActiveSession.activeUser.username}"
+					style="padding-left:20px" />
+				<p:menuitem value="Edit"
+					action="/pages/candidate/editcandidate.xhtml?faces-redirect=true"
+					style="padding-left:20px" />
+		
 
 				<p:submenu label="Applications" style="padding-left:20px">
 					<p:menuitem value="List Open Positions"
@@ -34,6 +35,8 @@
 					<p:menuitem value="My Applications"
 						action="/pages/candidate/userapplications.xhtml?faces-redirect=true" />
 				</p:submenu>
+						<p:menuitem value="Logout" action="#{pubLoginMB.logout()}"
+					style="padding-left:20px" />
 			</p:menubar>
 		</h:form>
 
@@ -43,6 +46,7 @@
 				name="#{cssRequestBB.cssInUse.logoPath}" />
 		</div>
 	</ui:define>
+	
 	<ui:define name="content">
 
 	<h1 style="margin-bottom: 20px; font-size: 25px;color:black">Submit application to Position: "#{position.title}" </h1>

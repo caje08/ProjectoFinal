@@ -26,29 +26,29 @@
 
 						<f:facet name="header">
 							<p:outputPanel>
-								<h:outputText value="Search all fields:" />
+								<h:outputText  style="text-align:center" value="Search all fields:" />
 								<p:inputText id="globalFilter"
 									onkeyup="PF('userTable').filter()" style="width:150px"
 									placeholder="Enter keyword" />
 							</p:outputPanel>
 						</f:facet>
 
-						<p:column styleClass="centeredColumn" headerText="First Name" size="300"
+						<p:column styleClass="centeredColumn" headerText="First Name" size="200"
 							filterBy="#{userapp.firstName}" filterMatchMode="contains">
 							<p:outputLabel value="#{userapp.firstName}" />
 						</p:column>
 
-						<p:column styleClass="centeredColumn" headerText="Last Name" size="300"
+						<p:column styleClass="centeredColumn" headerText="Last Name" size="200"
 							filterBy="#{userapp.lastName}" filterMatchMode="contains">
 							<p:outputLabel value="#{userapp.lastName}" />
 						</p:column>
 
-						<p:column styleClass="centeredColumn" headerText="Email" size="300"
+						<p:column styleClass="centeredColumn" headerText="Email" size="200"
 							filterBy="#{userapp.email}" filterMatchMode="contains">
 							<p:outputLabel value="#{userapp.email}" />
 						</p:column>
 
-						<p:column styleClass="centeredColumn" headerText="Roles" size="300"
+						<p:column styleClass="centeredColumn" headerText="Roles" size="200"
 							filterBy="#{userapp.role}" filterMatchMode="contains">
 							<p:outputLabel value="#{userapp.roles}" />
 						</p:column>

@@ -68,7 +68,7 @@
 
 						<p:column styleClass="centeredColumn" headerText="Update Status"
 							style="width:20%">
-							<p:commandButton styleClass="myButton"  value="Update"
+							<p:commandButton styleClass="myButton"  
 								rendered="#{manageApplicationWeb.canEditStatus(item)}"
 								id="updstatus" icon="ui-icon-plus"
 								oncomplete="PF('updstatus').show()" update=":statusUpdate">
@@ -78,7 +78,7 @@
 						</p:column>
 
 						<p:column styleClass="centeredColumn"
-							headerText="Process Interview" style="width:20%">
+							headerText="Process Interview" size="150">
 							<p:commandButton styleClass="myButton" value="Add Interview"
 								rendered="#{!applicationWebManagem.isRejected(item)}"
 								action="#{applicationWebManagem.showPanel(item)}"

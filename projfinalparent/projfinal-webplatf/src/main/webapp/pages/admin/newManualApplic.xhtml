@@ -128,6 +128,19 @@
 						<p:watermark for="confirmPassword" value="Type Password Again" />
 					</p:password>
 
+	<p:outputLabel value="Cover Letter Filename:" />
+					<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+					<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
+						required="true"
+						fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
+						label="Upload Cover Letter*"
+						requiredMessage="Please upload Cover Letter"
+						allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
+						styleClass="fileUploadClass" />
+					<p:growl id="cl1" showDetail="true" />
+
+
+
 					<p:outputLabel value="CV Filename:" />
                     <h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
 					<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
@@ -138,16 +151,7 @@
 						requiredMessage="Please upload CV" />
 					<p:growl id="cv1" showDetail="true" />
 
-					<p:outputLabel value="Cover Letter Filename:" />
-					<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
-					<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
-						required="true"
-						fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
-						label="Upload Cover Letter*"
-						requiredMessage="Please upload Cover Letter"
-						allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
-						styleClass="fileUploadClass" />
-					<p:growl id="cl1" showDetail="true" />
+				
 
 
 				</h:panelGrid>

@@ -2,54 +2,99 @@
     <!ENTITY nbsp "&#xA0;"> 
     ]>
 
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:f="http://java.sun.com/jsf/core"
-          xmlns:ui="http://java.sun.com/jsf/facelets"
-          xmlns:p="http://primefaces.org/ui">
-        <body>
-            <ui:composition template="./mainadmin.xhtml"> 
-                <ui:define name="content">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<body>
+	<ui:composition template="./mainadmin.xhtml">
+		<ui:define name="content">
 
-                    <!-- Form of Guide List-->
+			<!-- Form of Guide List-->
 
-                    <h:form id="form">
-                    
-                    <div>
-						<h1 style="margin-bottom: 20px; font-size: 25px;">Interviews
-							Outcome</h1>
-					</div>
-                        <p:chart type="bar" model="#{chartReps.barModelInterview}" style="height:300px"/>
+			<h:form id="form">
 
-                        <p:commandButton  styleClass="myButton" ajax="false" id="email" value="Send report by email" oncomplete="PF('managers').show()" update=":managersTable" >
-                            <f:setPropertyActionListener value="#{manager}" target="#{chartReps.selectedmanager}" />
-                        </p:commandButton>
+				<div>
+					<h1 style="margin-bottom: 20px; font-size: 25px;">Interviews
+						Outcome</h1>
+				</div>
+				<p:chart type="bar" model="#{chartReps.barModelInterview}"
+					style="height:300px" />
 
-                        <p:outputLabel id="themanager" value="#{chartReps.manager.email}" />
-                    </h:form>
+				<p:commandButton styleClass="myButton" id="email"
+					value="Send report by email" oncomplete="PF('managers').show()"
+					update=":managersTable">
+					<f:setPropertyActionListener value="#{manager}"
+						target="#{chartReps.selectedmanager}" />
+				</p:commandButton>
 
-                    <h:form id="managersTable" >
-                        <p:dialog header="Managers" widgetVar="managers" modal="true" height="500" width="500"  >
-                            <p:dataTable id="themanager" selectionMode="single" rowKey="#{manager.userId}" selection="#{chartReps.selectedmanager}"
-                                         value="#{chartReps.lstManagers}" var="manager"  >
+				<p:outputLabel id="themanager" value="#{chartReps.manager.email}" />
+			</h:form>
 
-                                <p:column styleClass="centeredColumn"  headerText="Manager"  filterBy="#{manager.firstName}" filterMatchMode="contains">
+			<h:form id="managersTable">
+				<p:dialog header="Managers" widgetVar="managers" modal="true"
+					height="500" width="500">
+					<p:dataTable id="themanager" selectionMode="single"
+						rowKey="#{manager.userId}"
+						selection="#{chartReps.selectedmanager}"
+						value="#{chartReps.lstManagers}" var="manager">
+
+						<p:column styleClass="centeredColumn" headerText="Manager"
+							filterBy="#{manager.firstName}" filterMatchMode="contains">
                                     #{manager.firstName}
                                 </p:column>
 
-                                <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.lastName}" filterMatchMode="contains">
+						<p:column styleClass="centeredColumn" headerText=""
+							filterBy="#{manager.lastName}" filterMatchMode="contains">
                                     #{manager.lastName}
                                 </p:column>
 
-                                <p:column styleClass="centeredColumn" headerText=""  filterBy="#{manager.email}" filterMatchMode="contains">
+						<p:column styleClass="centeredColumn" headerText=""
+							filterBy="#{manager.email}" filterMatchMode="contains">
                                     #{manager.email}
                                 </p:column>
 
-                            </p:dataTable>
-                            <h:commandButton styleClass="myButton"  value="Send email to this Manager" action="#{chartReps.sendInterviewReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"  />
-                        </p:dialog>
-                    </h:form>
-                </ui:define>
-            </ui:composition>
-        </body>
-    </html>
+					</p:dataTable>
+					
+					   	<!-- codigo  mistura -->
+					      
+					      
+                            	<p:commandButton styleClass="myButton" id="email"
+						value="Send report by email"
+						 oncomplete="PF('managers').show()"
+						update=":managersTable"  style="width:250px;height:50px"  ajax="false">
+						<f:setPropertyActionListener value="#{manager}"
+							target="#{chartReps.selectedmanager}" />
+					</p:commandButton>
+                            
+					
+					
+
+				
+
+			
+
+
+
+					<!--       codigo do "avarage time report"
+                            	<p:commandButton styleClass="myButton" id="email"
+						value="Send report by email"
+						 oncomplete="PF('managers').show()"
+						update=":managersTable"  style="width:250px;height:50px">  ajax="false"
+						<f:setPropertyActionListener value="#{manager}"
+							target="#{averageValues.selectedManager}" />
+					</p:commandButton>
+                             -->
+
+					<!--   codigo que estava -->
+					<!--     <h:commandButton styleClass="myButton"  
+                            value="Send email to this Manager" 
+                            action="#{chartReps.sendInterviewReport()}"
+                             style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"  /> -->
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
