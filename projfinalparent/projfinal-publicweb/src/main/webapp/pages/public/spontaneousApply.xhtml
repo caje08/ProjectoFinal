@@ -256,7 +256,7 @@
 				<p:growl id="cl1" showDetail="true" />
 				<!-- sizeLimit="52428800" /> -->
 				<p:message for="ml" />
-				
+				<h:outputText></h:outputText>
 				
 				<p:outputLabel value="CV Filename:" />
 				<h:outputText id="cvid" value="#{infoUser.clUploadName}" />
@@ -270,7 +270,7 @@
 				<p:message for="cv" />
 				
 				<h:commandButton styleClass="myButton" value="Apply"
-					style="width:100px; height:50px; background-color:  ##{cssRequestBB.cssInUse.backgroundButtonColor};Color: ##{cssRequestBB.cssInUse.labelButtonColor}"
+					style="width:100px; height:50px; background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}"
 					action="#{infoUser.createManualApplication()}" />
 
 				<!-- <h:commandButton styleClass="myButton" value="Cancel"

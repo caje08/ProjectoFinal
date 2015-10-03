@@ -8,31 +8,36 @@
                     xmlns:f="http://java.sun.com/jsf/core"
                     xmlns:ui="http://java.sun.com/jsf/facelets"
                     xmlns:p="http://primefaces.org/ui">
+                    
         <!--Top Content-->
 
         <ui:define name="top">
-            <h:form>
-              <h:graphicImage library="images" name="critical_logo.png"
-				style="display: inline;float: left; margin-right: 20px; margin-left: 7px;" /> 
-				
-				   <h:panelGrid columns="6" style="display: inline;">
-				   
-             <p:outputLabel value="Login for main page" style=" margin-right: 10px; margin-left: 150px;margin-top:20px;"/>
-              <p:commandButton style="margin-top:20px;" 
-               action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true" value="Login" /><!--  style="color: ##{cssRequestBB.cssInUse.labelCommandLink}"  />&nbsp;&nbsp; -->
-               
-                 <p:outputLabel value="List of oportunities" style=" margin-right: 10px; margin-left: 150px;margin-top:20px;"/>
-               <p:commandButton  style="margin-top:20px;"
-               action="/pages/public/lstpositions.xhtml?faces-redirect=true"  value="Career Oportunity"  />
-               
-                <p:outputLabel value="Back to main page" style=" margin-left: 150px;margin-right: 10px;margin-top:20px;"/>
-                <p:commandButton style="margin-top:20px;"
-                 action="/publogin.xhtml?faces-redirect=true"  value="Main Page" />
-            </h:panelGrid>
-            </h:form>
-            <div align="right">
-                <h:graphicImage library="images" name="#{cssRequestBB.cssInUse.logoPath}"/>
-            </div>
+         <h:graphicImage library="images" name="critical_logo.png"
+			style="display: inline;float: left; margin-right: 20px; margin-left: 7px;" />
+
+		<h:form id="menu" style="margin-left: 90px;">
+			<p:menubar>
+				<p:menuitem value="Login"
+					action="/pages/candidate/indexmainuser.xhtml?faces-redirect=true"
+					style="margin-right:20px" />
+
+				<p:menuitem value=" Main page"
+					action="/publogin.xhtml?faces-redirect=true"
+					style="margin-right:20px" />
+
+				<!-- <p:menuitem  value="List of oportunities"
+						action="/pages/candidate/openpositions.xhtml?faces-redirect=true" style="margin-right:20px"/> -->
+
+				<p:menuitem value="Career Oportunity"
+					action="/pages/public/lstpositions.xhtml?faces-redirect=true"
+					style="margin-right:20px" />
+
+				<p:menuitem value="New User"
+					action="/pages/public/spontaneousApply.xhtml?faces-redirect=true"
+					style="margin-right:20px" />
+			</p:menubar>
+		</h:form>
+
         </ui:define>
 
 
@@ -91,9 +96,9 @@
                     </p:rowExpansion>
 
                 </p:dataTable>
-
+<!-- 
                 <p:commandButton  id="selectButton3" value="Spontaneous Application"  action="spontaneousApply.xhtml" ajax="false"  />
-
+ -->
             </h:form>
 
         </ui:define>

@@ -9,43 +9,36 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 
+<ui:define name="top">
 
-    <ui:define name="top">
-     <h:graphicImage library="images" name="critical_logo.png"
-			style="display: inline;float: left; margin-right: 10px; margin-left: 7px;" />
+		<h:graphicImage library="images" name="critical_logo.png"
+			style="display: inline;float: left; margin-right: 10px; margin-left: 7px; margin-top: 10px;" />
+		
 
-		<h:form style="margin-left: 90px;">
+		<h:form style="margin-left: 90px;padding-top: 1px;">
 			<p:menubar>
 				<p:menuitem icon="ui-icon-home"
 					action="/pages/candidate/mainuser.xhtml?faces-redirect=true"
 					style="padding-left:20px" />
-				<p:menuitem label="Welcome: #{pubActiveSession.activeUser.username}"
+				<p:menuitem value="Welcome: #{pubActiveSession.activeUser.username}"
 					style="padding-left:20px" />
 				<p:menuitem value="Edit"
 					action="/pages/candidate/editcandidate.xhtml?faces-redirect=true"
 					style="padding-left:20px" />
-			
-
 				<p:submenu label="Applications" style="padding-left:20px">
-					<p:menuitem value="List Open Positions"
-						action="/pages/candidate/openpositions.xhtml?faces-redirect=true" />
+					<!-- <p:menuitem value="List Open Positions"
+						action="/pages/candidate/openpositions.xhtml?faces-redirect=true" /> -->
 					<p:menuitem value="New Spontaneous Application"
 						action="/pages/candidate/spontaneousapplications.xhtml?faces-redirect=true" />
 					<p:menuitem value="My Applications"
 						action="/pages/candidate/userapplications.xhtml?faces-redirect=true" />
 				</p:submenu>
-					<p:menuitem value="Logout" action="#{pubLoginMB.logout()}"
+				<p:menuitem value="Logout" action="#{pubLoginMB.logout()}"
 					style="padding-left:20px" />
 			</p:menubar>
 		</h:form>
 
-
-		<div align="right">
-			<h:graphicImage library="images"
-				name="#{cssRequestBB.cssInUse.logoPath}" />
-		</div>
 	</ui:define>
-	
     <ui:define name="content">
     
    <h1 style="margin-bottom: 20px; font-size: 25px;color:black">My applications</h1>

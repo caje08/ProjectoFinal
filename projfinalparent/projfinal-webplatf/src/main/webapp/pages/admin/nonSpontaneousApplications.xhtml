@@ -76,6 +76,17 @@
 									target="#{applicationWebManagem.selectedApplication}" />
 							</p:commandButton>
 						</p:column>
+						
+						<p:column styleClass="centeredColumn"
+							headerText="Process Interview" style="width:20%">
+							<p:commandButton styleClass="myButton" 
+								rendered="#{!applicationWebManagem.isRejected(item)}"
+								action="#{applicationWebManagem.showPanel(item)}"
+								icon="ui-icon-plus" title="Add" ajax="false">
+								<f:setPropertyActionListener value="#{item}"
+									target="#{applicationWebManagem.selectedApplication}" />
+							</p:commandButton>
+						</p:column>
 
 						<p:column styleClass="centeredColumn"
 							headerText="Process Interview" size="150">

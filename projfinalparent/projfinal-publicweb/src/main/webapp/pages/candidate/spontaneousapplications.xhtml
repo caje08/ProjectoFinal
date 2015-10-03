@@ -10,40 +10,35 @@
 
 
 
-	<ui:define name="top">
-<h:graphicImage library="images" name="critical_logo.png"
-			style="display: inline;float: left; margin-right: 10px; margin-left: 7px;" />
+<ui:define name="top">
 
-		<h:form style="margin-left: 90px;">
+		<h:graphicImage library="images" name="critical_logo.png"
+			style="display: inline;float: left; margin-right: 10px; margin-left: 7px; margin-top: 10px;" />
+			
+
+		<h:form style="margin-left: 90px;padding-top: 1px;">
 			<p:menubar>
 				<p:menuitem icon="ui-icon-home"
 					action="/pages/candidate/mainuser.xhtml?faces-redirect=true"
 					style="padding-left:20px" />
-				<p:menuitem label="Welcome: #{pubActiveSession.activeUser.username}"
+				<p:menuitem value="Welcome: #{pubActiveSession.activeUser.username}"
 					style="padding-left:20px" />
 				<p:menuitem value="Edit"
 					action="/pages/candidate/editcandidate.xhtml?faces-redirect=true"
 					style="padding-left:20px" />
-			
-
 				<p:submenu label="Applications" style="padding-left:20px">
-					<p:menuitem value="List Open Positions"
-						action="/pages/candidate/openpositions.xhtml?faces-redirect=true" />
+					<!-- <p:menuitem value="List Open Positions"
+						action="/pages/candidate/openpositions.xhtml?faces-redirect=true" /> -->
 					<p:menuitem value="New Spontaneous Application"
 						action="/pages/candidate/spontaneousapplications.xhtml?faces-redirect=true" />
 					<p:menuitem value="My Applications"
 						action="/pages/candidate/userapplications.xhtml?faces-redirect=true" />
 				</p:submenu>
-					<p:menuitem value="Logout" action="#{pubLoginMB.logout()}"
+				<p:menuitem value="Logout" action="#{pubLoginMB.logout()}"
 					style="padding-left:20px" />
 			</p:menubar>
 		</h:form>
 
-
-		<div align="right">
-			<h:graphicImage library="images"
-				name="#{cssRequestBB.cssInUse.logoPath}" />
-		</div>
 	</ui:define>
 	
 	<ui:define name="content">
@@ -57,74 +52,70 @@
 			<h:panelGrid columns="2" cellpadding="1">
 
 					
-					<p:outputLabel value="Source*"  style="font-size: 20px;"/>
-	
-					<p:selectOneMenu style="float:left" id="pub_Chann" required="true"
-						value="#{manageApplicationWeb.application.source}">
-						<f:selectItem itemLabel="Critical SW web site"
-							itemValue="CRITICALSWWEBSITE" />
-						<f:selectItem itemLabel="LinkedIn" itemValue="LINKEDIN" />
-						<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
-						<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
-						<f:selectItem itemLabel="All defined"
-							itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
-						<f:selectItem itemLabel="Other" itemValue="OTHER" />
-					</p:selectOneMenu>
 					
-					<p:outputLabel value="Other source:"  style="font-size: 20px;"/>
-					<p:inputText  style="float:left" id="publishingChannels" title="Source channels"
-						value="#{manageApplicationWeb.activePosition.texttmp}" size="40"
-						required="false"
-						requiredMessage="Please, enter the text for alternatives source channels." />
+				<p:outputLabel value="Source*" />
+				<p:selectOneMenu style="float:left" id="pub_Chann" required="true"
+					value="#{infoUser.application.source}">
+					<f:selectItem itemLabel="Critical SW web site"
+						itemValue="CRITICALSWWEBSITE" />
+					<f:selectItem itemLabel="LinkedIn" itemValue="LINKEDIN" />
+					<f:selectItem itemLabel="Facebook" itemValue="FACEBOOK" />
+					<f:selectItem itemLabel="Glassdoor" itemValue="GLASSDOOR" />
+					<f:selectItem itemLabel="All defined"
+						itemValue="CRITICALSWWEBSITE,LINKEDIN,FACEBOOK,GLASSDOOR " />
+					<f:selectItem itemLabel="Other" itemValue="OTHER" />
+				</p:selectOneMenu>
+				<p:outputLabel value="Other source:" />
+				<p:inputText style="float:left" id="publishingChannels"
+					title="Source channels" value="#{infoUser.application.source}"
+					size="40" required="false"
+					requiredMessage="Please, enter the text for alternatives source channels." />
 
 
-				<p:outputLabel value="CV Filename:" />
-				<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
-				<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
-					previewWidth="40" required="true"
-					fileUploadListener="#{manageApplicationWeb.uploadCV}"
-					label="Upload CV*" styleClass="fileUploadClass"
-					allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800"
-					requiredMessage="Please upload CV" />
-				<p:growl id="cv1" showDetail="true" />
+
+
+				<p:outputLabel value="Password*" />
+				<p:password id="password" required="true" label="password" size="40"
+					requiredMessage="Please enter your password."
+					match="confirmPassword" value="#{infoUser.applicant.password}"
+					maxlength="20">
+				</p:password>
+				<p:watermark for="password" value="Password* " />
+				<h:outputText></h:outputText>
+
+				<p:outputLabel value="Confirm Password*" />
+				<p:password id="confirmPassword" required="true" size="40"
+					requiredMessage="Please confirm your password."
+					label="confirmPassword" value="#{infoUser.applicant.password}"
+					maxlength="20">
+				</p:password>
+				<p:watermark for="confirmPassword" value="Type Password Again*" />
+				<h:outputText></h:outputText>
 
 				<p:outputLabel value="Cover Letter Filename:" />
-				<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
+				<h:outputText id="clid" value="#{infoUser.clUploadName}" />
 				<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
 					required="true"
-					fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
+					fileUploadListener="#{infoUser.uploadMotivationLetter}"
 					label="Upload Cover Letter*"
 					requiredMessage="Please upload Cover Letter"
 					allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="52428800"
 					styleClass="fileUploadClass" />
 				<p:growl id="cl1" showDetail="true" />
-
-
-
-				<!-- 
-<p:outputLabel value="CV Filename:" />
-					<h:outputText id="cvid" value="#{manageApplicationWeb.cvname}" />
-	<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
-						previewWidth="40" required="true"
-						fileUploadListener="#{manageApplicationWeb.uploadCV}"
-						label="Upload CV*" styleClass="fileUploadClass"
-						allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
-						requiredMessage="Please upload CV" />
-				<p:growl id="cv1" showDetail="true" />
-
-
-				<p:outputLabel value="Cover Letter Filename:" />
-					<h:outputText id="clid" value="#{manageApplicationWeb.clname}" />
-					<p:fileUpload update="clid cl1" id="ml" mode="advanced" auto="true"
-						required="true"
-						fileUploadListener="#{manageApplicationWeb.uploadMotivationLetter}"
-						label="Upload Cover Letter*"
-						requiredMessage="Please upload Cover Letter"
-						allowTypes="/(\.|\/)(pdf|docx|txt)$/" sizeLimit="60000000"
-						styleClass="fileUploadClass" /> -->
-
 				<!-- sizeLimit="52428800" /> -->
-				<p:growl id="cl1" showDetail="true" />
+				<p:message for="ml" />
+		<h:outputText></h:outputText>
+		
+				<p:outputLabel value="CV Filename:" />
+				<h:outputText id="cvid" value="#{infoUser.clUploadName}" />
+				<p:fileUpload update="cvid cv1" mode="advanced" auto="true" id="cv"
+					previewWidth="40" required="true"
+					fileUploadListener="#{infoUser.uploadCV}" label="Upload CV*"
+					styleClass="fileUploadClass" allowTypes="/(\.|\/)(pdf|docx|txt)$/"
+					sizeLimit="52428800" requiredMessage="Please upload CV" />
+				<!-- fileUploadListener="#{manageApplicationWeb.uploadCV}" -->
+				<p:growl id="cv1" showDetail="true" />
+				<p:message for="cv" />
 
 			</h:panelGrid>
 
