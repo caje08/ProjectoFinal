@@ -30,7 +30,7 @@
                     </h:form>
 
                     <h:form>
-                        <p:panel header="Applicants" rendered="#{!reppApplicantsBB.showTableTime(begin, end)}">
+                        <p:panel header="Applicants Per time Period" rendered="#{!reppApplicantsBB.showTableTime(begin, end)}">
                             <p:dataTable id="tbl" var="applicant" value="#{reppApplicantsBB.applicantsPerTime}"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                          paginator="true" rows="10" style="margin-bottom:20px">
@@ -113,7 +113,7 @@
                                 </p:column>
 
                             </p:dataTable>
-                            <h:commandButton value="Send email to this Manager" action="#{reppApplicantsBB.sendApplicationsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" />
+<!--                             <h:commandButton value="Send email to this Manager" action="#{reppApplicantsBB.sendApplicationsReport()}" style="background-color:  ##{stylesCssToWeb.cssInUse.backgroundColorButton};Color: ##{stylesCssToWeb.cssInUse.labelColorButton}" /> -->
                         </p:dialog>
                     </h:form>
                 </ui:define>

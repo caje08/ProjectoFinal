@@ -331,8 +331,8 @@
 				<p:dialog header="Add a new Interview" widgetVar="interviewer"
 					modal="true" height="300" width="500">
 					<p:dataTable id="theguide" selectionMode="single"
-						rowKey="#{interviewer.userId}"
-						selection="#{applicationWebManagem.selectedInterviewer}"
+						rowKey="#{interviewer.userId}" required="true"
+						selection="#{applicationWebManagem.selectedInterviewer}" 
 						value="#{manageApplicationWeb.collectListOfInterviewers()}" var="interviewer">
 <!-- 						value="#{applicationWebManagem.lstInterviewers}" var="interviewer"> -->
 

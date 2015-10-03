@@ -465,6 +465,7 @@ public class ReppApplicantsBB implements Serializable {
 		applicantsPerTime = applicationFacade.lstApplicantsPerTime(begin, end);
 		beginChart = begin;
 		endChart = end;
+		//applicants=(List<Object[]>)applicantsPerTime;
 		return applicantsPerTime;
 	}
 
@@ -512,9 +513,10 @@ public class ReppApplicantsBB implements Serializable {
 	 */
 	public void sendApplicationsReport() {
 		try {
+			Logger.getLogger(ChartReps.class.getName()).log(Level.INFO,"Inside sendApplicationsReport(), selectedManager.email="+selectedmanager.getEmail());
 			GeneratePDF.applicationsReportPdf(getApplicants(), selectedmanager);
 		} catch (DRException | FileNotFoundException | EmailException ex) {
-			Logger.getLogger(ChartReps.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(ChartReps.class.getName()).log(Level.SEVERE, null, ex.getMessage());
 		}
 	}
 
